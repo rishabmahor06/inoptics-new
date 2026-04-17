@@ -87,7 +87,7 @@ export default function App() {
       <div className={
         isMobile
           ? `fixed top-0 left-0 h-screen z-40 transition-transform duration-200 ease-in-out ${mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`
-          : 'flex-shrink-0 h-screen'
+          : 'shrink-0 h-screen'
       }>
         <Sidebar
           collapsed={isMobile ? false : sidebarCollapsed}
@@ -100,7 +100,7 @@ export default function App() {
       {/* Main */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <Header onMenuClick={() => setMobileSidebarOpen(prev => !prev)} />
-        <div className="flex-1 overflow-y-auto p-5 lg:p-6">
+        <div className="flex-1 overflow-y-auto p-5 lg:p-0">
           <ActivePage />
         </div>
       </div>

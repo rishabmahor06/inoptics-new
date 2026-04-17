@@ -29,8 +29,14 @@ export const TAB_LABELS = {
 
 export const useNavStore = create((set) => ({
   activeTab:       'dashboard',
-  setActiveTab:    (tab) => set({ activeTab: tab, editingExhibitor: null }),
+  setActiveTab:    (tab) => set({ activeTab: tab, editingExhibitor: null, selectedPayment: null }),
 
   editingExhibitor:    null,
   setEditingExhibitor: (exhibitor) => set({ editingExhibitor: exhibitor }),
+
+  selectedPayment:    null,
+  setSelectedPayment: (payment) => set({ selectedPayment: payment }),
+
+  communicationSubTab:    'emails',
+  setCommunicationSubTab: (sub) => set({ activeTab: 'communication', communicationSubTab: sub }),
 }));

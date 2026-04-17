@@ -35,7 +35,7 @@ export default function ExhibitorEditView() {
       <div className="flex items-center gap-3 mb-5">
         <button
           onClick={() => setEditingExhibitor(null)}
-          className="flex items-center gap-1.5 bg-zinc-100 border-0 rounded-lg px-3.5 py-1.5 text-[13px] font-semibold text-zinc-600 cursor-pointer hover:bg-zinc-200 transition-colors"
+          className="flex items-center gap-1.5 bg-zinc-100 rounded-lg px-3.5 py-1.5 text-[13px] font-semibold text-zinc-600 cursor-pointer hover:bg-zinc-200 transition-colors"
         >
           <MdArrowBack size={16} /> Back
         </button>
@@ -53,21 +53,24 @@ export default function ExhibitorEditView() {
 
       {/* Card with sub-tabs */}
       <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-        {/* Tab bar */}
-        <div className="flex overflow-x-auto border-b border-zinc-100 px-1 [scrollbar-width:none]">
+
+        {/* Tab bar — using relative + absolute bottom line to avoid border conflict with button reset */}
+        <div className="flex overflow-x-auto border-b border-zinc-100 [scrollbar-width:none]">
           {TABS.map(tab => {
             const active = activeSubTab === tab.id;
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveSubTab(tab.id)}
-                className={`px-4 py-3 text-[13px] whitespace-nowrap transition-all border-b-2 -mb-px cursor-pointer border-0 bg-transparent
+                className={`relative px-4 py-3 text-[13px] whitespace-nowrap transition-colors cursor-pointer shrink-0
                   ${active
-                    ? 'font-bold text-zinc-900 border-b-zinc-900'
-                    : 'font-medium text-zinc-500 border-b-transparent hover:text-zinc-900'
+                    ? 'font-bold text-zinc-900'
+                    : 'font-medium text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50'
                   }`}
               >
                 {tab.label}
+                {/* Active underline indicator */}
+                <span className={`absolute bottom-0 left-0 right-0 h-0.5 rounded-full transition-all duration-200 ${active ? 'bg-zinc-900' : 'bg-transparent'}`} />
               </button>
             );
           })}
