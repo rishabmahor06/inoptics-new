@@ -174,114 +174,119 @@ export default function PaymentDetail() {
   return (
     <div className="space-y-5">
       {/* ── Header ── */}
-      <div className="bg-white rounded-xl shadow-sm border border-zinc-200 p-2">
-        <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-5">
-          {/* Left Side */}
-          <div className="flex items-center gap-3 min-w-0">
-            <button
-              onClick={() => setSelectedPayment(null)}
-              className="w-10 h-10 rounded-lg bg-zinc-100 hover:bg-zinc-200 transition-colors flex items-center justify-center shrink-0"
-            >
-              <MdArrowBack size={18} />
-            </button>
+      <div className="bg-white px-3 py-2">
+  <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-3">
+    
+    {/* Left Section */}
+    <div className="flex items-start gap-3 min-w-0 flex-1">
+      
+      {/* Back Button */}
+      <button
+        onClick={() => setSelectedPayment(null)}
+        className="w-9 h-9 rounded-xl bg-zinc-100 hover:bg-zinc-200 transition flex items-center justify-center shrink-0"
+      >
+        <MdArrowBack size={17} className="text-zinc-700" />
+      </button>
 
-           
+      {/* Company + Stall Info */}
+      <div className="min-w-0 flex-1">
+        <h2 className="text-base md:text-lg font-bold text-zinc-900 truncate">
+          {ex.company_name}
+        </h2>
 
-            <div className="min-w-0">
-              <h2 className="text-lg font-bold text-zinc-900 truncate">
-                {ex.company_name}
-              </h2>
-             {stallRows.length === 1 ? (
-                <div className="bg-zinc-50 flex gap-6 rounded-lg px-3 py-2 space-y-1 text-[13px]">
-                  <p>
-                    <span className="text-zinc-400 font-medium">Stall:</span>{" "}
-                    <span className="font-semibold text-zinc-900">
-                      {stallRows[0]["Stall Number"]}
-                    </span>
-                  </p>
-                  <p>
-                    <span className="text-zinc-400 font-medium">Category:</span>{" "}
-                    {stallRows[0]["Stall Category"]}
-                  </p>
-                  <p>
-                    <span className="text-zinc-400 font-medium">Area:</span>{" "}
-                    {stallRows[0]["Stall Area"]}
-                  </p>
-                </div>
-              ) : (
-                <div className="overflow-x-auto rounded-lg border border-zinc-100">
-                  <table className="w-full border-collapse text-sm">
-                    <thead>
-                      <tr>
-                        <th className={TH}>Stall No</th>
-                        <th className={TH}>Category</th>
-                        <th className={TH}>Area</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {stallRows.map((s, i) => (
-                        <tr key={i}>
-                          <td className={TD}>{s["Stall Number"]}</td>
-                          <td className={TD}>{s["Stall Category"]}</td>
-                          <td className={TD}>{s["Stall Area"]}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </div>
+        {stallRows.length === 1 ? (
+          <div className="mt-1 flex flex-wrap gap-2 text-xs">
+            <span className="px-2 py-1 rounded-lg bg-zinc-100 text-zinc-700">
+              Stall:{" "}
+              <span className="font-semibold text-zinc-900">
+                {stallRows[0]["Stall Number"]}
+              </span>
+            </span>
+
+            <span className="px-2 py-1 rounded-lg bg-zinc-100 text-zinc-700">
+              {stallRows[0]["Stall Category"]}
+            </span>
+
+            <span className="px-2 py-1 rounded-lg bg-zinc-100 text-zinc-700">
+              {stallRows[0]["Stall Area"]}
+            </span>
           </div>
-
-          {/* Right Side Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full xl:w-auto xl:min-w-[620px]">
-            {/* Total */}
-            <div className="bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3 flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-zinc-100 flex items-center justify-center shrink-0">
-                <MdReceiptLong size={18} className="text-zinc-700" />
-              </div>
-              <div>
-                <p className="text-[11px] uppercase tracking-widest text-zinc-400 font-semibold">
-                  Total Amount
-                </p>
-                <p className="text-lg font-bold text-zinc-900">
-                  ₹{fmt(ex.total)}
-                </p>
-              </div>
-            </div>
-
-            {/* Received */}
-            <div className="bg-emerald-50 border border-emerald-100 rounded-xl px-4 py-3 flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center shrink-0">
-                <MdCheckCircle size={18} className="text-emerald-700" />
-              </div>
-              <div>
-                <p className="text-[11px] uppercase tracking-widest text-emerald-500 font-semibold">
-                  Received
-                </p>
-                <p className="text-lg font-bold text-emerald-700">
-                  ₹{fmt(ex.paid_total)}
-                </p>
-              </div>
-            </div>
-
-            {/* Pending */}
-            <div className="bg-red-50 border border-red-100 rounded-xl px-4 py-3 flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center shrink-0">
-                <MdPendingActions size={18} className="text-red-600" />
-              </div>
-              <div>
-                <p className="text-[11px] uppercase tracking-widest text-red-400 font-semibold">
-                  Pending
-                </p>
-                <p className="text-lg font-bold text-red-600">
-                  ₹{fmt(ex.pending)}
-                </p>
-              </div>
-            </div>
+        ) : (
+          <div className="mt-2 overflow-x-auto rounded-xl border border-zinc-100">
+            <table className="w-full text-xs">
+              <thead className="bg-zinc-50">
+                <tr>
+                  <th className={TH}>Stall</th>
+                  <th className={TH}>Category</th>
+                  <th className={TH}>Area</th>
+                </tr>
+              </thead>
+              <tbody>
+                {stallRows.map((s, i) => (
+                  <tr key={i} className="border-t border-zinc-100">
+                    <td className={TD}>{s["Stall Number"]}</td>
+                    <td className={TD}>{s["Stall Category"]}</td>
+                    <td className={TD}>{s["Stall Area"]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
+        )}
+      </div>
+    </div>
+
+    {/* Right Stats */}
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 xl:min-w-[520px] w-full xl:w-auto">
+      
+      {/* Total */}
+      <div className="rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2 flex items-center gap-2">
+        <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center">
+          <MdReceiptLong size={16} className="text-zinc-700" />
+        </div>
+        <div>
+          <p className="text-[10px] uppercase tracking-wider text-zinc-400 font-semibold">
+            Total
+          </p>
+          <p className="text-sm font-bold text-zinc-900">
+            ₹{fmt(ex.total)}
+          </p>
         </div>
       </div>
+
+      {/* Received */}
+      <div className="rounded-xl border border-emerald-100 bg-emerald-50 px-3 py-2 flex items-center gap-2">
+        <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center">
+          <MdCheckCircle size={16} className="text-emerald-700" />
+        </div>
+        <div>
+          <p className="text-[10px] uppercase tracking-wider text-emerald-500 font-semibold">
+            Received
+          </p>
+          <p className="text-sm font-bold text-emerald-700">
+            ₹{fmt(ex.paid_total)}
+          </p>
+        </div>
+      </div>
+
+      {/* Pending */}
+      <div className="rounded-xl border border-red-100 bg-red-50 px-3 py-2 flex items-center gap-2">
+        <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center">
+          <MdPendingActions size={16} className="text-red-600" />
+        </div>
+        <div>
+          <p className="text-[10px] uppercase tracking-wider text-red-400 font-semibold">
+            Pending
+          </p>
+          <p className="text-sm font-bold text-red-600">
+            ₹{fmt(ex.pending)}
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 
       {/* ── 3 Cards ── */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
