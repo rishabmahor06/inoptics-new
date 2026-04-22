@@ -94,11 +94,7 @@ const menuGroups = [
         label: "New Exhibitor Request",
         icon: MdPersonAdd,
       },
-      {
-        id: "export-contractor",
-        label: "Export Contractor",
-        icon: MdFileDownload,
-      },
+      
     ],
   },
   {
@@ -114,6 +110,70 @@ const menuGroups = [
     ],
   },
 ];
+
+const MASTER_SUB_ITEMS = [
+  { id: 'business_requirement',  label: 'Business Requirement' },
+  { id: 'products',              label: 'Products' },
+  { id: 'taxes',                 label: 'Taxes' },
+  { id: 'currency',              label: 'Currency' },
+  { id: 'proforma',              label: 'Proforma' },
+  { id: 'badges_limit',          label: 'Badges Limit' },
+  { id: 'power_requirement',     label: 'Power Requirement' },
+  { id: 'message_rules',         label: 'Message Rules' },
+  { id: 'exhibitor_series_edit', label: 'Exhibitor Series Edit' },
+  { id: 'furniture_requirement', label: 'Furniture Requirement' },
+];
+
+function MastersNavItem({ collapsed }) {
+  const { activeTab, masterSubTab, setMasterSubTab, setActiveTab } = useNavStore();
+  const isActive = activeTab === 'masters';
+  const [open, setOpen] = useState(isActive);
+
+  function handleMain() {
+    setActiveTab('masters');
+    setOpen(prev => !prev);
+  }
+
+  return (
+    <div>
+      <button
+        type="button"
+        title={collapsed ? 'Masters' : ''}
+        onClick={handleMain}
+        className={`flex items-center w-full rounded-lg text-sm font-medium px-3 py-2 transition-all duration-150
+          ${collapsed ? 'justify-center' : 'gap-3'}
+          ${isActive ? 'bg-zinc-900 text-white' : 'text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900'}`}
+      >
+        <MdTune size={18} className="shrink-0" />
+        {!collapsed && (
+          <>
+            <span className="truncate flex-1 text-left">Masters</span>
+            {open ? <MdExpandLess size={16} className="shrink-0" /> : <MdExpandMore size={16} className="shrink-0" />}
+          </>
+        )}
+      </button>
+
+      {!collapsed && open && (
+        <div className="mt-0.5 ml-3 pl-3 border-l-2 border-zinc-200 space-y-0.5">
+          {MASTER_SUB_ITEMS.map(sub => {
+            const subActive = isActive && masterSubTab === sub.id;
+            return (
+              <button
+                key={sub.id}
+                type="button"
+                onClick={() => setMasterSubTab(sub.id)}
+                className={`flex items-center gap-2.5 w-full rounded-lg text-[13px] font-medium px-2.5 py-1.5 transition-all duration-150
+                  ${subActive ? 'bg-zinc-100 text-zinc-900 font-semibold' : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-800'}`}
+              >
+                <span className="truncate">{sub.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
 
 const COMM_SUB_ITEMS = [
   { id: 'emails',    label: 'Emails Master',    icon: MdEmail },
@@ -185,6 +245,7 @@ function NavItem({ item, collapsed }) {
   const { activeTab, setActiveTab } = useNavStore();
 
   if (item.id === 'communication') return <CommNavItem collapsed={collapsed} />;
+  if (item.id === 'masters') return <MastersNavItem collapsed={collapsed} />;
 
   const active = activeTab === item.id;
   const Icon = item.icon;

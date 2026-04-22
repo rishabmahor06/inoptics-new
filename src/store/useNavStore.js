@@ -21,7 +21,6 @@ export const TAB_LABELS = {
   'website-management':    'Website Management',
   'contractor':            'Contractor',
   'new-exhibitor-request': 'New Exhibitor Request',
-  'export-contractor':     'Export Contractor',
   'contact-support':       'Contact Support',
   'media':                 'Media',
   'export':                'Export',
@@ -39,4 +38,7 @@ export const useNavStore = create((set) => ({
 
   communicationSubTab:    'emails',
   setCommunicationSubTab: (sub) => set({ activeTab: 'communication', communicationSubTab: sub }),
+
+  masterSubTab:    'business_requirement',
+  setMasterSubTab: (sub) => set({ activeTab: 'masters', masterSubTab: sub }),
 }));
