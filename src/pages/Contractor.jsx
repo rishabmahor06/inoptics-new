@@ -103,7 +103,8 @@ export default function Contractor() {
     try {
       const res = await fetch(`${API}/get_exhibitors.php`);
       const data = await res.json();
-      setExhibitorData(Array.isArray(data) ? data : []);
+      const arr = Array.isArray(data) ? data : [];
+      setExhibitorData([...arr].sort((a, b) => (a.company_name || '').localeCompare(b.company_name || '')));
     } catch {}
   };
 
@@ -132,7 +133,8 @@ export default function Contractor() {
     try {
       const res = await fetch(`${API}/get_contractor_requirement.php`);
       const data = await res.json();
-      setContractorData(Array.isArray(data) ? data : []);
+      const arr = Array.isArray(data) ? data : [];
+      setContractorData([...arr].sort((a, b) => (a.company_name || '').localeCompare(b.company_name || '')));
     } catch { toast.error('Failed to load'); }
     finally { setReqLoading(false); }
   };

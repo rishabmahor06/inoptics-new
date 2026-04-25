@@ -1,14 +1,60 @@
 @import "tailwindcss";
 
-/* ── CSS custom properties (unchanged) ── */
-:root {
-  --bg-app: #f0f0ef;
-  --font-sans: 'DM Sans', sans-serif;
-  --font-display: 'Syne', sans-serif;
+/* ─────────────────────────────────────────────
+   Shift zinc palette 1 step darker globally.
+   Every component using text-zinc-300/400/500
+   will automatically become more readable.
+───────────────────────────────────────────── */
+@theme {
+  /* Text sizes — bumped up from Tailwind defaults */
+  --text-xs:   0.8125rem;   /* 13px  (was 12px) */
+  --text-sm:   0.9375rem;   /* 15px  (was 14px) */
+  --text-base: 1.0625rem;   /* 17px  (was 16px) */
+
+  /* Zinc — shift lighter tones 1 step darker for contrast */
+  --color-zinc-300: oklch(70.7% 0.022 261.325);  /* was zinc-400 */
+  --color-zinc-400: oklch(55.3% 0.019 264.536);  /* was zinc-500 */
+  --color-zinc-500: oklch(44.2% 0.017 285.786);  /* was zinc-600 */
+  --color-zinc-600: oklch(37.1% 0.013 285.805);  /* was zinc-700 */
 }
 
-/* ── All manual resets go inside @layer base
-      so Tailwind @layer utilities always wins ── */
+/* ── CSS custom properties ── */
+:root {
+  --bg-app:          #e8e9eb;
+  --font-sans:       'DM Sans', sans-serif;
+  --font-display:    'Syne', sans-serif;
+
+  /* Text hierarchy used by Sidebar / Header CSS modules */
+  --text-primary:    #18181b;
+  --text-secondary:  #27272a;
+  --text-muted:      #52525b;
+
+  /* Surfaces */
+  --bg-white:        #ffffff;
+  --bg-hover:        #f0f0f2;
+  --bg-active:       #ebebed;
+
+  /* Borders */
+  --border:          #c4c4c8;
+
+  /* Radius */
+  --radius-sm:       8px;
+  --radius-md:       12px;
+  --radius-lg:       16px;
+
+  /* Shadow */
+  --shadow-sm:       0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-lg:       0 10px 40px rgba(0,0,0,0.18), 0 2px 12px rgba(0,0,0,0.08);
+
+  /* Transition */
+  --transition:      background-color 0.15s ease, color 0.15s ease;
+
+  /* Layout */
+  --sidebar-width:   220px;
+  --header-height:   56px;
+}
+
+/* ── Base resets ── */
 @layer base {
   *, *::before, *::after {
     box-sizing: border-box;
@@ -18,14 +64,15 @@
 
   html {
     -webkit-text-size-adjust: 100%;
+    font-size: 15px;
   }
 
   body {
     font-family: var(--font-sans);
     background: var(--bg-app);
     color: #18181b;
-    font-size: 14px;
-    line-height: 1.5;
+    font-size: 15px;
+    line-height: 1.55;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
@@ -38,11 +85,14 @@
     color: inherit;
   }
 
-  input {
+  input, textarea, select {
     font-family: var(--font-sans);
+    color: #18181b;
   }
 
-  ::-webkit-scrollbar { width: 4px; height: 4px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: #e4e4e7; border-radius: 4px; }
+  /* Scrollbar — slightly more visible */
+  ::-webkit-scrollbar        { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track  { background: transparent; }
+  ::-webkit-scrollbar-thumb  { background: #c4c4c8; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
 }

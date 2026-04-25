@@ -1,251 +1,306 @@
-import React, { useEffect, useState } from "react";
-import { MdPermMedia } from "react-icons/md";
-import { FaRegTrashAlt, FaExternalLinkAlt } from "react-icons/fa";
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { MdCloudUpload, MdRefresh, MdClose, MdContentCopy } from 'react-icons/md';
+import { FaRegTrashAlt } from 'react-icons/fa';
+import toast from 'react-hot-toast';
+
+const API = 'https://inoptics.in/api';
+
+const fmtSize = (bytes) => {
+  if (!bytes) return '—';
+  const mb = bytes / (1024 * 1024);
+  return mb >= 1 ? `${mb.toFixed(2)} MB` : `${(bytes / 1024).toFixed(1)} KB`;
+};
+
+const fmtExt = (url = '') => {
+  const ext = url.split('.').pop()?.toUpperCase();
+  return ['JPG', 'JPEG', 'PNG', 'GIF', 'WEBP', 'SVG'].includes(ext) ? ext : 'IMG';
+};
+
+const fmtName = (url = '') => url.split('/').pop() || 'image';
 
 export default function Media() {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [selectedImagePreview, setSelectedImagePreview] = useState(null);
-  const [mediaImages, setMediaImages] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [file, setFile]         = useState(null);
+  const [preview, setPreview]   = useState(null);
+  const [dragging, setDragging] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [images, setImages]     = useState([]);
+  const [loading, setLoading]   = useState(false);
+  const [copied, setCopied]     = useState(null);
+  const inputRef = useRef(null);
 
-  useEffect(() => {
-    fetchMediaImages();
+  useEffect(() => { fetchImages(); }, []);
+
+  const fetchImages = async () => {
+    setLoading(true);
+    try {
+      const res  = await fetch(`${API}/get_email_media_images.php`);
+      const data = await res.json();
+      setImages(Array.isArray(data) ? data : data.data || []);
+    } catch { setImages([]); }
+    finally { setLoading(false); }
+  };
+
+  /* ── File pick ── */
+  const pickFile = (f) => {
+    if (!f) return;
+    if (f.size > 10 * 1024 * 1024) { toast.error('File exceeds 10 MB limit'); return; }
+    setFile(f);
+    setPreview(URL.createObjectURL(f));
+  };
+
+  const onInputChange = (e) => pickFile(e.target.files[0]);
+
+  /* ── Drag & drop ── */
+  const onDragOver  = useCallback((e) => { e.preventDefault(); setDragging(true);  }, []);
+  const onDragLeave = useCallback(() => setDragging(false), []);
+  const onDrop      = useCallback((e) => {
+    e.preventDefault();
+    setDragging(false);
+    pickFile(e.dataTransfer.files[0]);
   }, []);
 
-  const handleImageSelect = (e) => {
-    const file = e.target.files[0];
-
-    if (!file) return;
-
-    setSelectedImage(file);
-    setSelectedImagePreview(URL.createObjectURL(file));
+  /* ── Clear selection ── */
+  const clearFile = () => {
+    setFile(null);
+    setPreview(null);
+    if (inputRef.current) inputRef.current.value = '';
   };
 
-  const fetchMediaImages = async () => {
+  /* ── Upload ── */
+  const handleUpload = async () => {
+    if (!file) { toast.error('Select an image first'); return; }
+    const fd = new FormData();
+    fd.append('image', file);
+    setUploading(true);
     try {
-      setLoading(true);
-
-      const res = await fetch(
-        "https://inoptics.in/api/get_email_media_images.php"
-      );
-
+      const res  = await fetch(`${API}/upload_email_media_image.php`, { method: 'POST', body: fd });
       const data = await res.json();
-
-      if (Array.isArray(data)) {
-        setMediaImages(data);
-      } else if (data.success) {
-        setMediaImages(data.data || []);
-      } else {
-        setMediaImages([]);
-      }
-    } catch (error) {
-      console.error(error);
-      setMediaImages([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleUploadImage = async () => {
-    if (!selectedImage) {
-      alert("Select image first");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("image", selectedImage);
-
-    try {
-      setUploading(true);
-
-      const res = await fetch(
-        "https://inoptics.in/api/upload_email_media_image.php",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-
-      const data = await res.json();
-
       if (data.success) {
-        alert("Image uploaded successfully");
-
-        setSelectedImage(null);
-        setSelectedImagePreview(null);
-
-        await fetchMediaImages();
+        toast.success('Image uploaded successfully');
+        clearFile();
+        fetchImages();
       } else {
-        alert(data.message || "Upload failed");
+        toast.error(data.message || 'Upload failed');
       }
-    } catch (error) {
-      console.error(error);
-      alert("Upload failed");
-    } finally {
-      setUploading(false);
-    }
+    } catch { toast.error('Upload failed'); }
+    finally { setUploading(false); }
   };
 
-  const handleDeleteImage = async (id) => {
-    const confirmDelete = window.confirm("Delete this image?");
-    if (!confirmDelete) return;
-
+  /* ── Delete ── */
+  const handleDelete = async (id) => {
+    if (!window.confirm('Delete this image?')) return;
     try {
-      const res = await fetch(
-        "https://inoptics.in/api/delete_email_media_image.php",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ id }),
-        }
-      );
-
+      const res  = await fetch(`${API}/delete_email_media_image.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
+      });
       const data = await res.json();
-
       if (data.success) {
-        setMediaImages((prev) => prev.filter((img) => img.id !== id));
-        alert("Image deleted successfully");
+        setImages(prev => prev.filter(img => img.id !== id));
+        toast.success('Image deleted');
       } else {
-        alert(data.message || "Delete failed");
+        toast.error(data.message || 'Delete failed');
       }
-    } catch (error) {
-      console.error(error);
-      alert("Delete failed");
-    }
+    } catch { toast.error('Delete failed'); }
   };
 
-  const handleCopyUrl = async (url) => {
+  /* ── Copy link ── */
+  const handleCopy = async (url, id) => {
     try {
       await navigator.clipboard.writeText(url);
-      alert("URL copied");
-    } catch (error) {
-      console.error(error);
-      alert("Copy failed");
-    }
+      setCopied(id);
+      toast.success('Link copied!');
+      setTimeout(() => setCopied(null), 2000);
+    } catch { toast.error('Copy failed'); }
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="bg-white rounded-2xl shadow-sm p-5 sm:p-6 flex items-center gap-4">
-        <div className="w-12 h-12 rounded-xl bg-zinc-100 flex items-center justify-center shrink-0">
-          <MdPermMedia size={26} className="text-zinc-700" />
-        </div>
+    <div className="space-y-4 p-2 lg:p-6">
 
-        <div>
-          <h2 className="text-lg sm:text-xl font-semibold text-zinc-900">
-            Media Library
-          </h2>
-          <p className="text-sm text-zinc-500">
-            Upload and manage your media files
-          </p>
-        </div>
-      </div>
+     
 
-      {/* Upload */}
-      <div className="bg-white rounded-2xl shadow-sm p-5 sm:p-6">
-        <h3 className="text-sm font-semibold text-zinc-900 mb-5">
-          Upload Image
-        </h3>
+      {/* ── Upload panel ── */}
+      <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
 
-        <div className="grid lg:grid-cols-2 gap-6">
-          {/* Left */}
-          <div className="space-y-4">
+          {/* Left — drag & drop zone */}
+          <div
+            onDragOver={onDragOver}
+            onDragLeave={onDragLeave}
+            onDrop={onDrop}
+            onClick={() => !file && inputRef.current?.click()}
+            className={`relative flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed transition-colors cursor-pointer select-none
+              ${dragging
+                ? 'border-blue-500 bg-blue-50'
+                : 'border-zinc-300 bg-zinc-50 hover:border-blue-400 hover:bg-blue-50/40'}`}
+            style={{ minHeight: 220 }}
+          >
             <input
+              ref={inputRef}
               type="file"
-              accept="image/*"
-              onChange={handleImageSelect}
-              className="block w-full text-sm text-zinc-600
-              file:mr-4 file:px-4 file:py-2.5
-              file:rounded-xl file:border-0
-              file:bg-zinc-900 file:text-white
-              hover:file:bg-zinc-800"
+              accept=".jpg,.jpeg,.png,.gif,.webp"
+              className="hidden"
+              onChange={onInputChange}
             />
-
+            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-colors
+              ${dragging ? 'bg-blue-600' : 'bg-blue-500'}`}>
+              <MdCloudUpload size={30} className="text-white" />
+            </div>
+            <div className="text-center px-4">
+              <p className="text-[13px] font-semibold text-zinc-700">
+                {dragging ? 'Drop your image here' : 'Drag & Drop your images here'}
+              </p>
+              <p className="text-[12px] text-zinc-400 mt-1">or</p>
+            </div>
             <button
-              onClick={handleUploadImage}
-              disabled={uploading}
-              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-zinc-900 text-white text-sm font-medium hover:bg-zinc-800 transition disabled:opacity-60"
+              type="button"
+              onClick={(e) => { e.stopPropagation(); inputRef.current?.click(); }}
+              className="px-5 py-2 text-[13px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors shadow-sm"
             >
-              {uploading ? "Uploading..." : "Upload Image"}
+              Browse Files
             </button>
+            <p className="text-[11px] text-zinc-400 mt-1">JPG, PNG, GIF, WEBP up to 10MB</p>
           </div>
 
-          {/* Preview */}
-          <div>
-            {selectedImagePreview ? (
-              <div className="border border-zinc-200 rounded-2xl overflow-hidden bg-zinc-50">
-                <img
-                  src={selectedImagePreview}
-                  alt="preview"
-                  className="w-full h-64 object-cover"
-                />
+          {/* Right — preview */}
+          <div className="flex flex-col rounded-xl border border-zinc-200 overflow-hidden bg-white">
+            {/* Preview header */}
+            <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-100">
+              <p className="text-[13px] font-bold text-zinc-800">Preview</p>
+              {preview && (
+                <button onClick={clearFile}
+                  className="w-7 h-7 rounded-lg hover:bg-zinc-100 flex items-center justify-center text-zinc-400 hover:text-zinc-700 transition-colors">
+                  <MdClose size={16} />
+                </button>
+              )}
+            </div>
+
+            {/* Preview body */}
+            {preview ? (
+              <div className="flex-1 flex flex-col">
+                <div className="flex items-start gap-3 p-4 flex-1">
+                  <img
+                    src={preview}
+                    alt="preview"
+                    className="w-28 h-24 object-cover rounded-xl border border-zinc-200 shrink-0"
+                  />
+                  <div className="min-w-0">
+                    <p className="text-[13px] font-semibold text-zinc-800 break-all leading-tight">{file?.name}</p>
+                    <p className="text-[12px] text-zinc-400 mt-1">{fmtSize(file?.size)}</p>
+                  </div>
+                </div>
+                <div className="px-4 pb-4">
+                  <button
+                    onClick={handleUpload}
+                    disabled={uploading}
+                    className="w-full py-2.5 rounded-xl text-[13px] font-bold text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-sm flex items-center justify-center gap-2 disabled:opacity-60"
+                  >
+                    <MdCloudUpload size={16} />
+                    {uploading ? 'Uploading...' : 'Upload Image'}
+                  </button>
+                </div>
               </div>
             ) : (
-              <div className="h-64 border border-dashed border-zinc-300 rounded-2xl flex flex-col items-center justify-center text-zinc-400">
-                <MdPermMedia size={38} />
-                <p className="text-sm mt-2">Preview appears here</p>
+              <div className="flex-1 flex flex-col items-center justify-center gap-2 py-10 px-6 text-center"
+                style={{ minHeight: 170 }}>
+                <div className="w-12 h-12 rounded-2xl bg-zinc-100 flex items-center justify-center mb-1">
+                  <MdCloudUpload size={24} className="text-zinc-400" />
+                </div>
+                <p className="text-[12px] font-medium text-zinc-500">No image selected</p>
+                <p className="text-[11px] text-zinc-400">Select or drag an image to preview it here</p>
               </div>
             )}
           </div>
         </div>
       </div>
 
-      {/* Gallery */}
-      <div className="bg-white rounded-2xl shadow-sm p-5 sm:p-6">
-        <div className="flex items-center justify-between gap-3 mb-5">
-          <h3 className="text-sm font-semibold text-zinc-900">
-            Uploaded Images
-          </h3>
-
-          <span className="text-xs text-zinc-500">
-            {mediaImages.length} Files
-          </span>
+      {/* ── Gallery ── */}
+      <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-5">
+        <div className="flex items-center justify-between mb-4">
+          <p className="text-[14px] font-bold text-zinc-800">Uploaded Images</p>
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] font-semibold text-zinc-500 bg-zinc-100 border border-zinc-200 px-2.5 py-1 rounded-lg">
+              {images.length} {images.length === 1 ? 'Image' : 'Images'}
+            </span>
+            <button onClick={fetchImages} disabled={loading}
+              className="w-8 h-8 rounded-lg border border-zinc-200 hover:bg-zinc-50 flex items-center justify-center text-zinc-500 transition-colors disabled:opacity-50">
+              <MdRefresh size={15} className={loading ? 'animate-spin' : ''} />
+            </button>
+          </div>
         </div>
 
         {loading ? (
-          <div className="py-14 text-center text-sm text-zinc-400">
-            Loading media...
-          </div>
-        ) : mediaImages.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
-            {mediaImages.map((img) => (
-              <div
-                key={img.id}
-                className="border border-zinc-200 rounded-2xl overflow-hidden hover:shadow-md transition"
-              >
-                <img
-                  src={img.image_url}
-                  alt="media"
-                  className="w-full h-52 object-cover"
-                />
-
-                <div className="p-4 flex gap-2">
-                  <button
-                    onClick={() => handleCopyUrl(img.image_url)}
-                    className="flex-1 h-10 rounded-xl bg-zinc-900 text-white text-sm font-medium hover:bg-zinc-800 flex items-center justify-center gap-2"
-                  >
-                    <FaExternalLinkAlt size={12} />
-                    Copy URL
-                  </button>
-
-                  <button
-                    onClick={() => handleDeleteImage(img.id)}
-                    className="w-10 h-10 rounded-xl bg-red-50 text-red-500 hover:bg-red-100 flex items-center justify-center"
-                  >
-                    <FaRegTrashAlt size={14} />
-                  </button>
+          <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-4">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="rounded-xl border border-zinc-100 overflow-hidden">
+                <div className="h-40 bg-zinc-100 animate-pulse" />
+                <div className="p-3 space-y-2">
+                  <div className="h-3 bg-zinc-100 rounded animate-pulse" />
+                  <div className="h-3 w-2/3 bg-zinc-100 rounded animate-pulse" />
+                  <div className="h-8 bg-zinc-100 rounded-lg animate-pulse mt-3" />
                 </div>
               </div>
             ))}
           </div>
+        ) : images.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-20 gap-3">
+            <div className="w-14 h-14 rounded-2xl bg-zinc-100 flex items-center justify-center">
+              <MdCloudUpload size={28} className="text-zinc-300" />
+            </div>
+            <p className="text-[13px] font-medium text-zinc-400">No images uploaded yet</p>
+            <p className="text-[11px] text-zinc-300">Upload your first image above</p>
+          </div>
         ) : (
-          <div className="py-16 flex flex-col items-center justify-center text-zinc-400 gap-3">
-            <MdPermMedia size={48} className="text-zinc-300" />
-            <p className="text-sm">No media files found</p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-4">
+            {images.map((img) => (
+              <div key={img.id}
+                className="rounded-xl border border-zinc-200 overflow-hidden hover:shadow-md hover:border-zinc-300 transition-all group">
+                {/* Image */}
+                <div className="relative overflow-hidden bg-zinc-100" style={{ height: 160 }}>
+                  <img
+                    src={img.image_url}
+                    alt="media"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    onError={e => { e.target.style.display = 'none'; }}
+                  />
+                  {/* Format badge */}
+                  <span className="absolute top-2 right-2 text-[9px] font-bold text-zinc-600 bg-white/90 border border-zinc-200 px-1.5 py-0.5 rounded backdrop-blur-sm">
+                    {fmtExt(img.image_url)}
+                  </span>
+                </div>
+
+                {/* Info */}
+                <div className="p-3">
+                  <p className="text-[11px] font-semibold text-zinc-800 truncate leading-tight">
+                    {img.name || fmtName(img.image_url)}
+                  </p>
+                  <p className="text-[10px] text-zinc-400 mt-0.5">
+                    {img.size ? fmtSize(img.size) : '—'} &bull; {fmtExt(img.image_url)}
+                  </p>
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-1.5 mt-2.5">
+                    <button
+                      onClick={() => handleCopy(img.image_url, img.id)}
+                      className={`flex-1 h-8 rounded-lg text-[11px] font-semibold flex items-center justify-center gap-1.5 border transition-colors
+                        ${copied === img.id
+                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                          : 'bg-white text-blue-600 border-blue-200 hover:bg-blue-50'}`}
+                    >
+                      <MdContentCopy size={12} />
+                      {copied === img.id ? 'Copied!' : 'Copy Link'}
+                    </button>
+                    <button
+                      onClick={() => handleDelete(img.id)}
+                      className="w-8 h-8 rounded-lg bg-red-50 text-red-500 border border-red-200 hover:bg-red-100 flex items-center justify-center transition-colors shrink-0"
+                    >
+                      <FaRegTrashAlt size={12} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </div>

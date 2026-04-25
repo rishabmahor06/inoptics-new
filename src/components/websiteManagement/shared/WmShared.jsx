@@ -1,4 +1,39 @@
 import React from 'react';
+
+export const API_BASE = 'https://inoptics.in/api';
+
+/* Resolve image URL – if just a filename, prepend uploads dir */
+export const imgSrc = (path) => {
+  if (!path) return "/placeholder.png";
+  if (path.startsWith("http")) return path;
+  return `https://inoptics.in/api/${path.replace(/^\/+/, "")}`;
+};
+
+/* Full-screen image preview overlay */
+export function ImgPreview({ src, alt, onClose }) {
+  if (!src) return null;
+  return (
+    <div
+      className="fixed inset-0 z-9999 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <div className="relative max-w-4xl w-full" onClick={e => e.stopPropagation()}>
+        <button
+          onClick={onClose}
+          className="absolute -top-9 right-0 text-white/70 hover:text-white text-sm font-semibold px-2 py-1 rounded transition-colors"
+        >
+          ✕ Close
+        </button>
+        <img
+          src={src}
+          alt={alt || ''}
+          className="w-full max-h-[85vh] object-contain rounded-xl shadow-2xl bg-zinc-900"
+        />
+        {alt && <p className="text-center text-white/50 text-xs mt-2">{alt}</p>}
+      </div>
+    </div>
+  );
+}
 import { MdAdd, MdEdit, MdDelete } from 'react-icons/md';
 
 export function AddBtn({ onClick, label = 'Add' }) {
@@ -195,7 +230,7 @@ export function Td({ children, className = '' }) {
 export function TdId({ children }) {
   return (
     <td className="px-4 py-3 border-b border-zinc-100 text-[12px] text-zinc-400 font-mono">
-      #{children}
+      {children}
     </td>
   );
 }
@@ -208,11 +243,18 @@ export function TdActions({ children }) {
   );
 }
 
-export function TdImage({ src, alt = '' }) {
-  if (!src) return <td className="px-4 py-3 border-b border-zinc-100"><span className="text-zinc-300 text-xs">—</span></td>;
+export function TdImage({ src, alt = '', onPreview }) {
+  const resolved = imgSrc(src);
+  if (!resolved) return <td className="px-4 py-3 border-b border-zinc-100"><span className="text-zinc-300 text-xs">—</span></td>;
   return (
     <td className="px-4 py-3 border-b border-zinc-100">
-      <img src={src} alt={alt} className="h-10 w-16 object-contain rounded-lg border border-zinc-100 bg-zinc-50" />
+      <img
+        src={resolved}
+        alt={alt}
+        onClick={onPreview ? () => onPreview(resolved) : undefined}
+        title={onPreview ? 'Click to preview' : undefined}
+        className={`h-10 w-16 object-contain rounded-lg border border-zinc-100 bg-zinc-50 transition-transform ${onPreview ? 'cursor-pointer hover:scale-110' : ''}`}
+      />
     </td>
   );
 }

@@ -13,7 +13,20 @@ import HomeExhibitorTab from '../components/websiteManagement/HomeExhibitor/Home
 import CustomEditor from '../components/CustomEditor/CustomEditor';
 
 const API = 'https://inoptics.in/api';
-const apiFetch    = (ep) => fetch(`${API}/${ep}`).then(r => r.json());
+
+function extractArr(json) {
+  if (Array.isArray(json)) return json;
+  if (json && typeof json === 'object') {
+    for (const key of ['data', 'records', 'items', 'result', 'results']) {
+      if (Array.isArray(json[key])) return json[key];
+    }
+    const arrays = Object.values(json).filter(Array.isArray);
+    if (arrays.length > 0) return arrays[0];
+  }
+  return json;
+}
+
+const apiFetch    = (ep) => fetch(`${API}/${ep}`).then(r => r.json()).then(extractArr);
 const apiPost     = (ep, data) => fetch(`${API}/${ep}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then(r => r.json());
 const apiPostForm = (ep, fd) => fetch(`${API}/${ep}`, { method: 'POST', body: fd }).then(r => r.json());
 

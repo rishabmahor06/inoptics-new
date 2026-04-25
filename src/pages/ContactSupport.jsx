@@ -61,20 +61,7 @@ export default function ContactSupport() {
     <div className="space-y-5">
 
       {/* Stats bar */}
-      <div className="bg-white rounded-xl shadow-sm px-5 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-zinc-100 flex items-center justify-center shrink-0">
-            <MdSupportAgent size={22} className="text-zinc-600" />
-          </div>
-          <div>
-            <p className="text-[12px] text-zinc-400 uppercase tracking-widest font-semibold">Total Tickets</p>
-            <p className="text-2xl font-bold text-zinc-900 leading-tight">{loading ? '—' : tickets.length}</p>
-          </div>
-        </div>
-        <span className="text-xs font-semibold text-zinc-500 bg-zinc-100 px-3 py-1.5 rounded-full">
-          Support Inbox
-        </span>
-      </div>
+      
 
       {/* Main card */}
       <div className="bg-white rounded-xl shadow-sm overflow-hidden">

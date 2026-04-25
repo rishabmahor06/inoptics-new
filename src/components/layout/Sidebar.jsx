@@ -255,7 +255,7 @@ function NavItem({ item, collapsed }) {
       type="button"
       title={collapsed ? item.label : ""}
       onClick={() => setActiveTab(item.id)}
-      className={`flex items-center w-full rounded-lg text-sm font-medium px-3 py-2 transition-all duration-150
+      className={`flex items-center w-full rounded-[8px] text-sm font-medium px-3 py-2 transition-all duration-150
         ${collapsed ? "justify-center" : "gap-3"}
         ${
           active
@@ -342,11 +342,11 @@ export default function Sidebar({
       >
         {!collapsed && (
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-zinc-900 rounded-lg flex items-center justify-center text-white font-bold text-sm">
-              A
-            </div>
+            {/* <div className="w-full h-8 bg-zinc-900 rounded-[4px] flex items-center justify-center text-white font-bold text-sm">
+               Admin Panel
+            </div> */}
 
-            <span className="text-sm font-bold text-zinc-900 whitespace-nowrap">
+            <span className="text-sm h-8 font-bold bg-zinc-900 flex items-center justify-center px-14 rounded text-white whitespace-nowrap">
               Admin Panel
             </span>
           </div>

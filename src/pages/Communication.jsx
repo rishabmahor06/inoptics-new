@@ -149,7 +149,8 @@ function EmailsMaster() {
       setLoading(true);
       const res = await fetch(`${API}/get_email_messages.php`);
       const json = await res.json();
-      setData(Array.isArray(json) ? json : json.records || json.data || []);
+      const arr = Array.isArray(json) ? json : json.records || json.data || [];
+      setData([...arr].sort((a, b) => (a.email_name || '').localeCompare(b.email_name || '')));
     } catch {
       setData([]);
     } finally {
@@ -516,7 +517,8 @@ function VendorTable({
       setLoading(true);
       const res = await fetch(fetchUrl);
       const json = await res.json();
-      setData(Array.isArray(json) ? json : json.records || json.data || []);
+      const arr = Array.isArray(json) ? json : json.records || json.data || [];
+      setData([...arr].sort((a, b) => (a.vendor_name || '').localeCompare(b.vendor_name || '')));
     } catch {
       setData([]);
     } finally {

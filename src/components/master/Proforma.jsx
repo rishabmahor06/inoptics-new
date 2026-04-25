@@ -40,10 +40,7 @@ export default function Proforma() {
     <div className="space-y-5">
       {/* Page header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <h2 className="text-sm font-semibold text-zinc-800">Proforma Invoice Configuration</h2>
-          <p className="text-xs text-zinc-400 mt-0.5">Manage company addresses, invoice services, and preview the template</p>
-        </div>
+        
         <button onClick={() => setPreviewOpen(p => !p)}
           className={`flex items-center gap-1.5 px-3.5 py-2 text-[12px] font-semibold rounded-lg border transition-colors shadow-sm
             ${previewOpen
@@ -70,7 +67,7 @@ export default function Proforma() {
                 </div>
               </div>
               <button onClick={() => setAddrModal({})}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 transition-colors">
+                className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100 transition-colors">
                 <MdAdd size={14} /> Add Address
               </button>
             </div>
@@ -140,27 +137,7 @@ export default function Proforma() {
             />
           </div>
 
-          {/* Number Format Info */}
-          {/* <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-5 space-y-3">
-            <p className="text-[11px] font-bold text-zinc-500 uppercase tracking-widest">Invoice Number Format</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {[
-                { label: 'Stall Proforma', format: 'INOPD-2026 | [CODE] | [SERIAL] | [YEAR RANGE]' },
-                { label: 'Power Proforma', format: 'INOPD-2026 | [CODE] | [SERIAL] | [YEAR RANGE]' },
-              ].map(({ label, format }) => (
-                <div key={label} className="bg-zinc-50 rounded-xl p-3.5 border border-zinc-100">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-2">{label}</p>
-                  <code className="text-[11px] font-mono text-zinc-700 bg-white px-2.5 py-1.5 rounded-lg border border-zinc-200 block leading-relaxed">{format}</code>
-                </div>
-              ))}
-            </div>
-            <div className="rounded-xl border border-amber-200 bg-amber-50 p-3.5">
-              <p className="text-[11px] font-bold text-amber-700 mb-0.5">Note</p>
-              <p className="text-[11px] text-amber-600 leading-relaxed">
-                Invoice numbers are auto-generated at creation. Configure the exhibitor badge series under <strong>Exhibitor Series Edit</strong>.
-              </p>
-            </div>
-          </div> */}
+          
         </div>
 
         {/* ── Right: Invoice Preview ── */}

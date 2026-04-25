@@ -44,10 +44,7 @@ export default function ExhibitorSeriesEdit() {
 
   return (
     <div className="max-w-xl">
-      <div className="mb-6">
-        <h2 className="text-sm font-semibold text-zinc-800">Exhibitor Series Edit</h2>
-        <p className="text-xs text-zinc-400 mt-0.5">Configure the exhibitor badge series prefix and starting number</p>
-      </div>
+      
 
       {/* Current Series Card */}
       {loading ? (

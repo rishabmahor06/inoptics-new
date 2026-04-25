@@ -79,8 +79,8 @@
   border: none;
   background: none;
   outline: none;
-  font-size: 13px;
-  color: var(--text-secondary);
+  font-size: 14px;
+  color: var(--text-primary);
   width: 100%;
 }
 .searchInput::placeholder { color: var(--text-muted); }

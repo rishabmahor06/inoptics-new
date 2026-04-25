@@ -55,10 +55,7 @@ export default function BusinessRequirement() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-3 flex-wrap">
-        <div>
-          <h2 className="text-sm font-semibold text-zinc-800">Business Requirement</h2>
-          <p className="text-xs text-zinc-400 mt-0.5">{rows.length} records</p>
-        </div>
+        
         <div className="flex items-center gap-2">
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search..."
             className="text-sm border border-zinc-200 rounded-lg px-3 py-2 bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-blue-500 w-48" />

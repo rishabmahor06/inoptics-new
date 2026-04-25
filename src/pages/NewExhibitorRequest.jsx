@@ -27,7 +27,9 @@ export default function NewExhibitorRequest() {
       const data = await res.json();
 
       if (data.status === "success") {
-        setNewExhibitors(data.data || []);
+        setNewExhibitors([...(data.data || [])].sort((a, b) =>
+          (a.company_name || a.person_name || '').localeCompare(b.company_name || b.person_name || '')
+        ));
       } else {
         setNewExhibitors([]);
       }
@@ -106,22 +108,7 @@ export default function NewExhibitorRequest() {
     <div className="space-y-5">
       {/* Top Header */}
       <div className="bg-white rounded-xl shadow-sm border border-zinc-200 px-2 py-2 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-        {/* Left */}
-        <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-xl bg-zinc-900 flex items-center justify-center">
-            <MdPersonAdd size={22} className="text-white" />
-          </div>
-
-          <div>
-            <h2 className="text-lg font-bold text-zinc-900">
-              New Exhibitor Requests
-            </h2>
-
-            <p className="text-sm text-zinc-500">
-              Total Requests: {filteredExhibitors.length}
-            </p>
-          </div>
-        </div>
+       
 
         {/* Search */}
         <div className="relative w-full lg:w-80">
@@ -235,7 +222,7 @@ function Info({ label, value }) {
       <p className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1">
         {label}
       </p>
-      <p className="text-zinc-800 break-words">{value || "-"}</p>
+      <p className="text-zinc-800 wrap-break-word">{value || "-"}</p>
     </div>
   );
 }

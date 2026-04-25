@@ -24,6 +24,7 @@ const CustomEditor = ({ value = '', onChange, placeholder = '' }) => {
   const [currentLetterSpacing, setCurrentLetterSpacing] = useState('');
   const [isSourceModalOpen, setIsSourceModalOpen] = useState(false);
   const [sourceContent, setSourceContent] = useState('');
+  const [sourceCopied, setSourceCopied] = useState(false);
   const [internalHtml, setInternalHtml] = useState(value || '');
   const [imageWidth, setImageWidth] = useState('');
   const [imageHeight, setImageHeight] = useState('');
@@ -460,6 +461,30 @@ const CustomEditor = ({ value = '', onChange, placeholder = '' }) => {
     if (url && editorRef.current) { saveHistory(); editorRef.current.focus(); document.execCommand('insertHTML', false, url); handleInput(true); }
   }, [saveHistory, handleInput]);
 
+  const formatHtml = useCallback((html) => {
+    let indent = 0;
+    return html
+      .replace(/></g, '>\n<')
+      .split('\n')
+      .map((line) => {
+        line = line.trim();
+        if (!line) return '';
+        if (/^<\//.test(line)) indent = Math.max(0, indent - 1);
+        const out = '  '.repeat(indent) + line;
+        if (/^<[^/!][^>]*[^/]>$/.test(line) && !/<\/.+>/.test(line)) indent++;
+        return out;
+      })
+      .filter(Boolean)
+      .join('\n');
+  }, []);
+
+  const handleCopySource = useCallback(() => {
+    navigator.clipboard.writeText(sourceContent).then(() => {
+      setSourceCopied(true);
+      setTimeout(() => setSourceCopied(false), 2000);
+    });
+  }, [sourceContent]);
+
   const handleAutoFormat = useCallback(() => {
     saveHistory();
     let html = editorRef.current.innerHTML;
@@ -540,7 +565,7 @@ const CustomEditor = ({ value = '', onChange, placeholder = '' }) => {
         <button onClick={() => format('subscript')} title="Subscript">x₂</button>
         <button onClick={() => format('removeFormat')} title="Clear Formatting">🚫</button>
         <button onClick={() => document.documentElement.requestFullscreen()} title="Fullscreen">⛶</button>
-        <button onClick={() => { setSourceContent(editorRef.current?.innerHTML || ''); setIsSourceModalOpen(true); }} title="Source">{'<>'}</button>
+        <button onClick={() => { setSourceContent(editorRef.current?.innerHTML || ''); setIsSourceModalOpen(true); }} title="Source Code" className="source-btn">{'</>'} Source</button>
         <button onClick={() => setShowFindReplace(!showFindReplace)} title="Find & Replace"><FaSearch /></button>
 
         <select value={currentFont} onChange={(e) => applyFontFamily(e.target.value)}>
@@ -671,13 +696,67 @@ const CustomEditor = ({ value = '', onChange, placeholder = '' }) => {
       />
 
       {isSourceModalOpen && (
-        <div className="source-modal-overlay">
+        <div className="source-modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) setIsSourceModalOpen(false); }}>
           <div className="source-modal">
-            <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 4 }}>HTML Source</h3>
-            <textarea value={sourceContent} onChange={(e) => setSourceContent(e.target.value)} />
-            <div className="source-modal-actions">
-              <button onClick={() => { setInternalHtml(cleanHtml(sourceContent)); setIsSourceModalOpen(false); }}>Apply</button>
-              <button onClick={() => setIsSourceModalOpen(false)}>Cancel</button>
+            {/* Header */}
+            <div className="source-modal-header">
+              <div className="source-modal-title">
+                <span className="source-modal-icon">{'</>'}</span>
+                <span>HTML Source Code</span>
+              </div>
+              <div className="source-modal-header-actions">
+                <button
+                  className={`source-copy-btn ${sourceCopied ? 'copied' : ''}`}
+                  onClick={handleCopySource}
+                  title="Copy source code"
+                >
+                  {sourceCopied ? '✓ Copied!' : '⎘ Copy'}
+                </button>
+                <button
+                  className="source-format-btn"
+                  onClick={() => setSourceContent(formatHtml(sourceContent))}
+                  title="Beautify / format HTML"
+                >
+                  ✦ Format
+                </button>
+                <button
+                  className="source-close-btn"
+                  onClick={() => setIsSourceModalOpen(false)}
+                  title="Close"
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+
+            {/* Textarea */}
+            <div className="source-textarea-wrap">
+              <textarea
+                className="source-textarea"
+                value={sourceContent}
+                onChange={(e) => setSourceContent(e.target.value)}
+                spellCheck={false}
+                placeholder="HTML source code..."
+              />
+            </div>
+
+            {/* Footer */}
+            <div className="source-modal-footer">
+              <span className="source-char-count">{sourceContent.length} chars</span>
+              <div className="source-modal-actions">
+                <button
+                  className="source-cancel-btn"
+                  onClick={() => setIsSourceModalOpen(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="source-apply-btn"
+                  onClick={() => { setInternalHtml(cleanHtml(sourceContent)); setIsSourceModalOpen(false); }}
+                >
+                  ✓ Apply Changes
+                </button>
+              </div>
             </div>
           </div>
         </div>
