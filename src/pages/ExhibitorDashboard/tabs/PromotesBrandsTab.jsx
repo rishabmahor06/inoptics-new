@@ -3,8 +3,7 @@ import {
   MdEdit, MdDelete, MdAdd, MdClose, MdVideoLibrary, MdCampaign, MdUpload,
 } from 'react-icons/md';
 import toast from 'react-hot-toast';
-
-const API = 'https://inoptics.in/api';
+import { API, apiPost, apiPostForm, Modal, ModalActions } from '../shared';
 
 const SUB_TABS = [
   { id: 'hoardings',  label: 'HOARDINGS'   },
@@ -15,16 +14,6 @@ const SUB_TABS = [
 
 const INPUT    = 'w-full h-9 px-3 text-sm border border-zinc-200 rounded-md bg-zinc-50 text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition';
 const TEXTAREA = 'w-full px-3 py-2 text-sm border border-zinc-200 rounded-md bg-zinc-50 text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 resize-none transition';
-
-const apiPost = (ep, body) =>
-  fetch(`${API}/${ep}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  }).then(r => r.json());
-
-const apiPostForm = (ep, fd) =>
-  fetch(`${API}/${ep}`, { method: 'POST', body: fd }).then(r => r.json());
 
 async function fetchArr(ep) {
   try {
@@ -48,35 +37,6 @@ async function fetchSingle(ep) {
   } catch { return null; }
 }
 
-/* ─── Modal ───────────────────────────────────────────── */
-function Modal({ title, onClose, children }) {
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden w-full max-w-2xl" style={{ maxHeight: '92vh' }}>
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-100 shrink-0">
-          <p className="text-sm font-bold text-zinc-800">{title}</p>
-          <button onClick={onClose} className="w-8 h-8 rounded-lg hover:bg-zinc-100 flex items-center justify-center text-zinc-400 hover:text-zinc-700">
-            <MdClose size={18} />
-          </button>
-        </div>
-        <div className="flex-1 overflow-y-auto p-5">{children}</div>
-      </div>
-    </div>
-  );
-}
-
-function ModalActions({ onCancel, onSave, saving, saveLabel = 'Save' }) {
-  return (
-    <div className="flex justify-end gap-2 mt-4 pt-4 border-t border-zinc-100">
-      <button onClick={onCancel} className="px-4 py-2 text-xs font-semibold text-zinc-600 bg-zinc-100 rounded-md hover:bg-zinc-200 transition-colors">Cancel</button>
-      <button onClick={onSave} disabled={saving}
-        className="px-4 py-2 text-xs font-semibold text-white bg-zinc-900 rounded-md hover:bg-zinc-700 transition-colors disabled:opacity-60">
-        {saving ? 'Saving...' : saveLabel}
-      </button>
-    </div>
-  );
-}
-
 /* ─── Phone Preview ───────────────────────────────────── */
 function PhonePreview({ lines }) {
   const [idx, setIdx] = useState(0);
@@ -86,78 +46,33 @@ function PhonePreview({ lines }) {
     return () => clearInterval(t);
   }, [lines?.length]);
 
-  const now  = new Date();
-  const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-  const date = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
-  const msg  = lines?.[idx] || 'Your promotional message will appear here';
+  const now    = new Date();
+  const time   = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+  const date   = now.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' });
+  const msg    = lines?.[idx] || 'Your promotional message will appear here';
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', padding: '16px 0' }}>
-      {/* Case / outer frame */}
-      <div style={{
-        position: 'relative',
-        width: 210,
-        height: 430,
-        borderRadius: 50,
-        background: 'linear-gradient(160deg, #5DFFC0 0%, #00D48A 100%)',
-        padding: 9,
-        boxShadow: '0 30px 70px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.15) inset',
-      }}>
-        {/* Power button — right */}
-        <div style={{ position: 'absolute', right: -5, top: 90, width: 5, height: 52, background: '#00B870', borderRadius: '0 4px 4px 0', boxShadow: '2px 0 4px rgba(0,0,0,0.2)' }} />
-        {/* Silent switch — left */}
-        <div style={{ position: 'absolute', left: -5, top: 62, width: 5, height: 22, background: '#00B870', borderRadius: '4px 0 0 4px' }} />
-        {/* Volume up — left */}
-        <div style={{ position: 'absolute', left: -5, top: 95, width: 5, height: 40, background: '#00B870', borderRadius: '4px 0 0 4px' }} />
-        {/* Volume down — left */}
-        <div style={{ position: 'absolute', left: -5, top: 145, width: 5, height: 40, background: '#00B870', borderRadius: '4px 0 0 4px' }} />
-
-        {/* Screen */}
-        <div style={{
-          width: '100%',
-          height: '100%',
-          borderRadius: 42,
-          overflow: 'hidden',
-          background: 'linear-gradient(145deg, #2D0060 0%, #6A0080 25%, #A8006A 55%, #D4006A 75%, #E8208A 100%)',
-          display: 'flex',
-          flexDirection: 'column',
-          position: 'relative',
-        }}>
-          {/* Dynamic Island pill notch */}
-          <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 14 }}>
-            <div style={{ width: 80, height: 22, background: '#000', borderRadius: 14 }} />
+    <div className="flex justify-center py-4">
+      <div className="relative w-44 rounded-[2.2rem] p-1.5 shadow-2xl border-[3px] border-zinc-800 bg-zinc-900" style={{ height: '22rem' }}>
+        <div className="absolute right-[-3px] top-16 w-1 h-10 bg-zinc-700 rounded-l" />
+        <div className="absolute left-[-3px] top-20 w-1 h-7 bg-zinc-700 rounded-r" />
+        <div className="absolute left-[-3px] top-32 w-1 h-7 bg-zinc-700 rounded-r" />
+        <div className="w-full h-full rounded-[1.8rem] overflow-hidden flex flex-col bg-gradient-to-b from-slate-800 to-slate-700">
+          <div className="flex justify-center pt-2.5">
+            <div className="w-2 h-2 rounded-full bg-zinc-900" />
           </div>
-
-          {/* Date */}
-          <div style={{ textAlign: 'center', marginTop: 14 }}>
-            <p style={{ color: 'rgba(255,255,255,0.88)', fontSize: 13, fontWeight: 500, letterSpacing: 0.2 }}>{date}</p>
+          <div className="text-center mt-1.5">
+            <p className="text-white/60 text-[7px]">{date}</p>
+            <p className="text-white font-bold text-xl leading-tight">{time}</p>
           </div>
-
-          {/* Time */}
-          <div style={{ textAlign: 'center', marginTop: 2 }}>
-            <p style={{ color: '#fff', fontSize: 46, fontWeight: 700, lineHeight: 1, letterSpacing: -1 }}>{time}</p>
+          <div className="flex-1 flex items-center px-3">
+            <div className="bg-white/15 rounded-xl p-2.5 text-white text-[8px] leading-relaxed w-full">
+              {msg.split('\n').map((l, i) => <div key={i}>{l}</div>)}
+            </div>
           </div>
-
-          {/* SMS notification bubble */}
-          <div style={{
-            margin: '18px 14px 0',
-            background: 'rgba(255,255,255,0.96)',
-            borderRadius: 18,
-            padding: '10px 13px',
-            boxShadow: '0 6px 24px rgba(0,0,0,0.25)',
-          }}>
-            <p style={{ fontSize: 10, color: '#222', lineHeight: 1.55, margin: 0 }}>
-              {msg.split('\n').map((l, i) => <span key={i}>{l}{i < msg.split('\n').length - 1 && <br />}</span>)}
-            </p>
-          </div>
-
-          {/* Spacer */}
-          <div style={{ flex: 1 }} />
-
-          {/* Swipe footer */}
-          <div style={{ textAlign: 'center', paddingBottom: 18 }}>
-            <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 10, margin: 0 }}>Swipe up to unlock</p>
-            <div style={{ width: 44, height: 3, background: 'rgba(255,255,255,0.35)', borderRadius: 2, margin: '8px auto 0' }} />
+          <div className="text-center pb-3">
+            <p className="text-white/40 text-[7px]">Swipe up to unlock</p>
+            <div className="w-7 h-0.5 bg-white/20 rounded-full mx-auto mt-1" />
           </div>
         </div>
       </div>
@@ -223,7 +138,9 @@ function PlansTable({ plans, loading, onEdit, onDelete, selectedId, onSelect }) 
               </tr>
             ))
           ) : plans.length === 0 ? (
-            <tr><td colSpan={5} className="px-4 py-8 text-center text-sm text-zinc-400">No plans added yet</td></tr>
+            <tr>
+              <td colSpan={5} className="px-4 py-8 text-center text-sm text-zinc-400">No plans added yet</td>
+            </tr>
           ) : plans.map((row, i) => (
             <tr key={row.id ?? i} className={`border-t border-zinc-100 transition-colors ${selectedId === row.id ? 'bg-blue-50' : 'hover:bg-zinc-50'}`}>
               {PLAN_COLS.map(c => (
@@ -236,7 +153,9 @@ function PlansTable({ plans, loading, onEdit, onDelete, selectedId, onSelect }) 
                   <button
                     onClick={() => onSelect(selectedId === row.id ? null : row)}
                     className={`px-2.5 py-1 rounded-md text-xs font-semibold border transition-colors
-                      ${selectedId === row.id ? 'bg-zinc-900 text-white border-zinc-900' : 'bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100'}`}>
+                      ${selectedId === row.id
+                        ? 'bg-zinc-900 text-white border-zinc-900'
+                        : 'bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100'}`}>
                     {selectedId === row.id ? 'Selected' : 'Select Plan'}
                   </button>
                 </div>
@@ -254,11 +173,11 @@ function PlanSlide({ plan, msgType, onClose }) {
   const [msg, setMsg]       = useState('');
   const [saving, setSaving] = useState(false);
 
-  const price     = parseFloat(plan?.price || 0);
-  const gst       = price * 0.18;
-  const total     = price + gst;
-  const charCount = msg.length;
-  const smsUnits  = charCount > 0 ? Math.ceil(charCount / 160) : 0;
+  const price      = parseFloat(plan?.price || 0);
+  const gst        = price * 0.18;
+  const total      = price + gst;
+  const charCount  = msg.length;
+  const smsUnits   = charCount > 0 ? Math.ceil(charCount / 160) : 0;
 
   const handleSave = async () => {
     setSaving(true);
@@ -279,6 +198,7 @@ function PlanSlide({ plan, msgType, onClose }) {
         </button>
       </div>
       <div className="p-5 bg-zinc-50 grid grid-cols-1 lg:grid-cols-2 gap-5">
+        {/* Compose */}
         <div className="space-y-4">
           <div className="bg-white rounded-lg border border-zinc-200 p-4">
             <p className="text-sm font-bold text-zinc-700 mb-2.5">Plan Details</p>
@@ -293,8 +213,13 @@ function PlanSlide({ plan, msgType, onClose }) {
           </div>
           <div>
             <p className="text-sm font-bold text-zinc-700 mb-2">Compose {msgType} Message</p>
-            <textarea value={msg} onChange={e => setMsg(e.target.value)} rows={6}
-              placeholder={`Enter your ${msgType} message here...`} className={TEXTAREA} />
+            <textarea
+              value={msg}
+              onChange={e => setMsg(e.target.value)}
+              rows={6}
+              placeholder={`Enter your ${msgType} message here...`}
+              className={TEXTAREA}
+            />
             {msgType === 'SMS' && charCount > 0 && (
               <p className="text-xs text-zinc-400 mt-1">
                 {charCount} chars · counted as {smsUnits} message{smsUnits !== 1 ? 's' : ''}
@@ -306,11 +231,12 @@ function PlanSlide({ plan, msgType, onClose }) {
             {saving ? 'Saving...' : 'Save Message'}
           </button>
         </div>
+        {/* Particulars */}
         <div className="space-y-4">
           <div className="bg-white rounded-lg border border-zinc-200 p-4">
             <p className="text-sm font-bold text-zinc-700 mb-3">Particulars</p>
             {msgType === 'SMS' && (
-              <p className="text-xs text-zinc-400 italic mb-3">* Messages over 160 characters are charged as multiple messages.</p>
+              <p className="text-xs text-zinc-400 italic mb-3">* Messages exceeding 160 characters are charged as multiple messages.</p>
             )}
             <div className="space-y-2">
               {[['Plan Selected', plan.plan_name], ['Price', `₹${price.toFixed(2)}`], ['GST (18%)', `₹${gst.toFixed(2)}`]].map(([k, v]) => (
@@ -320,7 +246,10 @@ function PlanSlide({ plan, msgType, onClose }) {
                 </div>
               ))}
               <hr className="border-zinc-100" />
-              <div className="flex justify-between font-bold text-base"><span>GRAND TOTAL</span><span>₹{total.toFixed(2)}</span></div>
+              <div className="flex justify-between font-bold text-base">
+                <span>GRAND TOTAL</span>
+                <span>₹{total.toFixed(2)}</span>
+              </div>
             </div>
           </div>
           <div className="bg-white rounded-lg border border-zinc-200 p-4">
@@ -376,7 +305,8 @@ function VideoWallsSection() {
       } else {
         await apiPost('add_video_wall_instruction.php', { content: form });
       }
-      toast.success('Saved'); setInstruction(form); setModal(null);
+      toast.success('Saved');
+      setInstruction(form); setModal(null);
     } catch { toast.error('Save failed'); }
     finally { setSaving(false); }
   };
@@ -404,13 +334,16 @@ function VideoWallsSection() {
   return (
     <>
       <div className="grid grid-cols-1 lg:grid-cols-[35%_1fr] gap-5">
+        {/* Left: embed + upload */}
         <div className="space-y-4">
           <div className="rounded-xl overflow-hidden border border-zinc-200 bg-black aspect-video">
-            <iframe className="w-full h-full"
+            <iframe
+              className="w-full h-full"
               src="https://www.youtube.com/embed/udqRmfMC_0A"
               title="Promotional Video"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen />
+              allowFullScreen
+            />
           </div>
           <div
             className="border-2 border-dashed border-zinc-300 rounded-xl p-6 text-center cursor-pointer hover:border-blue-400 hover:bg-blue-50/30 transition-colors"
@@ -433,6 +366,7 @@ function VideoWallsSection() {
             </button>
           )}
         </div>
+        {/* Right: instructions */}
         <div>
           <InstructionsBox
             title="Video Wall Instructions"
@@ -446,8 +380,13 @@ function VideoWallsSection() {
 
       {modal === 'edit' && (
         <Modal title={instrId ? 'Edit Instructions' : 'Add Instructions'} onClose={() => setModal(null)}>
-          <textarea value={form} onChange={e => setForm(e.target.value)} rows={10}
-            placeholder="Enter instructions (HTML supported)" className={TEXTAREA} />
+          <textarea
+            value={form}
+            onChange={e => setForm(e.target.value)}
+            rows={10}
+            placeholder="Enter instructions (HTML supported)"
+            className={TEXTAREA}
+          />
           <ModalActions onCancel={() => setModal(null)} onSave={handleSaveInstr} saving={saving}
             saveLabel={instrId ? 'Update' : 'Save'} />
         </Modal>
@@ -462,24 +401,22 @@ const PREVIEW_MSGS = [
   'Exclusive deals await you.\nConnect with industry leaders.\nSee you there!',
 ];
 
-const EMPTY_PLAN = { plan_name: '', delivery_frequency: '', description: '', price: '' };
-
 function MessagingSection({ type }) {
   const slug = type.toLowerCase();
 
-  const [instruction, setInstruction]   = useState('');
-  const [instrId, setInstrId]           = useState(null);
-  const [instrModal, setInstrModal]     = useState(null);
-  const [instrForm, setInstrForm]       = useState('');
-  const [instrSaving, setInstrSaving]   = useState(false);
+  const [instruction, setInstruction]     = useState('');
+  const [instrId, setInstrId]             = useState(null);
+  const [instrModal, setInstrModal]       = useState(null);
+  const [instrForm, setInstrForm]         = useState('');
+  const [instrSaving, setInstrSaving]     = useState(false);
 
-  const [plans, setPlans]               = useState([]);
-  const [plansLoading, setPlansLoading] = useState(false);
-  const [planModal, setPlanModal]       = useState(null);
-  const [planForm, setPlanForm]         = useState(EMPTY_PLAN);
-  const [planSaving, setPlanSaving]     = useState(false);
+  const [plans, setPlans]                 = useState([]);
+  const [plansLoading, setPlansLoading]   = useState(false);
+  const [planModal, setPlanModal]         = useState(null);
+  const [planForm, setPlanForm]           = useState({ plan_name: '', delivery_frequency: '', description: '', price: '' });
+  const [planSaving, setPlanSaving]       = useState(false);
 
-  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [selectedPlan, setSelectedPlan]   = useState(null);
 
   useEffect(() => {
     fetchSingle(`get_${slug}_instruction.php`).then(d => {
@@ -503,7 +440,8 @@ function MessagingSection({ type }) {
       } else {
         await apiPost(`add_${slug}_instruction.php`, { content: instrForm });
       }
-      toast.success('Saved'); setInstruction(instrForm); setInstrModal(null);
+      toast.success('Saved');
+      setInstruction(instrForm); setInstrModal(null);
     } catch { toast.error('Save failed'); }
     finally { setInstrSaving(false); }
   };
@@ -527,7 +465,9 @@ function MessagingSection({ type }) {
         await apiPost(`add_${slug}_plan.php`, planForm);
         toast.success('Plan added');
       }
-      setPlanModal(null); setPlanForm(EMPTY_PLAN); loadPlans();
+      setPlanModal(null);
+      setPlanForm({ plan_name: '', delivery_frequency: '', description: '', price: '' });
+      loadPlans();
     } catch { toast.error('Save failed'); }
     finally { setPlanSaving(false); }
   };
@@ -542,12 +482,17 @@ function MessagingSection({ type }) {
     } catch { toast.error('Delete failed'); }
   };
 
+  const emptyPlanForm = { plan_name: '', delivery_frequency: '', description: '', price: '' };
+
   return (
     <>
       <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-5">
+        {/* Phone preview */}
         <div className="w-full lg:w-52">
           <PhonePreview lines={PREVIEW_MSGS} />
         </div>
+
+        {/* Right */}
         <div className="space-y-5">
           <InstructionsBox
             title={`Ready to Make Some Noise with ${type}?`}
@@ -556,10 +501,12 @@ function MessagingSection({ type }) {
             onEdit={() => { setInstrForm(instruction); setInstrModal('edit'); }}
             onDelete={handleDeleteInstr}
           />
+
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <p className="text-sm font-bold text-zinc-800">Choose Your Messaging Plan</p>
-              <button onClick={() => { setPlanForm(EMPTY_PLAN); setPlanModal({}); }}
+              <button
+                onClick={() => { setPlanForm(emptyPlanForm); setPlanModal({}); }}
                 className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100">
                 <MdAdd size={13} /> Add Plan
               </button>
@@ -576,6 +523,7 @@ function MessagingSection({ type }) {
               onSelect={plan => setSelectedPlan(plan)}
             />
           </div>
+
           {selectedPlan && (
             <PlanSlide plan={selectedPlan} msgType={type} onClose={() => setSelectedPlan(null)} />
           )}
@@ -584,8 +532,13 @@ function MessagingSection({ type }) {
 
       {instrModal && (
         <Modal title={instrId ? `Edit ${type} Content` : `Add ${type} Content`} onClose={() => setInstrModal(null)}>
-          <textarea value={instrForm} onChange={e => setInstrForm(e.target.value)} rows={10}
-            placeholder="Enter content (HTML supported)" className={TEXTAREA} />
+          <textarea
+            value={instrForm}
+            onChange={e => setInstrForm(e.target.value)}
+            rows={10}
+            placeholder="Enter content (HTML supported)"
+            className={TEXTAREA}
+          />
           <ModalActions onCancel={() => setInstrModal(null)} onSave={handleSaveInstr} saving={instrSaving}
             saveLabel={instrId ? 'Update' : 'Save'} />
         </Modal>
@@ -623,38 +576,31 @@ function MessagingSection({ type }) {
   );
 }
 
-/* ─── Page ────────────────────────────────────────────── */
-export default function PromotesBrands() {
+/* ─── Main ────────────────────────────────────────────── */
+export default function PromotesBrandsTab() {
   const [sub, setSub] = useState('hoardings');
 
   return (
-    <div className="p-2 lg:p-3">
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-        {/* Tab bar */}
-        <div className="flex overflow-x-auto border-b border-zinc-100 [scrollbar-width:none]">
-          {SUB_TABS.map(t => {
-            const active = sub === t.id;
-            return (
-              <button
-                key={t.id}
-                onClick={() => setSub(t.id)}
-                className={`relative px-5 py-3.5 text-sm whitespace-nowrap transition-colors cursor-pointer shrink-0 font-medium
-                  ${active ? 'font-bold text-zinc-900' : 'text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50'}`}>
-                {t.label}
-                <span className={`absolute bottom-0 left-0 right-0 h-0.5 rounded-full transition-all duration-200 ${active ? 'bg-zinc-900' : 'bg-transparent'}`} />
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Content */}
-        <div className="p-5">
-          {sub === 'hoardings'  && <HoardingsSection />}
-          {sub === 'videowalls' && <VideoWallsSection />}
-          {sub === 'sms'        && <MessagingSection type="SMS" />}
-          {sub === 'whatsapp'   && <MessagingSection type="WhatsApp" />}
-        </div>
+    <div className="p-5 space-y-5">
+      {/* Sub-tab bar */}
+      <div className="flex gap-1.5 flex-wrap">
+        {SUB_TABS.map(t => (
+          <button
+            key={t.id}
+            onClick={() => setSub(t.id)}
+            className={`px-4 py-2 text-xs font-bold rounded-md border transition-colors
+              ${sub === t.id
+                ? 'bg-zinc-900 text-white border-zinc-900'
+                : 'bg-zinc-50 text-zinc-500 border-zinc-200 hover:bg-zinc-100 hover:text-zinc-700'}`}>
+            {t.label}
+          </button>
+        ))}
       </div>
+
+      {sub === 'hoardings'  && <HoardingsSection />}
+      {sub === 'videowalls' && <VideoWallsSection />}
+      {sub === 'sms'        && <MessagingSection type="SMS" />}
+      {sub === 'whatsapp'   && <MessagingSection type="WhatsApp" />}
     </div>
   );
 }

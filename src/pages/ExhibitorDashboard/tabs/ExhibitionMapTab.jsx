@@ -151,7 +151,9 @@ export default function ExhibitionMapTab() {
         title="Exhibition Map"
         subtitle="Upload and manage the exhibition floor plan"
         onAdd={map ? undefined : () => setModal({})}
-        addLabel="Upload Map">
+        addLabel="Upload Map"
+        loading={loading}
+        >
         {loading ? (
           <div className="h-64 bg-zinc-100 rounded-xl animate-pulse" />
         ) : !map ? (

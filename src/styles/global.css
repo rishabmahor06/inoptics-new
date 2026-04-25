@@ -7,8 +7,8 @@
 ───────────────────────────────────────────── */
 @theme {
   /* Text sizes — bumped up from Tailwind defaults */
-  --text-xs:   0.8125rem;   /* 13px  (was 12px) */
-  --text-sm:   0.9375rem;   /* 15px  (was 14px) */
+  --text-xs:   0.9375rem;   /* 15px  (was 12px) */
+  --text-sm:   1rem;        /* 16px  (was 14px) */
   --text-base: 1.0625rem;   /* 17px  (was 16px) */
 
   /* Zinc — shift lighter tones 1 step darker for contrast */

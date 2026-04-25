@@ -46,7 +46,7 @@ export function Modal({ title, onClose, wide = false, children }) {
 export function SectionShell({ icon: Icon, iconBg, iconColor, title, subtitle, onAdd, addLabel = 'Add', children }) {
   return (
     <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden h-full flex flex-col">
-      <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-100 shrink-0">
+      {/* <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-100 shrink-0">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: iconBg }}>
             <Icon size={17} style={{ color: iconColor }} />
@@ -62,7 +62,7 @@ export function SectionShell({ icon: Icon, iconBg, iconColor, title, subtitle, o
             <MdAdd size={14} /> {addLabel}
           </button>
         )}
-      </div>
+      </div> */}
       <div className="p-5 flex-1 overflow-y-auto">{children}</div>
     </div>
   );

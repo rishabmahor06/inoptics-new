@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { MdEvent } from 'react-icons/md';
+import { MdEvent, MdEdit, MdDelete } from 'react-icons/md';
 import toast from 'react-hot-toast';
 import { apiFetch, apiPost, SectionShell, Modal, ModalActions } from '../shared';
 import CustomEditor from '../../../components/CustomEditor/CustomEditor';
-import { MdEdit, MdDelete } from 'react-icons/md';
 
 export default function EventScheduleTab() {
   const [items, setItems]     = useState([]);
@@ -41,34 +40,27 @@ export default function EventScheduleTab() {
   return (
     <>
       <SectionShell icon={MdEvent} iconBg="#dbeafe" iconColor="#3b82f6"
-        title="Event Schedule"
-        subtitle="Event timeline shown to exhibitors"
-        onAdd={() => setModal({ description: '' })}
-        addLabel="Add Schedule">
+        title="Event Schedule" subtitle="Event timeline shown to exhibitors"
+        onAdd={() => setModal({ description: '' })} addLabel="Add Schedule">
         {loading ? (
-          <div className="h-32 bg-zinc-100 rounded-xl animate-pulse" />
+          <div className="h-32 bg-zinc-100 rounded-lg animate-pulse" />
         ) : items.length === 0 ? (
-          <div className="text-center py-12 border-2 border-dashed border-zinc-200 rounded-xl">
-            <p className="text-[13px] text-zinc-400">No event schedule added</p>
-            <button onClick={() => setModal({ description: '' })}
-              className="mt-2 text-[12px] font-semibold text-blue-600 hover:underline">+ Add schedule</button>
+          <div className="flex flex-col items-center justify-center py-12 border-2 border-dashed border-zinc-200 rounded-xl text-center">
+            <p className="text-sm text-zinc-400">No event schedule added</p>
+            <button onClick={() => setModal({ description: '' })} className="mt-2 text-sm font-semibold text-blue-600 hover:underline">+ Add schedule</button>
           </div>
         ) : (
           <div className="space-y-3">
             {items.map((item, idx) => (
-              <div key={item.id ?? idx} className="rounded-xl border border-zinc-100 bg-zinc-50 p-4">
+              <div key={item.id ?? idx} className="bg-white rounded-lg border border-zinc-200 p-4">
                 <div className="flex items-start gap-3">
-                  <div className="flex-1 text-[12px] text-zinc-700 leading-relaxed min-w-0 prose prose-sm max-w-none"
+                  <div className="flex-1 text-sm text-zinc-700 leading-relaxed min-w-0 [&_p]:mb-1"
                     dangerouslySetInnerHTML={{ __html: item.description || '' }} />
                   <div className="flex gap-1.5 shrink-0">
                     <button onClick={() => setModal({ id: item.id, description: item.description || '' })}
-                      className="p-1.5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100">
-                      <MdEdit size={13} />
-                    </button>
+                      className="p-1.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100"><MdEdit size={14} /></button>
                     <button onClick={() => handleDelete(item.id)}
-                      className="p-1.5 rounded-lg bg-red-50 text-red-600 border border-red-200 hover:bg-red-100">
-                      <MdDelete size={13} />
-                    </button>
+                      className="p-1.5 rounded-md bg-red-50 text-red-600 border border-red-200 hover:bg-red-100"><MdDelete size={14} /></button>
                   </div>
                 </div>
               </div>
@@ -79,17 +71,8 @@ export default function EventScheduleTab() {
 
       {modal !== null && (
         <Modal title={modal.id ? 'Edit Event Schedule' : 'Add Event Schedule'} onClose={() => setModal(null)} wide>
-          <CustomEditor
-            value={modal.description}
-            onChange={html => setModal(m => ({ ...m, description: html }))}
-            placeholder="Enter event schedule description..."
-          />
-          <ModalActions
-            onCancel={() => setModal(null)}
-            onSave={handleSave}
-            saving={saving}
-            saveLabel={modal.id ? 'Update' : 'Save'}
-          />
+          <CustomEditor value={modal.description} onChange={html => setModal(m => ({ ...m, description: html }))} placeholder="Enter event schedule description..." />
+          <ModalActions onCancel={() => setModal(null)} onSave={handleSave} saving={saving} saveLabel={modal.id ? 'Update' : 'Save'} />
         </Modal>
       )}
     </>
