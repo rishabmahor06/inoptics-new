@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useLandingPageStore } from '../../../store/website/useLandingPageStore';
 import {
   AddBtn, EditBtn, DelBtn, WmModal, Field, WmInput, WmFileInput,
-  SectionHeader,
+  SectionHeader, imgSrc, ImgPreview,
 } from '../shared/WmShared';
-
-const API_BASE = 'https://inoptics.in/api';
 
 const SPONSOR_TYPES = [
   'Platinum', 'Gold', 'Footer-hoya', 'Silver', 'Bronze', 'Diamond', 'Title',
@@ -14,40 +12,6 @@ const SPONSOR_TYPES = [
 ];
 
 const EMPTY_FORM = { name: '', sponsor_type: SPONSOR_TYPES[0] };
-
-/* Resolve image URL — if it starts with http use directly, else prepend uploads dir */
-function imgSrc(path) {
-  if (!path) return null;
-  if (path.startsWith('http')) return path;
-  return `${API_BASE}/uploads/${path}`;
-}
-
-/* Full-screen image preview overlay */
-function ImagePreview({ src, name, onClose }) {
-  return (
-    <div
-      className="fixed inset-0 z-9999 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
-      onClick={onClose}
-    >
-      <div className="relative max-w-3xl w-full" onClick={e => e.stopPropagation()}>
-        <button
-          onClick={onClose}
-          className="absolute -top-10 right-0 text-white/70 hover:text-white text-sm font-semibold"
-        >
-          ✕ Close
-        </button>
-        <img
-          src={src}
-          alt={name}
-          className="w-full max-h-[80vh] object-contain rounded-xl shadow-2xl bg-zinc-900"
-        />
-        {name && (
-          <p className="text-center text-white/60 text-xs mt-3">{name}</p>
-        )}
-      </div>
-    </div>
-  );
-}
 
 export default function LandingPage() {
   const { sponsors, loading, fetchSponsors, addSponsor, updateSponsor, deleteSponsor } = useLandingPageStore();
@@ -68,6 +32,8 @@ export default function LandingPage() {
     });
     setFile(null); setEditing(row); setModal('edit');
   };
+
+  const rowImg = (row) => row.image_path || row.image || row.image_url || row.logo || null;
 
   const handleSave = async () => {
     if (!form.name.trim()) { alert('Name is required'); return; }
@@ -117,8 +83,8 @@ export default function LandingPage() {
         /* All sponsors exist but none matched a type group — show flat grid */
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {sponsors.map(row => (
-            <SponsorCard key={row.id} row={row} displayName={displayName}
-              onPreview={() => setPreview({ src: imgSrc(row.image), name: displayName(row) })}
+            <SponsorCard key={row.id} row={row} displayName={displayName} rowImg={rowImg}
+              onPreview={() => setPreview({ src: imgSrc(rowImg(row)), alt: displayName(row) })}
               onEdit={() => openEdit(row)}
               onDelete={() => deleteSponsor(row.id)} />
           ))}
@@ -134,8 +100,8 @@ export default function LandingPage() {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {items.map(row => (
-                <SponsorCard key={row.id} row={row} displayName={displayName}
-                  onPreview={() => setPreview({ src: imgSrc(row.image), name: displayName(row) })}
+                <SponsorCard key={row.id} row={row} displayName={displayName} rowImg={rowImg}
+                  onPreview={() => setPreview({ src: imgSrc(rowImg(row)), alt: displayName(row) })}
                   onEdit={() => openEdit(row)}
                   onDelete={() => deleteSponsor(row.id)} />
               ))}
@@ -170,14 +136,14 @@ export default function LandingPage() {
             </Field>
 
             {/* Current image preview (edit mode) */}
-            {modal === 'edit' && editing?.image && (
+            {modal === 'edit' && rowImg(editing) && (
               <Field label="Current Image">
                 <div className="flex items-center gap-3">
                   <img
-                    src={imgSrc(editing.image)}
+                    src={imgSrc(rowImg(editing))}
                     alt={displayName(editing)}
                     className="h-20 w-28 object-contain rounded-lg border border-zinc-200 bg-zinc-50 cursor-pointer"
-                    onClick={() => setPreview({ src: imgSrc(editing.image), name: displayName(editing) })}
+                    onClick={() => setPreview({ src: imgSrc(rowImg(editing)), alt: displayName(editing) })}
                   />
                   <p className="text-xs text-zinc-400">Click image to preview</p>
                 </div>
@@ -203,15 +169,17 @@ export default function LandingPage() {
 
       {/* Full-screen image preview */}
       {preview && (
-        <ImagePreview src={preview.src} name={preview.name} onClose={() => setPreview(null)} />
+        <ImgPreview src={preview.src} alt={preview.alt} onClose={() => setPreview(null)} />
       )}
     </div>
   );
 }
 
 /* Sponsor card tile */
-function SponsorCard({ row, displayName, onPreview, onEdit, onDelete }) {
-  const src = imgSrc(row.image);
+function SponsorCard({ row, displayName, rowImg, onPreview, onEdit, onDelete }) {
+  const imagePath = rowImg(row);
+  const hasImage = !!imagePath;
+  const src = imgSrc(imagePath);
   return (
     <div className="bg-white rounded-xl border border-zinc-200 overflow-hidden hover:shadow-md hover:border-blue-200 transition-all group flex flex-col">
       {/* Image area */}
@@ -219,7 +187,7 @@ function SponsorCard({ row, displayName, onPreview, onEdit, onDelete }) {
         className="relative h-32 bg-zinc-50 flex items-center justify-center cursor-pointer"
         onClick={onPreview}
       >
-        {src ? (
+        {hasImage ? (
           <img
             src={src}
             alt={displayName(row)}
@@ -232,7 +200,7 @@ function SponsorCard({ row, displayName, onPreview, onEdit, onDelete }) {
         )}
 
         {/* Hover overlay */}
-        {src && (
+        {hasImage && (
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center">
             <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 text-white text-xs font-semibold px-3 py-1.5 rounded-full">
               🔍 Preview

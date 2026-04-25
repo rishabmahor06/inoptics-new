@@ -3,6 +3,7 @@ import {
   MdEdit, MdDelete, MdAdd, MdClose, MdVideoLibrary, MdCampaign, MdUpload,
 } from 'react-icons/md';
 import toast from 'react-hot-toast';
+import CustomEditor from '../components/CustomEditor/CustomEditor';
 
 const API = 'https://inoptics.in/api';
 
@@ -49,10 +50,10 @@ async function fetchSingle(ep) {
 }
 
 /* ─── Modal ───────────────────────────────────────────── */
-function Modal({ title, onClose, children }) {
+function Modal({ title, onClose, children, wide = false }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden w-full max-w-2xl" style={{ maxHeight: '92vh' }}>
+      <div className={`bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden w-full ${wide ? 'max-w-5xl' : 'max-w-2xl'}`} style={{ maxHeight: '92vh' }}>
         <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-100 shrink-0">
           <p className="text-sm font-bold text-zinc-800">{title}</p>
           <button onClick={onClose} className="w-8 h-8 rounded-lg hover:bg-zinc-100 flex items-center justify-center text-zinc-400 hover:text-zinc-700">
@@ -96,21 +97,21 @@ function PhonePreview({ lines }) {
       {/* Case / outer frame */}
       <div style={{
         position: 'relative',
-        width: 210,
-        height: 430,
+        width: 300,
+        height: 580,
         borderRadius: 50,
-        background: 'linear-gradient(160deg, #5DFFC0 0%, #00D48A 100%)',
+        background: '#A1A1AA',
         padding: 9,
-        boxShadow: '0 30px 70px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.15) inset',
+        boxShadow: 'none',
       }}>
         {/* Power button — right */}
-        <div style={{ position: 'absolute', right: -5, top: 90, width: 5, height: 52, background: '#00B870', borderRadius: '0 4px 4px 0', boxShadow: '2px 0 4px rgba(0,0,0,0.2)' }} />
+        <div style={{ position: 'absolute', right: -5, top: 90, width: 5, height: 52, background: '#27272A', borderRadius: '0 4px 4px 0', boxShadow: '2px 0 4px rgba(0,0,0,0.2)' }} />
         {/* Silent switch — left */}
-        <div style={{ position: 'absolute', left: -5, top: 62, width: 5, height: 22, background: '#00B870', borderRadius: '4px 0 0 4px' }} />
+        <div style={{ position: 'absolute', left: -5, top: 62, width: 5, height: 22, background: '#27272A', borderRadius: '4px 0 0 4px' }} />
         {/* Volume up — left */}
-        <div style={{ position: 'absolute', left: -5, top: 95, width: 5, height: 40, background: '#00B870', borderRadius: '4px 0 0 4px' }} />
+        <div style={{ position: 'absolute', left: -5, top: 95, width: 5, height: 40, background: '#27272A', borderRadius: '4px 0 0 4px' }} />
         {/* Volume down — left */}
-        <div style={{ position: 'absolute', left: -5, top: 145, width: 5, height: 40, background: '#00B870', borderRadius: '4px 0 0 4px' }} />
+        <div style={{ position: 'absolute', left: -5, top: 145, width: 5, height: 40, background: '#27272A', borderRadius: '4px 0 0 4px' }} />
 
         {/* Screen */}
         <div style={{
@@ -118,7 +119,9 @@ function PhonePreview({ lines }) {
           height: '100%',
           borderRadius: 42,
           overflow: 'hidden',
-          background: 'linear-gradient(145deg, #2D0060 0%, #6A0080 25%, #A8006A 55%, #D4006A 75%, #E8208A 100%)',
+          backgroundImage: 'url(https://images.unsplash.com/photo-1620207418302-439b387441b0?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2OTk4MTAxNTF8&ixlib=rb-4.0.3&q=85)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
           display: 'flex',
           flexDirection: 'column',
           position: 'relative',
@@ -129,12 +132,12 @@ function PhonePreview({ lines }) {
           </div>
 
           {/* Date */}
-          <div style={{ textAlign: 'center', marginTop: 14 }}>
+          <div style={{ textAlign: 'center', marginTop: 18 }}>
             <p style={{ color: 'rgba(255,255,255,0.88)', fontSize: 13, fontWeight: 500, letterSpacing: 0.2 }}>{date}</p>
           </div>
 
           {/* Time */}
-          <div style={{ textAlign: 'center', marginTop: 2 }}>
+          <div style={{ textAlign: 'center', marginTop: 6 }}>
             <p style={{ color: '#fff', fontSize: 46, fontWeight: 700, lineHeight: 1, letterSpacing: -1 }}>{time}</p>
           </div>
 
@@ -144,9 +147,9 @@ function PhonePreview({ lines }) {
             background: 'rgba(255,255,255,0.96)',
             borderRadius: 18,
             padding: '10px 13px',
-            boxShadow: '0 6px 24px rgba(0,0,0,0.25)',
+            boxShadow: 'none',
           }}>
-            <p style={{ fontSize: 10, color: '#222', lineHeight: 1.55, margin: 0 }}>
+            <p style={{ fontSize: 14, color: '#222', lineHeight: 1.55, margin: 0 }}>
               {msg.split('\n').map((l, i) => <span key={i}>{l}{i < msg.split('\n').length - 1 && <br />}</span>)}
             </p>
           </div>
@@ -157,7 +160,7 @@ function PhonePreview({ lines }) {
           {/* Swipe footer */}
           <div style={{ textAlign: 'center', paddingBottom: 18 }}>
             <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 10, margin: 0 }}>Swipe up to unlock</p>
-            <div style={{ width: 44, height: 3, background: 'rgba(255,255,255,0.35)', borderRadius: 2, margin: '8px auto 0' }} />
+            <div style={{ width: 76, height: 4, background: 'rgba(255,255,255,0.35)', borderRadius: 2, margin: '8px auto 0' }} />
           </div>
         </div>
       </div>
@@ -354,7 +357,6 @@ function HoardingsSection() {
 /* ─── VIDEO WALLS ─────────────────────────────────────── */
 function VideoWallsSection() {
   const [instruction, setInstruction] = useState('');
-  const [instrId, setInstrId]         = useState(null);
   const [modal, setModal]             = useState(null);
   const [form, setForm]               = useState('');
   const [saving, setSaving]           = useState(false);
@@ -363,19 +365,25 @@ function VideoWallsSection() {
   const fileRef                       = useRef(null);
 
   useEffect(() => {
-    fetchSingle('get_video_wall_instruction.php').then(d => {
-      if (d) { setInstruction(d.content || d.instruction || ''); setInstrId(d.id); }
-    });
+    /* API returns array of HTML strings: ["<p>...</p>"] */
+    fetch(`${API}/get_video_wall_instruction.php`)
+      .then(r => r.json())
+      .then(d => {
+        const content = Array.isArray(d)
+          ? (typeof d[0] === 'string' ? d[0] : (d[0]?.content || ''))
+          : (d?.content || '');
+        setInstruction(content);
+      })
+      .catch(() => {});
   }, []);
 
   const handleSaveInstr = async () => {
+    if (!form.trim()) { toast.error('Content cannot be empty'); return; }
     setSaving(true);
     try {
-      if (instrId) {
-        await apiPost('update_video_wall_instruction.php', { id: instrId, content: form });
-      } else {
-        await apiPost('add_video_wall_instruction.php', { content: form });
-      }
+      /* If instruction exists → update, else → add */
+      const ep = instruction ? 'update_video_wall_instruction.php' : 'add_video_wall_instruction.php';
+      await apiPost(ep, { content: form });
       toast.success('Saved'); setInstruction(form); setModal(null);
     } catch { toast.error('Save failed'); }
     finally { setSaving(false); }
@@ -384,8 +392,8 @@ function VideoWallsSection() {
   const handleDeleteInstr = async () => {
     if (!window.confirm('Delete instruction?')) return;
     try {
-      await apiPost('delete_video_wall_instruction.php', { id: instrId });
-      toast.success('Deleted'); setInstruction(''); setInstrId(null);
+      await apiPost('delete_video_wall_instruction.php', { action: 'delete_latest' });
+      toast.success('Deleted'); setInstruction('');
     } catch { toast.error('Delete failed'); }
   };
 
@@ -445,11 +453,14 @@ function VideoWallsSection() {
       </div>
 
       {modal === 'edit' && (
-        <Modal title={instrId ? 'Edit Instructions' : 'Add Instructions'} onClose={() => setModal(null)}>
-          <textarea value={form} onChange={e => setForm(e.target.value)} rows={10}
-            placeholder="Enter instructions (HTML supported)" className={TEXTAREA} />
+        <Modal wide title={instruction ? 'Edit Instructions' : 'Add Instructions'} onClose={() => setModal(null)}>
+          <CustomEditor
+            value={form}
+            onChange={setForm}
+            placeholder="Write video wall instructions here..."
+          />
           <ModalActions onCancel={() => setModal(null)} onSave={handleSaveInstr} saving={saving}
-            saveLabel={instrId ? 'Update' : 'Save'} />
+            saveLabel={instruction ? 'Update' : 'Save'} />
         </Modal>
       )}
     </>
@@ -458,17 +469,47 @@ function VideoWallsSection() {
 
 /* ─── Messaging (SMS / WhatsApp) ──────────────────────── */
 const PREVIEW_MSGS = [
-  'Hi! Join us at the exhibition.\nVisit us at Stall A-101.\nDon\'t miss out!',
-  'Exclusive deals await you.\nConnect with industry leaders.\nSee you there!',
+  '{BRAND}: Big news, {NAME}! 🚀 {OFFER} starts now at {EVENT}. Visit Booth {BOOTH_NO} today. Details: {SHORT_URL} STOP=opt‑out',
+  '{BRAND}: Last chance! ⏰ {OFFER} ends tomorrow. Drop by Booth {BOOTH_NO} & save. See you! STOP=opt‑out',
+  'Heads‑up, {NAME}! {BRAND} unveils {NEW_PRODUCT} on {EVENT_DATE}. Stay tuned—exclusive perks ahead. STOP=opt‑out',
+  '{BRAND}: It’s live! 🎁 Grab {OFFER} at Booth {BOOTH_NO}. First 100 visitors get a bonus gift. Info: {SHORT_URL} STOP=opt‑out',
+  '{BRAND}: Thanks for the buzz yesterday! Haven’t visited yet? Booth {BOOTH_NO} open till {END_DATE}. Don’t miss {OFFER}. STOP=opt‑out',
 ];
+
+
+
+/* Endpoint config per type — matches actual API file names */
+const TYPE_CONFIG = {
+  SMS: {
+    getPlans:        'get_sms_table.php',
+    addPlan:         'add_sms_table.php',
+    updatePlan:      'update_sms_table.php',      // expects { id, key, value }
+    deletePlan:      'delete_sms_table.php',
+    getInstr:        'get_sms_instruction.php',   // returns array of HTML strings
+    addInstr:        'add_sms_instruction.php',
+    updateInstr:     'update_sms_instruction.php',
+    deleteInstr:     'delete_sms_instruction.php',
+    deleteInstrBody: () => ({ action: 'delete_latest' }),
+  },
+  WhatsApp: {
+    getPlans:        'get_whatsapp_table.php',
+    addPlan:         'add_whatsapp_table.php',
+    updatePlan:      'update_whatsapp_table.php',  // expects { id, key, value }
+    deletePlan:      'delete_whatsapp_table.php',
+    getInstr:        'get_whatsapp_instruction.php', // returns { success, content }
+    addInstr:        'add_whatsapp_instruction.php',
+    updateInstr:     'update_whatsapp_instruction.php',
+    deleteInstr:     'delete_whatsapp_instruction.php',
+    deleteInstrBody: () => ({ action: 'delete_latest' }),
+  },
+};
 
 const EMPTY_PLAN = { plan_name: '', delivery_frequency: '', description: '', price: '' };
 
 function MessagingSection({ type }) {
-  const slug = type.toLowerCase();
+  const cfg = TYPE_CONFIG[type];
 
   const [instruction, setInstruction]   = useState('');
-  const [instrId, setInstrId]           = useState(null);
   const [instrModal, setInstrModal]     = useState(null);
   const [instrForm, setInstrForm]       = useState('');
   const [instrSaving, setInstrSaving]   = useState(false);
@@ -482,37 +523,46 @@ function MessagingSection({ type }) {
   const [selectedPlan, setSelectedPlan] = useState(null);
 
   useEffect(() => {
-    fetchSingle(`get_${slug}_instruction.php`).then(d => {
-      if (d) { setInstruction(d.content || d.instruction || d.message || ''); setInstrId(d.id); }
-    });
+    /* SMS returns array of HTML strings ["<p>...</p>"]
+       WhatsApp returns { success: true, content: "..." } */
+    fetch(`${API}/${cfg.getInstr}`)
+      .then(r => r.json())
+      .then(d => {
+        let content = '';
+        if (Array.isArray(d)) {
+          content = typeof d[0] === 'string' ? d[0] : (d[0]?.content || d[0]?.instruction || '');
+        } else {
+          content = d?.content || d?.instruction || '';
+        }
+        setInstruction(content);
+      })
+      .catch(() => {});
     loadPlans();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const loadPlans = async () => {
     setPlansLoading(true);
-    try { setPlans(await fetchArr(`get_${slug}_plans.php`)); }
+    try { setPlans(await fetchArr(cfg.getPlans)); }
     catch { setPlans([]); }
     finally { setPlansLoading(false); }
   };
 
   const handleSaveInstr = async () => {
+    if (!instrForm.trim()) { toast.error('Content cannot be empty'); return; }
     setInstrSaving(true);
     try {
-      if (instrId) {
-        await apiPost(`update_${slug}_instruction.php`, { id: instrId, content: instrForm });
-      } else {
-        await apiPost(`add_${slug}_instruction.php`, { content: instrForm });
-      }
+      const ep = instruction ? cfg.updateInstr : cfg.addInstr;
+      await apiPost(ep, { content: instrForm });
       toast.success('Saved'); setInstruction(instrForm); setInstrModal(null);
     } catch { toast.error('Save failed'); }
     finally { setInstrSaving(false); }
   };
 
   const handleDeleteInstr = async () => {
-    if (!window.confirm('Delete?')) return;
+    if (!window.confirm('Delete this content?')) return;
     try {
-      await apiPost(`delete_${slug}_instruction.php`, { id: instrId });
-      toast.success('Deleted'); setInstruction(''); setInstrId(null);
+      await apiPost(cfg.deleteInstr, cfg.deleteInstrBody());
+      toast.success('Deleted'); setInstruction('');
     } catch { toast.error('Delete failed'); }
   };
 
@@ -521,10 +571,15 @@ function MessagingSection({ type }) {
     setPlanSaving(true);
     try {
       if (planModal?.id) {
-        await apiPost(`update_${slug}_plan.php`, { id: planModal.id, ...planForm });
+        /* API expects { id, key, value } — one call per field */
+        await Promise.all(
+          Object.entries(planForm).map(([key, value]) =>
+            apiPost(cfg.updatePlan, { id: planModal.id, key, value })
+          )
+        );
         toast.success('Plan updated');
       } else {
-        await apiPost(`add_${slug}_plan.php`, planForm);
+        await apiPost(cfg.addPlan, planForm);
         toast.success('Plan added');
       }
       setPlanModal(null); setPlanForm(EMPTY_PLAN); loadPlans();
@@ -535,7 +590,7 @@ function MessagingSection({ type }) {
   const handleDeletePlan = async (id) => {
     if (!window.confirm('Delete this plan?')) return;
     try {
-      await apiPost(`delete_${slug}_plan.php`, { id });
+      await apiPost(cfg.deletePlan, { id });
       toast.success('Deleted');
       if (selectedPlan?.id === id) setSelectedPlan(null);
       loadPlans();
@@ -545,7 +600,7 @@ function MessagingSection({ type }) {
   return (
     <>
       <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-5">
-        <div className="w-full lg:w-52">
+        <div className="w-full lg:w-full xl:w-[400px] mx-auto">
           <PhonePreview lines={PREVIEW_MSGS} />
         </div>
         <div className="space-y-5">
@@ -583,11 +638,14 @@ function MessagingSection({ type }) {
       </div>
 
       {instrModal && (
-        <Modal title={instrId ? `Edit ${type} Content` : `Add ${type} Content`} onClose={() => setInstrModal(null)}>
-          <textarea value={instrForm} onChange={e => setInstrForm(e.target.value)} rows={10}
-            placeholder="Enter content (HTML supported)" className={TEXTAREA} />
+        <Modal wide title={instruction ? `Edit ${type} Content` : `Add ${type} Content`} onClose={() => setInstrModal(null)}>
+          <CustomEditor
+            value={instrForm}
+            onChange={setInstrForm}
+            placeholder="Write your message content here..."
+          />
           <ModalActions onCancel={() => setInstrModal(null)} onSave={handleSaveInstr} saving={instrSaving}
-            saveLabel={instrId ? 'Update' : 'Save'} />
+            saveLabel={instruction ? 'Update' : 'Save'} />
         </Modal>
       )}
 

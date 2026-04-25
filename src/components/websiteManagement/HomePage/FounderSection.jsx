@@ -51,7 +51,7 @@ export default function FounderSection() {
             <TdId>{row.id}</TdId>
             <Td className="font-semibold text-zinc-800">{row.heading}</Td>
             <TdHtml html={row.description} />
-            <TdImage src={row.image} onPreview={setPreview} />
+            <TdImage src={row.image_url || row.image} onPreview={setPreview} />
             <TdActions>
               <EditBtn onClick={() => openEdit(row)} />
               <DelBtn onClick={() => deleteFounder(row.id)} />
@@ -70,11 +70,11 @@ export default function FounderSection() {
             <Field label="Description">
               <CustomEditor value={description} onChange={setDescription} placeholder="Description..." />
             </Field>
-            {modal === 'edit' && editing?.image && (
+            {modal === 'edit' && (editing?.image_url || editing?.image) && (
               <Field label="Current Image">
-                <img src={imgSrc(editing.image)} alt={heading}
+                <img src={imgSrc(editing.image_url || editing.image)} alt={heading}
                   className="h-20 w-28 object-contain rounded-lg border border-zinc-200 bg-zinc-50 cursor-pointer"
-                  onClick={() => setPreview(imgSrc(editing.image))} />
+                  onClick={() => setPreview(imgSrc(editing.image_url || editing.image))} />
                 <p className="text-xs text-zinc-400 mt-1">Click to preview</p>
               </Field>
             )}

@@ -88,11 +88,11 @@ export default function PeopleComments() {
           <TrRow key={row.id} index={i}>
             <TdId>{i + 1}</TdId>
             <td className="px-4 py-3 border-b border-zinc-100">
-              {imgSrc(row.image) ? (
+              {imgSrc(row.image_path || row.image) ? (
                 <img
-                  src={imgSrc(row.image)}
+                  src={imgSrc(row.image_path || row.image)}
                   alt={row.name || ""}
-                  onClick={() => setPreview(imgSrc(row.image))}
+                  onClick={() => setPreview(imgSrc(row.image_path || row.image))}
                   title="Click to preview"
                   className="h-10 w-10 object-cover rounded-full border-2 border-zinc-200 cursor-pointer hover:scale-110 transition-transform"
                 />
@@ -148,14 +148,14 @@ export default function PeopleComments() {
                 placeholder="Comment..."
               />
             </Field>
-            {modal === "edit" && editing?.image && (
+            {modal === "edit" && (editing?.image_path || editing?.image) && (
               <Field label="Current Photo">
                 <div className="flex items-center gap-3">
                   <img
-                    src={imgSrc(editing.image)}
+                    src={imgSrc(editing.image_path || editing.image)}
                     alt={form.name}
                     className="h-16 w-16 object-cover rounded-full border-2 border-zinc-200 cursor-pointer hover:scale-105 transition-transform"
-                    onClick={() => setPreview(imgSrc(editing.image))}
+                    onClick={() => setPreview(imgSrc(editing.image_path || editing.image))}
                   />
                   <p className="text-xs text-zinc-400">Click to preview</p>
                 </div>

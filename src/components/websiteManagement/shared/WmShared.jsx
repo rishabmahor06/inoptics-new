@@ -2,11 +2,16 @@ import React from 'react';
 
 export const API_BASE = 'https://inoptics.in/api';
 
-/* Resolve image URL – if just a filename, prepend uploads dir */
+/* Resolve image URL:
+   - full URL → return as-is
+   - "uploads/file.jpg" or any path with "/" → prepend API base
+   - bare filename "file.jpg" (no slash) → prepend uploads dir automatically */
 export const imgSrc = (path) => {
-  if (!path) return "/placeholder.png";
+  if (!path) return null;
   if (path.startsWith("http")) return path;
-  return `https://inoptics.in/api/${path.replace(/^\/+/, "")}`;
+  const clean = path.replace(/^\/+/, "");
+  const withDir = clean.includes("/") ? clean : `uploads/${clean}`;
+  return `https://inoptics.in/api/${withDir}`;
 };
 
 /* Full-screen image preview overlay */

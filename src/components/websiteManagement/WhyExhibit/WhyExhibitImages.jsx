@@ -46,7 +46,7 @@ export default function WhyExhibitImages() {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
           {images.map(row => {
-            const src = imgSrc(row.image || row.url);
+            const src = imgSrc(row.image_url || row.image || row.url);
             return (
               <div key={row.id}
                 className="relative group rounded-xl overflow-hidden border border-zinc-200 aspect-square hover:shadow-md transition-all bg-zinc-50">
