@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import {
   MdPersonAdd,
   MdDelete,
@@ -61,18 +62,18 @@ export default function NewExhibitorRequest() {
 
       if (data.status === "success") {
         setNewExhibitors((prev) => prev.filter((item) => item.id !== id));
-        alert("Deleted successfully");
+        toast.success("Deleted successfully");
       } else {
-        alert(data.message || "Delete failed");
+        toast.error(data.message || "Delete failed");
       }
     } catch (error) {
       console.error(error);
-      alert("Delete failed");
+      toast.error("Delete failed");
     }
   };
 
   const handleMailClick = (item) => {
-    alert(`Send mail to: ${item.email}`);
+    toast(`Send mail to: ${item.email}`);
   };
 
   if (loadingNewExhibitors) {

@@ -22,7 +22,7 @@ function detectBS(categories) {
 
 function StallBadge({ label }) {
   return (
-    <span className="inline-block bg-sky-50 text-sky-600 border border-sky-200 rounded-md px-2 py-0.5 text-[12px] font-semibold mx-0.5 my-0.5 whitespace-nowrap">
+    <span className="inline-block bg-sky-50 text-sky-600 border border-sky-200 rounded px-2 py-0.5 text-[12px] font-semibold mx-0.5 my-0.5 whitespace-nowrap">
       {label}
     </span>
   );
@@ -30,13 +30,13 @@ function StallBadge({ label }) {
 
 function BSBadge({ label }) {
   if (label === 'B') return (
-    <span className="inline-flex items-center justify-center bg-amber-100 text-amber-800 border border-amber-200 rounded-md px-2 py-0.5 text-[12px] font-bold mx-0.5 my-0.5">B</span>
+    <span className="inline-flex items-center justify-center bg-amber-100 text-amber-800 border border-amber-200 rounded px-2 py-0.5 text-[12px] font-bold mx-0.5 my-0.5">B</span>
   );
   if (label === 'S') return (
-    <span className="inline-flex items-center justify-center bg-green-100 text-green-700 border border-green-200 rounded-md px-2 py-0.5 text-[12px] font-bold mx-0.5 my-0.5">S</span>
+    <span className="inline-flex items-center justify-center bg-green-100 text-green-700 border border-green-200 rounded px-2 py-0.5 text-[12px] font-bold mx-0.5 my-0.5">S</span>
   );
   return (
-    <span className="inline-flex items-center justify-center bg-zinc-100 text-zinc-400 rounded-md px-2 py-0.5 text-[12px] font-bold mx-0.5 my-0.5">-</span>
+    <span className="inline-flex items-center justify-center bg-zinc-100 text-zinc-400 rounded px-2 py-0.5 text-[12px] font-bold mx-0.5 my-0.5">-</span>
   );
 }
 
@@ -119,7 +119,7 @@ export default function Exhibitors() {
                 {['ID', 'COMPANY NAME', 'STALL NO', 'STALL AREA', 'B/S', 'EMAIL', 'MOBILE', 'ACTION'].map(h => (
                   <th
                     key={h}
-                    className="bg-zinc-900 text-white px-4 py-3 text-left font-semibold text-[11px] tracking-wider whitespace-nowrap"
+                    className="bg-zinc-900 text-white px-4 py-3 text-left font-semibold text-[14px] tracking-wider whitespace-nowrap"
                   >
                     {h}
                   </th>
@@ -144,7 +144,7 @@ export default function Exhibitors() {
                     className={`transition-colors hover:bg-zinc-50 ${idx % 2 === 0 ? 'bg-white' : 'bg-zinc-50/50'}`}
                   >
                     {/* ID */}
-                    <td className="px-4 py-3 border-b border-zinc-100 text-[13px] text-zinc-400 font-medium align-middle w-10">
+                    <td className="px-4 py-3 border-b border-zinc-100 text-[14px] text-zinc-400 font-medium align-middle w-10">
                       {row._rowNum}
                     </td>
 
@@ -197,21 +197,21 @@ export default function Exhibitors() {
                       <div className="flex items-center gap-1.5 flex-wrap">
                         <button
                           onClick={() => setEditingExhibitor(row)}
-                          className="inline-flex items-center gap-1.5 bg-green-50 text-green-700 border border-green-200 rounded-lg px-2.5 py-1.5 text-[12px] font-semibold hover:bg-green-100 transition-colors cursor-pointer border-solid"
+                          className="inline-flex items-center gap-1.5 bg-green-50 text-green-700 border border-green-200 rounded px-2.5 py-1.5 text-[12px] font-semibold hover:bg-green-100 transition-colors cursor-pointer border-solid"
                         >
                           <MdEdit size={14} /> Edit
                         </button>
-                        <button className="inline-flex items-center gap-1.5 bg-red-50 text-red-600 border border-red-200 rounded-lg px-2.5 py-1.5 text-[12px] font-semibold hover:bg-red-100 transition-colors cursor-pointer border-solid">
+                        <button className="inline-flex items-center gap-1.5 bg-red-50 text-red-600 border border-red-200 rounded px-2.5 py-1.5 text-[12px] font-semibold hover:bg-red-100 transition-colors cursor-pointer border-solid">
                           <MdDelete size={14} /> Delete
                         </button>
-                        <button className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-[12px] font-semibold transition-colors cursor-pointer border-solid
+                        <button className={`inline-flex items-center gap-1.5 rounded px-2.5 py-1.5 text-[12px] font-semibold transition-colors cursor-pointer border-solid
                           ${accepted
                             ? 'bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100'
                             : 'bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100'
                           }`}>
                           <MdDescription size={14} /> Terms
                         </button>
-                        <button className="inline-flex items-center gap-1.5 bg-cyan-50 text-cyan-700 border border-cyan-200 rounded-lg px-2.5 py-1.5 text-[12px] font-semibold hover:bg-cyan-100 transition-colors cursor-pointer border-solid">
+                        <button className="inline-flex items-center gap-1.5 bg-cyan-50 text-cyan-700 border border-cyan-200 rounded px-2.5 py-1.5 text-[12px] font-semibold hover:bg-cyan-100 transition-colors cursor-pointer border-solid">
                           <MdVisibility size={14} /> View
                         </button>
                       </div>

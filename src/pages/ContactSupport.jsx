@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import {
   MdSupportAgent, MdDeleteOutline,
   MdPerson, MdEmail, MdPhone, MdAccessTime,
@@ -46,12 +47,13 @@ export default function ContactSupport() {
       });
       const data = await res.json();
       if (data.status === 'success') {
+        toast.success('Ticket deleted');
         setTickets(prev => prev.filter(t => t.id !== id));
       } else {
-        alert(data.message || 'Delete failed');
+        toast.error(data.message || 'Delete failed');
       }
     } catch {
-      alert('Delete failed');
+      toast.error('Delete failed');
     } finally {
       setDeletingId(null);
     }

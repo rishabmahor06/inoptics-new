@@ -10,6 +10,7 @@ import {
   MdSearch,
   MdClose,
 } from "react-icons/md";
+import toast from "react-hot-toast";
 import CustomEditor from "../components/CustomEditor/CustomEditor";
 import { useNavStore } from "../store/useNavStore";
 
@@ -183,7 +184,7 @@ function EmailsMaster() {
   }
 
   async function handleSave() {
-    if (!form.email_name.trim()) return alert("Enter email name");
+    if (!form.email_name.trim()) return toast.error("Enter email name");
     try {
       setSaving(true);
       const url = editingId
@@ -196,13 +197,14 @@ function EmailsMaster() {
       });
       const json = await res.json();
       if (json.success || json.status === "success") {
+        toast.success(editingId ? "Template updated" : "Template added");
         setShowModal(false);
         await fetchData();
       } else {
-        alert(json.message || "Save failed");
+        toast.error(json.message || "Save failed");
       }
     } catch {
-      alert("Save failed");
+      toast.error("Save failed");
     } finally {
       setSaving(false);
     }
@@ -218,12 +220,13 @@ function EmailsMaster() {
       });
       const json = await res.json();
       if (json.success || json.status === "success") {
+        toast.success("Template deleted");
         setData((prev) => prev.filter((r) => r.id !== id));
       } else {
-        alert(json.message || "Delete failed");
+        toast.error(json.message || "Delete failed");
       }
     } catch {
-      alert("Delete failed");
+      toast.error("Delete failed");
     }
   }
 
@@ -544,7 +547,7 @@ function VendorTable({
   }
 
   async function handleSave() {
-    if (!form.vendor_name.trim()) return alert("Enter vendor name");
+    if (!form.vendor_name.trim()) return toast.error("Enter vendor name");
     try {
       setSaving(true);
       const url = editingId ? updateUrl : addUrl;
@@ -555,13 +558,14 @@ function VendorTable({
       });
       const json = await res.json();
       if (json.success || json.status === "success") {
+        toast.success(editingId ? "Vendor updated" : "Vendor added");
         setShowModal(false);
         await load();
       } else {
-        alert(json.message || "Save failed");
+        toast.error(json.message || "Save failed");
       }
     } catch {
-      alert("Save failed");
+      toast.error("Save failed");
     } finally {
       setSaving(false);
     }
@@ -577,12 +581,13 @@ function VendorTable({
       });
       const json = await res.json();
       if (json.success || json.status === "success") {
+        toast.success("Vendor deleted");
         setData((prev) => prev.filter((r) => r.id !== id));
       } else {
-        alert(json.message || "Delete failed");
+        toast.error(json.message || "Delete failed");
       }
     } catch {
-      alert("Delete failed");
+      toast.error("Delete failed");
     }
   }
 

@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { MdFileDownload } from "react-icons/md";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import toast from "react-hot-toast";
 
 export default function Export() {
   const [mode, setMode] = useState("");
@@ -173,8 +174,8 @@ export default function Export() {
   };
 
   const handleExport = async () => {
-  if (!mode) return alert("Select export type");
-  if (!selectedFields.length) return alert("Select at least one field");
+  if (!mode) return toast.error("Select export type");
+  if (!selectedFields.length) return toast.error("Select at least one field");
 
   try {
     setLoading(true);
@@ -243,9 +244,10 @@ export default function Export() {
       }),
       config.file
     );
+    toast.success("Export ready");
   } catch (error) {
     console.error("EXPORT ERROR:", error);
-    alert(error.message || "Export failed");
+    toast.error(error.message || "Export failed");
   } finally {
     setLoading(false);
   }

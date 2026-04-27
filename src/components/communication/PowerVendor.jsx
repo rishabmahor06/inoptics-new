@@ -44,7 +44,7 @@ const PowerVendor = ({ activeCommunicationTab }) => {
   // ================= HANDLE SAVE =================
   const handleSave = async () => {
     if (!formData.vendor_name || !formData.email) {
-      alert("Vendor name and email required");
+      toast.error("Vendor name and email required");
       return;
     }
 
@@ -78,10 +78,11 @@ const PowerVendor = ({ activeCommunicationTab }) => {
         setEditId(null);
         fetchVendors();
       } else {
-        alert(data.message);
+        toast.error(data.message || "Save failed");
       }
     } catch (error) {
       console.error(error);
+      toast.error("Server error");
     }
   };
 
@@ -113,13 +114,14 @@ const PowerVendor = ({ activeCommunicationTab }) => {
       const data = await res.json();
 
       if (data.success) {
-        alert("Vendor deleted");
+        toast.success("Vendor deleted");
         fetchVendors();
       } else {
-        alert(data.message);
+        toast.error(data.message || "Delete failed");
       }
     } catch (error) {
       console.error(error);
+      toast.error("Server error");
     }
   };
 
