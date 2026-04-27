@@ -534,19 +534,19 @@ th,td{border:1px solid #000;padding:6px;text-align:center;}th{background:#f2f2f2
         <div className="flex items-center gap-2 flex-wrap">
           <button
             onClick={exportToExcel}
-            className="px-3 py-2 text-[15px] font-semibold bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg flex items-center gap-1.5 transition-colors"
+            className="px-3 py-2 text-[15px] font-semibold bg-emerald-600 hover:bg-emerald-700 text-white rounded flex items-center gap-1.5 transition-colors"
           >
             <MdFileDownload size={16} /> Export Excel
           </button>
           <button
             onClick={handlePrintAll}
-            className="px-3 py-2 text-[15px] font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center gap-1.5 transition-colors"
+            className="px-3 py-2 text-[15px] font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded flex items-center gap-1.5 transition-colors"
           >
             <MdPrint size={16} /> Print All
           </button>
           <button
             onClick={() => setShowExhibitorList(true)}
-            className="px-3 py-2 text-[15px] font-semibold bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg flex items-center gap-1.5 transition-colors"
+            className="px-3 py-2 text-[15px] font-semibold bg-zinc-900 hover:bg-zinc-800 text-white rounded flex items-center gap-1.5 transition-colors"
           >
             <MdAdd size={16} /> Add Power
           </button>
@@ -608,17 +608,17 @@ th,td{border:1px solid #000;padding:6px;text-align:center;}th{background:#f2f2f2
                   </div>
 
                   {summary && (
-                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[15px] text-zinc-500">
-                      <span>Amt: <b className="text-zinc-800">₹{summary.amount.toFixed(2)}</b></span>
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[15px] text-zinc-500 ">
+                      <span className="px-2 py-0.5 text-[16px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200 rounded flex items-center gap-1 shrink-0">Amount: <b className="text-emerald-800">₹{summary.amount.toFixed(2)}</b></span>
                       {isDelhi ? (
                         <>
-                          <span>CGST: <b className="text-zinc-800">₹{summary.cgst.toFixed(2)}</b></span>
-                          <span>SGST: <b className="text-zinc-800">₹{summary.sgst.toFixed(2)}</b></span>
+                          <span className="px-2 py-0.5 text-[16px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200 rounded flex items-center gap-1 shrink-0">CGST: <b className="text-zinc-800">₹{summary.cgst.toFixed(2)}</b></span>
+                          <span className="px-2 py-0.5 text-[16px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200 rounded flex items-center gap-1 shrink-0">SGST: <b className="text-zinc-800">₹{summary.sgst.toFixed(2)}</b></span>
                         </>
                       ) : (
-                        <span>IGST: <b className="text-zinc-800">₹{summary.igst.toFixed(2)}</b></span>
+                        <span className="px-2 py-0.5 text-[16px] font-bold uppercase tracking-wider bg-red-50 text-red-700 border border-red-200 rounded shrink-0">IGST: <b className="text-zinc-800">₹{summary.igst.toFixed(2)}</b></span>
                       )}
-                      <span>Total: <b className="text-blue-700">₹{summary.total.toFixed(2)}</b></span>
+                      <span className="px-2 py-0.5 text-[16px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 border border-blue-200 rounded flex items-center gap-1 shrink-0">Total: <b className="text-blue-700">₹{summary.total.toFixed(2)}</b></span>
                     </div>
                   )}
 

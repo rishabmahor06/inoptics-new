@@ -2,40 +2,51 @@ import React, { useEffect, useState } from "react";
 import * as XLSX from "xlsx-js-style";
 import toast from "react-hot-toast";
 import {
-  MdSearch, MdFileDownload, MdUpload, MdAdd, MdClose,
-  MdExpandMore, MdEdit, MdDelete, MdPrint, MdToggleOn, MdToggleOff,
-  MdVisibility, MdVerified, MdCurrencyRupee,
+  MdSearch,
+  MdFileDownload,
+  MdUpload,
+  MdAdd,
+  MdClose,
+  MdExpandMore,
+  MdEdit,
+  MdDelete,
+  MdPrint,
+  MdToggleOn,
+  MdToggleOff,
+  MdVisibility,
+  MdVerified,
+  MdCurrencyRupee,
 } from "react-icons/md";
 
 const SITE = "https://inoptics.in";
-const API  = `${SITE}/api`;
+const API = `${SITE}/api`;
 const BADGE_RATE = 100;
 
 export default function ExhibitorBadges() {
-  const [companies, setCompanies]         = useState([]);
+  const [companies, setCompanies] = useState([]);
   const [allExhibitors, setAllExhibitors] = useState([]);
-  const [openCompany, setOpenCompany]     = useState(null);
-  const [loading, setLoading]             = useState(true);
-  const [search, setSearch]               = useState("");
-  const [uploading, setUploading]         = useState(false);
+  const [openCompany, setOpenCompany] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   const [showEditModal, setShowEditModal] = useState(false);
-  const [editingBadge, setEditingBadge]   = useState(null);
+  const [editingBadge, setEditingBadge] = useState(null);
 
-  const [printToggle, setPrintToggle]     = useState({});
-  const [freeQuotaMap, setFreeQuotaMap]   = useState({});
+  const [printToggle, setPrintToggle] = useState({});
+  const [freeQuotaMap, setFreeQuotaMap] = useState({});
   const [badgePaymentSummary, setBadgePaymentSummary] = useState({});
 
   const [showPreviewModal, setShowPreviewModal] = useState(false);
-  const [previewBadgeId, setPreviewBadgeId]     = useState(null);
+  const [previewBadgeId, setPreviewBadgeId] = useState(null);
 
   const [showExhibitorPopup, setShowExhibitorPopup] = useState(false);
-  const [showBadgePopup, setShowBadgePopup]         = useState(false);
-  const [selectedCompany, setSelectedCompany]       = useState(null);
-  const [exhibitorSearch, setExhibitorSearch]       = useState("");
-  const [photoPreview, setPhotoPreview]             = useState(null);
-  const [isSubmitting, setIsSubmitting]             = useState(false);
-  const [deletingId, setDeletingId]                 = useState(null);
+  const [showBadgePopup, setShowBadgePopup] = useState(false);
+  const [selectedCompany, setSelectedCompany] = useState(null);
+  const [exhibitorSearch, setExhibitorSearch] = useState("");
+  const [photoPreview, setPhotoPreview] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [deletingId, setDeletingId] = useState(null);
 
   const [formData, setFormData] = useState({
     exhibitor_company_name: "",
@@ -51,11 +62,15 @@ export default function ExhibitorBadges() {
   useEffect(() => {
     fetch(`${API}/get_exhibitors.php`)
       .then((res) => res.json())
-      .then((data) => { if (Array.isArray(data)) setAllExhibitors(data); })
+      .then((data) => {
+        if (Array.isArray(data)) setAllExhibitors(data);
+      })
       .catch(() => toast.error("Failed to load exhibitors"));
   }, []);
 
-  useEffect(() => { fetchBadges(); }, []);
+  useEffect(() => {
+    fetchBadges();
+  }, []);
 
   const fetchBadges = () => {
     fetch(`${API}/get_exhibitor_badges_grouped.php`)
@@ -77,7 +92,9 @@ export default function ExhibitorBadges() {
 
   useEffect(() => {
     companies.forEach((c) => {
-      fetch(`${API}/get_Exhibitor_badges.php?company_name=${encodeURIComponent(c.company_name)}`)
+      fetch(
+        `${API}/get_Exhibitor_badges.php?company_name=${encodeURIComponent(c.company_name)}`,
+      )
         .then((r) => r.json())
         .then((d) => {
           if (d.success) {
@@ -86,7 +103,8 @@ export default function ExhibitorBadges() {
               [c.company_name]: Number(d.free_badges || 0),
             }));
           }
-        }).catch(() => {});
+        })
+        .catch(() => {});
     });
   }, [companies]);
 
@@ -94,44 +112,69 @@ export default function ExhibitorBadges() {
     if (!companies.length) return;
     companies.forEach(async (company) => {
       try {
-        const res     = await fetch(`${API}/get_exhibitor_badge_payment.php?company_name=${encodeURIComponent(company.company_name)}`);
-        const data    = await res.json();
+        const res = await fetch(
+          `${API}/get_exhibitor_badge_payment.php?company_name=${encodeURIComponent(company.company_name)}`,
+        );
+        const data = await res.json();
         const records = Array.isArray(data.records) ? data.records : [];
-        const cleared = records.reduce((s, r) => s + Number(r.amount_paid || 0) + Number(r.tds || 0), 0);
+        const cleared = records.reduce(
+          (s, r) => s + Number(r.amount_paid || 0) + Number(r.tds || 0),
+          0,
+        );
 
         const freeQuota = Number(freeQuotaMap[company.company_name] || 0);
-        const badges    = [...(company.badges || [])].sort(
+        const badges = [...(company.badges || [])].sort(
           (a, b) => new Date(a.created_at) - new Date(b.created_at),
         );
         const paidBadges = badges.slice(freeQuota);
 
-        let amount = 0, cgst = 0, sgst = 0, igst = 0;
+        let amount = 0,
+          cgst = 0,
+          sgst = 0,
+          igst = 0;
         paidBadges.forEach((b) => {
           amount += BADGE_RATE;
           const st = (b.state || "").toLowerCase();
-          if (st === "delhi") { cgst += BADGE_RATE * 0.09; sgst += BADGE_RATE * 0.09; }
-          else                { igst += BADGE_RATE * 0.18; }
+          if (st === "delhi") {
+            cgst += BADGE_RATE * 0.09;
+            sgst += BADGE_RATE * 0.09;
+          } else {
+            igst += BADGE_RATE * 0.18;
+          }
         });
         const totalAmount = amount + cgst + sgst + igst;
-        const pending     = Math.max(0, totalAmount - cleared);
+        const pending = Math.max(0, totalAmount - cleared);
 
         setBadgePaymentSummary((prev) => ({
           ...prev,
           [company.company_name]: {
             paidBadgeCount: paidBadges.length,
-            amount, cgst, sgst, igst, totalAmount, cleared, pending,
+            amount,
+            cgst,
+            sgst,
+            igst,
+            totalAmount,
+            cleared,
+            pending,
           },
         }));
-      } catch (e) { console.error("Badge payment fetch failed", e); }
+      } catch (e) {
+        console.error("Badge payment fetch failed", e);
+      }
     });
   }, [companies, freeQuotaMap]);
 
   /* ================= COMPUTED ================= */
 
-  const totalBadges = companies.reduce((t, c) => t + (c.badges?.length || 0), 0);
+  const totalBadges = companies.reduce(
+    (t, c) => t + (c.badges?.length || 0),
+    0,
+  );
 
-  const filteredCompanies = companies.filter((c) =>
-    !search.trim() || c.company_name?.toLowerCase().includes(search.toLowerCase().trim()),
+  const filteredCompanies = companies.filter(
+    (c) =>
+      !search.trim() ||
+      c.company_name?.toLowerCase().includes(search.toLowerCase().trim()),
   );
 
   const filteredExhibitors = allExhibitors.filter((ex) =>
@@ -148,22 +191,30 @@ export default function ExhibitorBadges() {
 
   /* ================= ACTIONS ================= */
 
-  const toggleCompany = (name) => setOpenCompany((p) => (p === name ? null : name));
+  const toggleCompany = (name) =>
+    setOpenCompany((p) => (p === name ? null : name));
 
   const deleteBadge = async (badgeId) => {
     if (!window.confirm("Delete this badge?")) return;
     try {
       setDeletingId(badgeId);
-      const res  = await fetch(`${API}/delete_exhibitor_badge.php`, {
+      const res = await fetch(`${API}/delete_exhibitor_badge.php`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: badgeId }),
       });
       const data = await res.json();
-      if (!data.success) { setDeletingId(null); return toast.error("Delete failed"); }
+      if (!data.success) {
+        setDeletingId(null);
+        return toast.error("Delete failed");
+      }
       setCompanies((prev) =>
-        prev.map((c) => ({ ...c, badges: c.badges.filter((b) => b.id !== badgeId) }))
-            .filter((c) => c.badges.length > 0),
+        prev
+          .map((c) => ({
+            ...c,
+            badges: c.badges.filter((b) => b.id !== badgeId),
+          }))
+          .filter((c) => c.badges.length > 0),
       );
       toast.success("Badge deleted");
       setDeletingId(null);
@@ -194,9 +245,15 @@ export default function ExhibitorBadges() {
       if (editingBadge.candidate_photo instanceof File) {
         fd.append("candidate_photo", editingBadge.candidate_photo);
       }
-      const res  = await fetch(`${API}/edit_exhibitor_badge.php`, { method: "POST", body: fd });
+      const res = await fetch(`${API}/edit_exhibitor_badge.php`, {
+        method: "POST",
+        body: fd,
+      });
       const data = await res.json();
-      if (!data.success) { toast.error(data.message || "Update failed"); return; }
+      if (!data.success) {
+        toast.error(data.message || "Update failed");
+        return;
+      }
 
       setCompanies((prev) =>
         prev.map((c) => ({
@@ -209,7 +266,9 @@ export default function ExhibitorBadges() {
                   stall_no: editingBadge.stall_no,
                   state: editingBadge.state,
                   city: editingBadge.city,
-                  photo: data.candidate_photo ? data.candidate_photo + "?t=" + data.ts : b.photo,
+                  photo: data.candidate_photo
+                    ? data.candidate_photo + "?t=" + data.ts
+                    : b.photo,
                 }
               : b,
           ),
@@ -226,7 +285,7 @@ export default function ExhibitorBadges() {
   const togglePrintStatus = async (badge) => {
     const next = printToggle[badge.id] ? "disabled" : "ready";
     try {
-      const res  = await fetch(`${API}/update_badge_print_status.php`, {
+      const res = await fetch(`${API}/update_badge_print_status.php`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ badge_id: badge.id, status: next }),
@@ -235,17 +294,28 @@ export default function ExhibitorBadges() {
       if (!data.success) return toast.error("Failed");
       setPrintToggle((p) => ({ ...p, [badge.id]: next === "ready" }));
       toast.success("Updated");
-    } catch { toast.error("Server error"); }
+    } catch {
+      toast.error("Server error");
+    }
   };
 
   const handleCSVUpload = async (file) => {
-    if (!file)                       { toast.error("Please select a file"); return; }
-    if (!file.name.endsWith(".csv")) { toast.error("Only CSV file allowed"); return; }
+    if (!file) {
+      toast.error("Please select a file");
+      return;
+    }
+    if (!file.name.endsWith(".csv")) {
+      toast.error("Only CSV file allowed");
+      return;
+    }
     try {
       setUploading(true);
       const fd = new FormData();
       fd.append("excel", file);
-      const res  = await fetch(`${API}/exhibitor_badge_by_excel.php`, { method: "POST", body: fd });
+      const res = await fetch(`${API}/exhibitor_badge_by_excel.php`, {
+        method: "POST",
+        body: fd,
+      });
       const data = await res.json();
       if (!data.success) throw new Error(data.error || "Upload failed");
       toast.success(`${data.total_badges_generated} badges created`);
@@ -261,8 +331,14 @@ export default function ExhibitorBadges() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isSubmitting) return;
-    if (!formData.name.trim())               { toast.error("Name required"); return; }
-    if (!formData.exhibitor_company_name)    { toast.error("Company missing"); return; }
+    if (!formData.name.trim()) {
+      toast.error("Name required");
+      return;
+    }
+    if (!formData.exhibitor_company_name) {
+      toast.error("Company missing");
+      return;
+    }
     try {
       setIsSubmitting(true);
       const fd = new FormData();
@@ -272,9 +348,13 @@ export default function ExhibitorBadges() {
       fd.append("state", formData.state || "");
       fd.append("city", formData.city || "");
       fd.append("exhibitor_id", formData.exhibitor_id || "");
-      if (formData.candidate_photo) fd.append("candidate_photo", formData.candidate_photo);
+      if (formData.candidate_photo)
+        fd.append("candidate_photo", formData.candidate_photo);
 
-      const res  = await fetch(`${API}/submit-badge.php`, { method: "POST", body: fd });
+      const res = await fetch(`${API}/submit-badge.php`, {
+        method: "POST",
+        body: fd,
+      });
       const text = await res.text();
       const data = JSON.parse(text);
       if (!data.success) throw new Error(data.message);
@@ -294,7 +374,10 @@ export default function ExhibitorBadges() {
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    if (file.size > 2 * 1024 * 1024) { toast.error("Max 2MB allowed"); return; }
+    if (file.size > 2 * 1024 * 1024) {
+      toast.error("Max 2MB allowed");
+      return;
+    }
     setFormData((p) => ({ ...p, candidate_photo: file }));
     setPhotoPreview(URL.createObjectURL(file));
   };
@@ -307,24 +390,41 @@ export default function ExhibitorBadges() {
   /* ================= EXPORT EXCEL ================= */
 
   const exportBadgesExcel = () => {
-    if (!companies.length) { toast.error("No data to export"); return; }
+    if (!companies.length) {
+      toast.error("No data to export");
+      return;
+    }
     const exportData = [];
-    const merges     = [];
-    let rowIndex     = 1;
+    const merges = [];
+    let rowIndex = 1;
 
     companies.forEach((company) => {
-      const freeQuota    = Number(freeQuotaMap[company.company_name] || 0);
-      const sortedBadges = [...(company.badges || [])].sort((a, b) => a.id - b.id);
-      let companyPaidTotal = 0, paidRowStart = null, paidRowEnd = null;
+      const freeQuota = Number(freeQuotaMap[company.company_name] || 0);
+      const sortedBadges = [...(company.badges || [])].sort(
+        (a, b) => a.id - b.id,
+      );
+      let companyPaidTotal = 0,
+        paidRowStart = null,
+        paidRowEnd = null;
 
       sortedBadges.forEach((badge, index) => {
         const isFree = index < freeQuota;
         const amount = isFree ? 0 : BADGE_RATE;
-        const state  = (badge.state || company.badges?.[0]?.state || "").toLowerCase();
-        let cgst = 0, sgst = 0, igst = 0;
+        const state = (
+          badge.state ||
+          company.badges?.[0]?.state ||
+          ""
+        ).toLowerCase();
+        let cgst = 0,
+          sgst = 0,
+          igst = 0;
         if (!isFree) {
-          if (state === "delhi") { cgst = amount * 0.09; sgst = amount * 0.09; }
-          else                   { igst = amount * 0.18; }
+          if (state === "delhi") {
+            cgst = amount * 0.09;
+            sgst = amount * 0.09;
+          } else {
+            igst = amount * 0.18;
+          }
         }
         const total = amount + cgst + sgst + igst;
         if (!isFree) {
@@ -334,18 +434,18 @@ export default function ExhibitorBadges() {
         }
         exportData.push({
           "Company Name": company.company_name,
-          "Badge Name":  badge.name,
-          "Stall No":    badge.stall_no,
-          State:         badge.state || "",
-          City:          badge.city || "",
-          "Badge Code":  `${badge.badge_series || ""}-${badge.badge_series_num || ""}`,
-          Type:   isFree ? "FREE" : "",
-          Paid:  !isFree ? "PAID" : "",
+          "Badge Name": badge.name,
+          "Stall No": badge.stall_no,
+          State: badge.state || "",
+          City: badge.city || "",
+          "Badge Code": `${badge.badge_series || ""}-${badge.badge_series_num || ""}`,
+          Type: isFree ? "FREE" : "",
+          Paid: !isFree ? "PAID" : "",
           Amount: amount.toFixed(2),
-          CGST:   cgst ? cgst.toFixed(2) : "-",
-          SGST:   sgst ? sgst.toFixed(2) : "-",
-          IGST:   igst ? igst.toFixed(2) : "-",
-          Total:  total.toFixed(2),
+          CGST: cgst ? cgst.toFixed(2) : "-",
+          SGST: sgst ? sgst.toFixed(2) : "-",
+          IGST: igst ? igst.toFixed(2) : "-",
+          Total: total.toFixed(2),
           "Grand Total (Paid Only)": "",
           "Print Status": badge.print_status === "ready" ? "READY" : "DISABLED",
         });
@@ -354,8 +454,12 @@ export default function ExhibitorBadges() {
 
       if (paidRowStart !== null && paidRowEnd !== null) {
         const colIndex = 12;
-        exportData[paidRowStart - 1]["Grand Total (Paid Only)"] = companyPaidTotal.toFixed(2);
-        merges.push({ s: { r: paidRowStart, c: colIndex }, e: { r: paidRowEnd, c: colIndex } });
+        exportData[paidRowStart - 1]["Grand Total (Paid Only)"] =
+          companyPaidTotal.toFixed(2);
+        merges.push({
+          s: { r: paidRowStart, c: colIndex },
+          e: { r: paidRowEnd, c: colIndex },
+        });
       }
     });
 
@@ -413,7 +517,10 @@ export default function ExhibitorBadges() {
           </span>
         </div>
         <div className="relative w-full lg:w-72">
-          <MdSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" size={18} />
+          <MdSearch
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400"
+            size={18}
+          />
           <input
             type="text"
             placeholder="Search company..."
@@ -437,33 +544,57 @@ export default function ExhibitorBadges() {
               (a, b) => new Date(a.created_at) - new Date(b.created_at),
             );
 
-            let totalFree = 0, totalPaid = 0;
-            let totalAmount = 0, totalCGST = 0, totalSGST = 0, totalIGST = 0, grandTotalAll = 0;
+            let totalFree = 0,
+              totalPaid = 0;
+            let totalAmount = 0,
+              totalCGST = 0,
+              totalSGST = 0,
+              totalIGST = 0,
+              grandTotalAll = 0;
 
             const computedBadges = sortedBadges.map((badge, index) => {
               const isFree = index < freeQuota;
               const amount = isFree ? 0 : BADGE_RATE;
-              const state  = (badge.state || company.badges?.[0]?.state || "").toLowerCase();
-              let cgst = 0, sgst = 0, igst = 0;
+              const state = (
+                badge.state ||
+                company.badges?.[0]?.state ||
+                ""
+              ).toLowerCase();
+              let cgst = 0,
+                sgst = 0,
+                igst = 0;
               if (!isFree) {
-                if (state === "delhi") { cgst = amount * 0.09; sgst = amount * 0.09; }
-                else                   { igst = amount * 0.18; }
+                if (state === "delhi") {
+                  cgst = amount * 0.09;
+                  sgst = amount * 0.09;
+                } else {
+                  igst = amount * 0.18;
+                }
               }
               const total = amount + cgst + sgst + igst;
-              if (isFree) totalFree++; else totalPaid++;
-              totalAmount += amount; totalCGST += cgst; totalSGST += sgst; totalIGST += igst;
+              if (isFree) totalFree++;
+              else totalPaid++;
+              totalAmount += amount;
+              totalCGST += cgst;
+              totalSGST += sgst;
+              totalIGST += igst;
               grandTotalAll += total;
               return { badge, isFree, amount, cgst, sgst, igst, total };
             });
 
-            const cleared    = badgePaymentSummary[company.company_name]?.cleared || 0;
-            const pending    = Math.max(0, grandTotalAll - cleared);
-            const remaining  = Math.max(0, freeQuota - sortedBadges.length);
-            const isOpen     = openCompany === company.company_name;
-            const isDelhi    = (company.badges?.[0]?.state || "").toLowerCase() === "delhi";
+            const cleared =
+              badgePaymentSummary[company.company_name]?.cleared || 0;
+            const pending = Math.max(0, grandTotalAll - cleared);
+            const remaining = Math.max(0, freeQuota - sortedBadges.length);
+            const isOpen = openCompany === company.company_name;
+            const isDelhi =
+              (company.badges?.[0]?.state || "").toLowerCase() === "delhi";
 
             return (
-              <div key={company.company_name} className="bg-white border border-zinc-200 rounded-xl overflow-hidden">
+              <div
+                key={company.company_name}
+                className="bg-white border border-zinc-200 rounded-xl overflow-hidden"
+              >
                 {/* Header */}
                 <div
                   onClick={() => toggleCompany(company.company_name)}
@@ -473,31 +604,68 @@ export default function ExhibitorBadges() {
                     <span className="font-semibold text-zinc-800 text-[15px] truncate max-w-full">
                       {company.company_name}
                     </span>
-                    <span className={`px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider border rounded shrink-0 ${
-                      remaining > 0
-                        ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-                        : "bg-red-50 text-red-700 border-red-200"
-                    }`}>
+                    <span
+                      className={`px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider border rounded shrink-0 ${
+                        remaining > 0
+                          ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                          : "bg-red-50 text-red-700 border-red-200"
+                      }`}
+                    >
                       Free Left: {remaining}
                     </span>
                   </div>
 
                   {/* Summary */}
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-zinc-500">
-                    <span>Free: <b className="text-zinc-800">{totalFree}</b></span>
-                    <span>Paid: <b className="text-zinc-800">{totalPaid}</b></span>
-                    <span>Amt: <b className="text-zinc-800">₹{totalAmount.toFixed(2)}</b></span>
+                    <span className="px-2 py-0.5 text-[12px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200 rounded flex items-center gap-1 shrink-0">
+                      Free: <b className="text-emerald-800">{totalFree}</b>
+                    </span>
+                    <span className="px-2 py-0.5 text-[12px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 border border-blue-200 rounded flex items-center gap-1 shrink-0">
+                      Paid: <b className="text-blue-800">{totalPaid}</b>
+                    </span>
+                    <span className="px-2 py-0.5 text-[12px] font-bold uppercase tracking-wider bg-yellow-50 text-yellow-700 border border-yellow-200 rounded flex items-center gap-1 shrink-0">
+                      Amount:{" "}
+                      <b className="text-yellow-800">
+                        ₹{totalAmount.toFixed(2)}
+                      </b>
+                    </span>
                     {isDelhi ? (
                       <>
-                        <span>CGST: <b className="text-zinc-800">₹{totalCGST.toFixed(2)}</b></span>
-                        <span>SGST: <b className="text-zinc-800">₹{totalSGST.toFixed(2)}</b></span>
+                        <span className="px-2 py-0.5 text-[12px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200 rounded flex items-center gap-1 shrink-0">
+                          CGST:{" "}
+                          <b className="text-emerald-800">
+                            ₹{totalCGST.toFixed(2)}
+                          </b>
+                        </span>
+                        <span className="px-2 py-0.5 text-[12px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200 rounded flex items-center gap-1 shrink-0">
+                          SGST:{" "}
+                          <b className="text-emerald-800">
+                            ₹{totalSGST.toFixed(2)}
+                          </b>
+                        </span>
                       </>
                     ) : (
-                      <span>IGST: <b className="text-zinc-800">₹{totalIGST.toFixed(2)}</b></span>
+                      <span className="px-2 py-0.5 text-[12px] font-bold uppercase tracking-wider bg-red-50 text-red-700 border border-red-200 rounded flex items-center gap-1 shrink-0">
+                        IGST:{" "}
+                        <b className="text-red-800">₹{totalIGST.toFixed(2)}</b>
+                      </span>
                     )}
-                    <span>Total: <b className="text-blue-700">₹{grandTotalAll.toFixed(2)}</b></span>
-                    <span>Cleared: <b className="text-emerald-700">₹{Number(cleared).toFixed(2)}</b></span>
-                    <span>Pending: <b className="text-red-700">₹{pending.toFixed(2)}</b></span>
+                    <span className="px-2 py-0.5 text-[12px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 border border-blue-200 rounded flex items-center gap-1 shrink-0">
+                      Total:{" "}
+                      <b className="text-blue-800">
+                        ₹{grandTotalAll.toFixed(2)}
+                      </b>
+                    </span>
+                    <span className="px-2 py-0.5 text-[12px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200 rounded flex items-center gap-1 shrink-0">
+                      Cleared:{" "}
+                      <b className="text-emerald-800">
+                        ₹{Number(cleared).toFixed(2)}
+                      </b>
+                    </span>
+                    <span className="px-2 py-0.5 text-[12px] font-bold uppercase tracking-wider bg-red-50 text-red-700 border border-red-200 rounded flex items-center gap-1 shrink-0">
+                      Pending:{" "}
+                      <b className="text-red-800">₹{pending.toFixed(2)}</b>
+                    </span>
                   </div>
 
                   {/* Actions */}
@@ -505,21 +673,26 @@ export default function ExhibitorBadges() {
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        const exhibitor = allExhibitors.find((ex) => ex.company_name === company.company_name);
-                        if (!exhibitor) { toast.error("Exhibitor not found"); return; }
+                        const exhibitor = allExhibitors.find(
+                          (ex) => ex.company_name === company.company_name,
+                        );
+                        if (!exhibitor) {
+                          toast.error("Exhibitor not found");
+                          return;
+                        }
                         setSelectedCompany(exhibitor);
                         setFormData({
                           exhibitor_company_name: exhibitor.company_name,
                           stall_no: exhibitor.stall_no || "",
-                          state:    exhibitor.state || "",
-                          city:     exhibitor.city || "",
+                          state: exhibitor.state || "",
+                          city: exhibitor.city || "",
                           exhibitor_id: exhibitor.id || "",
                           name: "",
                           candidate_photo: null,
                         });
                         setShowBadgePopup(true);
                       }}
-                      className="px-2.5 py-1 text-[12px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-md flex items-center gap-1 transition-colors"
+                      className="px-2.5 py-1 text-[12px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded flex items-center gap-1 transition-colors"
                     >
                       <MdAdd size={14} /> Add Badge
                     </button>
@@ -538,87 +711,170 @@ export default function ExhibitorBadges() {
                       <table className="w-full">
                         <thead className="bg-zinc-50">
                           <tr>
-                            {["Name", "Stall", "Type", "Amount", "Free", "Paid", "CGST", "SGST", "IGST", "Total", "Actions", "Preview"].map((h) => (
-                              <th key={h} className="px-3 py-2.5 text-left text-[12px] font-semibold text-zinc-500 uppercase tracking-widest">
+                            {[
+                              "Name",
+                              "Stall",
+                              "Type",
+                              "Amount",
+                              "Free",
+                              "Paid",
+                              "CGST",
+                              "SGST",
+                              "IGST",
+                              "Total",
+                              "Actions",
+                              "Preview",
+                            ].map((h) => (
+                              <th
+                                key={h}
+                                className="px-3 py-2.5 text-left text-[12px] font-semibold text-zinc-500 uppercase tracking-widest"
+                              >
                                 {h}
                               </th>
                             ))}
                           </tr>
                         </thead>
                         <tbody>
-                          {computedBadges.map(({ badge, isFree, amount, cgst, sgst, igst, total }) => (
-                            <tr key={badge.id} className="hover:bg-zinc-50 border-b border-zinc-50">
-                              <td className="px-3 py-3 text-[14px] font-semibold text-zinc-800">{badge.name}</td>
-                              <td className="px-3 py-3 text-[14px] text-zinc-700">{badge.stall_no}</td>
-                              <td className="px-3 py-3">
-                                {isFree ? (
-                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full">
-                                    <MdVerified size={12} /> FREE
-                                  </span>
-                                ) : (
-                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200 rounded-full">
-                                    <MdCurrencyRupee size={12} /> PAID
-                                  </span>
-                                )}
-                              </td>
-                              <td className="px-3 py-3 text-[14px] text-zinc-700">₹{amount.toFixed(2)}</td>
-                              <td className="px-3 py-3 text-[14px] text-zinc-700">{isFree ? 1 : 0}</td>
-                              <td className="px-3 py-3 text-[14px] text-zinc-700">{!isFree ? 1 : 0}</td>
-                              <td className="px-3 py-3 text-[14px] text-zinc-700">{cgst ? `₹${cgst.toFixed(2)}` : "-"}</td>
-                              <td className="px-3 py-3 text-[14px] text-zinc-700">{sgst ? `₹${sgst.toFixed(2)}` : "-"}</td>
-                              <td className="px-3 py-3 text-[14px] text-zinc-700">{igst ? `₹${igst.toFixed(2)}` : "-"}</td>
-                              <td className="px-3 py-3 text-[14px] font-semibold text-blue-700">₹{total.toFixed(2)}</td>
-                              <td className="px-3 py-3">
-                                <div className="flex items-center gap-1">
+                          {computedBadges.map(
+                            ({
+                              badge,
+                              isFree,
+                              amount,
+                              cgst,
+                              sgst,
+                              igst,
+                              total,
+                            }) => (
+                              <tr
+                                key={badge.id}
+                                className="hover:bg-zinc-50 border-b border-zinc-50"
+                              >
+                                <td className="px-3 py-3 text-[14px] font-semibold text-zinc-800">
+                                  {badge.name}
+                                </td>
+                                <td className="px-3 py-3 text-[14px] text-zinc-700">
+                                  {badge.stall_no}
+                                </td>
+                                <td className="px-3 py-3">
+                                  {isFree ? (
+                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full">
+                                      <MdVerified size={12} /> FREE
+                                    </span>
+                                  ) : (
+                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200 rounded-full">
+                                      <MdCurrencyRupee size={12} /> PAID
+                                    </span>
+                                  )}
+                                </td>
+                                <td className="px-3 py-3 text-[14px] text-zinc-700">
+                                  ₹{amount.toFixed(2)}
+                                </td>
+                                <td className="px-3 py-3 text-[14px] text-zinc-700">
+                                  {isFree ? 1 : 0}
+                                </td>
+                                <td className="px-3 py-3 text-[14px] text-zinc-700">
+                                  {!isFree ? 1 : 0}
+                                </td>
+                                <td className="px-3 py-3 text-[14px] text-zinc-700">
+                                  {cgst ? `₹${cgst.toFixed(2)}` : "-"}
+                                </td>
+                                <td className="px-3 py-3 text-[14px] text-zinc-700">
+                                  {sgst ? `₹${sgst.toFixed(2)}` : "-"}
+                                </td>
+                                <td className="px-3 py-3 text-[14px] text-zinc-700">
+                                  {igst ? `₹${igst.toFixed(2)}` : "-"}
+                                </td>
+                                <td className="px-3 py-3 text-[14px] font-semibold text-blue-700">
+                                  ₹{total.toFixed(2)}
+                                </td>
+                                <td className="px-3 py-3">
+                                  <div className="flex items-center gap-1">
+                                    <button
+                                      onClick={() => togglePrintStatus(badge)}
+                                      className="p-1.5 hover:bg-zinc-100 rounded-md flex items-center gap-0.5"
+                                      title="Toggle print"
+                                    >
+                                      <MdPrint
+                                        size={15}
+                                        className="text-zinc-600"
+                                      />
+                                      {printToggle[badge.id] ? (
+                                        <MdToggleOn
+                                          size={26}
+                                          className="text-emerald-600"
+                                        />
+                                      ) : (
+                                        <MdToggleOff
+                                          size={26}
+                                          className="text-zinc-400"
+                                        />
+                                      )}
+                                    </button>
+                                    <button
+                                      onClick={() => openEditModal(badge)}
+                                      className="p-1.5 w-18 gap-1 text-center items-center justify-center flex text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded"
+                                      title="Edit"
+                                    >
+                                      <MdEdit size={14} /> Edit
+                                    </button>
+                                    <button
+                                      onClick={() => deleteBadge(badge.id)}
+                                      disabled={deletingId === badge.id}
+                                      className="p-1.5 text-red-700 gap-1 text-center items-center justify-center flex bg-red-50 hover:bg-red-100 border border-red-200 rounded disabled:opacity-50"
+                                      title="Delete"
+                                    >
+                                      {deletingId === badge.id ? (
+                                        <span className="block w-3.5 h-3.5 border-2 border-red-700 border-t-transparent rounded-full animate-spin" />
+                                      ) : (
+                                        <MdDelete size={14} />
+                                      )}
+                                      Delete
+                                    </button>
+                                  </div>
+                                </td>
+                                <td className="px-3 py-3">
                                   <button
-                                    onClick={() => togglePrintStatus(badge)}
-                                    className="p-1.5 hover:bg-zinc-100 rounded-md flex items-center gap-0.5"
-                                    title="Toggle print"
+                                    onClick={() => {
+                                      setPreviewBadgeId(badge.id);
+                                      setShowPreviewModal(true);
+                                    }}
+                                    className="p-1.5 text-zinc-700 gap-1 text-center items-center justify-center flex bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 rounded"
+                                    title="Preview"
                                   >
-                                    <MdPrint size={15} className="text-zinc-600" />
-                                    {printToggle[badge.id]
-                                      ? <MdToggleOn size={26} className="text-emerald-600" />
-                                      : <MdToggleOff size={26} className="text-zinc-400" />}
+                                    <MdVisibility size={14} /> Preview
                                   </button>
-                                  <button
-                                    onClick={() => openEditModal(badge)}
-                                    className="p-1.5 w-18 gap-1 text-center items-center justify-center flex text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded"
-                                    title="Edit"
-                                  >
-                                    <MdEdit size={14} /> Edit
-                                  </button>
-                                  <button
-                                    onClick={() => deleteBadge(badge.id)}
-                                    disabled={deletingId === badge.id}
-                                    className="p-1.5 text-red-700 gap-1 text-center items-center justify-center flex bg-red-50 hover:bg-red-100 border border-red-200 rounded disabled:opacity-50"
-                                    title="Delete"
-                                  >
-                                    {deletingId === badge.id ? (
-                                      <span className="block w-3.5 h-3.5 border-2 border-red-700 border-t-transparent rounded-full animate-spin" />
-                                    ) : <MdDelete size={14} />}Delete
-                                  </button>
-                                </div>
-                              </td>
-                              <td className="px-3 py-3">
-                                <button
-                                  onClick={() => { setPreviewBadgeId(badge.id); setShowPreviewModal(true); }}
-                                  className="p-1.5 text-zinc-700 gap-1 text-center items-center justify-center flex bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 rounded"
-                                  title="Preview"
-                                >
-                                  <MdVisibility size={14} /> Preview
-                                </button>
-                              </td>
-                            </tr>
-                          ))}
+                                </td>
+                              </tr>
+                            ),
+                          )}
                           <tr className="bg-blue-50 font-bold">
-                            <td colSpan="3" className="px-3 py-3 text-[13px] text-zinc-800">Total</td>
-                            <td className="px-3 py-3 text-[14px] text-zinc-800">₹{totalAmount.toFixed(2)}</td>
-                            <td className="px-3 py-3 text-[14px] text-zinc-800">{totalFree}</td>
-                            <td className="px-3 py-3 text-[14px] text-zinc-800">{totalPaid}</td>
-                            <td className="px-3 py-3 text-[14px] text-zinc-800">₹{totalCGST.toFixed(2)}</td>
-                            <td className="px-3 py-3 text-[14px] text-zinc-800">₹{totalSGST.toFixed(2)}</td>
-                            <td className="px-3 py-3 text-[14px] text-zinc-800">₹{totalIGST.toFixed(2)}</td>
-                            <td className="px-3 py-3 text-[14px] text-blue-700">₹{grandTotalAll.toFixed(2)}</td>
+                            <td
+                              colSpan="3"
+                              className="px-3 py-3 text-[13px] text-zinc-800"
+                            >
+                              Total
+                            </td>
+                            <td className="px-3 py-3 text-[14px] text-zinc-800">
+                              ₹{totalAmount.toFixed(2)}
+                            </td>
+                            <td className="px-3 py-3 text-[14px] text-zinc-800">
+                              {totalFree}
+                            </td>
+                            <td className="px-3 py-3 text-[14px] text-zinc-800">
+                              {totalPaid}
+                            </td>
+                            <td className="px-3 py-3 text-[14px] text-zinc-800">
+                              ₹{totalCGST.toFixed(2)}
+                            </td>
+                            <td className="px-3 py-3 text-[14px] text-zinc-800">
+                              ₹{totalSGST.toFixed(2)}
+                            </td>
+                            <td className="px-3 py-3 text-[14px] text-zinc-800">
+                              ₹{totalIGST.toFixed(2)}
+                            </td>
+                            <td className="px-3 py-3 text-[14px] text-blue-700">
+                              ₹{grandTotalAll.toFixed(2)}
+                            </td>
                             <td colSpan="2" />
                           </tr>
                         </tbody>
@@ -627,78 +883,147 @@ export default function ExhibitorBadges() {
 
                     {/* Mobile cards */}
                     <div className="xl:hidden divide-y divide-zinc-100">
-                      {computedBadges.map(({ badge, isFree, amount, cgst, sgst, igst, total }) => (
-                        <div key={badge.id} className="p-4 space-y-2">
-                          <div className="flex items-start justify-between gap-2">
-                            <div className="min-w-0">
-                              <p className="font-semibold text-[14px] text-zinc-800 truncate">{badge.name}</p>
-                              <p className="text-[12px] text-zinc-400">Stall: {badge.stall_no}</p>
+                      {computedBadges.map(
+                        ({
+                          badge,
+                          isFree,
+                          amount,
+                          cgst,
+                          sgst,
+                          igst,
+                          total,
+                        }) => (
+                          <div key={badge.id} className="p-4 space-y-2">
+                            <div className="flex items-start justify-between gap-2">
+                              <div className="min-w-0">
+                                <p className="font-semibold text-[14px] text-zinc-800 truncate">
+                                  {badge.name}
+                                </p>
+                                <p className="text-[12px] text-zinc-400">
+                                  Stall: {badge.stall_no}
+                                </p>
+                              </div>
+                              <div className="flex items-center gap-1 shrink-0">
+                                {isFree ? (
+                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full">
+                                    <MdVerified size={11} /> FREE
+                                  </span>
+                                ) : (
+                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200 rounded-full">
+                                    <MdCurrencyRupee size={11} /> PAID
+                                  </span>
+                                )}
+                              </div>
                             </div>
-                            <div className="flex items-center gap-1 shrink-0">
-                              {isFree ? (
-                                <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full">
-                                  <MdVerified size={11} /> FREE
-                                </span>
-                              ) : (
-                                <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200 rounded-full">
-                                  <MdCurrencyRupee size={11} /> PAID
-                                </span>
-                              )}
+                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-3 gap-y-1 text-[12px]">
+                              <div>
+                                <span className="text-zinc-400">Amount: </span>
+                                <b className="text-zinc-700">
+                                  ₹{amount.toFixed(2)}
+                                </b>
+                              </div>
+                              <div>
+                                <span className="text-zinc-400">CGST: </span>
+                                <b className="text-zinc-700">
+                                  {cgst ? `₹${cgst.toFixed(2)}` : "-"}
+                                </b>
+                              </div>
+                              <div>
+                                <span className="text-zinc-400">SGST: </span>
+                                <b className="text-zinc-700">
+                                  {sgst ? `₹${sgst.toFixed(2)}` : "-"}
+                                </b>
+                              </div>
+                              <div>
+                                <span className="text-zinc-400">IGST: </span>
+                                <b className="text-zinc-700">
+                                  {igst ? `₹${igst.toFixed(2)}` : "-"}
+                                </b>
+                              </div>
+                              <div className="col-span-2 sm:col-span-3 pt-1 border-t border-zinc-100 mt-1">
+                                <span className="text-zinc-400">Total: </span>
+                                <b className="text-blue-700 text-[13px]">
+                                  ₹{total.toFixed(2)}
+                                </b>
+                              </div>
+                            </div>
+                            <div className="flex items-center justify-end gap-1.5 pt-1">
+                              <button
+                                onClick={() => togglePrintStatus(badge)}
+                                className="p-1.5 hover:bg-zinc-100 rounded-md flex items-center"
+                              >
+                                <MdPrint size={14} className="text-zinc-600" />
+                                {printToggle[badge.id] ? (
+                                  <MdToggleOn
+                                    size={22}
+                                    className="text-emerald-600"
+                                  />
+                                ) : (
+                                  <MdToggleOff
+                                    size={22}
+                                    className="text-zinc-400"
+                                  />
+                                )}
+                              </button>
+                              <button
+                                onClick={() => {
+                                  setPreviewBadgeId(badge.id);
+                                  setShowPreviewModal(true);
+                                }}
+                                className="p-1.5 text-zinc-700 bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 rounded-md"
+                              >
+                                <MdVisibility size={13} />
+                              </button>
+                              <button
+                                onClick={() => openEditModal(badge)}
+                                className="p-1.5 text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-md"
+                              >
+                                <MdEdit size={13} />
+                              </button>
+                              <button
+                                onClick={() => deleteBadge(badge.id)}
+                                className="p-1.5 text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded-md"
+                              >
+                                {deletingId === badge.id ? (
+                                  <span className="block w-3.5 h-3.5 border-2 border-red-700 border-t-transparent rounded-full animate-spin" />
+                                ) : (
+                                  <MdDelete size={13} />
+                                )}
+                              </button>
                             </div>
                           </div>
-                          <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-3 gap-y-1 text-[12px]">
-                            <div><span className="text-zinc-400">Amount: </span><b className="text-zinc-700">₹{amount.toFixed(2)}</b></div>
-                            <div><span className="text-zinc-400">CGST: </span><b className="text-zinc-700">{cgst ? `₹${cgst.toFixed(2)}` : "-"}</b></div>
-                            <div><span className="text-zinc-400">SGST: </span><b className="text-zinc-700">{sgst ? `₹${sgst.toFixed(2)}` : "-"}</b></div>
-                            <div><span className="text-zinc-400">IGST: </span><b className="text-zinc-700">{igst ? `₹${igst.toFixed(2)}` : "-"}</b></div>
-                            <div className="col-span-2 sm:col-span-3 pt-1 border-t border-zinc-100 mt-1">
-                              <span className="text-zinc-400">Total: </span>
-                              <b className="text-blue-700 text-[13px]">₹{total.toFixed(2)}</b>
-                            </div>
-                          </div>
-                          <div className="flex items-center justify-end gap-1.5 pt-1">
-                            <button
-                              onClick={() => togglePrintStatus(badge)}
-                              className="p-1.5 hover:bg-zinc-100 rounded-md flex items-center"
-                            >
-                              <MdPrint size={14} className="text-zinc-600" />
-                              {printToggle[badge.id]
-                                ? <MdToggleOn size={22} className="text-emerald-600" />
-                                : <MdToggleOff size={22} className="text-zinc-400" />}
-                            </button>
-                            <button
-                              onClick={() => { setPreviewBadgeId(badge.id); setShowPreviewModal(true); }}
-                              className="p-1.5 text-zinc-700 bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 rounded-md"
-                            >
-                              <MdVisibility size={13} />
-                            </button>
-                            <button
-                              onClick={() => openEditModal(badge)}
-                              className="p-1.5 text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-md"
-                            >
-                              <MdEdit size={13} />
-                            </button>
-                            <button
-                              onClick={() => deleteBadge(badge.id)}
-                              className="p-1.5 text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded-md"
-                            >
-                              {deletingId === badge.id ? (
-                                <span className="block w-3.5 h-3.5 border-2 border-red-700 border-t-transparent rounded-full animate-spin" />
-                              ) : <MdDelete size={13} />}
-                            </button>
-                          </div>
-                        </div>
-                      ))}
+                        ),
+                      )}
                       <div className="p-4 bg-blue-50 grid grid-cols-2 gap-x-3 gap-y-1 text-[12px]">
-                        <div><span className="text-zinc-500">Free: </span><b>{totalFree}</b></div>
-                        <div><span className="text-zinc-500">Paid: </span><b>{totalPaid}</b></div>
-                        <div><span className="text-zinc-500">Amount: </span><b>₹{totalAmount.toFixed(2)}</b></div>
-                        <div><span className="text-zinc-500">CGST: </span><b>₹{totalCGST.toFixed(2)}</b></div>
-                        <div><span className="text-zinc-500">SGST: </span><b>₹{totalSGST.toFixed(2)}</b></div>
-                        <div><span className="text-zinc-500">IGST: </span><b>₹{totalIGST.toFixed(2)}</b></div>
+                        <div>
+                          <span className="text-zinc-500">Free: </span>
+                          <b>{totalFree}</b>
+                        </div>
+                        <div>
+                          <span className="text-zinc-500">Paid: </span>
+                          <b>{totalPaid}</b>
+                        </div>
+                        <div>
+                          <span className="text-zinc-500">Amount: </span>
+                          <b>₹{totalAmount.toFixed(2)}</b>
+                        </div>
+                        <div>
+                          <span className="text-zinc-500">CGST: </span>
+                          <b>₹{totalCGST.toFixed(2)}</b>
+                        </div>
+                        <div>
+                          <span className="text-zinc-500">SGST: </span>
+                          <b>₹{totalSGST.toFixed(2)}</b>
+                        </div>
+                        <div>
+                          <span className="text-zinc-500">IGST: </span>
+                          <b>₹{totalIGST.toFixed(2)}</b>
+                        </div>
                         <div className="col-span-2 pt-1 border-t border-blue-200">
                           <span className="text-zinc-500">Grand Total: </span>
-                          <b className="text-blue-700 text-[14px]">₹{grandTotalAll.toFixed(2)}</b>
+                          <b className="text-blue-700 text-[14px]">
+                            ₹{grandTotalAll.toFixed(2)}
+                          </b>
                         </div>
                       </div>
                     </div>
@@ -712,7 +1037,14 @@ export default function ExhibitorBadges() {
 
       {/* ============= PREVIEW MODAL ============= */}
       {showPreviewModal && (
-        <ModalShell title="Badge Preview" onClose={() => { setShowPreviewModal(false); setPreviewBadgeId(null); }} wide>
+        <ModalShell
+          title="Badge Preview"
+          onClose={() => {
+            setShowPreviewModal(false);
+            setPreviewBadgeId(null);
+          }}
+          wide
+        >
           <div className="flex justify-center">
             <img
               src={`${API}/exhibitor_badges_preview.php?id=${previewBadgeId}&t=${Date.now()}`}
@@ -730,22 +1062,44 @@ export default function ExhibitorBadges() {
           onClose={() => setShowEditModal(false)}
           footer={
             <>
-              <BtnGhost onClick={() => setShowEditModal(false)}>Cancel</BtnGhost>
+              <BtnGhost onClick={() => setShowEditModal(false)}>
+                Cancel
+              </BtnGhost>
               <BtnPrimary onClick={updateBadge}>Update Badge</BtnPrimary>
             </>
           }
         >
           <Field label="Candidate Name">
-            <Input value={editingBadge.name} onChange={(e) => setEditingBadge({ ...editingBadge, name: e.target.value })} />
+            <Input
+              value={editingBadge.name}
+              onChange={(e) =>
+                setEditingBadge({ ...editingBadge, name: e.target.value })
+              }
+            />
           </Field>
           <Field label="Stall No">
-            <Input value={editingBadge.stall_no} onChange={(e) => setEditingBadge({ ...editingBadge, stall_no: e.target.value })} />
+            <Input
+              value={editingBadge.stall_no}
+              onChange={(e) =>
+                setEditingBadge({ ...editingBadge, stall_no: e.target.value })
+              }
+            />
           </Field>
           <Field label="State">
-            <Input value={editingBadge.state} onChange={(e) => setEditingBadge({ ...editingBadge, state: e.target.value })} />
+            <Input
+              value={editingBadge.state}
+              onChange={(e) =>
+                setEditingBadge({ ...editingBadge, state: e.target.value })
+              }
+            />
           </Field>
           <Field label="City">
-            <Input value={editingBadge.city} onChange={(e) => setEditingBadge({ ...editingBadge, city: e.target.value })} />
+            <Input
+              value={editingBadge.city}
+              onChange={(e) =>
+                setEditingBadge({ ...editingBadge, city: e.target.value })
+              }
+            />
           </Field>
           <Field label="Photo">
             <input
@@ -754,13 +1108,22 @@ export default function ExhibitorBadges() {
               onChange={(e) => {
                 const file = e.target.files[0];
                 if (!file) return;
-                if (editingBadge.preview?.startsWith("blob:")) URL.revokeObjectURL(editingBadge.preview);
-                setEditingBadge((p) => ({ ...p, candidate_photo: file, preview: URL.createObjectURL(file) }));
+                if (editingBadge.preview?.startsWith("blob:"))
+                  URL.revokeObjectURL(editingBadge.preview);
+                setEditingBadge((p) => ({
+                  ...p,
+                  candidate_photo: file,
+                  preview: URL.createObjectURL(file),
+                }));
               }}
               className="block w-full text-[13px] text-zinc-600 file:mr-3 file:px-3 file:py-1.5 file:rounded-lg file:border-0 file:text-[12px] file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
             />
             {editingBadge?.preview && (
-              <img src={editingBadge.preview} alt="preview" className="mt-2 h-24 w-24 object-cover rounded-lg border border-zinc-200" />
+              <img
+                src={editingBadge.preview}
+                alt="preview"
+                className="mt-2 h-24 w-24 object-cover rounded-lg border border-zinc-200"
+              />
             )}
           </Field>
         </ModalShell>
@@ -770,31 +1133,48 @@ export default function ExhibitorBadges() {
       {showBadgePopup && (
         <ModalShell
           title="Add Exhibitor Badge"
-          onClose={() => { setShowBadgePopup(false); setPhotoPreview(null); }}
+          onClose={() => {
+            setShowBadgePopup(false);
+            setPhotoPreview(null);
+          }}
         >
           <form onSubmit={handleSubmit} className="space-y-3">
             <div className="flex items-center justify-between gap-2">
               {newBadgeIsFree ? (
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[12px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[12px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded">
                   <MdVerified size={13} /> FREE
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[12px] font-bold bg-amber-50 text-amber-700 border border-amber-200 rounded-full">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[12px] font-bold bg-amber-50 text-amber-700 border border-amber-200 rounded">
                   <MdCurrencyRupee size={13} /> PAID
                 </span>
               )}
               <span className="text-[12px] text-zinc-500">
-                Free Remaining: <b className="text-zinc-800">{Math.max(0, freeRemaining)}</b>
+                Free Remaining:{" "}
+                <b className="text-zinc-800">{Math.max(0, freeRemaining)}</b>
               </span>
             </div>
-            <Field label="Company"><Input value={formData.exhibitor_company_name} disabled /></Field>
+            <Field label="Company">
+              <Input value={formData.exhibitor_company_name} disabled />
+            </Field>
             <div className="grid grid-cols-2 gap-3">
-              <Field label="Stall No"><Input value={formData.stall_no} disabled /></Field>
-              <Field label="State"><Input value={formData.state} disabled /></Field>
+              <Field label="Stall No">
+                <Input value={formData.stall_no} disabled />
+              </Field>
+              <Field label="State">
+                <Input value={formData.state} disabled />
+              </Field>
             </div>
-            <Field label="City"><Input value={formData.city} disabled /></Field>
+            <Field label="City">
+              <Input value={formData.city} disabled />
+            </Field>
             <Field label="Candidate Name">
-              <Input name="name" value={formData.name} onChange={handleInputChange} placeholder="Enter Name" />
+              <Input
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                placeholder="Enter Name"
+              />
             </Field>
             <Field label="Photo (max 2MB)">
               <input
@@ -804,14 +1184,29 @@ export default function ExhibitorBadges() {
                 className="block w-full text-[13px] text-zinc-600 file:mr-3 file:px-3 file:py-1.5 file:rounded-lg file:border-0 file:text-[12px] file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
               />
               {photoPreview && (
-                <img src={photoPreview} alt="preview" className="mt-2 h-24 w-24 object-cover rounded-lg border border-zinc-200" />
+                <img
+                  src={photoPreview}
+                  alt="preview"
+                  className="mt-2 h-24 w-24 object-cover rounded-lg border border-zinc-200"
+                />
               )}
             </Field>
-            <div className="flex justify-end pt-2">
+            <div className="flex justify-end pt-2 gap-4">
+              <button
+                onClick={() => {
+                  setShowBadgePopup(false);
+                  setPhotoPreview(null);
+                }}
+                type="button"
+                className="ml-2 px-4 py-2 text-[14px] font-semibold bg-zinc-400 hover:bg-zinc-200 text-zinc-100 hover:text-zinc-700 rounded transition-colors"
+              >
+                Cancle
+              </button>
+
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-4 py-2 text-[14px] font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-lg disabled:opacity-60 transition-colors"
+                className="px-4 py-2 text-[14px] font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded disabled:opacity-60 transition-colors"
               >
                 {isSubmitting ? "Generating..." : "Generate Badge"}
               </button>
@@ -826,10 +1221,17 @@ export default function ExhibitorBadges() {
           title="Select Exhibitor"
           wide
           onClose={() => setShowExhibitorPopup(false)}
-          footer={<BtnGhost onClick={() => setShowExhibitorPopup(false)}>Close</BtnGhost>}
+          footer={
+            <BtnGhost onClick={() => setShowExhibitorPopup(false)}>
+              Close
+            </BtnGhost>
+          }
         >
           <div className="relative mb-3">
-            <MdSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" size={18} />
+            <MdSearch
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400"
+              size={18}
+            />
             <input
               type="text"
               placeholder="Search exhibitor..."
@@ -840,21 +1242,30 @@ export default function ExhibitorBadges() {
           </div>
           <div className="max-h-[55vh] overflow-y-auto border border-zinc-100 rounded-lg divide-y divide-zinc-100">
             {filteredExhibitors.length === 0 ? (
-              <p className="p-6 text-center text-zinc-400 text-[14px]">No exhibitors found</p>
+              <p className="p-6 text-center text-zinc-400 text-[14px]">
+                No exhibitors found
+              </p>
             ) : (
               filteredExhibitors.map((ex, i) => (
-                <div key={i} className="flex items-center justify-between gap-2 px-3 py-2.5 hover:bg-zinc-50">
-                  <span className="text-[14px] text-zinc-800 truncate">{ex.company_name}</span>
+                <div
+                  key={i}
+                  className="flex items-center justify-between gap-2 px-3 py-2.5 hover:bg-zinc-50"
+                >
+                  <span className="text-[14px] text-zinc-800 truncate">
+                    {ex.company_name}
+                  </span>
                   <button
                     onClick={() => {
-                      const fullCompany = companies.find((c) => c.company_name === ex.company_name);
+                      const fullCompany = companies.find(
+                        (c) => c.company_name === ex.company_name,
+                      );
                       setSelectedCompany(fullCompany || ex);
                       setShowExhibitorPopup(false);
                       setFormData({
                         exhibitor_company_name: ex.company_name,
                         stall_no: ex.stall_no || "",
-                        state:    ex.state || "",
-                        city:     ex.city || "",
+                        state: ex.state || "",
+                        city: ex.city || "",
                         exhibitor_id: ex.id || "",
                         name: "",
                         candidate_photo: null,
@@ -880,9 +1291,13 @@ export default function ExhibitorBadges() {
 function ModalShell({ title, onClose, children, footer, wide }) {
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className={`bg-white rounded-xl shadow-xl w-full ${wide ? "max-w-3xl" : "max-w-md"} max-h-[92vh] flex flex-col overflow-hidden`}>
+      <div
+        className={`bg-white rounded-xl shadow-xl w-full ${wide ? "max-w-3xl" : "max-w-md"} max-h-[92vh] flex flex-col overflow-hidden`}
+      >
         <div className="px-5 py-3.5 border-b border-zinc-100 flex items-center justify-between shrink-0">
-          <h3 className="text-[15px] font-bold text-zinc-800 truncate pr-3">{title}</h3>
+          <h3 className="text-[15px] font-bold text-zinc-800 truncate pr-3">
+            {title}
+          </h3>
           <button
             onClick={onClose}
             className="w-8 h-8 rounded-lg hover:bg-zinc-100 flex items-center justify-center text-zinc-400 hover:text-zinc-700 transition-colors shrink-0"
@@ -904,7 +1319,9 @@ function ModalShell({ title, onClose, children, footer, wide }) {
 function Field({ label, children }) {
   return (
     <div className="space-y-1">
-      <label className="block text-[12px] font-semibold text-zinc-500 uppercase tracking-wider">{label}</label>
+      <label className="block text-[12px] font-semibold text-zinc-500 uppercase tracking-wider">
+        {label}
+      </label>
       {children}
     </div>
   );
