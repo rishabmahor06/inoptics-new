@@ -211,7 +211,7 @@ export default function AppointedContractor() {
               <button
                 type="button"
                 onClick={() => setShowRegistrationModal(true)}
-                className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-zinc-900 px-4 text-[13px] font-semibold text-white transition hover:bg-zinc-800"
+                className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded bg-zinc-900 px-4 text-[13px] font-semibold text-white transition hover:bg-zinc-800"
               >
                 <MdEmail size={16} />
                 Open Registration Form
@@ -288,7 +288,7 @@ export default function AppointedContractor() {
                                 type="button"
                                 onClick={() => selectContractor(contractor.id, ex)}
                                 disabled={selecting || hasSelection}
-                                className="inline-flex h-9 items-center justify-center rounded-lg bg-emerald-600 px-3 text-[12px] font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-zinc-200 disabled:text-zinc-500"
+                                className="inline-flex h-9 items-center justify-center rounded bg-emerald-600 px-3 text-[12px] font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-zinc-200 disabled:text-zinc-500"
                               >
                                 {selecting ? "Selecting..." : "Select"}
                               </button>
@@ -511,7 +511,7 @@ export default function AppointedContractor() {
                 href={registrationFormUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-zinc-200 bg-white px-4 text-[13px] font-semibold text-zinc-700 transition hover:bg-zinc-100"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded border border-zinc-200 bg-white px-4 text-[13px] font-semibold text-zinc-700 transition hover:bg-zinc-100"
               >
                 <MdDescription size={16} />
                 View Form
@@ -521,7 +521,7 @@ export default function AppointedContractor() {
               type="button"
               onClick={() => sendRegistrationMail(contractorEmail)}
               disabled={sendingMail}
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-zinc-900 px-4 text-[13px] font-semibold text-white transition hover:bg-zinc-800 disabled:opacity-60"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded bg-zinc-900 px-4 text-[13px] font-semibold text-white transition hover:bg-zinc-800 disabled:opacity-60"
             >
               <MdEmail size={16} />
               {sendingMail ? "Sending..." : "Send Mail"}

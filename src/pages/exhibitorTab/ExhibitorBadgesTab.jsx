@@ -626,14 +626,14 @@ function BadgeEditorCard({
             min="0"
             value={value ?? ""}
             onChange={(event) => onChange(event.target.value)}
-            className="h-11 w-full rounded-lg border border-zinc-200 bg-white px-3 text-[14px] text-zinc-900 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+            className="h-11 w-full rounded border border-zinc-200 bg-white px-3 text-[14px] text-zinc-900 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
           />
         </div>
 
         <button
           type="submit"
           disabled={disabled}
-          className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-white px-4 text-[13px] font-semibold text-zinc-800 ring-1 ring-zinc-200 transition hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex h-10 w-full items-center justify-center gap-2 rounded bg-white px-4 text-[13px] font-semibold text-zinc-800 ring-1 ring-zinc-200 transition hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-60"
         >
           <MdSave size={16} />
           {buttonLabel}
