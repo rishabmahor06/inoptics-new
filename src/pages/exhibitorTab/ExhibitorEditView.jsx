@@ -28,10 +28,10 @@ export default function ExhibitorEditView() {
   if (!ex) return null;
 
   const ActiveComponent = TABS.find(t => t.id === activeSubTab)?.component || BasicDetails;
-  const isPowerTab = activeSubTab === 'power';
+  const isContainedTab = activeSubTab === 'power' || activeSubTab === 'contractor';
 
   return (
-    <div className={isPowerTab ? 'flex h-full min-h-0 flex-col' : ''}>
+    <div className={isContainedTab ? 'flex h-full min-h-0 flex-col' : ''}>
       {/* Back + company header */}
       <div className="flex items-center gap-3 mb-5">
         <button
@@ -53,7 +53,7 @@ export default function ExhibitorEditView() {
       </div>
 
       {/* Card with sub-tabs */}
-      <div className={`bg-white rounded-xl shadow-sm overflow-hidden ${isPowerTab ? 'flex min-h-0 flex-1 flex-col' : ''}`}>
+      <div className={`bg-white rounded-xl shadow-sm overflow-hidden ${isContainedTab ? 'flex min-h-0 flex-1 flex-col' : ''}`}>
 
         {/* Tab bar — using relative + absolute bottom line to avoid border conflict with button reset */}
         <div className="flex overflow-x-auto border-b border-zinc-100 [scrollbar-width:none]">
@@ -78,7 +78,7 @@ export default function ExhibitorEditView() {
         </div>
 
         {/* Content */}
-        <div className={isPowerTab ? 'flex-1 min-h-0 overflow-hidden p-5' : 'p-5'}>
+        <div className={isContainedTab ? 'flex-1 min-h-0 overflow-hidden p-5' : 'p-5'}>
           <ActiveComponent />
         </div>
       </div>

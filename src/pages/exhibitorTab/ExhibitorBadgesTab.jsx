@@ -440,7 +440,7 @@ export default function ExhibitorBadgesTab() {
                 className={
                   unlockRequested
                     ? "bg-zinc-200 text-zinc-500"
-                    : "bg-orange-500 text-white hover:bg-orange-600"
+                    : "bg-green-700 text-white hover:bg-green-600"
                 }
               >
                 {unlockRequested ? "Unlock Requested" : "Unlock Badges"}
@@ -649,7 +649,7 @@ function ActionButton({ onClick, disabled, icon, className, children }) {
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={`inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg px-4 text-[13px] font-semibold transition disabled:cursor-not-allowed disabled:opacity-60 ${className}`}
+      className={`inline-flex h-10 w-full items-center justify-center gap-2 rounded px-4 text-[13px] font-semibold transition disabled:cursor-not-allowed disabled:opacity-60 ${className}`}
     >
       {icon}
       {children}
