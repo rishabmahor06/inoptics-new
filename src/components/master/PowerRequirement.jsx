@@ -1,24 +1,17 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { API, MasterTable, MasterTr, MasterTd, MasterActions, MasterModal, MasterField, MasterInput, SectionHead } from './_shared';
+import { MasterTable, MasterTr, MasterTd, MasterActions, MasterModal, MasterField, MasterInput, SectionHead } from './_shared';
+import { usePowerTypesStore } from '../../store/master/usePowerTypesStore';
 
 const EMPTY = { power_type: '', price: '' };
 
 export default function PowerRequirement() {
-  const [rows, setRows]       = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { rows, loading, fetch: load, add, update, delete: remove } = usePowerTypesStore();
   const [search, setSearch]   = useState('');
   const [modal, setModal]     = useState(null);
   const [editing, setEditing] = useState(null);
   const [form, setForm]       = useState(EMPTY);
   const [saving, setSaving]   = useState(false);
-
-  const load = useCallback(async () => {
-    setLoading(true);
-    try { const r = await fetch(`${API}/get_power_requirement.php`); const d = await r.json(); setRows(Array.isArray(d) ? d : []); }
-    catch { toast.error('Failed to load power requirements'); }
-    finally { setLoading(false); }
-  }, []);
 
   useEffect(() => { load(); }, [load]);
 
@@ -35,23 +28,16 @@ export default function PowerRequirement() {
     if (!form.power_type.trim() || !form.price) { toast.error('All fields required'); return; }
     setSaving(true);
     try {
-      const body = modal === 'add'
-        ? { power_type: form.power_type, price: parseFloat(form.price) }
-        : { id: editing.id, power_type: form.power_type, price: parseFloat(form.price) };
-      const res = await fetch(`${API}/${modal === 'add' ? 'add_power_requirement.php' : 'update_power_requirement.php'}`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
-      }).then(r => r.json());
-      toast.success(res.message || 'Saved'); load(); setModal(null);
-    } catch { toast.error('Error saving'); }
-    finally { setSaving(false); }
+      const ok = modal === 'add'
+        ? await add({ power_type: form.power_type, price: parseFloat(form.price) })
+        : await update({ id: editing.id, power_type: form.power_type, price: parseFloat(form.price) });
+      if (ok) setModal(null);
+    } finally { setSaving(false); }
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this power requirement?')) return;
-    try {
-      const r = await fetch(`${API}/delete_power_requirement.php`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) }).then(r => r.json());
-      toast.success(r.message || 'Deleted'); load();
-    } catch { toast.error('Error deleting'); }
+    await remove(id);
   };
 
   const types = [...new Set(rows.map(r => r.power_type?.trim()).filter(Boolean))];
