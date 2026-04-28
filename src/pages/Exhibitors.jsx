@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { MdEdit, MdDelete, MdDescription, MdVisibility, MdSearch } from 'react-icons/md';
 import { useNavStore } from '../store/useNavStore';
+import { useExhibitorListStore } from '../store/exhibitor/useExhibitorListStore';
 import ExhibitorEditView from './exhibitorTab/ExhibitorEditView';
-
-const API_URL = 'https://inoptics.in/api/get_exhibitors.php';
 
 function chunk(arr, size) {
   const out = [];
@@ -42,18 +41,13 @@ function BSBadge({ label }) {
 
 export default function Exhibitors() {
   const { editingExhibitor, setEditingExhibitor } = useNavStore();
-  const [rawData,       setRawData]       = useState([]);
-  const [loading,       setLoading]       = useState(true);
-  const [error,         setError]         = useState(null);
+  const { rawData, loading, error, fetchExhibitors } = useExhibitorListStore();
   const [companySearch, setCompanySearch] = useState('');
   const [bsSearch,      setBsSearch]      = useState('');
 
   useEffect(() => {
-    fetch(API_URL)
-      .then(r => r.json())
-      .then(data => { setRawData(Array.isArray(data) ? data : []); setLoading(false); })
-      .catch(err => { setError(err.message); setLoading(false); });
-  }, []);
+    fetchExhibitors();
+  }, [fetchExhibitors]);
 
   if (editingExhibitor) return <ExhibitorEditView />;
 

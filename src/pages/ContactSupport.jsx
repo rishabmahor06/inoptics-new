@@ -103,7 +103,7 @@ export default function ContactSupport() {
                 <div className="px-4 py-3 bg-zinc-50 border-b border-zinc-100 flex items-start justify-between gap-2">
                   <div className="min-w-0">
                     <p className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest mb-0.5">
-                      Ticket #{index + 1}
+                      Ticket {index + 1}
                     </p>
                     <p className="text-[14px] font-bold text-zinc-900 truncate leading-tight">
                       {ticket.company_name || 'No Company'}
@@ -112,25 +112,25 @@ export default function ContactSupport() {
                   <button
                     onClick={() => handleDelete(ticket.id)}
                     disabled={deletingId === ticket.id}
-                    className="w-8 h-8 rounded-lg bg-white border border-zinc-200 text-zinc-400 hover:bg-red-50 hover:border-red-200 hover:text-red-500 flex items-center justify-center shrink-0 transition-all disabled:opacity-40"
+                    className="w-20 h-8 rounded bg-white border border-zinc-200 text-zinc-400 hover:bg-red-50 hover:border-red-200 hover:text-red-500 flex items-center justify-center shrink-0 transition-all disabled:opacity-40"
                   >
-                    <MdDeleteOutline size={16} />
+                    <MdDeleteOutline size={16} /> Delete
                   </button>
                 </div>
 
                 {/* Card info */}
                 <div className="px-4 py-3 space-y-2 flex-1">
                   <div className="flex items-center gap-2">
-                    <MdPerson size={14} className="text-zinc-400 shrink-0" />
-                    <span className="text-[13px] text-zinc-700 font-medium truncate">{ticket.name}</span>
+                    <MdPerson size={14} className="text-green-700 shrink-0" />
+                    <span className="text-[13px] text-zinc-900 font-medium truncate">{ticket.name}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <MdEmail size={14} className="text-zinc-400 shrink-0" />
-                    <span className="text-[13px] text-zinc-500 truncate">{ticket.email}</span>
+                    <MdEmail size={14} className="text-green-700 shrink-0" />
+                    <span className="text-[13px] text-zinc-900 truncate">{ticket.email}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <MdPhone size={14} className="text-zinc-400 shrink-0" />
-                    <span className="text-[13px] text-zinc-500">{ticket.mobile}</span>
+                    <MdPhone size={14} className="text-green-700 shrink-0" />
+                    <span className="text-[13px] text-zinc-900">{ticket.mobile}</span>
                   </div>
 
                   {/* Message */}
@@ -138,8 +138,8 @@ export default function ContactSupport() {
                     <p className="text-[11px] font-semibold text-zinc-400 uppercase tracking-widest mb-1.5">
                       Message
                     </p>
-                    <div className="bg-zinc-50 border border-zinc-100 rounded-lg px-3 py-2.5 max-h-28 overflow-y-auto">
-                      <p className="text-[13px] text-zinc-700 leading-relaxed whitespace-pre-line">
+                    <div className="bg-red-50 border border-red-100 rounded-lg px-3 py-2.5 max-h-28 overflow-y-auto">
+                      <p className="text-[13px] text-red-700 leading-relaxed whitespace-pre-line">
                         {cleanMessage(ticket.message) || <span className="italic text-zinc-300">No message</span>}
                       </p>
                     </div>
@@ -148,8 +148,8 @@ export default function ContactSupport() {
 
                 {/* Card footer */}
                 <div className="px-4 py-2.5 border-t border-zinc-100 flex items-center gap-1.5">
-                  <MdAccessTime size={12} className="text-zinc-300 shrink-0" />
-                  <span className="text-[11px] text-zinc-400">{ticket.submitted_at}</span>
+                  <MdAccessTime size={16} className="text-zinc-300 shrink-0" />
+                  <span className="text-[14px] text-zinc-400">{ticket.submitted_at}</span>
                 </div>
 
               </div>

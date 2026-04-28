@@ -196,7 +196,7 @@ export default function NewExhibitorRequest() {
             <div className="px-5 py-4 border-t border-zinc-100 flex gap-3">
               <button
                 onClick={() => handleMailClick(item)}
-                className="flex-1 h-10 rounded-lg bg-zinc-900 text-white text-sm font-semibold hover:bg-zinc-700 transition flex items-center justify-center gap-2"
+                className="flex-1 h-10 rounded bg-zinc-900 text-white text-sm font-semibold hover:bg-zinc-700 transition flex items-center justify-center gap-2"
               >
                 <MdMail size={18} />
                 Confirm Mail
@@ -204,9 +204,9 @@ export default function NewExhibitorRequest() {
 
               <button
                 onClick={() => handleDeleteClick(item.id)}
-                className="w-10 h-10 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition flex items-center justify-center"
+                className="w-22 h-10 rounded bg-red-50 border border-red-200 text-red-600 hover:bg-red-100 transition flex items-center justify-center"
               >
-                <MdDelete size={18} />
+                <MdDelete size={18} /> Delete 
               </button>
             </div>
           </div>
