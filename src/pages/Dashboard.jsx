@@ -172,7 +172,7 @@ export default function Dashboard() {
   const openTickets     = arr('support').filter(s => !s.status || ['open','pending'].includes(s.status?.toLowerCase()));
 
   const bannerCards = [
-    { title: 'Visitors Counts',   count: 120,               icon: MdVisibility,     bgImage: visitorsImg   },
+    
     { title: 'Exhibitors Counts', count: len('exhibitors'),  icon: MdPeople,         bgImage: exhibitorsImg },
     { title: 'Forms',             count: 42,                icon: MdAssignment,     bgImage: formsImg      },
     { title: 'Payment Details',   count: len('payments'),   icon: MdPayment,        bgImage: paymentsImg   },
@@ -217,8 +217,8 @@ export default function Dashboard() {
       </div>
 
       {/* ── Row 2: Banner cards ── */}
-      {/* Mobile: 2 cols | Tablet: 3 cols | Desktop: 6 cols fixed height */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 lg:shrink-0" style={{ '--banner-h': '148px' }}>
+      {/* Mobile: 2 cols | Tablet: 3 cols | Desktop: 5 cols fixed height */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 lg:shrink-0" style={{ '--banner-h': '148px' }}>
         <div className="contents lg:hidden">
           {bannerCards.map(c => <BannerCard key={c.title} {...c} loading={loading} />)}
         </div>

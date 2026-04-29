@@ -590,7 +590,7 @@ const deleteContractorReq = async (id) => {
               <div className="flex gap-2">
                 <button
                   onClick={exportContractorsToExcel}
-                  className="flex items-center gap-2 px-3 py-2 text-sm bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors"
+                  className="flex items-center gap-2 px-3 py-2 text-sm bg-emerald-600 hover:bg-emerald-700 text-white rounded transition-colors"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -599,7 +599,7 @@ const deleteContractorReq = async (id) => {
                 </button>
                 <button
                   onClick={() => { setEditItem(null); setModalMode('add'); }}
-                  className="flex items-center gap-2 px-3 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                  className="flex items-center gap-2 px-3 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -636,11 +636,11 @@ const deleteContractorReq = async (id) => {
                         <div className="flex gap-2">
                           <button
                             onClick={() => { setEditItem(item); setModalMode('edit'); }}
-                            className="px-3 py-1.5 text-xs bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-md font-medium transition-colors"
+                            className="px-3 py-1.5 text-xs bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-100 rounded font-medium transition-colors"
                           >Edit</button>
                           <button
                             onClick={() => deleteContractorReq(item.id)}
-                            className="px-3 py-1.5 text-xs bg-red-50 text-red-600 hover:bg-red-100 rounded-md font-medium transition-colors"
+                            className="px-3 py-1.5 text-xs bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 rounded font-medium transition-colors"
                           >Delete</button>
                         </div>
                       </td>
@@ -780,7 +780,7 @@ const deleteContractorReq = async (id) => {
             <div className="flex flex-wrap gap-3 mb-4">
               <button
                 onClick={() => { closeAllForms(); setShowAddUndertaking(true); setRichText(''); }}
-                className="flex items-center gap-2 px-3 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                className="flex items-center gap-2 px-3 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -789,7 +789,7 @@ const deleteContractorReq = async (id) => {
               </button>
               <button
                 onClick={() => { closeAllForms(); setShowAddRegistration(true); setRichText(''); }}
-                className="flex items-center gap-2 px-3 py-2 text-sm bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+                className="flex items-center gap-2 px-3 py-2 text-sm bg-purple-600 hover:bg-purple-700 text-white rounded transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -1160,7 +1160,7 @@ const deleteContractorReq = async (id) => {
                 placeholder="Search company..."
                 value={formSearch}
                 onChange={e => setFormSearch(e.target.value)}
-                className="pl-9 pr-4 py-2 text-sm border border-zinc-200 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="pl-9 pr-4 py-2 text-sm border border-zinc-200 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <svg className="absolute left-3 top-2.5 w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />

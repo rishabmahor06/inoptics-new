@@ -156,7 +156,7 @@ export default function Media() {
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); inputRef.current?.click(); }}
-              className="px-5 py-2 text-[13px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors shadow-sm"
+              className="px-5 py-2 text-[13px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded transition-colors shadow-sm"
             >
               Browse Files
             </button>
@@ -283,7 +283,7 @@ export default function Media() {
                   <div className="flex items-center gap-1.5 mt-2.5">
                     <button
                       onClick={() => handleCopy(img.image_url, img.id)}
-                      className={`flex-1 h-8 rounded-lg text-[11px] font-semibold flex items-center justify-center gap-1.5 border transition-colors
+                      className={`flex-1 h-8 rounded text-[11px] font-semibold flex items-center justify-center gap-1.5 border transition-colors
                         ${copied === img.id
                           ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
                           : 'bg-white text-blue-600 border-blue-200 hover:bg-blue-50'}`}
@@ -293,9 +293,9 @@ export default function Media() {
                     </button>
                     <button
                       onClick={() => handleDelete(img.id)}
-                      className="w-8 h-8 rounded-lg bg-red-50 text-red-500 border border-red-200 hover:bg-red-100 flex items-center justify-center transition-colors shrink-0"
+                      className="w-20 h-8 rounded bg-red-50 text-red-500 border border-red-200 hover:bg-red-100 flex items-center text-center gap-1.5 justify-center transition-colors shrink-0"
                     >
-                      <FaRegTrashAlt size={12} />
+                      <FaRegTrashAlt size={12} /> Delete
                     </button>
                   </div>
                 </div>

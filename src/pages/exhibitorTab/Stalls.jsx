@@ -283,7 +283,7 @@ function BillRow({ label, value, bold }) {
 /* ================= table ================= */
 
 const COLUMNS = [
-  { label: "Stall #",     key: "stall_number" },
+  { label: "Stall",     key: "stall_number" },
   { label: "Hall",        key: "hall_number" },
   { label: "Category",    key: "stall_category" },
   { label: "Price",       key: "stall_price" },
@@ -349,17 +349,17 @@ function StallsTable({ stallList, editStall, deleteStall }) {
                   <div className="flex gap-1.5">
                     <button
                       onClick={() => editStall(stall, i)}
-                      className="p-1.5 text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded"
+                      className="p-1.5 text-blue-700 w-fit h-8 gap-1 text-center items-center justify-center flex bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded"
                       title="Edit"
                     >
-                      <MdEdit size={14} />
+                      <MdEdit size={14} /> Edit
                     </button>
                     <button
                       onClick={() => deleteStall(i)}
-                      className="p-1.5 text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded"
+                      className="p-1.5 text-red-700 w-fit h-8 gap-1 text-center items-center justify-center flex bg-red-50 hover:bg-red-100 border border-red-200 rounded"
                       title="Delete"
                     >
-                      <MdDelete size={14} />
+                      <MdDelete size={14} /> Delete
                     </button>
                   </div>
                 </td>

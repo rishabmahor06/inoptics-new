@@ -145,11 +145,11 @@ export default function BasicDetails() {
 
           {/* Password readout (edit mode only) */}
           {isEdit && (
-            <div className="flex items-center gap-2 px-3 py-2.5 bg-zinc-50 border border-zinc-200 rounded">
-              <MdLockReset size={16} className="text-zinc-500 shrink-0" />
-              <p className="text-[13px] text-zinc-700">
+            <div className="flex items-center gap-2 px-3 py-2.5 bg-red-50 border border-red-200 rounded">
+              <MdLockReset size={16} className="text-red-500 shrink-0" />
+              <p className="text-[18px] text-red-700">
                 Password:{" "}
-                <span className="font-mono font-semibold text-zinc-900">
+                <span className="font-mono font-semibold text-red-900">
                   {formData.password || "N/A"}
                 </span>
               </p>

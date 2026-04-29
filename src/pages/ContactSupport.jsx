@@ -138,7 +138,7 @@ export default function ContactSupport() {
                     <p className="text-[11px] font-semibold text-zinc-400 uppercase tracking-widest mb-1.5">
                       Message
                     </p>
-                    <div className="bg-red-50 border border-red-100 rounded-lg px-3 py-2.5 max-h-28 overflow-y-auto">
+                    <div className="bg-red-50 border border-red-100 rounded px-3 py-2.5 max-h-28 overflow-y-auto">
                       <p className="text-[13px] text-red-700 leading-relaxed whitespace-pre-line">
                         {cleanMessage(ticket.message) || <span className="italic text-zinc-300">No message</span>}
                       </p>

@@ -14,8 +14,8 @@ const SUB_TABS = [
   { id: 'whatsapp',   label: 'WHATSAPP'     },
 ];
 
-const INPUT    = 'w-full h-9 px-3 text-sm border border-zinc-200 rounded-md bg-zinc-50 text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition';
-const TEXTAREA = 'w-full px-3 py-2 text-sm border border-zinc-200 rounded-md bg-zinc-50 text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 resize-none transition';
+const INPUT    = 'w-full h-9 px-3 text-sm border border-zinc-200 rounded bg-zinc-50 text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition';
+const TEXTAREA = 'w-full px-3 py-2 text-sm border border-zinc-200 rounded bg-zinc-50 text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 resize-none transition';
 
 const apiPost = (ep, body) =>
   fetch(`${API}/${ep}`, {
@@ -69,9 +69,9 @@ function Modal({ title, onClose, children, wide = false }) {
 function ModalActions({ onCancel, onSave, saving, saveLabel = 'Save' }) {
   return (
     <div className="flex justify-end gap-2 mt-4 pt-4 border-t border-zinc-100">
-      <button onClick={onCancel} className="px-4 py-2 text-xs font-semibold text-zinc-600 bg-zinc-100 rounded-md hover:bg-zinc-200 transition-colors">Cancel</button>
+      <button onClick={onCancel} className="px-4 py-2 text-xs font-semibold text-zinc-600 bg-zinc-100 rounded hover:bg-zinc-200 transition-colors">Cancel</button>
       <button onClick={onSave} disabled={saving}
-        className="px-4 py-2 text-xs font-semibold text-white bg-zinc-900 rounded-md hover:bg-zinc-700 transition-colors disabled:opacity-60">
+        className="px-4 py-2 text-xs font-semibold text-white bg-zinc-900 rounded hover:bg-zinc-700 transition-colors disabled:opacity-60">
         {saving ? 'Saving...' : saveLabel}
       </button>
     </div>
@@ -182,8 +182,8 @@ function InstructionsBox({ title, htmlContent, onAdd, onEdit, onDelete }) {
             </button>
           ) : (
             <>
-              <button onClick={onEdit} className="p-1.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100"><MdEdit size={13} /></button>
-              <button onClick={onDelete} className="p-1.5 rounded-md bg-red-50 text-red-600 border border-red-200 hover:bg-red-100"><MdDelete size={13} /></button>
+              <button onClick={onEdit} className="p-1.5 w-16 h-7 flex justify-center items-center text-center gap-1 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100"><MdEdit size={13} /> Edit</button>
+              <button onClick={onDelete} className="p-1.5 w-20 h-7 flex justify-center items-center text-center gap-1 rounded bg-red-50 text-red-600 border border-red-200 hover:bg-red-100"><MdDelete size={13} /> Delete</button>
             </>
           )}
         </div>
@@ -234,11 +234,11 @@ function PlansTable({ plans, loading, onEdit, onDelete, selectedId, onSelect }) 
               ))}
               <td className="px-4 py-2.5">
                 <div className="flex items-center justify-center gap-1.5">
-                  <button onClick={() => onEdit(row)} className="p-1.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100"><MdEdit size={13} /></button>
-                  <button onClick={() => onDelete(row.id)} className="p-1.5 rounded-md bg-red-50 text-red-600 border border-red-200 hover:bg-red-100"><MdDelete size={13} /></button>
+                  <button onClick={() => onEdit(row)} className="p-1.5 w-16 h-7 flex justify-center items-center text-center gap-1 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100"><MdEdit size={13} /> Edit</button>
+                  <button onClick={() => onDelete(row.id)} className="p-1.5 w-20 h-7 flex justify-center items-center text-center gap-1 rounded bg-red-50 text-red-600 border border-red-200 hover:bg-red-100"><MdDelete size={13} /> Delete</button>
                   <button
                     onClick={() => onSelect(selectedId === row.id ? null : row)}
-                    className={`px-2.5 py-1 rounded-md text-xs font-semibold border transition-colors
+                    className={`px-2.5 w-26 py-1 rounded text-xs font-semibold border transition-colors
                       ${selectedId === row.id ? 'bg-zinc-900 text-white border-zinc-900' : 'bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100'}`}>
                     {selectedId === row.id ? 'Selected' : 'Select Plan'}
                   </button>
@@ -615,7 +615,7 @@ function MessagingSection({ type }) {
             <div className="flex items-center justify-between">
               <p className="text-sm font-bold text-zinc-800">Choose Your Messaging Plan</p>
               <button onClick={() => { setPlanForm(EMPTY_PLAN); setPlanModal({}); }}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100">
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100">
                 <MdAdd size={13} /> Add Plan
               </button>
             </div>
