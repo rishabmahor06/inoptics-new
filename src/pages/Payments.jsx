@@ -255,7 +255,7 @@ export default function Payments() {
                       <td className="border border-zinc-200 px-3 py-2.5 text-center font-bold text-red-600 tabular-nums">{Math.round(pending).toLocaleString('en-IN')}</td>
                       <td className="border border-zinc-200 px-3 py-2.5 text-center">
                         <button onClick={() => setSelectedPayment(item)}
-                          className="px-3 py-1.5 rounded-lg bg-zinc-900 text-white text-[13px] font-semibold hover:bg-zinc-700 transition-colors">
+                          className="px-3 py-1.5 rounded bg-zinc-900 text-white text-[13px] font-semibold hover:bg-zinc-700 transition-colors">
                           View
                         </button>
                       </td>

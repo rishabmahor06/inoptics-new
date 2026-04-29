@@ -71,8 +71,13 @@ export default function PaymentDetails() {
     addBadge, updateBadge, deleteBadge,
   } = useExhibitorPaymentsStore();
 
-  /* boot */
-  useEffect(() => { if (ex) initForCompany(ex); }, [ex, initForCompany]);
+  /* boot — load payments + stalls + power so cards show full breakup */
+  useEffect(() => {
+    if (!ex) return;
+    initForCompany(ex);
+    if (ex.company_name) fetchStalls(ex.company_name);
+    fetchPowerData(ex);
+  }, [ex, initForCompany, fetchStalls, fetchPowerData]);
 
   const exState      = ex?.state || "";
   const stallSummary = useMemo(() => computeStallSummary(stallList), [stallList]);
@@ -80,9 +85,12 @@ export default function PaymentDetails() {
 
   if (!ex) return null;
 
-  const stallPending = (stallSummary.grand_total || 0) - totalPaidWithTDS(stallPayments);
-  const powerPending = (powerGrand || 0) - totalPaidWithTDS(powerPayments);
-  const badgePending = (badgeSummary.grandTotal || 0) - totalPaidWithTDS(badgePayments);
+  const stallPaid    = totalPaidWithTDS(stallPayments);
+  const powerPaid    = totalPaidWithTDS(powerPayments);
+  const badgePaid    = totalPaidWithTDS(badgePayments);
+  const stallPending = (stallSummary.grand_total || 0) - stallPaid;
+  const powerPending = (powerGrand || 0) - powerPaid;
+  const badgePending = (badgeSummary.grandTotal || 0) - badgePaid;
 
   const refreshAll = () => {
     fetchAll(ex);
@@ -170,6 +178,7 @@ export default function PaymentDetails() {
                 <BillRow label="IGST (18%)" value={`${fmt(stallSummary.igst)} ${stallSummary.currency}`} />
               )}
               <GrandTotalRow value={`${fmt(stallSummary.grand_total)} ${stallSummary.currency}`} />
+              <PaidRow paid={stallPaid} count={stallPayments.length} currency={stallSummary.currency} />
               <PendingRow pending={stallPending} currency={stallSummary.currency} />
             </SummaryCard>
 
@@ -189,6 +198,7 @@ export default function PaymentDetails() {
                 <BillRow label="IGST (18%)" value={`${fmt(powerIgst)} ₹`} />
               )}
               <GrandTotalRow value={`${fmt(powerGrand)} ₹`} />
+              <PaidRow paid={powerPaid} count={powerPayments.length} currency="₹" />
               <PendingRow pending={powerPending} currency="₹" />
             </SummaryCard>
 
@@ -209,6 +219,7 @@ export default function PaymentDetails() {
                 <BillRow label="IGST (18%)" value={`₹${fmt(badgeSummary.igst)}`} />
               )}
               <GrandTotalRow value={`₹${fmt(badgeSummary.grandTotal)}`} />
+              <PaidRow paid={badgePaid} count={badgePayments.length} currency="₹" />
               <PendingRow pending={badgePending} currency="₹" />
             </SummaryCard>
           </div>
@@ -836,6 +847,17 @@ function GrandTotalRow({ value }) {
     <div className="flex items-center justify-between pt-2 mt-2 border-t-2 border-zinc-900">
       <span className="text-[13px] font-bold text-zinc-900">Grand Total</span>
       <span className="text-[15px] font-bold text-blue-700">{value}</span>
+    </div>
+  );
+}
+
+function PaidRow({ paid, count, currency }) {
+  return (
+    <div className="flex items-center justify-between gap-2 mt-1 px-2.5 py-1.5 rounded bg-blue-50 text-blue-700">
+      <span className="text-[12px] font-bold uppercase tracking-wider">
+        Paid {count > 0 ? `(${count})` : ""}
+      </span>
+      <span className="text-[13px] font-bold">{fmt(paid)} {currency}</span>
     </div>
   );
 }

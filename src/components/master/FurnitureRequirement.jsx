@@ -242,13 +242,13 @@ export default function FurnitureRequirement() {
                   <div className="flex gap-1.5 mt-2.5">
                     <button
                       onClick={() => openEdit(row)}
-                      className="flex-1 py-1.5 text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg hover:bg-emerald-100 transition-colors"
+                      className="flex-1 py-1.5 text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded hover:bg-emerald-100 transition-colors"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => handleDelete(row.id)}
-                      className="flex-1 py-1.5 text-[11px] font-semibold bg-red-50 text-red-600 border border-red-200 rounded-lg hover:bg-red-100 transition-colors"
+                      className="flex-1 py-1.5 text-[11px] font-semibold bg-red-50 text-red-600 border border-red-200 rounded hover:bg-red-100 transition-colors"
                     >
                       Delete
                     </button>

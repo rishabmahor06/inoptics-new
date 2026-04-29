@@ -68,7 +68,7 @@ export default function AddressModal({ editing, onClose, onSave }) {
 
   const isEditing = !!(editing?.address || editing?.state);
   const inputCls =
-    "w-full px-3 py-2.5 text-sm border border-zinc-200 rounded-lg bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-zinc-300";
+    "w-full px-3 py-2.5 text-sm border border-zinc-200 rounded bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-zinc-300";
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
@@ -114,14 +114,14 @@ export default function AddressModal({ editing, onClose, onSave }) {
         <div className="flex gap-2 px-5 py-4 border-t border-zinc-100 shrink-0">
           <button
             onClick={onClose}
-            className="flex-1 py-2.5 text-sm font-semibold text-zinc-600 bg-zinc-100 rounded-lg hover:bg-zinc-200 transition-colors"
+            className="flex-1 py-2.5 text-sm font-semibold text-zinc-600 bg-zinc-100 rounded hover:bg-zinc-200 transition-colors"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex-1 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-60"
+            className="flex-1 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors disabled:opacity-60"
           >
             {saving ? "Saving..." : isEditing ? "Update" : "Add"}
           </button>

@@ -42,7 +42,7 @@ export default function Proforma() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         
         <button onClick={() => setPreviewOpen(p => !p)}
-          className={`flex items-center gap-1.5 px-3.5 py-2 text-[12px] font-semibold rounded-lg border transition-colors shadow-sm
+          className={`flex items-center gap-1.5 px-3.5 py-2 text-[12px] font-semibold rounded border transition-colors shadow-sm
             ${previewOpen
               ? 'text-blue-700 bg-blue-50 border-blue-200 hover:bg-blue-100'
               : 'text-zinc-700 bg-white border-zinc-200 hover:bg-zinc-50'}`}>
@@ -67,7 +67,7 @@ export default function Proforma() {
                 </div>
               </div>
               <button onClick={() => setAddrModal({})}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100 transition-colors">
+                className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100 transition-colors">
                 <MdAdd size={14} /> Add Address
               </button>
             </div>
@@ -120,7 +120,7 @@ export default function Proforma() {
                   setSelectedService(e.target.value);
                   if (e.target.value) setPreviewOpen(true);
                 }}
-                className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <option value="">— Select a service —</option>
                 {services.map(svc => (
                   <option key={svc.name} value={svc.name}>{svc.name}</option>

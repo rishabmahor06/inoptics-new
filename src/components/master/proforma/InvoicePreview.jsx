@@ -170,11 +170,11 @@ export default function InvoicePreview({ activeAddress, services, selectedServic
         <span style={{ fontSize: 11, fontWeight: 600, color: '#555', textTransform: 'uppercase', letterSpacing: 1 }}>Invoice Preview</span>
         <div style={{ display: 'flex', gap: 8 }}>
           <button onClick={handlePrint}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-zinc-700 bg-white border border-zinc-200 rounded-lg hover:bg-zinc-50 transition-colors shadow-sm">
+            className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-zinc-700 bg-white border border-zinc-200 rounded hover:bg-zinc-50 transition-colors shadow-sm">
             <MdPrint size={14} /> Print
           </button>
           <button onClick={handleDownload} disabled={downloading}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm disabled:opacity-60">
+            className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors shadow-sm disabled:opacity-60">
             <MdDownload size={14} /> {downloading ? 'Generating...' : 'Download PDF'}
           </button>
         </div>

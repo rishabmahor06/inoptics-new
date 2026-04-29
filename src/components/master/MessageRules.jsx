@@ -92,15 +92,15 @@ export default function MessageRules() {
             </MasterField>
             <MasterField label="Success Message">
               <textarea value={form.success_message} onChange={set('success_message')} rows={3} placeholder="Message shown on success..."
-                className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded-lg bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none placeholder:text-zinc-300" />
+                className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none placeholder:text-zinc-300" />
             </MasterField>
             <MasterField label="Error Message">
               <textarea value={form.error_message} onChange={set('error_message')} rows={3} placeholder="Message shown on error..."
-                className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded-lg bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none placeholder:text-zinc-300" />
+                className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none placeholder:text-zinc-300" />
             </MasterField>
             <MasterField label="Status">
               <select value={form.status} onChange={set('status')}
-                className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded-lg bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <option value={1}>Active</option>
                 <option value={0}>Inactive</option>
               </select>

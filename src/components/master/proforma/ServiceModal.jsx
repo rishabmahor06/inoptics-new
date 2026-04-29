@@ -54,14 +54,14 @@ export default function ServiceModal({ editing, onClose, onSave }) {
             </label>
             <input value={form.name} onChange={e => setForm(p => ({ ...p, name: e.target.value }))}
               placeholder="e.g. Stall Space Charges"
-              className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded-lg bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-zinc-300" />
+              className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-zinc-300" />
           </div>
 
           <div>
             <label className="block text-[11px] font-semibold text-zinc-500 mb-1 uppercase tracking-wide">Description</label>
             <textarea value={form.description} onChange={e => setForm(p => ({ ...p, description: e.target.value }))}
               rows={2} placeholder="Optional description..."
-              className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded-lg bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none placeholder:text-zinc-300" />
+              className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none placeholder:text-zinc-300" />
           </div>
 
           <div>
@@ -71,7 +71,7 @@ export default function ServiceModal({ editing, onClose, onSave }) {
                 const checked = form.selectedOptions.includes(opt);
                 return (
                   <label key={opt}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-lg border cursor-pointer transition-all text-[12px] font-medium select-none
+                    className={`flex items-center gap-2 px-3 py-2 rounded border cursor-pointer transition-all text-[12px] font-medium select-none
                       ${checked ? 'border-blue-400 bg-blue-50 text-blue-800' : 'border-zinc-200 bg-zinc-50 text-zinc-600 hover:bg-zinc-100'}`}>
                     <input type="checkbox" checked={checked} onChange={() => toggleOpt(opt)} className="accent-blue-600 shrink-0" />
                     {opt}
@@ -84,11 +84,11 @@ export default function ServiceModal({ editing, onClose, onSave }) {
 
         <div className="flex gap-2 px-5 py-4 border-t border-zinc-100 shrink-0">
           <button onClick={onClose}
-            className="flex-1 py-2.5 text-sm font-semibold text-zinc-600 bg-zinc-100 rounded-lg hover:bg-zinc-200 transition-colors">
+            className="flex-1 py-2.5 text-sm font-semibold text-zinc-600 bg-zinc-100 rounded hover:bg-zinc-200 transition-colors">
             Cancel
           </button>
           <button onClick={handleSave} disabled={saving}
-            className="flex-1 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-60">
+            className="flex-1 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors disabled:opacity-60">
             {saving ? 'Saving...' : (editing?.name ? 'Update' : 'Add')}
           </button>
         </div>

@@ -71,14 +71,14 @@ export default function AddressCard({ addr, onEdit, onDelete, onSetActive }) {
       <div className="flex gap-2 mt-4 pt-3 border-t border-zinc-100">
         <button
           onClick={() => onEdit(addr)}
-          className="flex-1 flex items-center justify-center gap-1 py-1.5 text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg hover:bg-emerald-100 transition-colors"
+          className="flex-1 flex items-center justify-center gap-1 py-1.5 text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded hover:bg-emerald-100 transition-colors"
         >
           <MdEdit size={12} /> Edit
         </button>
         {hasData && (
           <button
             onClick={() => onDelete(addr.label)}
-            className="flex-1 flex items-center justify-center gap-1 py-1.5 text-[11px] font-semibold bg-red-50 text-red-600 border border-red-200 rounded-lg hover:bg-red-100 transition-colors"
+            className="flex-1 flex items-center justify-center gap-1 py-1.5 text-[11px] font-semibold bg-red-50 text-red-600 border border-red-200 rounded hover:bg-red-100 transition-colors"
           >
             <MdDelete size={12} /> Delete
           </button>

@@ -49,12 +49,12 @@ export function MasterActions({ onEdit, onDelete }) {
       <div className="flex gap-1.5">
         {onEdit && (
           <button onClick={onEdit}
-            className="px-3 py-1.5 text-[13px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-300 rounded-lg hover:bg-emerald-100 transition-colors">
+            className="px-3 py-1.5 text-[13px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-300 rounded hover:bg-emerald-100 transition-colors">
             Edit
           </button>
         )}
         <button onClick={onDelete}
-          className="px-3 py-1.5 text-[13px] font-semibold bg-red-50 text-red-600 border border-red-300 rounded-lg hover:bg-red-100 transition-colors">
+          className="px-3 py-1.5 text-[13px] font-semibold bg-red-50 text-red-600 border border-red-300 rounded hover:bg-red-100 transition-colors">
           Delete
         </button>
       </div>
@@ -71,9 +71,9 @@ export function MasterModal({ title, onClose, onSave, saving, children }) {
         </div>
         <div className="px-6 py-5 overflow-y-auto flex-1">{children}</div>
         <div className="flex justify-end gap-3 px-6 py-4 border-t border-zinc-200 bg-zinc-50 rounded-b-2xl shrink-0">
-          <button onClick={onClose} className="px-4 py-2 text-[14px] font-medium text-zinc-700 border border-zinc-300 rounded-lg hover:bg-zinc-100 transition-colors">Cancel</button>
+          <button onClick={onClose} className="px-4 py-2 text-[14px] font-medium text-zinc-700 border border-zinc-300 rounded hover:bg-zinc-100 transition-colors">Cancel</button>
           <button onClick={onSave} disabled={saving}
-            className="px-4 py-2 text-[14px] font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-60">
+            className="px-4 py-2 text-[14px] font-semibold text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors disabled:opacity-60">
             {saving ? 'Saving...' : 'Save'}
           </button>
         </div>
@@ -96,7 +96,7 @@ export function MasterField({ label, children, required }) {
 export function MasterInput({ value, onChange, placeholder, type = 'text' }) {
   return (
     <input type={type} value={value} onChange={onChange} placeholder={placeholder}
-      className="w-full px-3 py-2.5 text-[14px] text-zinc-900 border border-zinc-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder:text-zinc-400" />
+      className="w-full px-3 py-2.5 text-[14px] text-zinc-900 border border-zinc-300 rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder:text-zinc-400" />
   );
 }
 
@@ -106,11 +106,11 @@ export function SectionHead({ title, count, onAdd, addLabel = '+ Add', search, o
       <div className="flex items-center gap-2">
         {onSearch !== undefined && (
           <input value={search} onChange={e => onSearch(e.target.value)} placeholder="Search..."
-            className="text-[14px] text-zinc-800 border border-zinc-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 w-48 placeholder:text-zinc-400" />
+            className="text-[14px] text-zinc-800 border border-zinc-300 rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 w-48 placeholder:text-zinc-400" />
         )}
         {onAdd && (
           <button onClick={onAdd}
-            className="bg-blue-600 text-white rounded-lg px-4 py-2 text-[14px] font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap">
+            className="bg-blue-600 text-white rounded px-4 py-2 text-[14px] font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap">
             {addLabel}
           </button>
         )}

@@ -60,7 +60,7 @@ export default function BusinessRequirement() {
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search..."
             className="text-sm border border-zinc-200 rounded-lg px-3 py-2 bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-blue-500 w-48" />
           <button onClick={openAdd}
-            className="bg-blue-600 text-white rounded-lg px-3.5 py-2 text-sm font-semibold hover:bg-blue-700 transition-colors">
+            className="bg-blue-600 text-white rounded px-3.5 py-2 text-sm font-semibold hover:bg-blue-700 transition-colors">
             + Add
           </button>
         </div>
@@ -87,12 +87,12 @@ export default function BusinessRequirement() {
                 <td className="px-4 py-3 border-b border-zinc-100">
                   <div className="flex gap-1.5">
                     <button onClick={() => openEdit(row)}
-                      className="px-2.5 py-1.5 text-[12px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg hover:bg-emerald-100 transition-colors">
+                      className="px-2.5 py-1.5 text-[12px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded hover:bg-emerald-100 transition-colors">
                       Edit
                     </button>
                     <button onClick={() => handleDelete(row.id)}
-                      className="px-2.5 py-1.5 text-[12px] font-semibold bg-red-50 text-red-600 border border-red-200 rounded-lg hover:bg-red-100 transition-colors">
-                      Delete
+                      className="px-2.5 py-1.5 text-[12px] font-semibold bg-red-50 text-red-600 border border-red-200 rounded hover:bg-red-100 transition-colors">
+                      Delete 
                     </button>
                   </div>
                 </td>
@@ -111,12 +111,12 @@ export default function BusinessRequirement() {
             <div className="px-6 py-5">
               <label className="block text-xs font-medium text-zinc-600 mb-1.5">Business Name *</label>
               <input value={name} onChange={e => setName(e.target.value)} placeholder="Enter business name"
-                className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded-lg bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
             <div className="flex justify-end gap-3 px-6 py-4 border-t border-zinc-100 bg-zinc-50 rounded-b-2xl">
-              <button onClick={() => setModal(null)} className="px-4 py-2 text-sm text-zinc-600 border border-zinc-200 rounded-lg hover:bg-zinc-100">Cancel</button>
+              <button onClick={() => setModal(null)} className="px-4 py-2 text-sm text-zinc-600 border border-zinc-200 rounded hover:bg-zinc-100">Cancel</button>
               <button onClick={handleSave} disabled={saving}
-                className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-60">
+                className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded hover:bg-blue-700 disabled:opacity-60">
                 {saving ? 'Saving...' : 'Save'}
               </button>
             </div>

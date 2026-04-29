@@ -63,7 +63,7 @@ export default function ExhibitorSeriesEdit() {
             </div>
           </div>
           <button onClick={loadForEdit}
-            className="mt-4 w-full px-4 py-2 text-sm font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 transition-colors">
+            className="mt-4 w-full px-4 py-2 text-sm font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100 transition-colors">
             Load for Editing
           </button>
         </div>
@@ -81,7 +81,7 @@ export default function ExhibitorSeriesEdit() {
           <MasterInput type="number" value={number} onChange={e => setNumber(e.target.value)} placeholder="e.g. 1001" />
         </MasterField>
         <button type="submit" disabled={saving}
-          className="w-full py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-60">
+          className="w-full py-2.5 text-sm font-semibold text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors disabled:opacity-60">
           {saving ? 'Saving...' : 'Save Series'}
         </button>
       </form>

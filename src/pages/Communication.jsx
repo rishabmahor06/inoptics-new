@@ -83,7 +83,7 @@ function TInput({ value, onChange, placeholder, type = "text" }) {
       value={value}
       onChange={onChange}
       placeholder={placeholder}
-      className="w-full h-10 px-3 text-sm border border-zinc-200 rounded-lg bg-zinc-50 text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition"
+      className="w-full h-10 px-3 text-sm border border-zinc-200 rounded bg-zinc-50 text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition"
     />
   );
 }
@@ -263,12 +263,12 @@ function EmailsMaster() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search templates…"
-            className="w-full h-9 pl-9 pr-3 text-sm border border-zinc-200 rounded-lg bg-zinc-50 text-zinc-700 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition"
+            className="w-full h-9 pl-9 pr-3 text-sm border border-zinc-200 rounded bg-zinc-50 text-zinc-700 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition"
           />
         </div>
         <button
           onClick={openAdd}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-900 text-white text-sm font-semibold hover:bg-zinc-700 transition-colors shrink-0"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded bg-zinc-900 text-white text-sm font-semibold hover:bg-zinc-700 transition-colors shrink-0"
         >
           <MdAdd size={18} /> Add Email
         </button>
@@ -339,15 +339,15 @@ function EmailsMaster() {
                       <div className="inline-flex items-center gap-1">
                         <button
                           onClick={() => openEdit(item)}
-                          className="w-8 h-8 rounded-lg border border-zinc-200 text-zinc-500 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-600 flex items-center justify-center transition-all"
+                          className="w-16 h-8 gap-1 rounded border bg-blue-50 border-blue-200 text-blue-600 flex items-center justify-center transition-all"
                         >
-                          <MdEdit size={15} />
+                          <MdEdit size={15} /> Edit
                         </button>
                         <button
                           onClick={() => handleDelete(item.id)}
-                          className="w-8 h-8 rounded-lg border border-zinc-200 text-zinc-500 hover:bg-red-50 hover:border-red-200 hover:text-red-500 flex items-center justify-center transition-all"
+                          className="w-18 h-8 gap-1 rounded border bg-red-50 border-red-200 text-red-500 flex items-center justify-center transition-all"
                         >
-                          <MdDelete size={15} />
+                          <MdDelete size={15} /> Delete
                         </button>
                       </div>
                     </td>
@@ -367,7 +367,7 @@ function EmailsMaster() {
           wide
         >
           <div className="p-5 grid grid-cols-1 xl:grid-cols-12 gap-6">
-            {/* Left Side - Small Width */}
+            {/* Left Side - Small Width */} 
             <div className="xl:col-span-4 space-y-4">
               <FRow label="Email Name">
                 <TInput
@@ -425,7 +425,7 @@ function EmailsMaster() {
               </FRow>
 
               <FRow label="Applied Place">
-                <div className="grid grid-cols-1 gap-1.5 max-h-64 overflow-y-auto p-2 border border-zinc-200 rounded-lg bg-zinc-50">
+                <div className="grid grid-cols-1 gap-1.5 max-h-64 overflow-y-auto p-2 border border-zinc-200 rounded bg-zinc-50">
                   {APPLIED_PLACE_OPTIONS.map((place) => (
                     <label
                       key={place}
@@ -459,14 +459,14 @@ function EmailsMaster() {
           <div className="px-6 py-4 border-t border-zinc-100 flex items-center justify-end gap-3">
             <button
               onClick={() => setShowModal(false)}
-              className="px-4 py-2 rounded-lg border border-zinc-200 text-sm font-semibold text-zinc-600 hover:bg-zinc-50 transition-colors"
+              className="px-4 py-2 rounded border border-zinc-200 text-sm font-semibold text-zinc-600 hover:bg-zinc-50 transition-colors"
             >
               Cancel
             </button>
             <button
               onClick={handleSave}
               disabled={saving}
-              className="px-5 py-2 rounded-lg bg-zinc-900 text-white text-sm font-semibold hover:bg-zinc-700 transition-colors disabled:opacity-60"
+              className="px-5 py-2 rounded bg-zinc-900 text-white text-sm font-semibold hover:bg-zinc-700 transition-colors disabled:opacity-60"
             >
               {saving ? "Saving…" : editingId ? "Update" : "Add"}
             </button>
@@ -611,12 +611,12 @@ function VendorTable({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={`Search ${title}…`}
-            className="w-full h-9 pl-9 pr-3 text-sm border border-zinc-200 rounded-lg bg-zinc-50 text-zinc-700 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition"
+            className="w-full h-9 pl-9 pr-3 text-sm border border-zinc-200 rounded bg-zinc-50 text-zinc-700 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition"
           />
         </div>
         <button
           onClick={openAdd}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-900 text-white text-sm font-semibold hover:bg-zinc-700 transition-colors shrink-0"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded bg-zinc-900 text-white text-sm font-semibold hover:bg-zinc-700 transition-colors shrink-0"
         >
           <MdAdd size={18} /> Add Vendor
         </button>
@@ -637,7 +637,7 @@ function VendorTable({
             <table className="w-full border-collapse text-sm">
               <thead>
                 <tr>
-                  <th className={TH}>#</th>
+                  <th className={TH}>ID</th>
                   <th className={TH}>Vendor Name</th>
                   <th className={TH}>Company</th>
                   <th className={TH}>Email</th>
@@ -662,15 +662,15 @@ function VendorTable({
                       <div className="inline-flex items-center gap-1">
                         <button
                           onClick={() => openEdit(item)}
-                          className="w-8 h-8 rounded-lg border border-zinc-200 text-zinc-500 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-600 flex items-center justify-center transition-all"
+                          className="w-16 h-8 rounded gap-1 border border-blue-200 bg-blue-50 text-blue-500 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-600 flex items-center justify-center transition-all"
                         >
-                          <MdEdit size={15} />
+                          <MdEdit size={15} /> Edit
                         </button>
                         <button
                           onClick={() => handleDelete(item.id)}
-                          className="w-8 h-8 rounded-lg border border-zinc-200 text-zinc-500 hover:bg-red-50 hover:border-red-200 hover:text-red-500 flex items-center justify-center transition-all"
+                          className="w-18 h-8 rounded border border-red-200 text-red-500 bg-red-50  hover:bg-red-50 hover:border-red-200 hover:text-red-500 flex items-center justify-center gap-1  transition-all"
                         >
-                          <MdDelete size={15} />
+                          <MdDelete size={15} /> Delete
                         </button>
                       </div>
                     </td>

@@ -13,7 +13,7 @@ export default function ServiceTable({ services, onEdit, onDelete, onAdd }) {
           <p className="text-[11px] text-zinc-400 mt-0.5">Define line items on proforma invoices</p>
         </div>
         <button onClick={onAdd}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 transition-colors">
+          className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100 transition-colors">
           <MdAdd size={14} /> Add Service
         </button>
       </div>
@@ -54,12 +54,12 @@ export default function ServiceTable({ services, onEdit, onDelete, onAdd }) {
                     <td className="px-3 py-3">
                       <div className="flex gap-1.5 justify-end">
                         <button onClick={() => onEdit(svc)}
-                          className="p-1.5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 transition-colors">
-                          <MdEdit size={13} />
+                          className="p-1.5 rounded flex justify-center items-center text-center w-18 h-8 gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 transition-colors">
+                          <MdEdit size={13} /> Edit
                         </button>
                         <button onClick={() => onDelete(svc.name)}
-                          className="p-1.5 rounded-lg bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 transition-colors">
-                          <MdDelete size={13} />
+                          className="p-1.5 rounded flex justify-center items-center text-center w-20 h-8 gap-1 bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 transition-colors">
+                          <MdDelete size={13} /> Delete
                         </button>
                       </div>
                     </td>
