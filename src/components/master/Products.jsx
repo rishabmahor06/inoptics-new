@@ -1,22 +1,15 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { API, MasterTable, MasterTr, MasterTd, MasterActions, MasterModal, MasterField, MasterInput, SectionHead } from './_shared';
+import { MasterTable, MasterTr, MasterTd, MasterActions, MasterModal, MasterField, MasterInput, SectionHead } from './_shared';
+import { useProductsStore } from '../../store/master/useProductsStore';
 
 export default function Products() {
-  const [rows, setRows]       = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { rows, loading, fetch: load, add, update, delete: remove } = useProductsStore();
   const [search, setSearch]   = useState('');
   const [modal, setModal]     = useState(null);
   const [editing, setEditing] = useState(null);
   const [name, setName]       = useState('');
   const [saving, setSaving]   = useState(false);
-
-  const load = useCallback(async () => {
-    setLoading(true);
-    try { const r = await fetch(`${API}/get_product.php`); const d = await r.json(); setRows(Array.isArray(d) ? d : []); }
-    catch { toast.error('Failed to load products'); }
-    finally { setLoading(false); }
-  }, []);
 
   useEffect(() => { load(); }, [load]);
 
@@ -29,21 +22,14 @@ export default function Products() {
     if (!name.trim()) { toast.error('Name is required'); return; }
     setSaving(true);
     try {
-      const res = await fetch(`${API}/${modal === 'add' ? 'add_product.php' : 'update_product.php'}`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(modal === 'add' ? { name } : { id: editing.id, name }),
-      }).then(r => r.json());
-      toast.success(res.message || 'Saved'); load(); setModal(null);
-    } catch { toast.error('Error saving'); }
-    finally { setSaving(false); }
+      const ok = modal === 'add' ? await add(name) : await update(editing.id, name);
+      if (ok) setModal(null);
+    } finally { setSaving(false); }
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this product?')) return;
-    try {
-      const r = await fetch(`${API}/delete_product.php`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) }).then(r => r.json());
-      toast.success(r.message || 'Deleted'); load();
-    } catch { toast.error('Error deleting'); }
+    await remove(id);
   };
 
   return (

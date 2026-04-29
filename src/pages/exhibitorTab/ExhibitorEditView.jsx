@@ -9,6 +9,7 @@ import AppointedContractor from './AppointedContractor';
 import ExtraFurnitureReq   from './ExtraFurnitureReq';
 import PaymentDetails      from './PaymentDetails';
 import Brands              from './Brands';
+import Undertaking         from './Undertaking';
 
 const TABS = [
   { id: 'basic',      label: 'Basic Details',               component: BasicDetails },
@@ -19,6 +20,7 @@ const TABS = [
   { id: 'furniture',  label: 'Extra Furniture Requirement', component: ExtraFurnitureReq },
   { id: 'payment',    label: 'Payment Details',             component: PaymentDetails },
   { id: 'brands',     label: 'Brands',                      component: Brands },
+  { id: 'undertaking',label: 'Undertaking',                 component: Undertaking },
 ];
 
 export default function ExhibitorEditView() {
