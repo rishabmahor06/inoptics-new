@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube, FaEnvelope } from "react-icons/fa";
 import {
   MdClose, MdLocationOn, MdPhone, MdEmail, MdSend, MdArrowOutward,
   MdChevronRight, MdShield,
@@ -68,88 +68,170 @@ export default function Footer() {
   ].filter((s) => getSponsor(s.type));
 
   const SOCIAL_ICONS = [
-    { Icon: FaFacebookF,  bg: "bg-[#1877F2]",                  label: "Facebook" },
-    { Icon: FaInstagram,  bg: "bg-linear-to-br from-[#f09433] via-[#dc2743] to-[#bc1888]", label: "Instagram" },
-    { Icon: FaLinkedinIn, bg: "bg-[#0A66C2]",                  label: "LinkedIn" },
-    { Icon: FaYoutube,    bg: "bg-[#FF0000]",                  label: "YouTube" },
+    { Icon: FaFacebookF,  label: "Facebook" },
+    { Icon: FaInstagram,  label: "Instagram" },
+    { Icon: FaLinkedinIn, label: "LinkedIn" },
+    { Icon: FaYoutube,    label: "YouTube" },
+    { Icon: FaEnvelope,   label: "Email" },
+  ];
+
+  const EXPLORE_LINKS = [
+    { to: "/about",            label: "About Us" },
+    { to: "/why-exhibit",      label: "Why Exhibit" },
+    { to: "/become-exhibitor", label: "Become Exhibitor" },
+    { to: "/benefactors",      label: "Our Partners" },
+    { to: "/contact",          label: "Contact" },
   ];
 
   return (
     <>
-      <div className="px-3 sm:px-5 py-5 bg-[#03050d]">
-        <footer className="relative rounded-3xl overflow-hidden bg-[#070a18] border border-blue-500/20 shadow-[0_0_60px_-20px_rgba(59,130,246,0.4)]">
-          {/* Subtle radial glow */}
-          <div className="pointer-events-none absolute -top-1/2 left-1/2 -translate-x-1/2 w-300 h-300 rounded-full bg-blue-600/4 blur-3xl" />
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(99,102,241,0.08),transparent_50%)]" />
+      <div className="bg-[#03050d] px-3 sm:px-5 pt-5 pb-0">
+
+        {/* ============ SPONSORS CARD (top, outside main footer) ============ */}
+        <div className="rounded-2xl   overflow-hidden mb-5">
+          {/* Labels Row */}
+          <div className="flex px-4 sm:px-6 pt-4 pb-2">
+            <div className="flex-none w-full sm:w-[38%] lg:w-[30%]">
+              <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.25em] uppercase text-violet-400">
+                Platinum Sponsors
+              </span>
+            </div>
+            <div className="hidden sm:block flex-1">
+              <span className="text-[11px] font-bold tracking-[0.25em] uppercase text-amber-400">
+                Gold Sponsors
+              </span>
+            </div>
+          </div>
+
+          {/* Cards Row */}
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 p-3 sm:p-4">
+            {/* Platinum Card */}
+            <div className="sm:w-[38%] lg:w-[30%] shrink-0">
+              <div className="bg-white rounded-xl flex items-center justify-center h-28 sm:h-32 px-6">
+                {getSponsor("Footer-Platinum") ? (
+                  <img
+                    src={getSponsor("Footer-Platinum")}
+                    alt="Platinum Sponsor"
+                    className="max-h-20 max-w-full object-contain"
+                  />
+                ) : (
+                  <span className="text-zinc-400 text-[13px] font-medium">Platinum Sponsor</span>
+                )}
+              </div>
+            </div>
+
+            {/* Gold Sponsors Grid */}
+            <div className="flex-1">
+              {/* Mobile label */}
+              <div className="sm:hidden mb-2">
+                <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-amber-400">
+                  Gold Sponsors
+                </span>
+              </div>
+              <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+                {goldSponsors.map((s, i) => (
+                  <div
+                    key={i}
+                    className="bg-white rounded-xl flex items-center justify-center h-28 sm:h-32 px-2 py-3 hover:-translate-y-0.5 hover:shadow-lg transition-all"
+                  >
+                    <img
+                      src={getSponsor(s.type)}
+                      alt={s.alt}
+                      className="max-h-16 max-w-full object-contain"
+                    />
+                  </div>
+                ))}
+                {/* Explore More */}
+                <Link
+                  to="/benefactors"
+                  className="group bg-[#1a1c2e] hover:bg-[#22253a] rounded-xl flex flex-col items-center justify-center h-28 sm:h-32 px-2 text-center transition-all border border-white/10"
+                >
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-white leading-tight">
+                    Explore More Sponsors
+                  </span>
+                  <MdArrowOutward
+                    size={18}
+                    className="text-white/60 mt-2 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                  />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ============ MAIN FOOTER CARD ============ */}
+        <div className="rounded-3xl bg-[#070a18] border border-white/10 overflow-hidden relative">
+
+          {/* Glow */}
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(99,102,241,0.07),transparent_60%)]" />
 
           <div className="relative z-10">
 
-            {/* ============ TOP: 4 columns ============ */}
-            <div className="px-6 sm:px-10 lg:px-14 pt-12 sm:pt-16 pb-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12">
+            {/* ============ 4 COLUMNS ============ */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 lg:divide-x divide-white/10 px-0">
 
-              {/* About / Logo */}
-              <div className="lg:col-span-3 space-y-5">
-                {footer1[0] ? (
+              {/* ── Col 1: Logo + About + Social ── */}
+              <div className="px-7 sm:px-8 py-10 space-y-5">
+                {/* Logo */}
+                {footer1[0]?.image ? (
                   <Link to="/" className="inline-block">
-                    <img
-                      src={footer1[0].image}
-                      alt="InOptics"
-                      className="max-w-45 h-auto"
-                    />
+                    <img src={footer1[0].image} alt="InOptics" className="max-w-44 h-auto" />
                   </Link>
                 ) : (
-                  <Link to="/" className="inline-block">
-                    <span className="text-xl font-light text-blue-400">
+                  <Link to="/" className="inline-block space-y-0.5">
+                    <div className="text-[13px] font-light text-blue-300 tracking-wide">
                       Think Optics: Think
-                    </span>
-                    <div className="text-3xl font-bold text-blue-300 tracking-tight leading-none">
-                      INOPTICS
                     </div>
-                    <div className="text-[10px] tracking-widest text-zinc-400 mt-1">
-                      WHERE VISION MEETS INNOVATION
+                    <div className="text-[42px] font-bold leading-none tracking-tight">
+                      <span className="text-white">in</span>
+                      <span className="text-[#00b4d8]">optics</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-[11px] tracking-widest text-zinc-400 font-light mt-0.5">
+                      <span>Where Vision</span>
+                      <span className="text-[#00b4d8] font-bold">|</span>
+                      <span className="text-[#00b4d8]">Meets Innovation</span>
                     </div>
                   </Link>
                 )}
 
-                <div
-                  className="text-[14px] leading-relaxed text-zinc-400 [&_a]:text-blue-400 [&_a]:underline"
+                {/* Description */}
+                <p
+                  className="text-[13px] leading-relaxed text-zinc-400"
                   dangerouslySetInnerHTML={{
                     __html: footer1[0]?.description ||
                       "A grand showcase of visionary innovation, technology &amp; excellence in the world of optics",
                   }}
                 />
 
-                <div className="flex items-center gap-2.5 pt-1">
-                  {SOCIAL_ICONS.map(({ Icon, bg, label }, i) => (
+                {/* Social Icons */}
+                <div className="flex items-center gap-2 pt-1">
+                  {SOCIAL_ICONS.map(({ Icon, label }, i) => (
                     <a
                       key={i}
                       href="#"
                       aria-label={label}
-                      className={`w-11 h-11 rounded-full ${bg} flex items-center justify-center text-white shadow-lg shadow-black/30 hover:scale-110 hover:shadow-xl transition-all`}
+                      className="w-10 h-10 rounded-full bg-[#111827] border border-white/50 flex items-center justify-center text-white hover:text-white hover:border-white/40 hover:bg-white/10 transition-all"
                     >
-                      <Icon size={15} />
+                      <Icon size={14} />
                     </a>
                   ))}
                 </div>
               </div>
 
-              {/* Explore */}
-              <div className="lg:col-span-2 space-y-4">
+              {/* ── Col 2: Explore ── */}
+              <div className="px-7 sm:px-10 py-10 space-y-5">
                 <SectionHeading>Explore</SectionHeading>
-                <ul className="space-y-3">
-                  {[
-                    { to: "/about",            label: "About Us" },
-                    { to: "/why-exhibit",      label: "Why Exhibit" },
-                    { to: "/become-exhibitor", label: "Become Exhibitor" },
-                    { to: "/benefactors",      label: "Our Partners" },
-                    { to: "/contact",          label: "Contact" },
-                  ].map((l) => (
+                <ul className="space-y-3.5">
+                  {EXPLORE_LINKS.map((l) => (
                     <li key={l.to}>
                       <Link
                         to={l.to}
-                        className="group flex items-center gap-1.5 text-[14px] text-zinc-300 hover:text-blue-400 transition-colors"
+                        className="group flex items-center gap-2 text-[14px] text-zinc-100 hover:text-white transition-colors"
                       >
-                        <MdChevronRight size={14} className="text-blue-400 group-hover:translate-x-0.5 transition-transform" />
+                        <MdChevronRight
+                          size={18}
+                          className="text-zinc-100 group-hover:text-white group-hover:translate-x-0.5 transition-all shrink-0"
+                        />
                         {l.label}
                       </Link>
                     </li>
@@ -157,66 +239,76 @@ export default function Footer() {
                 </ul>
               </div>
 
-              {/* Get in Touch */}
-              <div className="lg:col-span-3 space-y-4">
+              {/* ── Col 3: Get in Touch ── */}
+              <div className="px-7 sm:px-8 py-10 space-y-5">
                 <SectionHeading>Get in Touch</SectionHeading>
-                <ul className="space-y-4">
+                <ul className="space-y-5">
                   <ContactItem icon={<MdLocationOn size={16} />}>
                     <span
-                      className="text-[13px] text-zinc-300 leading-relaxed"
-                      dangerouslySetInnerHTML={{ __html: addressDetail?.description || "Our Address" }}
+                      className="text-[13px] text-zinc-100 leading-relaxed"
+                      dangerouslySetInnerHTML={{
+                        __html: addressDetail?.description ||
+                          "OUR ADDRESS : RSD EXPOSITIONS, A99 DEFENCE COLONY, NEW DELHI - 110024 (INDIA)",
+                      }}
                     />
                   </ContactItem>
                   <ContactItem icon={<MdPhone size={16} />}>
                     <a
                       href={`tel:${(contactDetail?.description || "").replace(/<[^>]*>/g, "").replace(/[^0-9+]/g, "")}`}
-                      className="text-[13px] text-zinc-300 hover:text-blue-400 transition-colors"
-                      dangerouslySetInnerHTML={{ __html: contactDetail?.description || "Call us" }}
+                      className="text-[13px] text-zinc-100 hover:text-white transition-colors"
+                      dangerouslySetInnerHTML={{
+                        __html: contactDetail?.description || "CALL US AT: +91-11-41815099",
+                      }}
                     />
                   </ContactItem>
                   <ContactItem icon={<MdEmail size={16} />}>
                     <a
                       href={`mailto:${(emailDetail?.description || "").replace(/<[^>]*>/g, "").replace(/.*?:/, "").trim()}`}
-                      className="text-[13px] text-zinc-300 hover:text-blue-400 transition-colors break-all"
-                      dangerouslySetInnerHTML={{ __html: emailDetail?.description || "Email" }}
+                      className="text-[13px] text-zinc-100 hover:text-white transition-colors break-all"
+                      dangerouslySetInnerHTML={{
+                        __html: emailDetail?.description ||
+                          "EMAIL: SUPPORT@INOPTICS.IN,<br/>INFOINOPTICS@GMAIL.COM",
+                      }}
                     />
                   </ContactItem>
                 </ul>
               </div>
 
-              {/* Newsletter + Org */}
-              <div className="lg:col-span-4 space-y-4">
+              {/* ── Col 4: Newsletter + Org ── */}
+              <div className="px-7 sm:px-8 py-10 space-y-5">
                 <SectionHeading>Don't Miss Out!</SectionHeading>
                 <p
-                  className="text-[13px] text-zinc-400 leading-relaxed"
+                  className="text-[13px] text-zinc-200 leading-relaxed"
                   dangerouslySetInnerHTML={{
                     __html: footer2[0]?.description ||
                       "Big announcements, cutting-edge updates, and exclusive offers — straight to your inbox. Enter your email above and stay one step ahead.",
                   }}
                 />
-                <form onSubmit={(e) => e.preventDefault()} className="relative">
+                {/* Email Input */}
+                <div className="relative">
                   <input
                     type="email"
                     placeholder="Your email address"
-                    className="w-full pl-5 pr-14 h-12 text-[13px] rounded-full bg-white/4 border border-white/10 text-white placeholder:text-zinc-500 focus:outline-none focus:border-blue-400 focus:bg-white/6 transition-all"
+                    className="w-full pl-4 pr-14 h-12 text-[16px] rounded bg-[#111827] border border-white/15 text-white placeholder:text-zinc-200 focus:outline-none focus:border-blue-500/60 transition-all"
                   />
                   <button
-                    type="submit"
+                    type="button"
                     aria-label="Subscribe"
-                    className="absolute right-1.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-linear-to-br from-blue-500 to-purple-600 hover:from-blue-400 hover:to-purple-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/40 transition-all"
+                    className="absolute right-1.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded bg-blue-500 hover:bg-blue-400 text-white flex items-center justify-center transition-all"
                   >
-                    <MdSend size={14} />
+                    <MdSend size={15} />
                   </button>
-                </form>
+                </div>
 
+                {/* Org + Member logos */}
                 {footer4.length > 0 && (
-                  <div className="grid grid-cols-2 gap-4 pt-2">
+                  <div className="grid grid-cols-2 gap-4 pt-1">
                     {footer4.slice(0, 2).map((item, idx) => (
-                      <div key={idx} className="space-y-2">
-                        <p className="text-[10px] uppercase tracking-[0.2em] text-zinc-500 m-0">
+                      <div key={idx} className="space-y-1.5">
+                        <p className="text-[10px] uppercase tracking-[0.18em] text-zinc-500 m-0 font-semibold">
                           {item.title}
                         </p>
-                        <div className="h-12 flex items-center">
+                        <div className="h-14 flex items-center">
                           <img
                             src={item.image}
                             alt={item.title}
@@ -227,115 +319,86 @@ export default function Footer() {
                     ))}
                   </div>
                 )}
-              </div>
-            </div>
 
-            {/* ============ DIVIDER ============ */}
-            <div className="px-6 sm:px-10 lg:px-14">
-              <div className="h-px bg-linear-to-r from-transparent via-white/10 to-transparent" />
-            </div>
-
-            {/* ============ SPONSORS ============ */}
-            <div className="px-6 sm:px-10 lg:px-14 pt-10 pb-8">
-              <div className="text-center mb-7">
-                <span className="text-[11px] font-bold tracking-[0.3em] uppercase text-blue-400">
-                  — Our Partners —
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-6 items-stretch">
-                {/* Platinum */}
-                <div className="space-y-3">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-purple-300/80 m-0">
-                    Platinum Sponsor
-                  </p>
-                  <div className="bg-white rounded-2xl p-6 sm:p-8 flex items-center justify-center min-h-32 sm:min-h-37 hover:shadow-2xl hover:shadow-purple-500/20 transition-all">
-                    {getSponsor("Footer-Platinum") ? (
-                      <img
-                        src={getSponsor("Footer-Platinum")}
-                        alt="Platinum Sponsor"
-                        className="max-w-[80%] max-h-25 object-contain"
-                      />
-                    ) : (
-                      <span className="text-zinc-400 text-[12px]">—</span>
-                    )}
-                  </div>
-                </div>
-
-                {/* Gold + View All */}
-                <div className="space-y-3">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-amber-300/80 m-0">
-                    <span className="text-amber-300">Gold Sponsors</span>
-                    <span className="text-zinc-500"> &amp; Partners</span>
-                  </p>
-                  <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-2 sm:gap-3">
-                    {goldSponsors.map((s, i) => (
-                      <div
-                        key={i}
-                        className="bg-white rounded-xl flex items-center justify-center min-h-22 sm:min-h-25 p-2 sm:p-3 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/10 transition-all"
-                      >
-                        <img
-                          src={getSponsor(s.type)}
-                          alt={s.alt}
-                          className="max-w-[85%] max-h-16 object-contain"
-                        />
+                {/* Fallback if no footer4 data */}
+                {footer4.length === 0 && (
+                  <div className="grid grid-cols-2 gap-4 pt-1">
+                    <div className="space-y-1.5">
+                      <p className="text-[10px] uppercase tracking-[0.18em] text-zinc-500 m-0 font-semibold">
+                        Event Organised By
+                      </p>
+                      <div className="h-14 flex items-center">
+                        <div className="text-[11px] text-zinc-400 italic">rsd expositions</div>
                       </div>
-                    ))}
-                    <Link
-                      to="/benefactors"
-                      className="group bg-white/3 hover:bg-white/8 border border-white/10 hover:border-blue-400/50 rounded-xl flex flex-col items-center justify-center min-h-22 sm:min-h-25 p-3 text-center transition-all"
-                    >
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-white">
-                        View All
-                      </span>
-                      <MdArrowOutward
-                        size={18}
-                        className="text-blue-400 mt-1 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
-                      />
-                    </Link>
+                    </div>
+                    <div className="space-y-1.5">
+                      <p className="text-[10px] uppercase tracking-[0.18em] text-zinc-500 m-0 font-semibold">
+                        Member Of
+                      </p>
+                      <div className="h-14 flex items-center">
+                        <div className="text-[11px] text-zinc-400 italic">iEIA</div>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
 
             {/* ============ DIVIDER ============ */}
             <div className="px-6 sm:px-10 lg:px-14">
-              <div className="h-px bg-linear-to-r from-transparent via-white/10 to-transparent" />
+              <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
             </div>
 
-            {/* ============ COPYRIGHT ============ */}
-            <div className="px-6 sm:px-10 lg:px-14 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-[12px] text-zinc-500">
-              <p className="m-0 flex items-center gap-2 text-center sm:text-left">
-                <span className="w-6 h-6 rounded-md bg-blue-500/10 border border-blue-400/30 flex items-center justify-center text-blue-400 shrink-0">
+            {/* ============ BOTTOM BAR ============ */}
+            <div className="px-6 sm:px-10 lg:px-14 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-[12px] text-zinc-100">
+              <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 text-center sm:text-left">
+                <span className="w-6 h-6 rounded-md bg-blue-500/15 border border-blue-400/30 flex items-center justify-center text-blue-400 shrink-0">
                   <MdShield size={13} />
                 </span>
-                © {new Date().getFullYear()} <span className="text-zinc-300">Inoptic</span>. All rights reserved.
-                <span className="hidden sm:inline text-zinc-600">|</span>
+                <span>
+                  © {new Date().getFullYear()}{" "}
+                  <span className="text-zinc-10">Inoptic</span>
+                  . All rights reserved.
+                </span>
+                <span className="hidden sm:inline text-zinc-100">|</span>
                 <span className="hidden sm:inline">Developed by RSD Expositions.</span>
-              </p>
+              </div>
+
               <div className="flex items-center gap-4">
-                <button onClick={() => openModal("privacy")} className="text-blue-400 hover:text-blue-300 transition-colors">
+                <button
+                  onClick={() => openModal("privacy")}
+                  className="text-zinc-100 hover:text-blue-300 transition-colors"
+                >
                   Privacy Policy
                 </button>
-                <span className="text-zinc-700">|</span>
-                <button onClick={() => openModal("terms")} className="text-blue-400 hover:text-blue-300 transition-colors">
+                <span className="text-zinc-100">|</span>
+                <button
+                  onClick={() => openModal("terms")}
+                  className="text-zinc-100 hover:text-blue-300 transition-colors"
+                >
                   Terms &amp; Conditions
                 </button>
               </div>
             </div>
+
           </div>
-        </footer>
+        </div>
+
+        {/* Bottom padding */}
+        <div className="h-5" />
       </div>
 
       {/* ============ MODAL ============ */}
       {activeModal && (
         <div
           onClick={() => setActiveModal(null)}
-          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-[fadeIn_0.2s_ease]"
+          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6"
+          style={{ animation: "fadeIn 0.2s ease" }}
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-white w-full max-w-250 max-h-[85vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-[modalUp_0.3s_ease]"
+            className="bg-white w-full max-w-2xl max-h-[85vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+            style={{ animation: "modalUp 0.3s ease" }}
           >
             <div className="px-6 sm:px-8 py-5 flex items-center justify-between border-b border-zinc-100 sticky top-0 bg-white z-10">
               <h2 className="m-0 text-zinc-900 text-[18px] sm:text-[20px] font-bold tracking-tight">
@@ -353,12 +416,16 @@ export default function Footer() {
             <div className="overflow-y-auto px-6 sm:px-8 py-6 sm:py-8 text-zinc-700 leading-relaxed text-[14px] sm:text-[15px] [&>p]:mb-4 [&_a]:text-blue-600 [&_a]:underline">
               {activeModal === "privacy" &&
                 (privacyDetails.length > 0
-                  ? privacyDetails.map((item, i) => <p key={i} dangerouslySetInnerHTML={{ __html: item.description }} />)
+                  ? privacyDetails.map((item, i) => (
+                      <p key={i} dangerouslySetInnerHTML={{ __html: item.description }} />
+                    ))
                   : <p className="text-zinc-400">Loading Privacy Policy...</p>
                 )}
               {activeModal === "terms" &&
                 (termsDetails.length > 0
-                  ? termsDetails.map((item, i) => <p key={i} dangerouslySetInnerHTML={{ __html: item.description }} />)
+                  ? termsDetails.map((item, i) => (
+                      <p key={i} dangerouslySetInnerHTML={{ __html: item.description }} />
+                    ))
                   : <p className="text-zinc-400">Loading Terms &amp; Conditions...</p>
                 )}
             </div>
@@ -374,26 +441,26 @@ export default function Footer() {
   );
 }
 
-/* ================== sub-components ================== */
+/* ================== Sub-components ================== */
 
 function SectionHeading({ children }) {
   return (
     <div>
-      <h4 className="text-white text-[14px] font-bold uppercase tracking-[0.2em] m-0">
+      <h4 className="text-white text-[15px] font-bold uppercase tracking-[0.15em] m-0">
         {children}
       </h4>
-      <div className="mt-2 w-12 h-0.75 rounded-full bg-linear-to-r from-purple-500 to-blue-500" />
+      <div className="mt-2.5 w-10 h-0.5 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400" />
     </div>
   );
 }
 
 function ContactItem({ icon, children }) {
   return (
-    <li className="flex items-start gap-3">
-      <span className="w-9 h-9 rounded-full bg-blue-500/10 border border-blue-400/30 flex items-center justify-center text-blue-400 shrink-0 mt-0.5">
+    <li className="flex items-start gap-3.5">
+      <span className="w-10 h-10 rounded-full bg-[#111827] border border-white/50 flex items-center justify-center text-zinc-100 shrink-0 mt-0.5">
         {icon}
       </span>
-      <div className="pt-1.5 min-w-0">{children}</div>
+      <div className="pt-2 min-w-0">{children}</div>
     </li>
   );
 }

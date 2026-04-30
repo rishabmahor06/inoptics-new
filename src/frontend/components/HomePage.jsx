@@ -140,17 +140,28 @@ export default function HomePage({ showBreadcrumbs }) {
       {showBreadcrumbs}
 
       {/* ============ HERO VIDEO ============ */}
-      <div className="relative w-full h-[60vh] sm:h-[75vh] lg:h-[calc(100vh-77px)] overflow-hidden bg-black">
-        <iframe
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none w-[177.78vh] h-screen min-w-full min-h-full"
-          src="https://www.youtube.com/embed/L9OHFU62kX8?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&modestbranding=1&playlist=L9OHFU62kX8"
-          frameBorder="0"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-          title="Intro Video"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none" />
-      </div>
+     <div className="relative w-full h-screen overflow-hidden bg-black">
+
+  {/* VIDEO */}
+  <iframe
+    className="
+      absolute top-1/2 left-1/2
+      w-screen h-screen
+      min-w-[177.77vh] 
+      min-h-[56.25vw]
+      -translate-x-1/2 -translate-y-1/2
+      pointer-events-none
+    "
+    src="https://www.youtube.com/embed/L9OHFU62kX8?autoplay=1&mute=1&loop=1&controls=0&rel=0&modestbranding=1&playlist=L9OHFU62kX8"
+    frameBorder="0"
+    allow="autoplay; encrypted-media"
+    title="Background Video"
+  />
+
+  {/* OPTIONAL OVERLAY */}
+  {/* <div className="absolute inset-0 bg-black/30" /> */}
+
+</div>
 
       {/* ============ MAIN CONTENT ============ */}
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-10 mt-12 sm:mt-20 lg:mt-28 space-y-20 sm:space-y-28">
