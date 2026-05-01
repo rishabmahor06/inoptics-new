@@ -1,5 +1,10 @@
 import { create } from 'zustand';
-import { getHomeVideos, uploadHomeVideo, deleteHomeVideo } from '../../api/website/homeVideoApi';
+import {
+  getHomeVideos,
+  uploadHomeVideo,
+  uploadHomeVideoLink,
+  deleteHomeVideo,
+} from '../../api/website/homeVideoApi';
 import toast from 'react-hot-toast';
 
 export const useHomeVideoStore = create((set, get) => ({
@@ -21,6 +26,14 @@ export const useHomeVideoStore = create((set, get) => ({
   uploadVideo: async (fd) => {
     const res = await uploadHomeVideo(fd);
     toast.success(res.message || 'Video uploaded');
+    get().fetchVideos();
+    return res;
+  },
+
+  uploadVideoLink: async (url) => {
+    const res = await uploadHomeVideoLink(url);
+    if (res.error) { toast.error(res.error); return res; }
+    toast.success(res.message || 'Link saved');
     get().fetchVideos();
     return res;
   },
