@@ -135,12 +135,12 @@ function NavbarAndRoutes() {
     "/powerload",
   ];
 
+  // Show FloatingCard on all public pages — hide only on admin/login dashboards
   const hideFloatingCardRoutes = [
-    "/",
+    "/admindashboard",
     "/dashboard",
     "/exhibitor-dashboard",
     "/exhibitor-login",
-    "/unsubscribe",
     "/admin-login",
     "/sachin-dashboard",
     "/sachin",

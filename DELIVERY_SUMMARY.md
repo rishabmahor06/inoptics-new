@@ -6,7 +6,7 @@
 
 #### **11 React Components**
 1. ✅ **PaymentDetails.jsx** - Main container/entry point
-2. ✅ **CompanyDetailsSection.jsx** - Company info display
+2. ✅ **CompanslateY(-50%);yDetailsSection.jsx** - Company info display
 3. ✅ **BillingCardsSection.jsx** - 3-column billing overview
 4. ✅ **StallPaymentPanel.jsx** - Stall payment management
 5. ✅ **PowerPaymentPanel.jsx** - Power payment management

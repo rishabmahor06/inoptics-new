@@ -68,11 +68,11 @@ export default function Footer() {
   ].filter((s) => getSponsor(s.type));
 
   const SOCIAL_ICONS = [
-    { Icon: FaFacebookF,  label: "Facebook" },
-    { Icon: FaInstagram,  label: "Instagram" },
-    { Icon: FaLinkedinIn, label: "LinkedIn" },
-    { Icon: FaYoutube,    label: "YouTube" },
-    { Icon: FaEnvelope,   label: "Email" },
+    { Icon: FaFacebookF,  label: "Facebook", href: "https://www.facebook.com/inopticsonoptics", target: "_blank" },
+    { Icon: FaInstagram,  label: "Instagram", href: "https://www.instagram.com/inoptic99/", target: "_blank" },
+    { Icon: FaLinkedinIn, label: "LinkedIn", href: "https://www.linkedin.com/company/inoptics", target: "_blank" },
+    { Icon: FaYoutube,    label: "YouTube", href: "https://www.youtube.com/channel/UCZzX2F7ztBatHyOkZo2cmQw", target: "_blank" },
+    { Icon: FaEnvelope,   label: "Email", href: "mailto:info@inoptics.in", target: "_blank" },
   ];
 
   const EXPLORE_LINKS = [
@@ -208,7 +208,9 @@ export default function Footer() {
                   {SOCIAL_ICONS.map(({ Icon, label }, i) => (
                     <a
                       key={i}
-                      href="#"
+                      href={SOCIAL_ICONS[i].href}
+                      target={SOCIAL_ICONS[i].target}
+                      rel="noopener noreferrer"
                       aria-label={label}
                       className="w-10 h-10 rounded-full bg-[#111827] border border-white/50 flex items-center justify-center text-white hover:text-white hover:border-white/40 hover:bg-white/10 transition-all"
                     >
