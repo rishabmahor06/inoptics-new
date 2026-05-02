@@ -15,9 +15,8 @@ const API  = "https://inoptics.in/api/get_floatingcard_details.php";
 /* ── Social config ── */
 const SOCIALS = [
   { id: "fb",  label: "Facebook",  href: "https://www.facebook.com/inopticsonoptics",                color: "#1877F2", bg: "#1877F2", Icon: FaFacebookF  },
-  { id: "wa",  label: "WhatsApp",  href: "https://wa.me/",                                           color: "#25D366", bg: "#25D366", Icon: FaWhatsapp   },
-  { id: "tw",  label: "Twitter",   href: "https://x.com/in_inoptics",                                color: "#1DA1F2", bg: "#1DA1F2", Icon: FaXTwitter   },
   { id: "ig",  label: "Instagram", href: "https://www.instagram.com/inoptic99/",                     color: "#E1306C", bg: "#E1306C", Icon: FaInstagram  },
+  { id: "tw",  label: "Twitter",   href: "https://x.com/in_inoptics",                                color: "#1DA1F2", bg: "#1DA1F2", Icon: FaXTwitter   },
   { id: "yt",  label: "YouTube",   href: "https://www.youtube.com/channel/UCZzX2F7ztBatHyOkZo2cmQw", color: "#FF0000", bg: "#FF0000", Icon: FaYoutube    },
   { id: "li",  label: "LinkedIn",  href: "https://www.linkedin.com/company/inoptics",                color: "#0A66C2", bg: "#0A66C2", Icon: FaLinkedinIn },
 ];
