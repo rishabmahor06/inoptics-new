@@ -67,14 +67,14 @@ export default function ForExhibitors() {
           <h1
             className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight font-[Playfair_Display,serif] leading-tight max-w-3xl
               [&_em]:bg-gradient-to-r [&_em]:from-amber-300 [&_em]:to-pink-300 [&_em]:bg-clip-text [&_em]:text-transparent [&_em]:not-italic [&_em]:font-light"
-            dangerouslySetInnerHTML={{ __html: exhibitorsMain.header || "Showcase your brand at <em>InOptics 2026</em>" }}
+            dangerouslySetInnerHTML={{ __html: exhibitorsMain?.header || "Showcase your brand at <em>InOptics 2026</em>" }}
           />
           <div
             className="mt-5 text-[14px] sm:text-[16px] text-blue-200 leading-relaxed max-w-2xl
               [&_p]:mb-2 [&_a]:text-amber-300 [&_a]:no-underline [&_a]:font-semibold hover:[&_a]:text-white
               [&_strong]:font-bold [&_strong]:text-white"
             dangerouslySetInnerHTML={{
-              __html: exhibitorsMain.text ||
+              __html: exhibitorsMain?.text ||
                 "This section provides essential resources and guidelines for exhibitors at In-Optics.",
             }}
           />
