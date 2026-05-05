@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-// import Footer from "./Footer";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate, Link } from "react-router-dom";
-import exhibitorImage from "../../../assets/exhibitor_login_illustration.png";
-import Footer from "../../components/Footer";
-import FloatingCard from "../../components/FloatingCard";
+import exhibitorImage from "../../../assets/llll.png";
+import Footer from "../Footer";
 
 
 /*
