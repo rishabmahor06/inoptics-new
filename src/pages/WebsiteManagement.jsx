@@ -265,7 +265,7 @@ function VisitorGuide() {
           </button>
         ))}
       </div>
-      {sub === 'Main'       && <ContentSection title="Visitor Guide - Main" getEndpoint="get_visitor_guide.php" addEndpoint="add_visitor_guide.php" updateEndpoint="update_visitor_guide.php" deleteEndpoint="delete_visitor_guide.php" />}
+      {sub === 'Main'       && <ContentSection title="Visitor Guide - Main" getEndpoint="get_visitor_guide_main.php" addEndpoint="add_visitor_guide.php" updateEndpoint="update_visitor_guide.php" deleteEndpoint="delete_visitor_guide.php" />}
       {sub === 'Cards'      && <ImageCardSection title="Visitor Guide Cards" getEndpoint="get_visitor_guide_cards.php" addEndpoint="add_visitor_guide_card.php" updateEndpoint="update_visitor_guide_card.php" deleteEndpoint="delete_visitor_guide_card.php" />}
       {sub === 'Metro Maps' && <ImageCardSection title="Metro Maps" getEndpoint="get_metro_maps.php" addEndpoint="add_visitor_metro_map.php" updateEndpoint="update_visitor_metro_map.php" deleteEndpoint="delete_visitor_metro_map.php" />}
     </div>
