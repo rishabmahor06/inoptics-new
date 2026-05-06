@@ -43,6 +43,7 @@ const APPLIED_PLACE_OPTIONS = [
   "Contractor Selection",
   "Fascia Email",
   "Booth Design Approve",
+  "New Exhibitor Registration Request",
 ];
 
 const SUB_TABS = [
@@ -119,7 +120,7 @@ function Modal({ title, onClose, children, wide = false }) {
           <h3 className="text-sm font-bold text-zinc-900">{title}</h3>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-lg bg-zinc-100 hover:bg-zinc-200 flex items-center justify-center transition-colors"
+            className="w-8 h-8 rounded bg-zinc-200 text-black hover:text-white hover:bg-zinc-600 flex items-center justify-center transition-colors"
           >
             <MdClose size={16} />
           </button>

@@ -87,7 +87,7 @@ function AnimatedRoutes() {
         <Route path="/contact"                       element={<Contact />} />
         <Route path="/increase-visibility"           element={<IncreaseVisibility />} />
 
-        <Route path="/admin-login"                   element={<Login />} />
+        <Route path="/admin-login"                   element={<ExhibitorLogin />} />
 
         {/* 🔥 The new bright-crm admin (sidebar + tabs) */}
         <Route path="/dashboard"                element={<AdminLayout />} />
@@ -125,7 +125,7 @@ function NavbarAndRoutes() {
     "/",
     "/dashboard",
     "/exhibitor-dashboard",
-    "/exhibitor-loginexhibitor-login",
+    "/admin-login",
     "/unsubscribe",
     "/sachin-dashboard",
     "/sachin",
