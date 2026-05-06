@@ -285,7 +285,7 @@ export default function Contact() {
             <div className="flex-1">
               <h4 className="text-[15px] font-bold text-[#02062c]">Office Hours</h4>
               <div className="mt-2 space-y-1 text-[13px]">
-                <Row day="Mon – Sat" time="10:00 AM – 7:00 PM" />-a
+                <Row day="Mon – Sat" time="10:00 AM – 7:00 PM" />
 
                 <Row day="Sunday"    time="Closed" closed />
               </div>
