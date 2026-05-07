@@ -275,7 +275,7 @@ export default function HomePage({ showBreadcrumbs }) {
           {newsShown.map((item, i) => (
             <li key={i} className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all overflow-hidden border border-zinc-100">
               <div className="flex flex-col sm:flex-row">
-                <div className="w-full sm:w-[180px] aspect-video sm:aspect-auto sm:h-[180px] shrink-0 overflow-hidden bg-zinc-100">
+                <div className="w-full h-[380px] sm:w-[180px] aspect-video sm:aspect-auto sm:h-[180px] shrink-0 overflow-hidden bg-zinc-100">
                   <img src={item.img} alt={item.alt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 </div>
                 <div className="flex-1 p-4 sm:p-5 flex flex-col">
@@ -366,7 +366,7 @@ export default function HomePage({ showBreadcrumbs }) {
         {bigPerson && (
           <div className="mb-10 bg-gradient-to-br from-[#02062c] to-[#0f1a4a] rounded-3xl overflow-hidden shadow-2xl">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
-              <div className="relative aspect-[4/3] md:aspect-auto md:h-full bg-zinc-900">
+              <div className="relative aspect-[4/4] md:aspect-auto md:h-full bg-zinc-900">
                 <img
                   src={`https://inoptics.in/api/${bigPerson.image_path}`}
                   alt={bigPerson.name}
@@ -395,7 +395,7 @@ export default function HomePage({ showBreadcrumbs }) {
                 key={i}
                 className="group bg-white rounded-2xl border border-zinc-100 shadow-sm hover:shadow-xl transition-all overflow-hidden flex flex-col"
               >
-                <div className="aspect-[4/3] overflow-hidden bg-zinc-100">
+                <div className="aspect-[4/4] overflow-hidden bg-zinc-100">
                   <img
                     src={`https://inoptics.in/api/${t.image_path}`}
                     alt={t.name}
