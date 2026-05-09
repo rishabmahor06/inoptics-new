@@ -38,6 +38,7 @@ import IncreaseVisibility      from "./frontend/components/exhibitorArea/Increas
 import Login                   from "./frontend/components/Login";
 import FloatingCard            from "./frontend/components/FloatingCard";
 import ExhibitorDashboardLegacy from "./frontend/components/ExhibitorDashboard";
+import ExhibitorPanel from "./exhibitorDashboard/ExhibitorPanel";
 import ExhibitorLogin          from "./frontend/components/exhibitorArea/ExhibitorLogin";
 import CustomEditor            from "./frontend/components/CustomEditor";
 import VisitorGuide            from "./frontend/components/VisitorGuide";
@@ -105,7 +106,7 @@ function AnimatedRoutes() {
           path="/exhibitor-dashboard"
           element={
             <ExhibitorProtected>
-              <ExhibitorDashboardLegacy />
+              <ExhibitorPanel />
             </ExhibitorProtected>
           }
         />
