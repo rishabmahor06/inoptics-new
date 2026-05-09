@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   MdDashboard,
   MdStorefront,
@@ -320,12 +321,21 @@ export default function Sidebar({
   isMobile = false,
 }) {
   const [collapsedSections, setCollapsedSections] = useState({});
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const navigate = useNavigate();
 
   const toggleSection = (label) => {
     setCollapsedSections((prev) => ({
       ...prev,
       [label]: !prev[label],
     }));
+  };
+
+  const confirmLogout = () => {
+    localStorage.removeItem("isAdminLoggedIn");
+    localStorage.removeItem("adminEmail");
+    setShowLogoutConfirm(false);
+    navigate("/admin-login", { replace: true });
   };
 
   return (
@@ -392,6 +402,7 @@ export default function Sidebar({
       <div className="p-2 border-t border-zinc-100">
         <button
           type="button"
+          onClick={() => setShowLogoutConfirm(true)}
           className={`flex items-center w-full rounded-lg px-3 py-2 text-sm font-medium text-red-500 hover:bg-red-50 ${
             collapsed ? "justify-center" : "gap-3"
           }`}
@@ -400,6 +411,58 @@ export default function Sidebar({
           {!collapsed && <span>Logout</span>}
         </button>
       </div>
+
+      {showLogoutConfirm && (
+        <LogoutConfirmModal
+          onCancel={() => setShowLogoutConfirm(false)}
+          onConfirm={confirmLogout}
+        />
+      )}
     </aside>
+  );
+}
+
+/* ============ Logout Confirm Modal ============ */
+function LogoutConfirmModal({ onCancel, onConfirm }) {
+  return (
+    <div
+      className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 animate-[fadeIn_0.15s_ease]"
+      onClick={onCancel}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden animate-[scaleIn_0.2s_ease]"
+      >
+        <div className="px-6 pt-6 pb-2 text-center">
+          <div className="w-14 h-14 rounded-2xl bg-red-50 border border-red-100 flex items-center justify-center mx-auto mb-3">
+            <MdLogout size={26} className="text-red-500" />
+          </div>
+          <h3 className="text-lg font-bold text-zinc-900">Sign out?</h3>
+          <p className="mt-1 text-[13px] text-zinc-500 leading-relaxed">
+            You'll be returned to the login screen and your session will end.
+          </p>
+        </div>
+        <div className="px-5 pb-5 pt-3 flex items-center gap-2">
+          <button
+            onClick={onCancel}
+            className="flex-1 h-10 text-[13px] font-semibold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded-lg transition-colors"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={onConfirm}
+            className="flex-1 h-10 text-[13px] font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors flex items-center justify-center gap-1.5"
+            autoFocus
+          >
+            <MdLogout size={14} /> Sign Out
+          </button>
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes fadeIn { from {opacity:0} to {opacity:1} }
+        @keyframes scaleIn { from {opacity:0; transform:scale(0.94)} to {opacity:1; transform:scale(1)} }
+      `}</style>
+    </div>
   );
 }

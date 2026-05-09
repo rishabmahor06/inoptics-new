@@ -9,6 +9,7 @@ import { Toaster } from "react-hot-toast";
 import { AnimatePresence } from "framer-motion";
 
 import AdminLayout from "./AdminLayout";
+import { AdminProtected, ExhibitorProtected } from "./frontend/components/auth/ProtectedRoutes";
 
 /* ============== Legacy frontend (public site) components ============== */
 /* These live in src/frontend/components/ — currently stubs that show a
@@ -89,11 +90,25 @@ function AnimatedRoutes() {
 
         <Route path="/admin-login"                   element={<ExhibitorLogin />} />
 
-        {/* 🔥 The new bright-crm admin (sidebar + tabs) */}
-        <Route path="/dashboard"                element={<AdminLayout />} />
+        {/* 🔥 Admin dashboard — protected */}
+        <Route
+          path="/dashboard"
+          element={
+            <AdminProtected>
+              <AdminLayout />
+            </AdminProtected>
+          }
+        />
 
-        {/* legacy exhibitor dashboard kept on its own path */}
-        <Route path="/exhibitor-dashboard"           element={<ExhibitorDashboardLegacy />} />
+        {/* Exhibitor dashboard — protected */}
+        <Route
+          path="/exhibitor-dashboard"
+          element={
+            <ExhibitorProtected>
+              <ExhibitorDashboardLegacy />
+            </ExhibitorProtected>
+          }
+        />
 
         <Route path="/custom-editor"                 element={<CustomEditor />} />
         <Route path="/for-exhibitors"                element={<ForExhibitors />} />

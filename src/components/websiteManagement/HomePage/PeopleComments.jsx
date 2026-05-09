@@ -50,7 +50,7 @@ export default function PeopleComments() {
   };
   const openEdit = (row) => {
     setForm({ name: row.name || "", designation: row.designation || "" });
-    setComment(row.comments || "");
+    setComment(row.comment || row.comments || "");
     setFile(null);
     setEditing(row);
     setModal("edit");
@@ -62,6 +62,7 @@ export default function PeopleComments() {
       const fd = new FormData();
       fd.append("name", form.name);
       fd.append("designation", form.designation);
+      fd.append("comment",  comment);
       fd.append("comments", comment);
       if (file) fd.append("image", file);
       if (modal === "edit") fd.append("id", editing.id);
@@ -102,7 +103,7 @@ export default function PeopleComments() {
                 </div>
               )}
             </td>
-            <TdHtml html={row.comments} />
+            <TdHtml html={row.comment || row.comments} />
             <Td className="font-semibold text-zinc-800">{row.name}</Td>
             <Td className="text-zinc-500">{row.designation}</Td>
             <TdActions>

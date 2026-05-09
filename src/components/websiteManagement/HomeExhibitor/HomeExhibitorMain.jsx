@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHomeExhibitorStore } from '../../../store/website/useHomeExhibitorStore';
 import {
   AddBtn, EditBtn, DelBtn, WmModal, WmTable, Field, WmInput, WmFileInput,
-  SectionHeader, TrRow, Td, TdId, TdImage, TdHtml, TdActions, imgSrc, ImgPreview,
+  SectionHeader, TrRow, Td, TdId, TdImage, TdText, TdActions, imgSrc, ImgPreview,
 } from '../shared/WmShared';
 import CustomEditor from '../../CustomEditor/CustomEditor';
 
@@ -49,7 +49,7 @@ export default function HomeExhibitorMain() {
           <TrRow key={row.id} index={i}>
             <TdId>{row.id}</TdId>
             <Td className="font-semibold text-zinc-800">{row.title}</Td>
-            <TdHtml html={row.description} />
+            <TdText html={row.description} />
             <TdImage src={row.image} onPreview={setPreview} />
             <TdActions>
               <EditBtn onClick={() => openEdit(row)} />

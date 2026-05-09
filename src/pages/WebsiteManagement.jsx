@@ -8,7 +8,10 @@ import HomePage         from '../components/websiteManagement/HomePage/HomePage'
 import AboutUsTab       from '../components/websiteManagement/AboutUs/AboutUsTab';
 import WhyExhibitTab    from '../components/websiteManagement/WhyExhibit/WhyExhibitTab';
 import FloatingCard     from '../components/websiteManagement/FloatingCard/FloatingCard';
-import HomeExhibitorTab from '../components/websiteManagement/HomeExhibitor/HomeExhibitorTab';
+import HomeExhibitorTab    from '../components/websiteManagement/HomeExhibitor/HomeExhibitorTab';
+import VisitorGuideTab     from '../components/websiteManagement/VisitorGuide/VisitorGuideTab';
+import ForExhibitorsTab    from '../components/websiteManagement/ForExhibitors/ForExhibitorsTab';
+import ExhibitorLoginTab   from '../components/websiteManagement/ExhibitorLogin/ExhibitorLoginTab';
 
 import CustomEditor from '../components/CustomEditor/CustomEditor';
 
@@ -416,11 +419,11 @@ export default function WebsiteManagement() {
       case 'Why Exhibit':         return <WhyExhibitTab />;
       case 'Floating Card':       return <FloatingCard />;
       case 'Home Exhibitor':      return <HomeExhibitorTab />;
-      case 'Visitor Guide':       return <VisitorGuide />;
-      case 'For Exhibitors':      return <ForExhibitors />;
+      case 'Visitor Guide':       return <VisitorGuideTab />;
+      case 'For Exhibitors':      return <ForExhibitorsTab />;
       case 'Outer Page':          return <OuterPage />;
       case 'Become An Exhibitor': return <BecomeAnExhibitor />;
-      case 'Exhibitor Login':     return <ExhibitorLogin />;
+      case 'Exhibitor Login':     return <ExhibitorLoginTab />;
       default:                    return null;
     }
   };

@@ -1,388 +1,542 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import {
-  MdEmail, MdLock, MdLogin, MdArrowForward, MdHowToReg,
-  MdInfoOutline, MdAdminPanelSettings, MdStorefront,
-  MdVerifiedUser, MdSpeed, MdSecurity,
-} from "react-icons/md";
 
-/* ============ Tab config ============ */
+import exhibitorImage from "../../../assets/llll.png"; // ✅ Import image
+
+/*
+  App.jsx mein dono routes same component pe:
+  <Route path="/exhibitor-login" element={<UnifiedLogin />} />
+  <Route path="/admin-login"     element={<UnifiedLogin />} />
+
+  Add to index.html:
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+*/
+
+/* ── Tab config ── */
 const TABS = {
   exhibitor: {
-    key:        "exhibitor",
-    label:      "Exhibitor",
-    Icon:       MdStorefront,
-    route:      "/exhibitor-login",
-    api:        "https://inoptics.in/api/exhibitor_login.php",
-    flagKey:    "isExhibitorLoggedIn",
-    infoKey:    "exhibitorInfo",
-    dashboard:  "/exhibitor-dashboard",
-    eyebrow:    "Exhibitor Portal",
-    title:      "Welcome Back",
-    subtitle:   "Sign in to manage your stalls, brands, payments and badges.",
-    accent:     "blue",
-    showRegister: true,
+    key:       "exhibitor",
+    label:     "Exhibitor",
+    route:     "/exhibitor-login",
+    api:       "https://inoptics.in/api/exhibitor_login.php",
+    flagKey:   "isExhibitorLoggedIn",
+    infoKey:   "exhibitorInfo",
+    dashboard: "/exhibitor-dashboard",
+    title:     "Welcome back,",
+    italic:    "Exhibitor",
+    subtitle:  "Sign in to manage stalls, payments, badges & more.",
+    eyebrow:   "Exhibitor Portal",
+    showReg:   true,
+    accent:    "#2563EB",
+    accentDark:"#1D4ED8",
+    accentBg:  "rgba(37,99,235,0.09)",
+    accentRing:"rgba(37,99,235,0.22)",
+    storeInfo: (result, email) => JSON.stringify(result.data || { email }),
   },
   admin: {
-    key:        "admin",
-    label:      "Admin",
-    Icon:       MdAdminPanelSettings,
-    route:      "/admin-login",
-    api:        "https://inoptics.in/api/login.php",
-    flagKey:    "isAdminLoggedIn",
-    infoKey:    "adminEmail",
-    dashboard:  "/admindashboard",
-    eyebrow:    "Admin Console",
-    title:      "Admin Sign In",
-    subtitle:   "Full control over the InOptics CRM and event operations.",
-    accent:     "amber",
-    showRegister: false,
+    key:       "admin",
+    label:     "Admin",
+    route:     "/admin-login",
+    api:       "https://inoptics.in/api/login.php",
+    flagKey:   "isAdminLoggedIn",
+    infoKey:   "adminEmail",
+    dashboard: "/dashboard",
+    title:     "Admin",
+    italic:    "Sign In",
+    subtitle:  "Full control over InOptics CRM & event operations.",
+    eyebrow:   "Admin Console",
+    showReg:   false,
+    accent:    "#D97706",
+    accentDark:"#B45309",
+    accentBg:  "rgba(217,119,6,0.09)",
+    accentRing:"rgba(217,119,6,0.22)",
+    storeInfo: (_, email) => email,
   },
 };
 
-const ACCENT_MAP = {
-  blue: {
-    bg:        "bg-blue-600",
-    bgHover:   "hover:bg-blue-700",
-    text:      "text-blue-600",
-    textHover: "hover:text-blue-700",
-    ring:      "focus:ring-blue-500",
-    fill:      "bg-blue-50",
-    border:    "border-blue-200",
-    pill:      "bg-blue-50 text-blue-700 border-blue-200",
-    shadow:    "shadow-blue-500/30",
-  },
-  amber: {
-    bg:        "bg-amber-500",
-    bgHover:   "hover:bg-amber-600",
-    text:      "text-amber-600",
-    textHover: "hover:text-amber-700",
-    ring:      "focus:ring-amber-500",
-    fill:      "bg-amber-50",
-    border:    "border-amber-200",
-    pill:      "bg-amber-50 text-amber-700 border-amber-200",
-    shadow:    "shadow-amber-500/30",
-  },
+/* ── Floating label input ── */
+const FloatInput = ({ label, name, type = "text", value, onChange, required, autoComplete, accentColor, accentRing, children }) => {
+  const [focused, setFocused] = useState(false);
+  const filled = value?.length > 0;
+  const float  = focused || filled;
+
+  return (
+    <div className="relative">
+      <label
+        className="absolute left-4 pointer-events-none z-10 font-medium transition-all duration-200"
+        style={{
+          fontFamily: "'Inter', sans-serif",
+          top:        float ? -9       : "50%",
+          transform:  float ? "translateY(0) scale(0.78)" : "translateY(-50%) scale(1)",
+          transformOrigin: "left center",
+          color:      focused ? accentColor : "#9CA3AF",
+          background: float ? "#fff" : "transparent",
+          padding:    float ? "0 4px" : "0",
+          fontSize:   14,
+        }}
+      >
+        {label}
+      </label>
+      <div className="relative">
+        <input
+          type={type}
+          name={name}
+          value={value}
+          onChange={onChange}
+          required={required}
+          autoComplete={autoComplete}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          placeholder={focused ? (name === "email" ? "you@example.com" : "••••••••") : ""}
+          className="w-full h-[52px] px-4 text-[14.5px] font-normal text-gray-900 bg-white rounded-2xl outline-none transition-all duration-200"
+          style={{
+            fontFamily: "'Inter', sans-serif",
+            paddingRight: children ? 48 : 16,
+            border: `2px solid ${focused ? accentColor : "#E5E7EB"}`,
+            boxShadow: focused ? `0 0 0 4px ${accentRing}` : "none",
+          }}
+        />
+        {children && (
+          <div className="absolute right-4 top-1/2 -translate-y-1/2">{children}</div>
+        )}
+      </div>
+    </div>
+  );
 };
 
-const HIGHLIGHTS = [
-  { Icon: MdSpeed,        title: "Fast Access",       desc: "Lightning-quick login to your dashboard" },
-  { Icon: MdSecurity,     title: "Secure",            desc: "Industry-standard encryption" },
-  { Icon: MdVerifiedUser, title: "Verified Account",  desc: "Verified exhibitor & admin profiles" },
-];
-
+/* ════════════════════════════════════════
+   MAIN COMPONENT
+════════════════════════════════════════ */
 export default function ExhibitorLogin() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const initialTab = location.pathname === "/admin-login" ? "admin" : "exhibitor";
-  const [activeTab, setActiveTab] = useState(initialTab);
-  const tab    = TABS[activeTab];
-  const accent = ACCENT_MAP[tab.accent];
+  const initTab = location.pathname === "/admin-login" ? "admin" : "exhibitor";
+  const [activeTab,  setActiveTab]  = useState(initTab);
+  const [formData,   setFormData]   = useState({ email: "", password: "" });
+  const [showPw,     setShowPw]     = useState(false);
+  const [error,      setError]      = useState("");
+  const [loading,    setLoading]    = useState(false);
+  const [details,    setDetails]    = useState([]);
+  const [detailLoad, setDetailLoad] = useState(true);
+  const [slideDir,   setSlideDir]   = useState("right"); // for animation
 
-  const [formData,     setFormData]     = useState({ email: "", password: "" });
-  const [showPassword, setShowPassword] = useState(false);
-  const [error,        setError]        = useState("");
-  const [loading,      setLoading]      = useState(false);
+  const tab = TABS[activeTab];
+  const isExhibitor = activeTab === "exhibitor";
 
-  /* sync tab when URL changes (browser back/forward) */
+  /* sync tab when URL changes */
   useEffect(() => {
     const next = location.pathname === "/admin-login" ? "admin" : "exhibitor";
     if (next !== activeTab) setActiveTab(next);
-  }, [location.pathname, activeTab]);
+  }, [location.pathname]);
 
-  /* auto-redirect if already logged in for current tab */
+  /* redirect if already logged in */
   useEffect(() => {
     if (localStorage.getItem(tab.flagKey)) {
       navigate(tab.dashboard, { replace: true });
     }
-  }, [tab, navigate]);
+  }, [tab]);
+
+  /* fetch left-panel API content once */
+  useEffect(() => {
+    (async () => {
+      try {
+        const r = await fetch("https://inoptics.in/api/get_exhibitor_login.php");
+        const d = await r.json();
+        setDetails(Array.isArray(d) ? d : []);
+      } catch { /* silent */ }
+      finally { setDetailLoad(false); }
+    })();
+  }, []);
 
   const switchTab = (key) => {
     if (key === activeTab) return;
-    setActiveTab(key);
+    setSlideDir(key === "exhibitor" ? "left" : "right");
     setError("");
     setFormData({ email: "", password: "" });
-    setShowPassword(false);
+    setShowPw(false);
+    setActiveTab(key);
     navigate(TABS[key].route, { replace: false });
   };
 
   const handleChange = (e) =>
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setFormData(p => ({ ...p, [e.target.name]: e.target.value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
+    setError(""); setLoading(true);
     try {
-      const res = await fetch(tab.api, {
-        method:  "POST",
+      const res    = await fetch(tab.api, {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        body:    JSON.stringify(formData),
+        body: JSON.stringify(formData),
       });
       const result = await res.json();
       if (result.success) {
         localStorage.setItem(tab.flagKey, "true");
-        if (activeTab === "exhibitor") {
-          localStorage.setItem(tab.infoKey, JSON.stringify(result.data || { email: formData.email }));
-        } else {
-          localStorage.setItem(tab.infoKey, formData.email);
-        }
+        localStorage.setItem(tab.infoKey, tab.storeInfo(result, formData.email));
         navigate(tab.dashboard, { replace: true });
       } else {
         setError(result.message || "Invalid credentials. Please try again.");
       }
-    } catch (err) {
-      console.error("Login error:", err);
+    } catch {
       setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  const isExhibitor = activeTab === "exhibitor";
-
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-10 sm:py-16 bg-[#f4f5f9] font-[Quicksand,sans-serif] relative overflow-hidden">
-
-      {/* Background mesh / decorations */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-blue-200/40 blur-3xl" />
-        <div className="absolute -bottom-40 -right-40 w-[500px] h-[500px] rounded-full bg-amber-200/40 blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-purple-100/30 blur-3xl" />
-      </div>
-
-      <div className="relative w-full max-w-md">
-
-        {/* Logo + brand */}
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-[#02062c] to-[#1e3a8a] text-white shadow-xl shadow-blue-500/30 mb-3">
-            <MdVerifiedUser size={26} />
-          </div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-zinc-500">
-            InOptics 2026
-          </p>
-          <h1 className="mt-1 text-2xl font-light tracking-tight text-[#02062c] font-[Playfair_Display,serif]">
-            Login Portal
-          </h1>
-        </div>
-
-        {/* ============ MAIN CARD ============ */}
-        <div className="bg-white rounded-3xl shadow-2xl shadow-zinc-300/40 border border-zinc-100 overflow-hidden">
-
-          {/* Tab strip */}
-          <div className="relative bg-zinc-50 p-1.5 m-3 rounded-2xl select-none">
-            <span
-              aria-hidden
-              className={`absolute top-1.5 bottom-1.5 left-1.5 w-[calc(50%-6px)] rounded-xl bg-white shadow-md ring-1 ring-zinc-200/70 transition-transform duration-300 ease-out
-                ${isExhibitor ? "translate-x-0" : "translate-x-full"}`}
-            />
-            <div className="relative grid grid-cols-2">
-              {Object.values(TABS).map((t) => {
-                const a = ACCENT_MAP[t.accent];
-                const active = t.key === activeTab;
-                return (
-                  <button
-                    key={t.key}
-                    type="button"
-                    onClick={() => switchTab(t.key)}
-                    className={`relative flex items-center justify-center gap-2 h-11 text-[13px] font-bold uppercase tracking-wider rounded-xl transition-colors z-10
-                      ${active ? "text-[#02062c]" : "text-zinc-500 hover:text-zinc-800"}`}
-                  >
-                    <t.Icon size={16} className={active ? a.text : ""} />
-                    {t.label}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Sliding form */}
-          <div className="overflow-hidden">
-            <div
-              key={activeTab}
-              className="px-7 sm:px-9 pb-9 pt-3"
-              style={{
-                animation: `${isExhibitor ? "slideIn" : "slideInReverse"} 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both`,
-              }}
-            >
-              {/* Heading */}
-              <div className="mb-6">
-                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[10px] font-bold uppercase tracking-widest ${accent.pill}`}>
-                  <span className={`w-1.5 h-1.5 rounded-full ${accent.bg}`} />
-                  {tab.eyebrow}
-                </span>
-                <h2 className="mt-3 text-2xl sm:text-3xl font-light tracking-tight text-[#02062c] font-[Playfair_Display,serif]">
-                  {tab.title}
-                </h2>
-                <p className="mt-1 text-[13px] text-zinc-500 leading-relaxed">
-                  {tab.subtitle}
-                </p>
-              </div>
-
-              {/* Form */}
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <Field label="Email" icon={<MdEmail size={16} />}>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    placeholder="you@example.com"
-                    autoComplete="email"
-                    className={`w-full h-12 pl-10 pr-3 text-[14px] border border-zinc-200 rounded-xl bg-white focus:outline-none focus:ring-2 ${accent.ring} focus:border-transparent transition-all`}
-                  />
-                </Field>
-
-                <Field label="Password" icon={<MdLock size={16} />}>
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                    placeholder="••••••••"
-                    autoComplete="current-password"
-                    className={`w-full h-12 pl-10 pr-11 text-[14px] border border-zinc-200 rounded-xl bg-white focus:outline-none focus:ring-2 ${accent.ring} focus:border-transparent transition-all`}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword((v) => !v)}
-                    className={`absolute right-3 top-1/2 -translate-y-1/2 w-7 h-7 flex items-center justify-center text-zinc-400 ${accent.textHover} transition-colors`}
-                    aria-label={showPassword ? "Hide password" : "Show password"}
-                  >
-                    {showPassword ? <FaEyeSlash size={14} /> : <FaEye size={14} />}
-                  </button>
-                </Field>
-
-                {/* Forgot password */}
-                <div className="text-right -mt-1">
-                  <button
-                    type="button"
-                    className={`text-[12px] font-semibold ${accent.text} ${accent.textHover}`}
-                    onClick={() => alert("Password reset is not yet implemented.")}
-                  >
-                    Forgot password?
-                  </button>
-                </div>
-
-                {error && (
-                  <div className="flex items-start gap-2.5 p-3 bg-red-50 border border-red-200 rounded-xl animate-[shake_0.3s_ease]">
-                    <MdInfoOutline size={18} className="text-red-500 shrink-0 mt-0.5" />
-                    <p className="text-red-700 text-[13px] font-medium">{error}</p>
-                  </div>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className={`group relative w-full h-12 rounded-xl text-[13px] font-bold uppercase tracking-wider ${accent.bg} ${accent.bgHover} text-white shadow-lg ${accent.shadow} disabled:opacity-60 disabled:cursor-not-allowed transition-all`}
-                >
-                  <span className="flex items-center justify-center gap-2">
-                    {loading ? (
-                      <>
-                        <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                        Signing in...
-                      </>
-                    ) : (
-                      <>
-                        <MdLogin size={16} />
-                        Sign In
-                        <MdArrowForward size={14} className="group-hover:translate-x-1 transition-transform" />
-                      </>
-                    )}
-                  </span>
-                </button>
-              </form>
-
-              {/* Footer */}
-              <div className="mt-6 pt-5 border-t border-zinc-100">
-                {tab.showRegister ? (
-                  <p className="text-center text-[12px] text-zinc-500">
-                    New to InOptics?{" "}
-                    <Link
-                      to="/become-exhibitor"
-                      className={`font-bold ${accent.text} ${accent.textHover}`}
-                    >
-                      <MdHowToReg size={12} className="inline -mt-0.5" /> Register as Exhibitor
-                    </Link>
-                  </p>
-                ) : (
-                  <p className="text-center text-[12px] text-zinc-500">
-                    Need an exhibitor account?{" "}
-                    <button
-                      type="button"
-                      onClick={() => switchTab("exhibitor")}
-                      className={`font-bold ${accent.text} ${accent.textHover}`}
-                    >
-                      Switch to Exhibitor login
-                    </button>
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Highlights row */}
-        <div className="mt-6 grid grid-cols-3 gap-2">
-          {HIGHLIGHTS.map(({ Icon, title, desc }, i) => (
-            <div
-              key={i}
-              className="bg-white/60 backdrop-blur-sm border border-white/80 rounded-xl px-3 py-2.5 text-center hover:bg-white transition-colors"
-            >
-              <Icon size={18} className={`mx-auto mb-1 ${accent.text}`} />
-              <p className="text-[11px] font-bold text-[#02062c] leading-tight">{title}</p>
-              <p className="text-[10px] text-zinc-500 leading-tight mt-0.5 hidden sm:block">{desc}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Terms */}
-        <p className="text-center text-[11px] text-zinc-500 mt-5 leading-relaxed">
-          By signing in, you agree to our{" "}
-          <span className={`font-semibold ${accent.text} cursor-pointer`}>Terms</span>{" "}
-          &amp;{" "}
-          <span className={`font-semibold ${accent.text} cursor-pointer`}>Privacy Policy</span>.
-        </p>
-      </div>
-
+    <>
       <style>{`
-        @keyframes slideIn {
-          0%   { opacity: 0; transform: translateX(-24px) scale(0.98); }
-          100% { opacity: 1; transform: translateX(0) scale(1); }
+        @keyframes slideFromRight {
+          from { opacity:0; transform:translateX(28px) scale(0.98); }
+          to   { opacity:1; transform:translateX(0)    scale(1);    }
         }
-        @keyframes slideInReverse {
-          0%   { opacity: 0; transform: translateX(24px) scale(0.98); }
-          100% { opacity: 1; transform: translateX(0) scale(1); }
+        @keyframes slideFromLeft {
+          from { opacity:0; transform:translateX(-28px) scale(0.98); }
+          to   { opacity:1; transform:translateX(0)     scale(1);    }
+        }
+        @keyframes fadeUp {
+          from { opacity:0; transform:translateY(20px); }
+          to   { opacity:1; transform:translateY(0);    }
         }
         @keyframes shake {
-          0%,100% { transform: translateX(0); }
-          20%     { transform: translateX(-5px); }
-          40%     { transform: translateX(5px); }
-          60%     { transform: translateX(-3px); }
-          80%     { transform: translateX(3px); }
+          0%,100% { transform:translateX(0); }
+          20%     { transform:translateX(-6px); }
+          60%     { transform:translateX(6px); }
         }
+        @keyframes spin { to { transform:rotate(360deg); } }
+        .form-slide-right { animation: slideFromRight 0.38s cubic-bezier(0.34,1.4,0.64,1) both; }
+        .form-slide-left  { animation: slideFromLeft  0.38s cubic-bezier(0.34,1.4,0.64,1) both; }
+        .tab-track { transition: transform 0.32s cubic-bezier(0.34,1.4,0.64,1); }
       `}</style>
-    </div>
-  );
-}
 
-/* ============ Field wrapper ============ */
-function Field({ label, icon, children }) {
-  return (
-    <div>
-      <label className="block text-[11px] font-bold uppercase tracking-widest text-zinc-500 mb-1.5">
-        {label}
-      </label>
-      <div className="relative">
-        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none z-10">
-          {icon}
-        </span>
-        {children}
+      <div className="min-h-screen flex flex-col" style={{ fontFamily: "'Inter', sans-serif" }}>
+
+        {/* ══════════ FULL-SCREEN HERO ══════════ */}
+        <div className="relative flex-1 flex items-center justify-center px-4 py-10 md:py-14 min-h-screen overflow-hidden">
+
+          {/* Background image */}
+          <img
+            src={exhibitorImage}
+            alt="InOptics 2026"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          {/* Dark overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-950/85 via-gray-900/75 to-slate-900/85" />
+          {/* Colored accent overlay based on active tab */}
+          <div className="absolute inset-0 transition-all duration-700"
+            style={{ background: `radial-gradient(ellipse at 60% 30%, ${tab.accent}18 0%, transparent 65%)` }} />
+
+          {/* Floating dots grid */}
+          <div className="absolute inset-0 opacity-[0.04]"
+            style={{ backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)", backgroundSize: "30px 30px" }} />
+
+          <div className="relative z-10 w-full max-w-[1000px]" style={{ animation: "fadeUp 0.55s ease both" }}>
+
+            {/* ── Brand pill ── */}
+            <div className="flex justify-center mb-8">
+              <div className="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full px-5 py-2 shadow-lg">
+                <div className="w-5 h-5 rounded-full flex items-center justify-center"
+                  style={{ background: "linear-gradient(135deg,#f59e0b,#f97316)" }}>
+                  <svg width="10" height="10" viewBox="0 0 14 14" fill="none">
+                    <circle cx="7" cy="7" r="2.4" fill="#fff"/>
+                    <line x1="7" y1="1.5" x2="7" y2="3.4" stroke="#fff" strokeWidth="1.8" strokeLinecap="round"/>
+                    <line x1="7" y1="10.6" x2="7" y2="12.5" stroke="#fff" strokeWidth="1.8" strokeLinecap="round"/>
+                    <line x1="1.5" y1="7" x2="3.4" y2="7" stroke="#fff" strokeWidth="1.8" strokeLinecap="round"/>
+                    <line x1="10.6" y1="7" x2="12.5" y2="7" stroke="#fff" strokeWidth="1.8" strokeLinecap="round"/>
+                  </svg>
+                </div>
+                <span className="text-[11px] font-bold tracking-[0.22em] text-white/90">INOPTICS 2026</span>
+                <span className="text-white/35 text-[10px]">· Portal</span>
+              </div>
+            </div>
+
+            {/* ══ CARD ══ */}
+            <div className="flex flex-col lg:flex-row rounded-[28px] overflow-hidden shadow-2xl"
+              style={{ boxShadow: "0 40px 100px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.07)" }}>
+
+              {/* ─── LEFT PANEL ─── */}
+              <div
+                className="hidden lg:flex lg:w-[42%] flex-col justify-between p-12 relative overflow-hidden"
+                style={{ background: "rgba(8,12,30,0.92)", backdropFilter: "blur(20px)" }}
+              >
+                {/* Accent glow */}
+                <div className="absolute -top-20 -right-20 w-56 h-56 rounded-full pointer-events-none transition-all duration-700"
+                  style={{ background: `radial-gradient(circle, ${tab.accent}30, transparent 65%)` }} />
+                {/* Top shimmer line */}
+                <div className="absolute top-0 inset-x-0 h-px transition-all duration-500"
+                  style={{ background: `linear-gradient(90deg, transparent, ${tab.accent}bb, transparent)` }} />
+
+                {/* Top */}
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2.5 mb-9">
+                    <span className="block w-6 h-px" style={{ background: tab.accent }} />
+                    <span className="text-[10px] font-bold tracking-[0.3em] uppercase transition-colors duration-300"
+                      style={{ color: tab.accent }}>
+                      {tab.eyebrow}
+                    </span>
+                  </div>
+
+                  <h2 className="text-white leading-[1.1] mb-5 transition-all duration-300"
+                    style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem,2.8vw,2.4rem)", fontWeight: 700 }}>
+                    {tab.title}{" "}
+                    <em style={{ fontStyle: "italic", fontWeight: 400, color: "#FCD34D" }}>
+                      {tab.italic}
+                    </em>
+                  </h2>
+
+                  <p className="text-white/45 text-[14px] leading-relaxed font-light max-w-[260px]">
+                    {tab.subtitle}
+                  </p>
+                </div>
+
+                {/* API content */}
+                <div className="relative z-10 my-8">
+                  {detailLoad ? (
+                    <div className="space-y-2 animate-pulse">
+                      {[75, 90, 65].map((w, i) => (
+                        <div key={i} className="h-3 rounded-full bg-white/10" style={{ width: `${w}%` }} />
+                      ))}
+                    </div>
+                  ) : details.map((item, i) => (
+                    <div key={item.id || i}
+                      className="text-white/50 text-[13px] leading-relaxed font-light [&_p]:mb-1.5 [&_strong]:text-white/80 [&_strong]:font-semibold [&_a]:text-amber-300"
+                      dangerouslySetInnerHTML={{ __html: item.description }} />
+                  ))}
+                </div>
+
+                {/* Feature list */}
+                <div className="relative z-10 space-y-3.5">
+                  {[
+                    ["Secure Access",       "Industry-standard encryption"],
+                    ["Real-time Dashboard", "Live stall & visitor data"],
+                    ["Verified Portal",     "Authenticated accounts only"],
+                  ].map(([title, sub], i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      <div className="w-7 h-7 rounded-xl flex items-center justify-center flex-shrink-0 border transition-colors duration-500"
+                        style={{ background: `${tab.accent}18`, borderColor: `${tab.accent}40` }}>
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 16 16"
+                          stroke={tab.accent} strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M3 8l3 3.5L13 4"/>
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="text-white/80 text-[12px] font-semibold leading-tight">{title}</p>
+                        <p className="text-white/35 text-[11px] leading-tight">{sub}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* ─── RIGHT PANEL — FORM ─── */}
+              <div className="flex-1 flex flex-col"
+                style={{ background: "rgba(255,255,255,0.97)", backdropFilter: "blur(20px)" }}>
+
+                {/* ── TAB STRIP ── */}
+                <div className="px-8 sm:px-10 pt-8">
+                  <div className="relative flex rounded-2xl p-1.5 bg-gray-100">
+                    {/* Sliding pill */}
+                    <div
+                      className="tab-track absolute top-1.5 bottom-1.5 w-[calc(50%-6px)] bg-white rounded-[14px] shadow-md"
+                      style={{
+                        left: 6,
+                        transform: isExhibitor ? "translateX(0)" : "translateX(calc(100% + 0px))",
+                      }} />
+                    {Object.values(TABS).map((t) => {
+                      const active = t.key === activeTab;
+                      return (
+                        <button key={t.key} type="button"
+                          onClick={() => switchTab(t.key)}
+                          className="relative z-10 flex-1 flex items-center justify-center gap-2 h-11 rounded-[14px] text-[13px] font-bold tracking-wide transition-colors duration-200"
+                          style={{
+                            fontFamily: "'Inter', sans-serif",
+                            color: active ? "#111827" : "#9CA3AF",
+                            border: "none",
+                            background: "transparent",
+                            cursor: "pointer",
+                          }}
+                        >
+                          {/* Tab icon */}
+                          <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24"
+                            stroke={active ? t.accent : "#9CA3AF"} strokeWidth={1.8}
+                            strokeLinecap="round" strokeLinejoin="round">
+                            {t.key === "exhibitor" ? (
+                              <>
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                <polyline points="9 22 9 12 15 12 15 22"/>
+                              </>
+                            ) : (
+                              <>
+                                <circle cx="12" cy="8" r="4"/>
+                                <path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>
+                                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L12 14l-4 1 1-4 7.5-7.5z"/>
+                              </>
+                            )}
+                          </svg>
+                          {t.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* ── FORM ── */}
+                <div
+                  key={activeTab}
+                  className={`flex-1 px-8 sm:px-10 pb-9 pt-7 ${slideDir === "right" ? "form-slide-right" : "form-slide-left"}`}
+                >
+                  {/* Heading */}
+                  <div className="mb-7">
+                    <span
+                      className="inline-flex items-center gap-1.5 rounded-full border text-[10px] font-bold uppercase tracking-[0.2em] px-3 py-1 mb-4 transition-colors duration-300"
+                      style={{ color: tab.accent, background: tab.accentBg, borderColor: `${tab.accent}44` }}>
+                      <span className="w-1.5 h-1.5 rounded-full" style={{ background: tab.accent }} />
+                      {tab.eyebrow}
+                    </span>
+                    <h2 className="text-gray-900 leading-[1.12] mb-2"
+                      style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.7rem,3vw,2.1rem)", fontWeight: 700 }}>
+                      {tab.title}{" "}
+                      <em style={{ fontStyle: "italic", fontWeight: 400, color: tab.accent }}>{tab.italic}</em>
+                    </h2>
+                    <p className="text-gray-400 text-[13.5px] font-light leading-snug" style={{ fontFamily: "'Inter', sans-serif" }}>
+                      {tab.subtitle}
+                    </p>
+                  </div>
+
+                  {/* Form fields */}
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    <FloatInput
+                      label="Email address"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      autoComplete="email"
+                      accentColor={tab.accent}
+                      accentRing={tab.accentRing}
+                    />
+
+                    <FloatInput
+                      label="Password"
+                      name="password"
+                      type={showPw ? "text" : "password"}
+                      value={formData.password}
+                      onChange={handleChange}
+                      required
+                      autoComplete="current-password"
+                      accentColor={tab.accent}
+                      accentRing={tab.accentRing}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setShowPw(v => !v)}
+                        className="flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-200"
+                        style={{ background: "none", border: "none", cursor: "pointer" }}
+                        onMouseEnter={e => e.currentTarget.style.color = tab.accent}
+                        onMouseLeave={e => e.currentTarget.style.color = "#9CA3AF"}
+                      >
+                        {showPw ? <FaEyeSlash size={14} /> : <FaEye size={14} />}
+                      </button>
+                    </FloatInput>
+
+                    {/* Forgot */}
+                    <div className="flex justify-end -mt-2">
+                      <button type="button"
+                        className="text-[12px] font-semibold transition-colors duration-200"
+                        style={{ color: tab.accent, background: "none", border: "none", cursor: "pointer", fontFamily: "'Inter', sans-serif" }}
+                        onClick={() => alert("Password reset coming soon.")}>
+                        Forgot password?
+                      </button>
+                    </div>
+
+                    {/* Error */}
+                    {error && (
+                      <div className="flex items-start gap-2.5 bg-red-50 border border-red-200 rounded-2xl px-4 py-3"
+                        style={{ animation: "shake 0.35s ease" }}>
+                        <svg className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/>
+                        </svg>
+                        <p className="text-red-600 text-[13px] font-medium" style={{ fontFamily: "'Inter', sans-serif" }}>
+                          {error}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Submit */}
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="w-full h-[52px] rounded-2xl text-white text-[13.5px] font-bold tracking-wide flex items-center justify-center gap-2.5 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+                      style={{
+                        fontFamily: "'Inter', sans-serif",
+                        background: loading
+                          ? tab.accent
+                          : `linear-gradient(135deg, ${tab.accent} 0%, ${tab.accentDark} 100%)`,
+                        boxShadow: loading ? "none" : `0 8px 28px ${tab.accent}44`,
+                      }}
+                      onMouseEnter={e => { if (!loading) e.currentTarget.style.boxShadow = `0 12px 36px ${tab.accent}66`; }}
+                      onMouseLeave={e => { e.currentTarget.style.boxShadow = `0 8px 28px ${tab.accent}44`; }}
+                    >
+                      {loading ? (
+                        <>
+                          <span className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white"
+                            style={{ animation: "spin 0.7s linear infinite" }} />
+                          Signing in…
+                        </>
+                      ) : (
+                        <>
+                          Sign In
+                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                          </svg>
+                        </>
+                      )}
+                    </button>
+                  </form>
+
+                  {/* Footer line */}
+                  <div className="mt-6 pt-5 border-t border-gray-100 text-center">
+                    {tab.showReg ? (
+                      <p className="text-[13px] text-gray-400" style={{ fontFamily: "'Inter', sans-serif" }}>
+                        New to InOptics 2026?{" "}
+                        <Link to="/become-exhibitor"
+                          className="font-bold no-underline transition-opacity hover:opacity-80"
+                          style={{ color: tab.accent }}>
+                          Register as Exhibitor →
+                        </Link>
+                      </p>
+                    ) : (
+                      <p className="text-[13px] text-gray-400" style={{ fontFamily: "'Inter', sans-serif" }}>
+                        Need exhibitor access?{" "}
+                        <button type="button" onClick={() => switchTab("exhibitor")}
+                          className="font-bold transition-opacity hover:opacity-80"
+                          style={{ color: tab.accent, background: "none", border: "none", cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>
+                          Switch to Exhibitor login
+                        </button>
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Terms */}
+            <p className="text-center mt-5 text-[11.5px] text-white/35" style={{ fontFamily: "'Inter', sans-serif" }}>
+              By signing in you agree to our{" "}
+              <span className="font-semibold text-white/55 cursor-pointer hover:text-white/80 transition-colors">Terms</span>
+              {" & "}
+              <span className="font-semibold text-white/55 cursor-pointer hover:text-white/80 transition-colors">Privacy Policy</span>
+            </p>
+          </div>
+        </div>
+
+        {/* <Footer /> */}
       </div>
-    </div>
+    </>
   );
 }

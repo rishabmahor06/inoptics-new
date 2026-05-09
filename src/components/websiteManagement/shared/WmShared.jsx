@@ -53,7 +53,7 @@ export function AddBtn({ onClick, label = 'Add' }) {
 export function EditBtn({ onClick }) {
   return (
     <button onClick={onClick}
-      className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg px-2.5 py-1.5 text-[12px] font-semibold hover:bg-emerald-100 transition-colors">
+      className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded px-2.5 py-1.5 text-[12px] font-semibold hover:bg-emerald-100 transition-colors">
       <MdEdit size={13} />Edit
     </button>
   );
@@ -62,7 +62,7 @@ export function EditBtn({ onClick }) {
 export function DelBtn({ onClick }) {
   return (
     <button onClick={onClick}
-      className="inline-flex items-center gap-1 bg-red-50 text-red-600 border border-red-200 rounded-lg px-2.5 py-1.5 text-[12px] font-semibold hover:bg-red-100 transition-colors">
+      className="inline-flex items-center gap-1 bg-red-50 text-red-600 border border-red-200 rounded px-2.5 py-1.5 text-[12px] font-semibold hover:bg-red-100 transition-colors">
       <MdDelete size={13} />Delete
     </button>
   );
@@ -75,7 +75,7 @@ export function WmModal({ title, onClose, onSave, saving, children }) {
         <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-100 shrink-0">
           <h2 className="text-base font-semibold text-zinc-800">{title}</h2>
           <button onClick={onClose}
-            className="p-2 rounded-lg text-zinc-400 hover:text-zinc-600 hover:bg-zinc-100 transition-colors">
+            className="p-2 rounded text-zinc-400 hover:text-zinc-100 hover:bg-zinc-600 transition-colors">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -84,11 +84,11 @@ export function WmModal({ title, onClose, onSave, saving, children }) {
         <div className="overflow-y-auto flex-1 px-6 py-5">{children}</div>
         <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-zinc-100 bg-zinc-50/80 rounded-b-2xl shrink-0">
           <button onClick={onClose} disabled={saving}
-            className="px-5 py-2.5 text-sm font-medium text-zinc-600 bg-white border border-zinc-200 hover:bg-zinc-50 rounded-lg transition-colors disabled:opacity-50">
+            className="px-5 py-2.5 text-sm font-medium text-zinc-600 bg-white border border-zinc-200 hover:bg-zinc-50 rounded transition-colors disabled:opacity-50">
             Cancel
           </button>
           <button onClick={onSave} disabled={saving}
-            className="px-5 py-2.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors disabled:opacity-60 flex items-center gap-2">
+            className="px-5 py-2.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded transition-colors disabled:opacity-60 flex items-center gap-2">
             {saving && (
               <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
@@ -270,6 +270,29 @@ export function TdHtml({ html }) {
       <div className="text-[13px] text-zinc-600 line-clamp-2" dangerouslySetInnerHTML={{ __html: html || '' }} />
     </td>
   );
+}
+
+/* Strip HTML tags & decode entities → plain text cell */
+export function TdText({ html, lines = 2 }) {
+  const txt = stripHtml(html);
+  return (
+    <td className="px-4 py-3 border-b border-zinc-100 max-w-xs">
+      <p
+        className="text-[13px] text-zinc-600 whitespace-pre-line break-words"
+        style={{ display: '-webkit-box', WebkitLineClamp: lines, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
+        title={txt}
+      >
+        {txt}
+      </p>
+    </td>
+  );
+}
+
+export function stripHtml(s) {
+  if (!s) return '';
+  const div = document.createElement('div');
+  div.innerHTML = String(s);
+  return (div.textContent || div.innerText || '').replace(/\s+/g, ' ').trim();
 }
 
 export function EmptyState({ message = 'No data found' }) {
