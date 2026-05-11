@@ -1,8 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  MdDashboard, MdPerson, MdMail, MdChair, MdPower, MdAssignment,
-  MdBadge, MdEngineering, MdLabel, MdPayments, MdLogout, MdMenu, MdClose,
+  MdDashboard,
+  MdPerson,
+  MdMail,
+  MdChair,
+  MdPower,
+  MdAssignment,
+  MdBadge,
+  MdEngineering,
+  MdLabel,
+  MdPayments,
+  MdLogout,
+  MdClose,
 } from "react-icons/md";
 
 export const TABS = [
@@ -18,15 +28,14 @@ export const TABS = [
   { key: "payment",              label: "Payment",              Icon: MdPayments    },
 ];
 
-export default function ExhibitorSidebar({ active, onChange }) {
+export default function ExhibitorSidebar({
+  active,
+  onChange,
+  mobileOpen = false,
+  setMobileOpen = () => {},
+}) {
   const navigate = useNavigate();
-  const [mobileOpen, setMobileOpen] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
-
-  const exhibitor = (() => {
-    try { return JSON.parse(localStorage.getItem("exhibitorInfo") || "null"); }
-    catch { return null; }
-  })();
 
   const confirmLogout = () => {
     localStorage.removeItem("isExhibitorLoggedIn");
@@ -36,45 +45,59 @@ export default function ExhibitorSidebar({ active, onChange }) {
 
   const SidebarContent = (
     <>
-      {/* Brand / user header */}
-      <div className="px-5 py-5 bg-gradient-to-br from-[#02062c] to-[#1e3a8a] text-white">
-        <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-amber-300">Exhibitor Portal</p>
-        <h2 className="mt-1 text-[15px] font-bold truncate">
-          {exhibitor?.company_name || exhibitor?.companyName || "Welcome"}
-        </h2>
-        {exhibitor?.email && (
-          <p className="text-[11px] text-blue-200 truncate mt-0.5">{exhibitor.email}</p>
-        )}
+      {/* Brand pill — matches admin */}
+      <div className="h-14 flex items-center px-3 border-b border-zinc-200 shrink-0">
+        <span className="flex-1 text-sm h-8 font-bold bg-zinc-900 flex items-center justify-center rounded text-white whitespace-nowrap px-4">
+          Exhibitor Panel
+        </span>
+        <button
+          onClick={() => setMobileOpen(false)}
+          className="lg:hidden w-8 h-8 rounded-md flex items-center justify-center text-zinc-400 hover:bg-zinc-100 hover:text-zinc-900 ml-2"
+          aria-label="Close"
+        >
+          <MdClose size={18} />
+        </button>
+      </div>
+
+      {/* Section label */}
+      <div className="px-3 pt-3 pb-1">
+        <p className="text-[11px] font-bold uppercase tracking-widest text-zinc-400 px-2">
+          Exhibitor
+        </p>
       </div>
 
       {/* Tab list */}
-      <nav className="flex-1 overflow-y-auto py-2">
+      <nav className="flex-1 overflow-y-auto px-2 pb-3 space-y-0.5">
         {TABS.map(({ key, label, Icon }) => {
           const isActive = active === key;
           return (
             <button
               key={key}
-              onClick={() => { onChange(key); setMobileOpen(false); }}
-              className={`group relative w-full flex items-center gap-3 px-5 py-3 text-[13px] font-semibold transition-colors
-                ${isActive
-                  ? "text-blue-700 bg-blue-50"
-                  : "text-zinc-700 hover:text-blue-700 hover:bg-zinc-50"}`}
+              onClick={() => {
+                onChange(key);
+                setMobileOpen(false);
+              }}
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium transition-colors ${
+                isActive
+                  ? "bg-zinc-900 text-white"
+                  : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900"
+              }`}
             >
-              {isActive && <span className="absolute left-0 top-2 bottom-2 w-1 rounded-r bg-blue-600" />}
-              <Icon size={17} className={isActive ? "text-blue-600" : "text-zinc-500 group-hover:text-blue-600"} />
-              <span className="flex-1 text-left">{label}</span>
+              <Icon size={17} className="shrink-0" />
+              <span className="flex-1 text-left truncate">{label}</span>
             </button>
           );
         })}
       </nav>
 
       {/* Logout */}
-      <div className="p-3 border-t border-zinc-100">
+      <div className="p-3 border-t border-zinc-200 shrink-0">
         <button
           onClick={() => setShowLogout(true)}
-          className="w-full inline-flex items-center justify-center gap-2 px-3.5 h-11 text-[12px] font-bold uppercase tracking-wider bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 rounded-lg transition-colors"
+          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium text-red-500 hover:bg-red-50 transition-colors"
         >
-          <MdLogout size={14} /> Logout
+          <MdLogout size={17} />
+          <span>Logout</span>
         </button>
       </div>
     </>
@@ -82,19 +105,6 @@ export default function ExhibitorSidebar({ active, onChange }) {
 
   return (
     <>
-      {/* Mobile top bar */}
-      <header className="lg:hidden sticky top-0 z-30 bg-white border-b border-zinc-200 shadow-sm h-14 flex items-center justify-between px-4">
-        <button
-          onClick={() => setMobileOpen(true)}
-          aria-label="Open menu"
-          className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-zinc-100 text-zinc-700"
-        >
-          <MdMenu size={22} />
-        </button>
-        <p className="text-[12px] font-bold uppercase tracking-[0.25em] text-zinc-700">Exhibitor</p>
-        <span className="w-10" aria-hidden />
-      </header>
-
       {/* Desktop sidebar */}
       <aside className="hidden lg:flex flex-col w-64 shrink-0 h-screen sticky top-0 bg-white border-r border-zinc-200">
         {SidebarContent}
@@ -103,21 +113,20 @@ export default function ExhibitorSidebar({ active, onChange }) {
       {/* Mobile drawer */}
       <div
         className={`lg:hidden fixed inset-0 z-40 transition-opacity ${
-          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          mobileOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         }`}
       >
-        <div className="absolute inset-0 bg-black/40" onClick={() => setMobileOpen(false)} />
+        <div
+          className="absolute inset-0 bg-black/40"
+          onClick={() => setMobileOpen(false)}
+        />
         <aside
-          className={`absolute top-0 left-0 h-full w-72 max-w-[85%] bg-white shadow-2xl flex flex-col transition-transform
-            ${mobileOpen ? "translate-x-0" : "-translate-x-full"}`}
+          className={`absolute top-0 left-0 h-full w-72 max-w-[85%] bg-white shadow-2xl flex flex-col transition-transform ${
+            mobileOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
         >
-          <button
-            onClick={() => setMobileOpen(false)}
-            aria-label="Close"
-            className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 text-white z-10"
-          >
-            <MdClose size={20} />
-          </button>
           {SidebarContent}
         </aside>
       </div>

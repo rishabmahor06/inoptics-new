@@ -16,22 +16,35 @@ const stripHtml = (html = "") =>
 
 const formatDate = (s) => {
   if (!s) return "";
+
   const d = new Date(s);
   if (isNaN(d.getTime())) return s;
+
   const today = new Date();
-  const same =
+
+  const sameDay =
     d.getFullYear() === today.getFullYear() &&
     d.getMonth() === today.getMonth() &&
     d.getDate() === today.getDate();
-  if (same) {
-    return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
+  // Today → show only time
+  if (sameDay) {
+    return d.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   }
-  return d.toLocaleDateString([], {
+
+  // Other days → show date + time
+  return d.toLocaleString([], {
     day: "2-digit",
     month: "short",
     year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
   });
 };
+
 
 export default function MailsInbox() {
   const { mails, loading, selectedMail, fetchMails, selectMail, clearSelected } =

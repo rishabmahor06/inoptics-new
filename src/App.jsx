@@ -141,6 +141,7 @@ function NavbarAndRoutes() {
     "/",
     "/dashboard",
     "/exhibitor-dashboard",
+    "/exhibitor-login",
     "/admin-login",
     "/unsubscribe",
     "/sachin-dashboard",
