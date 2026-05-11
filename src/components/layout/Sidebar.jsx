@@ -123,6 +123,7 @@ const MASTER_SUB_ITEMS = [
   { id: 'message_rules',         label: 'Message Rules' },
   { id: 'exhibitor_series_edit', label: 'Exhibitor Series Edit' },
   { id: 'furniture_requirement', label: 'Furniture Requirement' },
+  { id: 'email_applied_place',   label: 'Email Applied Place' },
 ];
 
 function MastersNavItem({ collapsed }) {

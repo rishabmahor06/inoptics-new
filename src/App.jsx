@@ -40,6 +40,7 @@ import FloatingCard            from "./frontend/components/FloatingCard";
 import ExhibitorDashboardLegacy from "./frontend/components/ExhibitorDashboard";
 import ExhibitorPanel from "./exhibitorDashboard/ExhibitorPanel";
 import ExhibitorLogin          from "./frontend/components/exhibitorArea/ExhibitorLogin";
+import AdminLogin              from "./frontend/components/AdminLogin";
 import CustomEditor            from "./frontend/components/CustomEditor";
 import VisitorGuide            from "./frontend/components/VisitorGuide";
 import ForExhibitors           from "./frontend/components/exhibitorArea/ForExhibitors";
@@ -89,7 +90,7 @@ function AnimatedRoutes() {
         <Route path="/contact"                       element={<Contact />} />
         <Route path="/increase-visibility"           element={<IncreaseVisibility />} />
 
-        <Route path="/admin-login"                   element={<ExhibitorLogin />} />
+        <Route path="/admin-login"                   element={<AdminLogin />} />
 
         {/* 🔥 Admin dashboard — protected */}
         <Route

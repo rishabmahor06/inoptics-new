@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import exhibitorImage from "../../../assets/llll.png";
@@ -110,14 +110,12 @@ const FloatInput = ({
 };
 
 /* ════════════════════════════════════════
-   MAIN COMPONENT
+   MAIN COMPONENT — supports mode="exhibitor" | "admin"
 ════════════════════════════════════════ */
-export default function ExhibitorLogin() {
+export default function ExhibitorLogin({ mode = "exhibitor" }) {
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const initTab = location.pathname === "/admin-login" ? "admin" : "exhibitor";
-  const [activeTab, setActiveTab] = useState(initTab);
+  const activeTab = mode;
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPw, setShowPw] = useState(false);
   const [error, setError] = useState("");
@@ -127,12 +125,6 @@ export default function ExhibitorLogin() {
 
   const tab = TABS[activeTab];
   const isExhibitor = activeTab === "exhibitor";
-
-  useEffect(() => {
-    const next = location.pathname === "/admin-login" ? "admin" : "exhibitor";
-    if (next !== activeTab) setActiveTab(next);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
 
   useEffect(() => {
     if (localStorage.getItem(tab.flagKey)) {
@@ -153,15 +145,6 @@ export default function ExhibitorLogin() {
       }
     })();
   }, []);
-
-  const switchTab = (key) => {
-    if (key === activeTab) return;
-    setError("");
-    setFormData({ email: "", password: "" });
-    setShowPw(false);
-    setActiveTab(key);
-    navigate(TABS[key].route, { replace: false });
-  };
 
   const handleChange = (e) =>
     setFormData((p) => ({ ...p, [e.target.name]: e.target.value }));
@@ -410,63 +393,6 @@ export default function ExhibitorLogin() {
               className="bg-white rounded-3xl border border-gray-100 shadow-2xl overflow-hidden"
               style={{ boxShadow: "0 30px 80px rgba(10, 20, 60, 0.18)" }}
             >
-              {/* Tab strip */}
-              <div className="px-7 sm:px-8 pt-7">
-                <div className="relative flex rounded-2xl p-1.5 bg-gray-100">
-                  <div
-                    className="tab-track absolute top-1.5 bottom-1.5 w-[calc(50%-6px)] bg-white rounded-[14px] shadow-md"
-                    style={{
-                      left: 6,
-                      transform: isExhibitor
-                        ? "translateX(0)"
-                        : "translateX(calc(100% + 0px))",
-                    }}
-                  />
-                  {Object.values(TABS).map((t) => {
-                    const active = t.key === activeTab;
-                    return (
-                      <button
-                        key={t.key}
-                        type="button"
-                        onClick={() => switchTab(t.key)}
-                        className="relative z-10 flex-1 flex items-center justify-center gap-2 h-11 rounded-[14px] text-[13px] font-bold tracking-wide transition-colors duration-200"
-                        style={{
-                          fontFamily: "'Inter', sans-serif",
-                          color: active ? "#111827" : "#9CA3AF",
-                          border: "none",
-                          background: "transparent",
-                          cursor: "pointer",
-                        }}
-                      >
-                        <svg
-                          className="w-4 h-4 shrink-0"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke={active ? t.accent : "#9CA3AF"}
-                          strokeWidth={1.8}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          {t.key === "exhibitor" ? (
-                            <>
-                              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                              <polyline points="9 22 9 12 15 12 15 22" />
-                            </>
-                          ) : (
-                            <>
-                              <circle cx="12" cy="8" r="4" />
-                              <path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
-                              <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L12 14l-4 1 1-4 7.5-7.5z" />
-                            </>
-                          )}
-                        </svg>
-                        {t.label}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
               {/* Form body */}
               <div
                 key={activeTab}
@@ -654,20 +580,14 @@ export default function ExhibitorLogin() {
                     </p>
                   ) : (
                     <p className="text-[13px] text-gray-400">
-                      Need exhibitor access?{" "}
-                      <button
-                        type="button"
-                        onClick={() => switchTab("exhibitor")}
+                      Authorized personnel only · Contact{" "}
+                      <a
+                        href="mailto:info@inoptics.in"
                         className="font-bold transition-opacity hover:opacity-80"
-                        style={{
-                          color: tab.accent,
-                          background: "none",
-                          border: "none",
-                          cursor: "pointer",
-                        }}
+                        style={{ color: tab.accent }}
                       >
-                        Switch to Exhibitor login
-                      </button>
+                        info@inoptics.in
+                      </a>
                     </p>
                   )}
                 </div>

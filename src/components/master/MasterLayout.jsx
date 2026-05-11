@@ -10,6 +10,7 @@ import PowerRequirement from './PowerRequirement';
 import MessageRules from './MessageRules';
 import ExhibitorSeriesEdit from './ExhibitorSeriesEdit';
 import FurnitureRequirement from './FurnitureRequirement';
+import EmailAppliedPlace from './EmailAppliedPlace';
 
 const COMPONENTS = {
   business_requirement:  BusinessRequirement,
@@ -22,6 +23,7 @@ const COMPONENTS = {
   message_rules:         MessageRules,
   exhibitor_series_edit: ExhibitorSeriesEdit,
   furniture_requirement: FurnitureRequirement,
+  email_applied_place:   EmailAppliedPlace,
 };
 
 export default function MasterLayout() {
