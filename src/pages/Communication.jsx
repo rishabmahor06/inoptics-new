@@ -16,35 +16,6 @@ import { useNavStore } from "../store/useNavStore";
 
 const API = "https://inoptics.in/api";
 
-const APPLIED_PLACE_OPTIONS = [
-  "Exhibitor Password",
-  "Payment Receive",
-  "Stall Details",
-  "Stall Performa",
-  "Power Requirement",
-  "Exhibition Badges",
-  "Appointed Contractors",
-  "Extra Furniture Requirement",
-  "Exhibitor Unlock Request",
-  "Succesfully Unlocked Request",
-  "Exhibitor Power Unlock Request",
-  "Succesfully Power Unlocked Request",
-  "Exhibitor Power Requirement",
-  "Exhibitor Badges Unlock Request",
-  "Successfully Badges Unlocked Request",
-  "Exhibitor Badges Requirement",
-  "Exhibitor Contractor Unlock Request",
-  "Electrical Vendor Power Requirement",
-  "Stall Balance Payment",
-  "Remark Mail",
-  "Contractor Badges Unlock Request",
-  "Contractor Badges Submit",
-  "UnderTaking and Declaration Accept",
-  "Contractor Selection",
-  "Fascia Email",
-  "Booth Design Approve",
-  "New Exhibitor Registration Request",
-];
 
 const SUB_TABS = [
   { id: "emails", label: "Emails Master", icon: <MdEmail size={15} /> },
@@ -141,10 +112,26 @@ function EmailsMaster() {
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState(EMPTY_FORM);
   const [saving, setSaving] = useState(false);
+  const [appliedPlaceOptions, setAppliedPlaceOptions] = useState([]);
 
   useEffect(() => {
     fetchData();
+    fetchAppliedPlaces();
   }, []);
+
+  async function fetchAppliedPlaces() {
+    try {
+      const res = await fetch(`${API}/fetch_email_applied_place.php`);
+      const json = await res.json();
+      const arr = Array.isArray(json) ? json : json?.data || json?.records || [];
+      const names = arr
+        .map((r) => r.applied_place || r.name || "")
+        .filter(Boolean);
+      setAppliedPlaceOptions(names);
+    } catch {
+      setAppliedPlaceOptions([]);
+    }
+  }
 
   async function fetchData() {
     try {
@@ -427,7 +414,7 @@ function EmailsMaster() {
 
               <FRow label="Applied Place">
                 <div className="grid grid-cols-1 gap-1.5 max-h-64 overflow-y-auto p-2 border border-zinc-200 rounded bg-zinc-50">
-                  {APPLIED_PLACE_OPTIONS.map((place) => (
+                  {appliedPlaceOptions.map((place) => (
                     <label
                       key={place}
                       className="flex items-start gap-2 text-[12px] text-zinc-700 cursor-pointer hover:text-zinc-900"

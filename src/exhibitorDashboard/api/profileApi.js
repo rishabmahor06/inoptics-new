@@ -15,14 +15,17 @@ export const fetchExhibitors = async () => {
 };
 
 export const fetchStalls = async () => {
-  const data = await apiGet("get_stalls.php");
-  const arr = Array.isArray(data) ? data : data?.data || [];
   const ex = getExhibitor();
-  const company = (ex?.company_name || "").toLowerCase();
-  if (!company) return arr;
-  return arr.filter(
-    (r) => (r.company_name || "").toLowerCase() === company
-  );
+  const company = ex?.company_name || "";
+  if (!company) return [];
+  const res = await fetch(`/api/get_stalls.php`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ company_name: company }),
+  });
+  if (!res.ok) return [];
+  const data = await res.json();
+  return Array.isArray(data) ? data : data ? [data] : [];
 };
 
 export const fetchProducts = async () => {

@@ -302,47 +302,41 @@ export default function Footer() {
                   </button>
                 </div>
 
-                {/* Org + Member logos */}
-                {footer4.length > 0 && (
-                  <div className="grid grid-cols-2 gap-4 pt-1">
-                    {footer4.slice(0, 2).map((item, idx) => (
-                      <div key={idx} className="space-y-1.5">
-                        <p className="text-[10px] uppercase tracking-[0.18em] text-zinc-500 m-0 font-semibold">
-                          {item.title}
-                        </p>
-                        <div className="h-14 flex items-center">
-                          <img
-                            src={item.image}
-                            alt={item.title}
-                            className="max-h-12 max-w-full w-auto object-contain"
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
+              </div>
+            </div>
 
-                {/* Fallback if no footer4 data */}
-                {footer4.length === 0 && (
-                  <div className="grid grid-cols-2 gap-4 pt-1">
-                    <div className="space-y-1.5">
-                      <p className="text-[10px] uppercase tracking-[0.18em] text-zinc-500 m-0 font-semibold">
-                        Event Organised By
-                      </p>
-                      <div className="h-14 flex items-center">
-                        <div className="text-[11px] text-zinc-400 italic">rsd expositions</div>
-                      </div>
-                    </div>
-                    <div className="space-y-1.5">
-                      <p className="text-[10px] uppercase tracking-[0.18em] text-zinc-500 m-0 font-semibold">
-                        Member Of
-                      </p>
-                      <div className="h-14 flex items-center">
-                        <div className="text-[11px] text-zinc-400 italic">iEIA</div>
-                      </div>
+            {/* ============ ORG + MEMBER LOGOS (centered, bottom) ============ */}
+            <div className="px-6 sm:px-10 lg:px-14 pt-6 pb-2">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-16">
+                {(footer4.length > 0
+                  ? footer4.slice(0, 2)
+                  : [
+                      { title: "Event Organised By", image: null, _fallback: "rsd expositions" },
+                      { title: "Member Of", image: null, _fallback: "iEIA" },
+                    ]
+                ).map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="flex flex-col items-center text-center space-y-2"
+                  >
+                    <p className="text-[10px] uppercase tracking-[0.22em] text-zinc-400 m-0 font-semibold">
+                      {item.title}
+                    </p>
+                    <div className="h-24 sm:h-28 flex items-center">
+                      {item.image ? (
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="max-h-24 sm:max-h-28 max-w-72 w-auto object-contain"
+                        />
+                      ) : (
+                        <div className="text-[12px] text-zinc-400 italic">
+                          {item._fallback}
+                        </div>
+                      )}
                     </div>
                   </div>
-                )}
+                ))}
               </div>
             </div>
 

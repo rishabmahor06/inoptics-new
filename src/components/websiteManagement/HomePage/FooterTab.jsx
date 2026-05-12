@@ -39,13 +39,15 @@ function FooterBlock({ num }) {
     setSaving(true);
     try {
       const fd = new FormData();
-      if (hasTitle) fd.append('title', form.title);
-      if (hasDesc)  fd.append('description', form.description);
+      // Always send title + description so backend validators don't reject the request
+      fd.append('title', hasTitle ? (form.title || '') : (editing?.title || ''));
+      fd.append('description', hasDesc ? (form.description || '') : (editing?.description || '-'));
       if (hasImage && file) fd.append('image', file);
       if (modal === 'edit') fd.append('id', editing.id);
-      if (modal === 'add') await addFooterItem(num, fd);
-      else await updateFooterItem(num, fd);
-      setModal(null);
+      const res = modal === 'add'
+        ? await addFooterItem(num, fd)
+        : await updateFooterItem(num, fd);
+      if (res?._ok) setModal(null);
     } finally { setSaving(false); }
   };
 

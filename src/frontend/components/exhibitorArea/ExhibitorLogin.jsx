@@ -483,19 +483,7 @@ export default function ExhibitorLogin({ mode = "exhibitor" }) {
                       />
                       Remember me
                     </label>
-                    <button
-                      type="button"
-                      className="text-[12px] font-semibold"
-                      style={{
-                        color: tab.accent,
-                        background: "none",
-                        border: "none",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => alert("Password reset coming soon.")}
-                    >
-                      Forgot password?
-                    </button>
+                   
                   </div>
 
                   {error && (

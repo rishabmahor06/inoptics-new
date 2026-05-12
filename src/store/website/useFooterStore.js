@@ -20,16 +20,32 @@ export const useFooterStore = create((set, get) => ({
 
   addFooterItem: async (n, fd) => {
     const res = await addFooter(n, fd);
-    toast.success(res.message || 'Added');
-    get().fetchFooter(n);
-    return res;
+    const ok =
+      res?.success === true ||
+      res?.status === 'success' ||
+      /success/i.test(res?.message || '');
+    if (ok) {
+      toast.success(res.message || 'Added');
+      get().fetchFooter(n);
+    } else {
+      toast.error(res?.message || res?.error || 'Failed to add');
+    }
+    return { ...res, _ok: ok };
   },
 
   updateFooterItem: async (n, fd) => {
     const res = await updateFooter(n, fd);
-    toast.success(res.message || 'Updated');
-    get().fetchFooter(n);
-    return res;
+    const ok =
+      res?.success === true ||
+      res?.status === 'success' ||
+      /success/i.test(res?.message || '');
+    if (ok) {
+      toast.success(res.message || 'Updated');
+      get().fetchFooter(n);
+    } else {
+      toast.error(res?.message || res?.error || 'Failed to update');
+    }
+    return { ...res, _ok: ok };
   },
 
   deleteFooterItem: async (n, id) => {

@@ -39,7 +39,7 @@ export default function ExhibitorPanel() {
   ).length;
 
   return (
-    <div className="min-h-screen bg-[#f0f0ef] flex flex-col lg:flex-row">
+    <div className="flex h-screen overflow-hidden bg-[#f0f0ef]">
       <ExhibitorSidebar
         active={active}
         onChange={setActive}
@@ -47,14 +47,14 @@ export default function ExhibitorPanel() {
         setMobileOpen={setMobileOpen}
       />
 
-      <div className="flex-1 min-w-0 flex flex-col">
+      <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
         <ExhibitorTopbar
           active={active}
           onMenuClick={() => setMobileOpen(true)}
           unreadCount={unreadCount}
         />
 
-        <main className="flex-1 min-w-0 p-2 lg:p-0">
+        <main className="flex-1 min-h-0 min-w-0 overflow-y-auto p-2 lg:p-4">
           <ActivePage />
         </main>
       </div>
