@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import TabShell from "../TabShell";
 import {
   MdPower,
@@ -6,12 +6,8 @@ import {
   MdLock,
   MdLockOpen,
   MdCheckCircle,
-  MdAdd,
-  MdArrowBack,
-  MdArrowForward,
   MdClose,
   MdInfoOutline,
-  MdDelete,
 } from "react-icons/md";
 import { usePowerStore } from "../store/usePowerStore";
 import { getExhibitor } from "../api/base";
@@ -20,7 +16,7 @@ export default function AdditionalPower() {
   const s = usePowerStore();
   const exhibitor = getExhibitor();
 
-  useEffect(() => {
+  React.useEffect(() => {
     s.fetchAll();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -44,7 +40,7 @@ export default function AdditionalPower() {
       subtitle="Submit your power requirements for setup & exhibition days"
     >
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-        {/* LEFT — Form */}
+        {/* LEFT — Dual Form */}
         <div className="lg:col-span-2">
           <FormCard />
         </div>
@@ -62,226 +58,201 @@ export default function AdditionalPower() {
   );
 }
 
-/* ============== Form Card ============== */
+/* ============================================================
+   FormCard — Setup Days (top) + Exhibition Days (bottom)
+   Direct submit, no row add/delete.
+   ============================================================ */
 
 function FormCard() {
   const {
-    formStep,
     pricePerKw,
-    powerRequired,
-    phase,
     isLocked,
     saving,
-    previewList,
     setField,
-    addRow,
-    goNext,
-    goPrevious,
     submit,
     requestUnlock,
-    removePreviewRow,
+    goNext,
+    goPrevious,
   } = usePowerStore();
 
-  const totalAmount =
-    pricePerKw && powerRequired
-      ? (Number(pricePerKw) * Number(powerRequired)).toFixed(2)
-      : "";
+  const [setupKw, setSetupKw] = React.useState("");
+  const [setupPhase, setSetupPhase] = React.useState("Single Phase");
+  const [exhibKw, setExhibKw] = React.useState("");
+  const [exhibPhase, setExhibPhase] = React.useState("Single Phase");
+
+  const setupTotal = pricePerKw && setupKw
+    ? (Number(pricePerKw) * Number(setupKw)).toFixed(2) : "";
+  const exhibTotal = pricePerKw && exhibKw
+    ? (Number(pricePerKw) * Number(exhibKw)).toFixed(2) : "";
+
+  const handleSubmit = () => {
+    // Setup Days row
+    goPrevious();
+    setField("powerRequired", setupKw);
+    setField("phase", setupPhase);
+    // Exhibition Days row
+    goNext();
+    setField("powerRequired", exhibKw);
+    setField("phase", exhibPhase);
+    submit();
+  };
+
+  const canSubmit = !saving && setupKw && Number(setupKw) > 0 && exhibKw && Number(exhibKw) > 0;
 
   return (
-    <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
-      <div className="px-4 sm:px-5 py-3 border-b border-zinc-100 bg-zinc-50/60">
-        <h3 className="text-[13.5px] font-bold text-[#02062c]">Power Form</h3>
+    <div className="bg-white rounded border border-zinc-200 shadow-sm overflow-hidden">
+      <div className="px-4 py-2.5 border-b border-zinc-100 bg-zinc-50/60">
+        <h3 className="text-[13px] font-bold text-[#02062c]">Power Requirements</h3>
       </div>
 
-      {/* Stepper */}
-      <div className="px-4 sm:px-5 pt-4">
-        <Stepper step={formStep} />
-      </div>
+      <div className="p-3 sm:p-4 space-y-3">
 
-      <div className="p-4 sm:p-5 space-y-3">
-        <Field label="Day Type">
-          <input
-            type="text"
-            value={formStep === 0 ? "Setup Days" : "Exhibition Days"}
-            disabled
-            className="w-full px-3 py-2 text-[13px] border border-zinc-200 rounded-lg bg-zinc-50 text-zinc-600"
-          />
-        </Field>
-        <Field label="Price per KW (₹)">
-          <input
-            type="text"
-            value={pricePerKw || ""}
-            disabled
-            className="w-full px-3 py-2 text-[13px] border border-zinc-200 rounded-lg bg-zinc-50 text-zinc-600"
-          />
-        </Field>
-        <Field label="Power Required (KW)" required>
-          <input
-            type="number"
-            min="0"
-            value={powerRequired}
-            onChange={(e) => setField("powerRequired", e.target.value)}
-            disabled={isLocked || saving}
-            className="w-full px-3 py-2 text-[13px] border border-zinc-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-zinc-50"
-          />
-        </Field>
-        <Field label="Phase" required>
-          <div className="flex gap-2">
-            {["Single Phase", "Three Phase"].map((p) => (
-              <label
-                key={p}
-                className={`flex-1 cursor-pointer px-3 py-2 text-[12.5px] font-semibold border rounded-lg flex items-center justify-center gap-1.5 transition-colors ${
-                  phase === p
-                    ? "bg-blue-50 border-blue-300 text-blue-700"
-                    : "bg-white border-zinc-200 text-zinc-600 hover:bg-zinc-50"
-                } ${isLocked ? "pointer-events-none opacity-60" : ""}`}
-              >
-                <input
-                  type="radio"
-                  className="hidden"
-                  name="phase"
-                  value={p}
-                  checked={phase === p}
-                  onChange={(e) => setField("phase", e.target.value)}
-                  disabled={isLocked}
-                />
-                {p}
-              </label>
-            ))}
+        {/* ───── Setup Days ───── */}
+        <div className="space-y-2">
+          <div className="flex items-center gap-1.5 px-2 py-1 rounded border bg-blue-50 border-blue-100">
+            <span className="w-1.5 h-1.5 rounded bg-blue-500 shrink-0" />
+            <p className="text-[11px] font-bold uppercase tracking-wider text-blue-700">Setup Days</p>
           </div>
-        </Field>
-        <Field label="Total Amount">
-          <input
-            type="text"
-            value={totalAmount ? `₹ ${totalAmount}` : ""}
-            disabled
-            className="w-full px-3 py-2 text-[13px] font-bold border border-zinc-200 rounded-lg bg-emerald-50/40 text-emerald-700"
-          />
-        </Field>
 
-        {/* Action buttons */}
-        <div className="pt-2 border-t border-zinc-100 space-y-2">
+          <div className="grid grid-cols-2 gap-2">
+            <CompactField label="₹/KW">
+              <input
+                type="text"
+                value={pricePerKw || ""}
+                disabled
+                className="w-full px-2.5 py-1.5 text-[12.5px] border border-zinc-200 rounded bg-zinc-50 text-zinc-500"
+              />
+            </CompactField>
+            <CompactField label="Power (KW)" required>
+              <input
+                type="number"
+                min="0"
+                value={setupKw}
+                onChange={(e) => setSetupKw(e.target.value)}
+                disabled={isLocked || saving}
+                placeholder="0"
+                className="w-full px-2.5 py-1.5 text-[12.5px] border border-zinc-200 rounded bg-white focus:outline-none focus:ring-1 focus:ring-blue-400 disabled:bg-zinc-50"
+              />
+            </CompactField>
+          </div>
+
+          <CompactField label="Phase" required>
+            <div className="flex gap-1.5">
+              {["Single Phase", "Three Phase"].map((p) => (
+                <label
+                  key={p}
+                  className={`flex-1 cursor-pointer px-2 py-1.5 text-[11.5px] font-semibold border rounded text-center transition-colors ${
+                    setupPhase === p
+                      ? "bg-blue-50 border-blue-300 text-blue-700"
+                      : "bg-white border-zinc-200 text-zinc-600 hover:bg-zinc-50"
+                  } ${isLocked ? "pointer-events-none opacity-50" : ""}`}
+                >
+                  <input type="radio" className="hidden" name="phase-setup"
+                    value={p} checked={setupPhase === p}
+                    onChange={(e) => setSetupPhase(e.target.value)} disabled={isLocked} />
+                  {p}
+                </label>
+              ))}
+            </div>
+          </CompactField>
+
+          {setupTotal && (
+            <div className="flex items-center justify-between px-2.5 py-1.5 bg-emerald-50/60 border border-emerald-100 rounded">
+              <span className="text-[11px] text-zinc-500">Total</span>
+              <span className="text-[12.5px] font-bold text-emerald-700">₹ {setupTotal}</span>
+            </div>
+          )}
+        </div>
+
+        {/* ── Divider ── */}
+        <div className="relative flex items-center gap-2">
+          <div className="flex-1 border-t border-dashed border-zinc-200" />
+          <span className="text-[9.5px] uppercase tracking-widest font-bold text-zinc-400 shrink-0">
+            Exhibition Days
+          </span>
+          <div className="flex-1 border-t border-dashed border-zinc-200" />
+        </div>
+
+        {/* ───── Exhibition Days ───── */}
+        <div className="space-y-2">
+          <div className="flex items-center gap-1.5 px-2 py-1 rounded border bg-violet-50 border-violet-100">
+            <span className="w-1.5 h-1.5 rounded bg-violet-500 shrink-0" />
+            <p className="text-[11px] font-bold uppercase tracking-wider text-violet-700">Exhibition Days</p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2">
+            <CompactField label="₹/KW">
+              <input
+                type="text"
+                value={pricePerKw || ""}
+                disabled
+                className="w-full px-2.5 py-1.5 text-[12.5px] border border-zinc-200 rounded bg-zinc-50 text-zinc-500"
+              />
+            </CompactField>
+            <CompactField label="Power (KW)" required>
+              <input
+                type="number"
+                min="0"
+                value={exhibKw}
+                onChange={(e) => setExhibKw(e.target.value)}
+                disabled={isLocked || saving}
+                placeholder="0"
+                className="w-full px-2.5 py-1.5 text-[12.5px] border border-zinc-200 rounded bg-white focus:outline-none focus:ring-1 focus:ring-violet-400 disabled:bg-zinc-50"
+              />
+            </CompactField>
+          </div>
+
+          <CompactField label="Phase" required>
+            <div className="flex gap-1.5">
+              {["Single Phase", "Three Phase"].map((p) => (
+                <label
+                  key={p}
+                  className={`flex-1 cursor-pointer px-2 py-1.5 text-[11.5px] font-semibold border rounded text-center transition-colors ${
+                    exhibPhase === p
+                      ? "bg-violet-50 border-violet-300 text-violet-700"
+                      : "bg-white border-zinc-200 text-zinc-600 hover:bg-zinc-50"
+                  } ${isLocked ? "pointer-events-none opacity-50" : ""}`}
+                >
+                  <input type="radio" className="hidden" name="phase-exhib"
+                    value={p} checked={exhibPhase === p}
+                    onChange={(e) => setExhibPhase(e.target.value)} disabled={isLocked} />
+                  {p}
+                </label>
+              ))}
+            </div>
+          </CompactField>
+
+          {exhibTotal && (
+            <div className="flex items-center justify-between px-2.5 py-1.5 bg-emerald-50/60 border border-emerald-100 rounded">
+              <span className="text-[11px] text-zinc-500">Total</span>
+              <span className="text-[12.5px] font-bold text-emerald-700">₹ {exhibTotal}</span>
+            </div>
+          )}
+        </div>
+
+        {/* ── Submit / Unlock ── */}
+        <div className="pt-1 border-t border-zinc-100">
           {isLocked ? (
             <button
               onClick={requestUnlock}
               disabled={saving}
-              className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-[13px] font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-lg disabled:opacity-60"
+              className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 text-[12.5px] font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded disabled:opacity-60 transition-colors"
             >
-              <MdLockOpen size={15} /> Request to Unlock
+              <MdLockOpen size={14} /> Request to Unlock
             </button>
           ) : (
-            <>
-              <div className="grid grid-cols-2 gap-2">
-                {formStep === 1 && (
-                  <button
-                    onClick={goPrevious}
-                    disabled={saving}
-                    className="inline-flex items-center justify-center gap-1.5 px-4 py-2 text-[13px] font-semibold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded-lg"
-                  >
-                    <MdArrowBack size={15} /> Previous
-                  </button>
-                )}
-                <button
-                  onClick={addRow}
-                  disabled={saving}
-                  className={`inline-flex items-center justify-center gap-1.5 px-4 py-2 text-[13px] font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg ${
-                    formStep === 0 ? "col-span-2" : ""
-                  }`}
-                >
-                  <MdAdd size={16} /> Add Row
-                </button>
-              </div>
-
-              {formStep === 0 ? (
-                <button
-                  onClick={goNext}
-                  disabled={saving}
-                  className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-[13px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg disabled:opacity-60"
-                >
-                  Next: Exhibition Days <MdArrowForward size={15} />
-                </button>
-              ) : (
-                <button
-                  onClick={submit}
-                  disabled={saving || previewList.length === 0}
-                  className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-[13px] font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg disabled:opacity-60"
-                >
-                  <MdLock size={15} />
-                  {saving ? "Submitting..." : "Submit & Lock"}
-                </button>
-              )}
-            </>
+            <button
+              onClick={handleSubmit}
+              disabled={!canSubmit}
+              className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 text-[12.5px] font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded disabled:opacity-50 transition-colors"
+            >
+              <MdLock size={13} />
+              {saving ? "Submitting..." : "Submit & Lock"}
+            </button>
           )}
         </div>
 
-        {/* Pending preview rows */}
-        {!isLocked && previewList.length > 0 && (
-          <div className="mt-3 pt-3 border-t border-dashed border-zinc-200">
-            <p className="text-[10.5px] uppercase tracking-wider font-bold text-zinc-500 mb-2">
-              Pending rows ({previewList.length})
-            </p>
-            <ul className="space-y-1.5">
-              {previewList.map((r, i) => (
-                <li
-                  key={i}
-                  className="flex items-center gap-2 px-2.5 py-1.5 bg-zinc-50 border border-zinc-100 rounded-lg text-[12px]"
-                >
-                  <span className="font-semibold text-zinc-700">{r.day}</span>
-                  <span className="text-zinc-400">·</span>
-                  <span>{r.powerRequired} KW</span>
-                  <span className="text-zinc-400">·</span>
-                  <span>{r.phase}</span>
-                  <span className="ml-auto font-bold text-emerald-700">
-                    ₹{r.totalAmount}
-                  </span>
-                  <button
-                    onClick={() => removePreviewRow(i)}
-                    className="text-zinc-400 hover:text-red-600"
-                    title="Remove"
-                  >
-                    <MdDelete size={14} />
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
       </div>
-    </div>
-  );
-}
-
-function Stepper({ step }) {
-  const steps = ["Setup Days", "Exhibition Days"];
-  return (
-    <div className="flex items-center gap-2">
-      {steps.map((label, i) => (
-        <React.Fragment key={label}>
-          <div className="flex items-center gap-2 flex-1">
-            <div
-              className={`w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold border-2 transition-colors ${
-                i <= step
-                  ? "bg-blue-600 text-white border-blue-600"
-                  : "bg-white text-zinc-400 border-zinc-200"
-              }`}
-            >
-              {i + 1}
-            </div>
-            <span
-              className={`text-[11.5px] font-semibold whitespace-nowrap ${
-                i <= step ? "text-blue-700" : "text-zinc-400"
-              }`}
-            >
-              {label}
-            </span>
-          </div>
-          {i < steps.length - 1 && (
-            <div
-              className={`flex-1 h-0.5 ${i < step ? "bg-blue-600" : "bg-zinc-200"}`}
-            />
-          )}
-        </React.Fragment>
-      ))}
     </div>
   );
 }
@@ -297,7 +268,7 @@ function GuidelinesCard() {
     "Ensure proper wiring is used.",
   ];
   return (
-    <div className="bg-blue-50/50 border border-blue-100 rounded-2xl p-4">
+    <div className="bg-blue-50/50 border border-blue-100 rounded p-4">
       <div className="flex items-center gap-2 mb-2">
         <MdInfoOutline className="text-blue-600" size={18} />
         <p className="text-[12.5px] font-bold uppercase tracking-wider text-blue-700">
@@ -319,19 +290,19 @@ function PowerTableCard() {
   const { powerData, isLocked, openEdit, loading } = usePowerStore();
 
   return (
-    <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
+    <div className="bg-white rounded border border-zinc-200 shadow-sm overflow-hidden">
       <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-b border-zinc-100 bg-zinc-50/60">
         <h3 className="text-[13.5px] font-bold text-[#02062c]">
           Submitted Power Entries
         </h3>
         {isLocked ? (
-          <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">
+          <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
             <MdCheckCircle size={11} /> Locked
           </span>
         ) : powerData.length > 0 ? (
           <button
             onClick={openEdit}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded"
           >
             <MdEdit size={13} /> Edit
           </button>
@@ -369,7 +340,17 @@ function PowerTableCard() {
             ) : (
               powerData.map((row, i) => (
                 <tr key={i} className="border-b border-zinc-50 hover:bg-zinc-50/60">
-                  <td className="px-4 py-3 text-[13px] font-medium text-zinc-800">{row.day}</td>
+                  <td className="px-4 py-3 text-[13px] font-medium text-zinc-800">
+                    <span
+                      className={`text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ${
+                        row.day?.toLowerCase().includes("setup")
+                          ? "bg-blue-50 text-blue-700"
+                          : "bg-violet-50 text-violet-700"
+                      }`}
+                    >
+                      {row.day}
+                    </span>
+                  </td>
                   <td className="px-4 py-3 text-[13px] text-zinc-700">₹{row.price_per_kw}</td>
                   <td className="px-4 py-3 text-[13px] text-zinc-700">{row.power_required} KW</td>
                   <td className="px-4 py-3 text-[13px] text-zinc-700">{row.phase}</td>
@@ -400,7 +381,15 @@ function PowerTableCard() {
           powerData.map((row, i) => (
             <div key={i} className="p-4 space-y-1.5">
               <div className="flex items-center justify-between">
-                <p className="font-bold text-[13px] text-[#02062c]">{row.day}</p>
+                <span
+                  className={`text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ${
+                    row.day?.toLowerCase().includes("setup")
+                      ? "bg-blue-50 text-blue-700"
+                      : "bg-violet-50 text-violet-700"
+                  }`}
+                >
+                  {row.day}
+                </span>
                 {Number(row.is_locked) === 1 ? (
                   <MdLock className="text-zinc-500" size={14} />
                 ) : (
@@ -433,7 +422,7 @@ function BillingCard({ exhibitor }) {
   const isDelhi = (exhibitor?.state || "").trim().toLowerCase() === "delhi";
 
   return (
-    <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
+    <div className="bg-white rounded border border-zinc-200 shadow-sm overflow-hidden">
       <div className="px-4 sm:px-5 py-3 border-b border-zinc-100 bg-zinc-50/60">
         <h3 className="text-[13.5px] font-bold text-[#02062c]">Billing Summary</h3>
       </div>
@@ -479,14 +468,14 @@ function EditModal() {
   const { editRows, saving, closeEdit, setEditRow, saveEdit } = usePowerStore();
   return (
     <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-3xl max-h-[90vh] flex flex-col">
+      <div className="bg-white rounded shadow-xl w-full max-w-3xl max-h-[90vh] flex flex-col">
         <div className="px-5 py-3.5 border-b border-zinc-100 flex items-center justify-between">
           <h3 className="text-[14px] font-bold text-[#02062c]">
             Edit Power Requirement
           </h3>
           <button
             onClick={closeEdit}
-            className="w-8 h-8 rounded-lg hover:bg-zinc-100 flex items-center justify-center text-zinc-500"
+            className="w-8 h-8 rounded hover:bg-zinc-100 flex items-center justify-center text-zinc-500"
           >
             <MdClose size={18} />
           </button>
@@ -495,13 +484,22 @@ function EditModal() {
         <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-3">
           {editRows.map((row, index) => {
             const total = Number(row.power_required || 0) * Number(row.price_per_kw || 0);
+            const isSetup = row.day?.toLowerCase().includes("setup");
             return (
               <div
                 key={index}
-                className="border border-zinc-200 rounded-xl p-3 space-y-2.5"
+                className="border border-zinc-200 rounded p-3 space-y-2.5"
               >
                 <div className="flex items-center justify-between">
-                  <p className="font-bold text-[13px] text-[#02062c]">{row.day}</p>
+                  <span
+                    className={`text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ${
+                      isSetup
+                        ? "bg-blue-50 text-blue-700"
+                        : "bg-violet-50 text-violet-700"
+                    }`}
+                  >
+                    {row.day}
+                  </span>
                   <span className="text-[11px] text-zinc-500">
                     ₹{row.price_per_kw}/KW
                   </span>
@@ -512,7 +510,7 @@ function EditModal() {
                     min="0"
                     value={row.power_required}
                     onChange={(e) => setEditRow(index, "power_required", e.target.value)}
-                    className="w-full px-3 py-2 text-[13px] border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-[13px] border border-zinc-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </Field>
                 <Field label="Phase">
@@ -520,7 +518,7 @@ function EditModal() {
                     {["Single Phase", "Three Phase"].map((p) => (
                       <label
                         key={p}
-                        className={`flex-1 cursor-pointer px-3 py-2 text-[12px] font-semibold border rounded-lg text-center ${
+                        className={`flex-1 cursor-pointer px-3 py-2 text-[12px] font-semibold border rounded text-center ${
                           row.phase === p
                             ? "bg-blue-50 border-blue-300 text-blue-700"
                             : "bg-white border-zinc-200 text-zinc-600 hover:bg-zinc-50"
@@ -556,14 +554,14 @@ function EditModal() {
           <button
             onClick={closeEdit}
             disabled={saving}
-            className="px-4 py-2 text-[13px] font-semibold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded-lg disabled:opacity-60"
+            className="px-4 py-2 text-[13px] font-semibold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded disabled:opacity-60"
           >
             Cancel
           </button>
           <button
             onClick={saveEdit}
             disabled={saving}
-            className="inline-flex items-center gap-1.5 px-5 py-2 text-[13px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg disabled:opacity-60"
+            className="inline-flex items-center gap-1.5 px-5 py-2 text-[13px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded disabled:opacity-60"
           >
             {saving ? "Updating..." : "Update Power"}
           </button>
@@ -574,6 +572,17 @@ function EditModal() {
 }
 
 /* ============== Helpers ============== */
+
+function CompactField({ label, required, children }) {
+  return (
+    <div>
+      <label className="text-[11px] font-semibold text-zinc-500 mb-1 flex items-center gap-0.5">
+        {label} {required && <span className="text-red-400">*</span>}
+      </label>
+      {children}
+    </div>
+  );
+}
 
 function Field({ label, required, children }) {
   return (
@@ -588,7 +597,7 @@ function Field({ label, required, children }) {
 
 function Empty({ text }) {
   return (
-    <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-10 text-center">
+    <div className="bg-white rounded border border-zinc-100 shadow-sm p-10 text-center">
       <p className="text-[14px] text-zinc-500">{text}</p>
     </div>
   );

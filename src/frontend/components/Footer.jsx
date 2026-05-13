@@ -250,7 +250,7 @@ export default function Footer() {
                       className="text-[13px] text-zinc-100 leading-relaxed"
                       dangerouslySetInnerHTML={{
                         __html: addressDetail?.description ||
-                          "OUR ADDRESS : RSD EXPOSITIONS, A99 DEFENCE COLONY, NEW DELHI - 110024 (INDIA)",
+                          "ADDRESS : RSD EXPOSITIONS, A99 DEFENCE COLONY, NEW DELHI - 110024 (INDIA)",
                       }}
                     />
                   </ContactItem>

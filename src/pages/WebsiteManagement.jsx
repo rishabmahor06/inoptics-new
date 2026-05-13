@@ -317,9 +317,7 @@ function BecomeAnExhibitor() {
 
 // ─── Outer Page ───────────────────────────────────────────────────────────────
 
-function OuterPage() {
-  return <ContentSection title="Outer Page (Unsubscribe)" getEndpoint="get_outer_page.php" addEndpoint="add_outer_page.php" updateEndpoint="update_outer_page.php" deleteEndpoint="delete_outer_page.php" />;
-}
+
 
 // ─── Exhibitor Login ──────────────────────────────────────────────────────────
 
@@ -421,7 +419,6 @@ export default function WebsiteManagement() {
       case 'Home Exhibitor':      return <HomeExhibitorTab />;
       case 'Visitor Guide':       return <VisitorGuideTab />;
       case 'For Exhibitors':      return <ForExhibitorsTab />;
-      case 'Outer Page':          return <OuterPage />;
       case 'Become An Exhibitor': return <BecomeAnExhibitor />;
       case 'Exhibitor Login':     return <ExhibitorLoginTab />;
       default:                    return null;
