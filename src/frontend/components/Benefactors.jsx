@@ -2,239 +2,195 @@ import React, { useEffect, useState } from "react";
 import Breadcrumbs from "./Breadcrumbs";
 import Footer from "./Footer";
 
-/* ─────────────────────────────────────────
-   Add to index.html:
-   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
-───────────────────────────────────────── */
-
-// ── Tier config — controls badge color, size, label ──
 const TIER_CONFIG = {
   Platinum: {
-    label: "Platinum Sponsor",
-    badgeBg: "bg-[#e8e8f0]",
-    badgeText: "text-[#5b5b8a]",
-    badgeBorder: "border-[#c8c8e8]",
-    ringColor: "ring-[#c8c8e8]",
-    dotColor: "bg-[#9898c8]",
-    accentBar: "from-[#b8b8d8] via-[#dcdcf0] to-[#b8b8d8]",
-    imgSize: "max-h-36 sm:max-h-44",
-    cardPad: "p-8 sm:p-12",
-    titleSize: "text-xs sm:text-sm",
-    glow: "shadow-[0_0_40px_rgba(180,180,220,0.25)]",
-    crown: true,
+    label: "Title Sponsor",
+    dot: "bg-violet-500",
+    chipBg: "bg-violet-50",
+    chipText: "text-violet-700",
+    chipBorder: "border-violet-200",
+    ring: "hover:ring-violet-300",
+    bar: "bg-violet-500",
+    grid: "grid-cols-1",
+    wrap: "max-w-sm mx-auto",
+    imgH: "h-28 sm:h-32",
   },
   Gold: {
     label: "Gold Sponsor",
-    badgeBg: "bg-amber-50",
-    badgeText: "text-amber-700",
-    badgeBorder: "border-amber-200",
-    ringColor: "ring-amber-200",
-    dotColor: "bg-amber-400",
-    accentBar: "from-amber-300 via-yellow-200 to-amber-300",
-    imgSize: "max-h-28 sm:max-h-36",
-    cardPad: "p-6 sm:p-10",
-    titleSize: "text-xs sm:text-sm",
-    glow: "shadow-[0_0_32px_rgba(251,191,36,0.18)]",
-    crown: false,
+    dot: "bg-amber-500",
+    chipBg: "bg-amber-50",
+    chipText: "text-amber-700",
+    chipBorder: "border-amber-200",
+    ring: "hover:ring-amber-300",
+    bar: "bg-amber-500",
+    grid: "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4",
+    wrap: "",
+    imgH: "h-20 sm:h-24",
   },
   Silver: {
     label: "Silver Sponsor",
-    badgeBg: "bg-gray-50",
-    badgeText: "text-gray-600",
-    badgeBorder: "border-gray-200",
-    ringColor: "ring-gray-200",
-    dotColor: "bg-gray-400",
-    accentBar: "from-gray-300 via-gray-100 to-gray-300",
-    imgSize: "max-h-24 sm:max-h-28",
-    cardPad: "p-6 sm:p-8",
-    titleSize: "text-xs",
-    glow: "shadow-[0_0_24px_rgba(160,160,160,0.12)]",
-    crown: false,
+    dot: "bg-zinc-400",
+    chipBg: "bg-zinc-50",
+    chipText: "text-zinc-700",
+    chipBorder: "border-zinc-200",
+    ring: "hover:ring-zinc-300",
+    bar: "bg-zinc-400",
+    grid: "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4",
+    wrap: "",
+    imgH: "h-16 sm:h-20",
   },
   Media: {
     label: "Media Partner",
-    badgeBg: "bg-blue-50",
-    badgeText: "text-blue-600",
-    badgeBorder: "border-blue-100",
-    ringColor: "ring-blue-100",
-    dotColor: "bg-blue-400",
-    accentBar: "from-blue-200 via-blue-50 to-blue-200",
-    imgSize: "max-h-20 sm:max-h-24",
-    cardPad: "p-5 sm:p-7",
-    titleSize: "text-xs",
-    glow: "shadow-sm",
-    crown: false,
+    dot: "bg-blue-500",
+    chipBg: "bg-blue-50",
+    chipText: "text-blue-700",
+    chipBorder: "border-blue-200",
+    ring: "hover:ring-blue-300",
+    bar: "bg-blue-500",
+    grid: "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4",
+    wrap: "",
+    imgH: "h-16 sm:h-20",
   },
   Foreign: {
     label: "Foreign Partner",
-    badgeBg: "bg-emerald-50",
-    badgeText: "text-emerald-700",
-    badgeBorder: "border-emerald-100",
-    ringColor: "ring-emerald-100",
-    dotColor: "bg-emerald-400",
-    accentBar: "from-emerald-200 via-emerald-50 to-emerald-200",
-    imgSize: "max-h-20 sm:max-h-24",
-    cardPad: "p-5 sm:p-7",
-    titleSize: "text-xs",
-    glow: "shadow-sm",
-    crown: false,
+    dot: "bg-emerald-500",
+    chipBg: "bg-emerald-50",
+    chipText: "text-emerald-700",
+    chipBorder: "border-emerald-200",
+    ring: "hover:ring-emerald-300",
+    bar: "bg-emerald-500",
+    grid: "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4",
+    wrap: "",
+    imgH: "h-16 sm:h-20",
   },
   Organisers: {
     label: "Organised By",
-    badgeBg: "bg-rose-50",
-    badgeText: "text-rose-600",
-    badgeBorder: "border-rose-100",
-    ringColor: "ring-rose-100",
-    dotColor: "bg-rose-400",
-    accentBar: "from-rose-200 via-rose-50 to-rose-200",
-    imgSize: "max-h-20 sm:max-h-24",
-    cardPad: "p-5 sm:p-7",
-    titleSize: "text-xs",
-    glow: "shadow-sm",
-    crown: false,
+    dot: "bg-rose-500",
+    chipBg: "bg-rose-50",
+    chipText: "text-rose-700",
+    chipBorder: "border-rose-200",
+    ring: "hover:ring-rose-300",
+    bar: "bg-rose-500",
+    grid: "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4",
+    wrap: "",
+    imgH: "h-16 sm:h-20",
   },
   Memberof: {
     label: "Member Of",
-    badgeBg: "bg-violet-50",
-    badgeText: "text-violet-600",
-    badgeBorder: "border-violet-100",
-    ringColor: "ring-violet-100",
-    dotColor: "bg-violet-400",
-    accentBar: "from-violet-200 via-violet-50 to-violet-200",
-    imgSize: "max-h-20 sm:max-h-24",
-    cardPad: "p-5 sm:p-7",
-    titleSize: "text-xs",
-    glow: "shadow-sm",
-    crown: false,
+    dot: "bg-purple-500",
+    chipBg: "bg-purple-50",
+    chipText: "text-purple-700",
+    chipBorder: "border-purple-200",
+    ring: "hover:ring-purple-300",
+    bar: "bg-purple-500",
+    grid: "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4",
+    wrap: "",
+    imgH: "h-16 sm:h-20",
   },
 };
 
-// ── Crown SVG for Platinum ──
-const CrownIcon = () => (
-  <svg className="w-5 h-5 text-[#9898c8]" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M2 19h20v2H2v-2zm2-3l3-7 5 4 4-6 3 4V16H4zm8-6.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
-  </svg>
-);
+const TIER_ORDER = ["Platinum", "Gold", "Silver", "Media", "Foreign"];
 
-// ── Single sponsor card ──
-const SponsorCard = ({ sponsor, tier, index, wide = false }) => {
-  const cfg = TIER_CONFIG[tier] || TIER_CONFIG["Media"];
+const SponsorCard = ({ sponsor, tier }) => {
+  const cfg = TIER_CONFIG[tier] || TIER_CONFIG.Media;
   const [imgError, setImgError] = useState(false);
 
   return (
     <div
-      className={`
-        relative bg-white border border-gray-100 rounded-2xl overflow-hidden
-        ring-1 ${cfg.ringColor} ${cfg.glow}
-        hover:scale-[1.02] hover:shadow-xl transition-all duration-300
-        flex flex-col items-center justify-center
-        ${cfg.cardPad}
-        ${wide ? "col-span-full sm:col-span-1" : ""}
-      `}
-      style={{ animation: `fadeUp 0.5s ease both`, animationDelay: `${index * 80}ms` }}
+      className={`group relative bg-white rounded-2xl border border-zinc-200 overflow-hidden flex flex-col items-center justify-between p-4 sm:p-5 ring-1 ring-transparent ${cfg.ring} hover:-translate-y-1 hover:shadow-lg shadow-sm transition-all duration-300`}
     >
-      {/* Top accent gradient bar */}
-      <div className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r ${cfg.accentBar}`} />
+      <span className={`absolute top-0 inset-x-0 h-0.5 ${cfg.bar} group-hover:h-1 transition-all`} />
 
-      {/* Crown badge (Platinum only) */}
-      {cfg.crown && (
-        <div className="absolute top-4 left-4">
-          <CrownIcon />
-        </div>
-      )}
-
-      {/* Tier badge */}
-      <div className={`
-        absolute top-4 right-4
-        inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border
-        ${cfg.badgeBg} ${cfg.badgeText} ${cfg.badgeBorder}
-      `}>
-        <span className={`w-1.5 h-1.5 rounded-full ${cfg.dotColor}`} />
-        <span className={`font-semibold uppercase tracking-widest ${cfg.titleSize}`}
-          style={{ fontFamily: "'DM Sans', sans-serif" }}>
-          {cfg.label}
+      <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded border ${cfg.chipBg} ${cfg.chipBorder} self-start mb-4`}>
+        <span className={`w-1.5 h-1.5 rounded-full ${cfg.dot}`} />
+        <span className={`text-[10px] font-semibold uppercase tracking-widest ${cfg.chipText}`}>
+          {sponsor.name} || {cfg.label}
         </span>
       </div>
 
-      {/* Logo image */}
-      <div className="flex items-center justify-center w-full mt-6 mb-4">
+      <div className={`flex items-center justify-center w-full flex-1 ${cfg.imgH} py-1`}>
         {!imgError ? (
           <img
             src={`https://inoptics.in/api/${sponsor.image_path}`}
             alt={sponsor.name}
-            className={`object-contain w-auto ${cfg.imgSize} transition-all duration-300`}
             onError={() => setImgError(true)}
+            className="object-contain w-full h-full grayscale-15 group-hover:grayscale-0 transition-all duration-300"
           />
         ) : (
-          <div className="flex flex-col items-center gap-2 py-6">
-            <svg className="w-10 h-10 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v13.5A1.5 1.5 0 003.75 21z" />
+          <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-zinc-100">
+            <svg className="w-6 h-6 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <path strokeLinecap="round" d="M3 9l4.5 4.5L12 9l4.5 6L21 9" />
             </svg>
-            <span className="text-xs text-gray-300" style={{ fontFamily: "'DM Sans', sans-serif" }}>Image unavailable</span>
           </div>
         )}
       </div>
 
-      {/* Sponsor name */}
-      <p
-        className="text-center text-sm font-semibold text-gray-700 mt-1 leading-snug"
-        style={{ fontFamily: "'DM Sans', sans-serif" }}
-      >
-        {sponsor.name}
-      </p>
+      
     </div>
   );
 };
 
-// ── Section divider with label ──
-const SectionDivider = ({ label }) => (
-  <div className="flex items-center gap-4 my-10" style={{ animation: "fadeUp 0.4s ease both" }}>
-    <div className="flex-1 h-px bg-gradient-to-r from-transparent to-gray-200" />
-    <span
-      className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-400 px-3"
-      style={{ fontFamily: "'DM Sans', sans-serif" }}
-    >
-      {label}
-    </span>
-    <div className="flex-1 h-px bg-gradient-to-l from-transparent to-gray-200" />
+const TierSection = ({ tier, sponsors }) => {
+  const cfg = TIER_CONFIG[tier];
+  if (!cfg || !sponsors.length) return null;
+
+  return (
+    <section className="mb-12 sm:mb-14">
+      <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+        <div className="flex-1 h-px bg-zinc-200" />
+        <div className="flex items-center gap-2">
+          <span className={`w-2 h-2 rounded-full ${cfg.dot} opacity-70`} />
+          <span className="text-[11px] font-semibold uppercase tracking-widest text-zinc-400">
+            {cfg.label}
+          </span>
+          <span className="text-[11px] font-semibold text-zinc-300">· {sponsors.length}</span>
+        </div>
+        <div className="flex-1 h-px bg-zinc-200" />
+      </div>
+
+      <div className={`grid gap-4 sm:gap-5 ${cfg.grid} ${cfg.wrap}`}>
+        {sponsors.map((s, i) => (
+          <SponsorCard key={s.id || i} sponsor={s} tier={tier} />
+        ))}
+      </div>
+    </section>
+  );
+};
+
+const SkeletonCard = () => (
+  <div className="bg-white rounded-2xl border border-zinc-200 p-6 animate-pulse min-h-[160px]">
+    <div className="h-5 w-20 bg-zinc-100 rounded-full mb-4" />
+    <div className="h-16 bg-zinc-50 rounded-lg mb-3" />
+    <div className="h-2.5 w-3/5 bg-zinc-100 rounded-full mx-auto" />
   </div>
 );
 
-// ── Skeleton ──
-const SkeletonCard = ({ tall = false }) => (
-  <div className={`bg-white border border-gray-100 rounded-2xl animate-pulse ${tall ? "p-10" : "p-6"}`}>
-    <div className="flex justify-end mb-6">
-      <div className="h-5 w-24 bg-gray-100 rounded-full" />
-    </div>
-    <div className={`mx-auto bg-gray-200 rounded-lg ${tall ? "h-32 w-48" : "h-20 w-36"}`} />
-    <div className="h-3 bg-gray-100 rounded-full w-1/2 mx-auto mt-5" />
-  </div>
-);
-
-// ── Empty state ──
 const EmptyState = ({ onRetry, isError }) => (
-  <div className="flex flex-col items-center justify-center py-32 text-center">
-    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-5 ${isError ? "bg-red-50" : "bg-gray-100"}`}>
-      <svg className={`w-8 h-8 ${isError ? "text-red-300" : "text-gray-300"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        {isError
-          ? <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
-          : <path strokeLinecap="round" strokeLinejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13" />
-        }
+  <div className="flex flex-col items-center justify-center py-20 sm:py-24 text-center px-4">
+    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 ${isError ? "bg-rose-50" : "bg-zinc-100"}`}>
+      <svg className={`w-6 h-6 ${isError ? "text-rose-400" : "text-zinc-400"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        {isError ? (
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+        ) : (
+          <path strokeLinecap="round" strokeLinejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32" />
+        )}
       </svg>
     </div>
-    <h3 className="text-lg font-semibold text-gray-800 mb-2" style={{ fontFamily: "'DM Serif Display', serif" }}>
+    <h3 className="text-xl font-light text-zinc-900 mb-2">
       {isError ? "Failed to Load" : "No Sponsors Yet"}
     </h3>
-    <p className="text-sm text-gray-400 mb-6 max-w-xs" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-      {isError ? "Could not fetch sponsor data. Please try again." : "Benefactor information will appear here once published."}
+    <p className="text-[13px] text-zinc-400 max-w-xs mb-6 leading-relaxed">
+      {isError
+        ? "Could not fetch sponsor data. Please try again."
+        : "Sponsor information will appear here once published."}
     </p>
     {isError && (
       <button
         onClick={onRetry}
-        className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-950 text-white text-sm font-medium rounded-xl hover:bg-gray-800 transition-colors"
-        style={{ fontFamily: "'DM Sans', sans-serif" }}
+        className="inline-flex items-center gap-2 px-5 py-2.5 bg-zinc-900 hover:bg-zinc-700 text-white text-[13px] font-medium rounded-lg transition-colors"
       >
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
         </svg>
         Try Again
@@ -243,7 +199,6 @@ const EmptyState = ({ onRetry, isError }) => (
   </div>
 );
 
-// ── Main component ──
 const Benefactors = () => {
   const [sponsorImages, setSponsorImages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -264,163 +219,153 @@ const Benefactors = () => {
     }
   };
 
-  useEffect(() => { fetchSponsors(); }, []);
+  useEffect(() => {
+    fetchSponsors();
+  }, []);
 
-  // helper: find sponsor by type (case-insensitive)
-  const get = (type) =>
-    sponsorImages.find(s => s.sponsor_type?.toLowerCase() === type.toLowerCase());
+  const TIER_MATCHERS = {
+    Platinum:   (t) => t === "platinum" || t === "title" || t === "diamond",
+    Gold:       (t) => t === "gold" || t === "co-title",
+    Silver:     (t) => t === "silver" || t === "bronze" || t === "associate" || t === "supporting",
+    Media:      (t) => t.includes("media"),
+    Foreign:    (t) => t.includes("foreign") || t.includes("knowledge") || t.includes("technology") || t.includes("hospitality") || t.includes("logistics") || t.includes("exhibition"),
+    Organisers: (t) => t.includes("organis") || t.includes("organiz"),
+    Memberof:   (t) => t.includes("member"),
+  };
 
-  const platinum   = get("Platinum");
-  const gold       = get("Gold");
-  const silver     = get("Silver");
-  const media      = get("Media");
-  const foreign    = get("Foreign");
-  const organisers = get("Organisers");
-  const memberof   = get("Memberof");
+  const getAll = (tier) => {
+    const matcher = TIER_MATCHERS[tier];
+    if (!matcher) return [];
+    return sponsorImages.filter((s) => {
+      const tokens = String(s.sponsor_type || "")
+        .toLowerCase()
+        .split(",")
+        .map((t) => t.trim())
+        .filter(Boolean);
+      return tokens.some((t) => matcher(t));
+    });
+  };
 
-  const hasAny = platinum || gold || silver || media || foreign || organisers || memberof;
+  const tierData = TIER_ORDER.map((tier) => ({ tier, sponsors: getAll(tier) }));
+
+  // "Other" type sponsors whose image filename mentions gold/silver — show only on mobile
+  const mobileOnlyOthers = sponsorImages.filter((s) => {
+    const tokens = String(s.sponsor_type || "").toLowerCase().split(",").map(t => t.trim());
+    if (!tokens.includes("other")) return false;
+    const path = (s.image_path || "").toLowerCase();
+    return /gold|silver/.test(path);
+  });
+
+  const hasAny =
+    tierData.some((t) => t.sponsors.length > 0) ||
+    mobileOnlyOthers.length > 0 ||
+    getAll("Organisers").length > 0 ||
+    getAll("Memberof").length > 0;
+  const totalCount = sponsorImages.length;
 
   return (
-    <>
-      <style>{`
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(18px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
-
-      <div className="min-h-screen bg-[#f9f9f8]">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
-
-          {/* Breadcrumbs */}
-          <div className="mb-6">
-            <Breadcrumbs />
-          </div>
-
-          {/* ── Page header ── */}
-          <div className="mb-12" style={{ animation: "fadeUp 0.4s ease both" }}>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-              <span
-                className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-600"
-                style={{ fontFamily: "'DM Sans', sans-serif" }}
-              >
-                InOptics 2026
-              </span>
-            </div>
-            <h1
-              className="text-4xl sm:text-5xl font-normal text-gray-950 leading-tight mb-3"
-              style={{ fontFamily: "'DM Serif Display', serif" }}
-            >
-              Our <em>Benefactors</em>
-            </h1>
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-px bg-gray-300" />
-              <p className="text-sm text-gray-500" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                Proud supporters of InOptics 2026
-              </p>
-            </div>
-          </div>
-
-          {/* ── Content ── */}
-          {loading ? (
-            <div className="space-y-6">
-              <SkeletonCard tall />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <SkeletonCard /><SkeletonCard />
-              </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                {[...Array(4)].map((_, i) => <SkeletonCard key={i} />)}
-              </div>
-            </div>
-          ) : error ? (
-            <EmptyState isError onRetry={fetchSponsors} />
-          ) : !hasAny ? (
-            <EmptyState />
-          ) : (
-            <div>
-
-              {/* ── PLATINUM ── */}
-              {platinum && (
-                <>
-                  <SectionDivider label="Title Sponsor" />
-                  <div className="grid grid-cols-1 max-w-lg mx-auto">
-                    <SponsorCard sponsor={platinum} tier="Platinum" index={0} />
-                  </div>
-                </>
-              )}
-
-              {/* ── GOLD ── */}
-              {gold && (
-                <>
-                  <SectionDivider label="Gold Sponsor" />
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl mx-auto">
-                    <SponsorCard sponsor={gold} tier="Gold" index={0} wide />
-                  </div>
-                </>
-              )}
-
-              {/* ── SILVER ── */}
-              {silver && (
-                <>
-                  <SectionDivider label="Silver Sponsor" />
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                    <SponsorCard sponsor={silver} tier="Silver" index={0} />
-                  </div>
-                </>
-              )}
-
-              {/* ── MEDIA + FOREIGN ── */}
-              {(media || foreign) && (
-                <>
-                  <SectionDivider label="Partners" />
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    {media   && <SponsorCard sponsor={media}   tier="Media"   index={0} />}
-                    {foreign && <SponsorCard sponsor={foreign} tier="Foreign" index={1} />}
-                  </div>
-                </>
-              )}
-
-              {/* ── ORGANISERS + MEMBER OF ── */}
-              {(organisers || memberof) && (
-                <>
-                  <SectionDivider label="Association" />
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    {organisers && <SponsorCard sponsor={organisers} tier="Organisers" index={0} />}
-                    {memberof   && <SponsorCard sponsor={memberof}   tier="Memberof"   index={1} />}
-                  </div>
-                </>
-              )}
-
-              {/* ── Footer CTA ── */}
-              <div
-                className="mt-16 text-center py-10 border-t border-gray-100"
-                style={{ animation: "fadeUp 0.5s ease 0.4s both" }}
-              >
-                <p
-                  className="text-sm text-gray-400 mb-4"
-                  style={{ fontFamily: "'DM Sans', sans-serif" }}
-                >
-                  Interested in sponsoring InOptics 2026?
-                </p>
-                <a
-                  href="mailto:sponsor@inoptics.in"
-                  className="inline-flex items-center gap-2.5 px-6 py-3 bg-gray-950 text-white text-sm font-medium rounded-xl hover:bg-gray-800 transition-all duration-200 shadow-sm hover:shadow-md"
-                  style={{ fontFamily: "'DM Sans', sans-serif" }}
-                >
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-                  </svg>
-                  Become a Sponsor
-                </a>
-              </div>
-            </div>
-          )}
+    <div className="min-h-screen bg-zinc-50">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 pb-12 sm:pb-16">
+        <div className="mb-5 sm:mb-6">
+          <Breadcrumbs />
         </div>
 
-        <Footer />
+        <div className="mb-10 sm:mb-14">
+          <div className="flex items-center gap-2 mb-3 sm:mb-4">
+            <div className="w-7 h-px bg-amber-500" />
+            <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-amber-700">
+              InOptics 2026
+            </span>
+          </div>
+
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light text-zinc-900 leading-tight tracking-tight mb-3 sm:mb-4">
+            Our <span className="italic font-normal">Benefactors</span>
+          </h1>
+
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] sm:text-[14px] text-zinc-400">
+            <p>Proud supporters of InOptics 2026</p>
+            {!loading && !error && totalCount > 0 && (
+              <>
+                <span className="hidden sm:inline">·</span>
+                <span className="font-medium text-zinc-600">
+                  {totalCount} {totalCount === 1 ? "partner" : "partners"}
+                </span>
+              </>
+            )}
+          </div>
+        </div>
+
+        {loading ? (
+          <div className="space-y-8">
+            <div className="grid grid-cols-1 max-w-sm mx-auto w-full gap-4">
+              <SkeletonCard />
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+              <SkeletonCard />
+              <SkeletonCard />
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)}
+            </div>
+          </div>
+        ) : error ? (
+          <EmptyState isError onRetry={fetchSponsors} />
+        ) : !hasAny ? (
+          <EmptyState />
+        ) : (
+          <>
+            {tierData.map(({ tier, sponsors }) =>
+              sponsors.length > 0 ? (
+                <TierSection key={tier} tier={tier} sponsors={sponsors} />
+              ) : null
+            )}
+
+            {mobileOnlyOthers.length > 0 && (
+              <div className="md:hidden">
+                <TierSection tier="Silver" sponsors={mobileOnlyOthers} />
+              </div>
+            )}
+
+            {(getAll("Organisers").length > 0 || getAll("Memberof").length > 0) && (
+              <section className="mb-12 sm:mb-14">
+                <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+                  <div className="flex-1 h-px bg-zinc-200" />
+                  <span className="text-[11px] font-semibold uppercase tracking-widest text-zinc-400">
+                    Organised By &amp; Member Of
+                  </span>
+                  <div className="flex-1 h-px bg-zinc-200" />
+                </div>
+                <div className="grid gap-4 sm:gap-5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+                  {getAll("Organisers").map((s, i) => (
+                    <SponsorCard key={`org-${s.id || i}`} sponsor={s} tier="Organisers" />
+                  ))}
+                  {getAll("Memberof").map((s, i) => (
+                    <SponsorCard key={`mem-${s.id || i}`} sponsor={s} tier="Memberof" />
+                  ))}
+                </div>
+              </section>
+            )}
+
+            <div className="mt-12 sm:mt-16 pt-10 sm:pt-12 border-t border-zinc-200 text-center">
+              <p className="text-[13px] text-zinc-400 mb-5">
+                Interested in sponsoring InOptics 2027?
+              </p>
+              <a
+                href="mailto:sponsor@inoptics.in"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-900 hover:bg-zinc-700 text-white text-[13px] font-medium rounded-xl transition-colors"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>
+                Become a Sponsor
+              </a>
+            </div>
+          </>
+        )}
       </div>
-    </>
+
+      <Footer />
+    </div>
   );
 };
 

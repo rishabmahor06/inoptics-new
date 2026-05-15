@@ -11,7 +11,13 @@ const SPONSOR_TYPES = [
   'Technology Partner', 'Hospitality Partner', 'Logistics Partner', 'Exhibition Partner', 'Other',
 ];
 
-const EMPTY_FORM = { name: '', sponsor_type: SPONSOR_TYPES[0] };
+const EMPTY_FORM = { name: '', sponsor_type: [SPONSOR_TYPES[0]] };
+
+const parseTypes = (val) => {
+  if (Array.isArray(val)) return val.filter(Boolean);
+  if (!val) return [];
+  return String(val).split(',').map(s => s.trim()).filter(Boolean);
+};
 
 export default function LandingPage() {
   const { sponsors, loading, fetchSponsors, addSponsor, updateSponsor, deleteSponsor } = useLandingPageStore();
@@ -28,7 +34,7 @@ export default function LandingPage() {
   const openEdit = (row) => {
     setForm({
       name: row.name || row.title || '',
-      sponsor_type: row.sponsor_type || SPONSOR_TYPES[0],
+      sponsor_type: parseTypes(row.sponsor_type).length ? parseTypes(row.sponsor_type) : [SPONSOR_TYPES[0]],
     });
     setFile(null); setEditing(row); setModal('edit');
   };
@@ -41,7 +47,7 @@ export default function LandingPage() {
     try {
       const fd = new FormData();
       fd.append('name', form.name);
-      fd.append('sponsor_type', form.sponsor_type);
+      fd.append('sponsor_type', (form.sponsor_type || []).join(','));
       if (file) fd.append('image', file);
       if (modal === 'edit') fd.append('id', editing.id);
       if (modal === 'add') await addSponsor(fd);
@@ -51,7 +57,7 @@ export default function LandingPage() {
   };
 
   const grouped = SPONSOR_TYPES.reduce((acc, type) => {
-    const items = sponsors.filter(s => s.sponsor_type === type);
+    const items = sponsors.filter(s => parseTypes(s.sponsor_type).includes(type));
     if (items.length) acc[type] = items;
     return acc;
   }, {});
@@ -125,14 +131,37 @@ export default function LandingPage() {
               />
             </Field>
 
-            <Field label="Sponsor Type">
-              <select
-                value={form.sponsor_type}
-                onChange={e => setForm(p => ({ ...p, sponsor_type: e.target.value }))}
-                className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded-lg bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                {SPONSOR_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
-              </select>
+            <Field label="Sponsor Type (select one or more)">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 p-3 border border-zinc-200 rounded-lg bg-zinc-50 max-h-56 overflow-y-auto">
+                {SPONSOR_TYPES.map(t => {
+                  const checked = (form.sponsor_type || []).includes(t);
+                  return (
+                    <label
+                      key={t}
+                      className={`flex items-center gap-2 px-2.5 py-1.5 text-[12px] rounded-md cursor-pointer border ${checked ? 'bg-blue-50 border-blue-300 text-blue-700' : 'bg-white border-zinc-200 text-zinc-600 hover:bg-zinc-100'}`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={checked}
+                        onChange={e => setForm(p => {
+                          const cur = p.sponsor_type || [];
+                          return {
+                            ...p,
+                            sponsor_type: e.target.checked
+                              ? [...cur, t]
+                              : cur.filter(x => x !== t),
+                          };
+                        })}
+                        className="accent-blue-600"
+                      />
+                      <span className="truncate">{t}</span>
+                    </label>
+                  );
+                })}
+              </div>
+              {(form.sponsor_type || []).length === 0 && (
+                <p className="text-[11px] text-rose-500 mt-1">Select at least one type</p>
+              )}
             </Field>
 
             {/* Current image preview (edit mode) */}

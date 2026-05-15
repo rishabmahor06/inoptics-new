@@ -19,8 +19,13 @@ export default function LandingPage() {
   }, []);
 
   const getSponsorImage = (type) => {
-    const sponsor = sponsorImages.find(
-      (img) => img.sponsor_type?.toLowerCase() === type.toLowerCase(),
+    const target = type.toLowerCase();
+    const sponsor = sponsorImages.find((img) =>
+      String(img.sponsor_type || "")
+        .toLowerCase()
+        .split(",")
+        .map((t) => t.trim())
+        .includes(target),
     );
     return sponsor ? `https://inoptics.in/api/${sponsor.image_path}` : null;
   };

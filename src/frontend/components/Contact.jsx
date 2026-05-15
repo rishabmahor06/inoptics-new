@@ -163,19 +163,7 @@ export default function Contact() {
       </section>
 
       {/* INFO CARDS */}
-      <section className="max-w-[1200px] mx-auto w-full px-4 sm:px-6 lg:px-10 -mt-12 sm:-mt-16 relative z-10">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
-          <InfoCard icon={<MdEmail size={22} />}      tint="from-blue-500 to-cyan-500"     label="Email">
-            <span ref={contactEmailRef}>support@inoptics.in</span>
-          </InfoCard>
-          <InfoCard icon={<MdPhone size={22} />}      tint="from-emerald-500 to-teal-500"  label="Phone">
-            +91 011-41815099
-          </InfoCard>
-          <InfoCard icon={<MdLocationOn size={22} />} tint="from-pink-500 to-rose-500"     label="Location">
-            A-99, Defence Colony, New Delhi
-          </InfoCard>
-        </div>
-      </section>
+      
 
       {/* MAIN: MAP + FORM */}
       <section className="max-w-[1200px] mx-auto w-full px-4 sm:px-6 lg:px-10 mt-12 sm:mt-16 mb-16 sm:mb-24 flex-1">
@@ -277,34 +265,7 @@ export default function Contact() {
         </div>
 
         {/* Bottom: Hours + Social */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-8">
-          <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-5 sm:p-6 flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white flex items-center justify-center shrink-0">
-              <MdSchedule size={22} />
-            </div>
-            <div className="flex-1">
-              <h4 className="text-[15px] font-bold text-[#02062c]">Office Hours</h4>
-              <div className="mt-2 space-y-1 text-[13px]">
-                <Row day="Mon – Sat" time="10:00 AM – 7:00 PM" />
-
-                <Row day="Sunday"    time="Closed" closed />
-              </div>
-            </div>
-          </div>
-
-
-          <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-5 sm:p-6">
-            <h4 className="text-[15px] font-bold text-[#02062c]">Follow Us</h4>
-            <p className="mt-1 text-[13px] text-zinc-500">Stay updated on the latest InOptics news</p>
-            <div className="flex flex-wrap items-center gap-2 mt-4">
-              <SocialBtn href="https://www.facebook.com/inopticsonoptics"                Icon={FaFacebookF}   label="Facebook"  color="bg-[#1877F2]" />
-              <SocialBtn href="https://www.instagram.com/inoptic99/"                     Icon={FaInstagram}   label="Instagram" color="bg-gradient-to-br from-pink-500 to-orange-500" />
-              <SocialBtn href="https://x.com/in_inoptics"                                 Icon={FaXTwitter}    label="X"         color="bg-black" />
-              <SocialBtn href="https://www.youtube.com/channel/UCZzX2F7ztBatHyOkZo2cmQw" Icon={FaYoutube}     label="YouTube"   color="bg-[#FF0000]" />
-              <SocialBtn href="https://www.linkedin.com/company/inoptics"                Icon={FaLinkedinIn}  label="LinkedIn"  color="bg-[#0A66C2]" />
-            </div>
-          </div>
-        </div>
+        
       </section>
 
       <Footer />

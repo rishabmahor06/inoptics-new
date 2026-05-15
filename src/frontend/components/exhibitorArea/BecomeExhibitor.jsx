@@ -124,7 +124,7 @@ export default function BecomeExhibitor() {
     setErrorMessage("");
     const form = e.target;
 
-    const mandatory = ["companyName", "personName", "address", "pincode", "mobile", "email", "gst"];
+    const mandatory = ["companyName", "personName", "address", "pincode", "mobile", "email", "gst", "boothSpace"];
     for (const field of mandatory) {
       if (!form[field]?.value.trim()) {
         setErrorMessage("Please fill all mandatory fields.");
@@ -360,11 +360,7 @@ export default function BecomeExhibitor() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
               <Field label="Booth Space Required" icon={<MdSpaceBar size={16} />}>
-                <select name="boothSpace" className={INPUT_CLASS}>
-                  {BOOTH_SIZES.map((s) => (
-                    <option key={s} value={s}>{s} (Approx)</option>
-                  ))}
-                </select>
+                <input name="boothSpace" type="text" placeholder="Your stall size in sq mtrs" className={INPUT_CLASS} required />
               </Field>
 
               <div>
@@ -442,7 +438,7 @@ export default function BecomeExhibitor() {
               />
               <span>
                 I agree to receive all updates related to <b className="text-[#02062c]">In-Optics</b> on my provided email address from{" "}
-                <span className="text-blue-600 font-semibold">inforsd@inoptic.com</span>,{" "}
+                <span className="text-blue-600 font-semibold">support@inoptic.com</span>,{" "}
                 <span className="text-blue-600 font-semibold">infoinoptics@gmail.com</span>.
               </span>
             </label>

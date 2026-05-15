@@ -8,6 +8,7 @@ import { useNavStore }                  from "../../store/useNavStore";
 import { useExhibitorStallsStore }      from "../../store/exhibitor/useExhibitorStallsStore";
 import { useExhibitorPowerStore }       from "../../store/exhibitor/useExhibitorPowerStore";
 import { useExhibitorPaymentsStore }    from "../../store/exhibitor/useExhibitorPaymentsStore";
+import PaymentRemarkSection from "./PaymentRemarkSection";
 
 const BADGE_RATE = 100;
 
@@ -734,6 +735,8 @@ function PaymentForm({ form, editing, setField, onAdd, onUpdate, onCancel }) {
           </button>
         )}
       </div>
+
+      {/* <PaymentRemarkSection /> */}
     </div>
   );
 }

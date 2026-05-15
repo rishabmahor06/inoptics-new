@@ -34,7 +34,14 @@ export default function Footer() {
   }, []);
 
   const getSponsor = (type) => {
-    const s = sponsorImages.find((img) => img.sponsor_type?.toLowerCase() === type.toLowerCase());
+    const target = type.toLowerCase();
+    const s = sponsorImages.find((img) =>
+      String(img.sponsor_type || "")
+        .toLowerCase()
+        .split(",")
+        .map((t) => t.trim())
+        .includes(target)
+    );
     return s ? `${API}/${s.image_path}` : null;
   };
 
@@ -58,14 +65,31 @@ export default function Footer() {
     }
   };
 
-  const goldSponsors = [
-    { type: "Footer-Gold",     alt: "Gold Sponsor" },
-    { type: "Footer-Silver",   alt: "Silver Sponsor" },
-    { type: "Footer-Media",    alt: "Media Partner" },
-    { type: "Footer-Foreign",  alt: "Foreign Partner" },
-    { type: "Footer-hoya",     alt: "Hoya" },
-    { type: "Footer-fastrack", alt: "Fastrack" },
-  ].filter((s) => getSponsor(s.type));
+  const hasToken = (img, target) =>
+    String(img.sponsor_type || "")
+      .toLowerCase()
+      .split(",")
+      .map((t) => t.trim())
+      .includes(target.toLowerCase());
+
+  const tokensOf = (img) =>
+    String(img.sponsor_type || "")
+      .toLowerCase()
+      .split(",")
+      .map((t) => t.trim())
+      .filter(Boolean);
+
+  const PLATINUM_TOKENS = ["footer-platinum", "platinum", "title", "diamond"];
+
+  const platinumImg =
+    PLATINUM_TOKENS.map((t) => getSponsor(t)).find(Boolean) || null;
+
+  const goldSponsors = sponsorImages.filter((img) =>
+    tokensOf(img).some((t) => t.includes("gold") || t === "co-title")
+  );
+  const silverSponsors = sponsorImages.filter((img) =>
+    tokensOf(img).some((t) => t.includes("silver") || t === "bronze")
+  );
 
   const SOCIAL_ICONS = [
     { Icon: FaFacebookF,  label: "Facebook", href: "https://www.facebook.com/inopticsonoptics", target: "_blank" },
@@ -88,76 +112,78 @@ export default function Footer() {
       <div className="bg-[#03050d] px-3 sm:px-5 pt-5 pb-0">
 
         {/* ============ SPONSORS CARD (top, outside main footer) ============ */}
-        <div className="rounded-2xl   overflow-hidden mb-5">
-          {/* Labels Row */}
-          <div className="flex px-4 sm:px-6 pt-4 pb-2">
-            <div className="flex-none w-full sm:w-[38%] lg:w-[30%]">
-              <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.25em] uppercase text-violet-400">
-                Platinum Sponsors
-              </span>
-            </div>
-            <div className="hidden sm:block flex-1">
-              <span className="text-[11px] font-bold tracking-[0.25em] uppercase text-amber-400">
-                Gold Sponsors
-              </span>
-            </div>
-          </div>
+        {(platinumImg || goldSponsors.length > 0 || silverSponsors.length > 0) && (
+          <div className="rounded-2xl overflow-hidden mb-5">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-2.5 sm:gap-3 p-3 sm:p-4">
 
-          {/* Cards Row */}
-          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 p-3 sm:p-4">
-            {/* Platinum Card */}
-            <div className="sm:w-[38%] lg:w-[30%] shrink-0">
-              <div className="bg-white rounded-xl flex items-center justify-center h-28 sm:h-32 px-6">
-                {getSponsor("Footer-Platinum") ? (
-                  <img
-                    src={getSponsor("Footer-Platinum")}
-                    alt="Platinum Sponsor"
-                    className="max-h-20 max-w-full object-contain"
-                  />
-                ) : (
-                  <span className="text-zinc-400 text-[13px] font-medium">Platinum Sponsor</span>
-                )}
-              </div>
-            </div>
-
-            {/* Gold Sponsors Grid */}
-            <div className="flex-1">
-              {/* Mobile label */}
-              <div className="sm:hidden mb-2">
-                <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-amber-400">
-                  Gold Sponsors
-                </span>
-              </div>
-              <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-2">
-                {goldSponsors.map((s, i) => (
-                  <div
-                    key={i}
-                    className="bg-white rounded-xl flex items-center justify-center h-28 sm:h-32 px-2 py-3 hover:-translate-y-0.5 hover:shadow-lg transition-all"
-                  >
+              {/* ─── LEFT: Platinum ─── */}
+              {platinumImg && (
+                <div className="md:col-span-3 flex flex-col">
+                  <span className="text-[10px] font-bold tracking-[0.22em] uppercase text-violet-400 mb-1.5 px-1">
+                    Platinum
+                  </span>
+                  <div className="bg-white rounded-xl flex items-center justify-center flex-1 min-h-28 md:min-h-full p-3">
                     <img
-                      src={getSponsor(s.type)}
-                      alt={s.alt}
-                      className="max-h-16 max-w-full object-contain"
+                      src={platinumImg}
+                      alt="Platinum Sponsor"
+                      className="max-h-24 sm:max-h-28 md:max-h-full max-w-full object-contain"
                     />
                   </div>
-                ))}
-                {/* Explore More */}
-                <Link
-                  to="/benefactors"
-                  className="group bg-[#1a1c2e] hover:bg-[#22253a] rounded-xl flex flex-col items-center justify-center h-28 sm:h-32 px-2 text-center transition-all border border-white/10"
-                >
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-white leading-tight">
-                    Explore More Sponsors
+                </div>
+              )}
+
+              {/* ─── MIDDLE: Gold ─── */}
+              {goldSponsors.length > 0 && (
+                <div className={`${platinumImg ? "md:col-span-5" : "md:col-span-6"} flex flex-col`}>
+                  <span className="text-[10px] font-bold tracking-[0.22em] uppercase text-amber-400 mb-1.5 px-1">
+                    Gold Sponsors
+                    <span className="ml-1.5 text-zinc-500 font-normal tracking-normal">· {goldSponsors.length}</span>
                   </span>
-                  <MdArrowOutward
-                    size={18}
-                    className="text-white/60 mt-2 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
-                  />
-                </Link>
-              </div>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-1.5 sm:gap-2 flex-1 content-start">
+                    {goldSponsors.map((s, i) => (
+                      <div
+                        key={s.id || i}
+                        title={s.name}
+                        className="bg-white rounded-lg flex items-center justify-center h-16 sm:h-18 px-1.5 py-2 hover:-translate-y-0.5 hover:shadow-lg transition-all"
+                      >
+                        <img
+                          src={`${API}/${s.image_path}`}
+                          alt={s.name || "Gold Sponsor"}
+                          className="max-h-10 sm:max-h-12 max-w-full object-contain"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* ─── RIGHT: Silver ─── */}
+              {silverSponsors.length > 0 && (
+                <div className={`${platinumImg ? "md:col-span-4" : "md:col-span-6"} flex flex-col`}>
+                  <span className="text-[10px] font-bold tracking-[0.22em] uppercase text-zinc-300 mb-1.5 px-1">
+                    Silver Sponsors
+                    <span className="ml-1.5 text-zinc-500 font-normal tracking-normal">· {silverSponsors.length}</span>
+                  </span>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-1.5 sm:gap-2 flex-1 content-start">
+                    {silverSponsors.map((s, i) => (
+                      <div
+                        key={s.id || i}
+                        title={s.name}
+                        className="bg-white rounded-lg flex items-center justify-center h-16 sm:h-18 px-1.5 py-2 hover:-translate-y-0.5 hover:shadow-lg transition-all"
+                      >
+                        <img
+                          src={`${API}/${s.image_path}`}
+                          alt={s.name || "Silver Sponsor"}
+                          className="max-h-10 sm:max-h-12 max-w-full object-contain"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        </div>
+        )}
 
         {/* ============ MAIN FOOTER CARD ============ */}
         <div className="rounded-3xl bg-[#070a18] border border-white/10 overflow-hidden relative">
