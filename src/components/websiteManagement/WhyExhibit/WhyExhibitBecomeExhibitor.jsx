@@ -16,13 +16,19 @@ export default function WhyExhibitBecomeExhibitor() {
 
   useEffect(() => { fetchBecomeExhibitor(); }, [fetchBecomeExhibitor]);
 
+  const stripHtml = (html = '') => String(html).replace(/<[^>]*>/g, '').trim();
+
   const openAdd = () => { setTitle(''); setDescription(''); setEditing(null); setModal('add'); };
-  const openEdit = (row) => { setTitle(row.title || ''); setDescription(row.description || ''); setEditing(row); setModal('edit'); };
+  const openEdit = (row) => {
+    setTitle(stripHtml(row.title || ''));
+    setDescription(row.description || row.text || '');
+    setEditing(row); setModal('edit');
+  };
 
   const handleSave = async () => {
     setSaving(true);
     try {
-      const payload = { title, description, ...(modal === 'edit' ? { id: editing.id } : {}) };
+      const payload = { title, description, text: description, ...(modal === 'edit' ? { id: editing.id } : {}) };
       if (modal === 'add') await addBecomeExhibitor(payload);
       else await updateBecomeExhibitor(payload);
       setModal(null);
@@ -38,8 +44,8 @@ export default function WhyExhibitBecomeExhibitor() {
         {becomeExhibitor.map((row, i) => (
           <TrRow key={row.id} index={i}>
             <TdId>{row.id}</TdId>
-            <Td className="font-semibold text-zinc-800">{row.title}</Td>
-            <TdHtml html={row.description} />
+            <Td className="font-semibold text-zinc-800">{stripHtml(row.title || '')}</Td>
+            <TdHtml html={row.description || row.text} />
             <TdActions>
               <EditBtn onClick={() => openEdit(row)} />
               <DelBtn onClick={() => deleteBecomeExhibitor(row.id)} />

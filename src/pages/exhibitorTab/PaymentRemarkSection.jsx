@@ -1,18 +1,19 @@
 import React from "react";
 import { FaEdit, FaTrash, FaPaperPlane, FaCheck, FaTimes } from "react-icons/fa";
+import { useExhibitorRemarksStore } from "../../store/exhibitor/useExhibitorRemarksStore";
 
-const PaymentRemarkSection = ({
-  remarks = [],
-  remarkText,
-  setRemarkText,
-  editingRemarkId,
-  setEditingRemarkId,
-  onSaveRemark,
-  onUpdateRemark,
-  onDeleteRemark,
-  onEditRemark,
-  onSendEmail,
-}) => {
+const PaymentRemarkSection = () => {
+  const remarks            = useExhibitorRemarksStore((s) => s.remarks);
+  const remarkText         = useExhibitorRemarksStore((s) => s.remarkText);
+  const setRemarkText      = useExhibitorRemarksStore((s) => s.setRemarkText);
+  const editingRemarkId    = useExhibitorRemarksStore((s) => s.editingRemarkId);
+  const setEditingRemarkId = useExhibitorRemarksStore((s) => s.setEditingRemarkId);
+  const saveRemark         = useExhibitorRemarksStore((s) => s.saveRemark);
+  const updateRemark       = useExhibitorRemarksStore((s) => s.updateRemark);
+  const deleteRemark       = useExhibitorRemarksStore((s) => s.deleteRemark);
+  const editRemark         = useExhibitorRemarksStore((s) => s.editRemark);
+  const sendEmail          = useExhibitorRemarksStore((s) => s.sendEmail);
+
   const isEditing = Boolean(editingRemarkId);
 
   const handleCancelEdit = () => {
@@ -36,7 +37,7 @@ const PaymentRemarkSection = ({
 
         <div className="space-y-4">
           <textarea
-            className="min-h-[110px] w-full resize-y rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100"
+            className="min-h-27.5 w-full resize-y rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100"
             placeholder="Enter payment remark here..."
             value={remarkText}
             onChange={(e) => setRemarkText(e.target.value)}
@@ -44,22 +45,20 @@ const PaymentRemarkSection = ({
           />
 
           <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:justify-end">
-            {onSendEmail && (
-              <button
-                type="button"
-                onClick={onSendEmail}
-                disabled={!remarks.length}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-50 px-4 py-3 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-100 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                <FaPaperPlane />
-                Send Email
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={sendEmail}
+              disabled={!remarks.length}
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-50 px-4 py-3 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-100 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <FaPaperPlane />
+              Send Email
+            </button>
 
             {!isEditing ? (
               <button
                 type="button"
-                onClick={onSaveRemark}
+                onClick={saveRemark}
                 disabled={!remarkText.trim()}
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
               >
@@ -70,7 +69,7 @@ const PaymentRemarkSection = ({
               <>
                 <button
                   type="button"
-                  onClick={onUpdateRemark}
+                  onClick={updateRemark}
                   disabled={!remarkText.trim()}
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
                 >
@@ -129,7 +128,7 @@ const PaymentRemarkSection = ({
                   <div className="flex items-center gap-2 self-end sm:self-auto">
                     <button
                       type="button"
-                      onClick={() => onEditRemark(item)}
+                      onClick={() => editRemark(item)}
                       className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white text-slate-700 shadow-sm ring-1 ring-slate-200 transition hover:bg-slate-100"
                       title="Edit"
                     >
@@ -138,7 +137,7 @@ const PaymentRemarkSection = ({
 
                     <button
                       type="button"
-                      onClick={() => onDeleteRemark(item.id)}
+                      onClick={() => deleteRemark(item.id)}
                       className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-rose-50 text-rose-700 shadow-sm ring-1 ring-rose-100 transition hover:bg-rose-100"
                       title="Delete"
                     >

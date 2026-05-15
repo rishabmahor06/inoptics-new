@@ -5,20 +5,22 @@ import {
   SectionHeader, TrRow, Td, TdId, TdImage, TdActions, imgSrc, ImgPreview,
 } from '../shared/WmShared';
 import { MdImage } from 'react-icons/md';
+import CustomEditor from '../../CustomEditor/CustomEditor';
 
 export default function HomeExhibitorCards() {
   const { cardItems, loadingCards, fetchCards, addCard, updateCard, deleteCard } = useHomeExhibitorStore();
   const [modal, setModal]     = useState(null);
   const [editing, setEditing] = useState(null);
   const [title, setTitle]     = useState('');
+  const [description, setDescription] = useState('');
   const [file, setFile]       = useState(null);
   const [saving, setSaving]   = useState(false);
   const [preview, setPreview] = useState(null);
 
   useEffect(() => { fetchCards(); }, [fetchCards]);
 
-  const openAdd = () => { setTitle(''); setFile(null); setEditing(null); setModal('add'); };
-  const openEdit = (row) => { setTitle(row.title || ''); setFile(null); setEditing(row); setModal('edit'); };
+  const openAdd = () => { setTitle(''); setDescription(''); setFile(null); setEditing(null); setModal('add'); };
+  const openEdit = (row) => { setTitle(row.title || ''); setDescription(row.description || ''); setFile(null); setEditing(row); setModal('edit'); };
 
   const handleSave = async () => {
     if (!file && !editing) { alert('Please select an image'); return; }
@@ -26,6 +28,7 @@ export default function HomeExhibitorCards() {
     try {
       const fd = new FormData();
       fd.append('title', title);
+      fd.append('description', description);
       if (file) fd.append('image', file);
       if (modal === 'edit') fd.append('id', editing.id);
       if (modal === 'add') await addCard(fd);
@@ -96,6 +99,9 @@ export default function HomeExhibitorCards() {
           <div className="space-y-4">
             <Field label="Title">
               <WmInput value={title} onChange={e => setTitle(e.target.value)} placeholder="Card title" />
+            </Field>
+            <Field label="Description">
+              <CustomEditor value={description} onChange={setDescription} placeholder="Description..." />
             </Field>
             {modal === 'edit' && editing?.image && (
               <Field label="Current Image">

@@ -17,8 +17,14 @@ export default function WhyExhibitMain() {
 
   useEffect(() => { fetchExhibits(); }, [fetchExhibits]);
 
+  const stripHtml = (html = '') => String(html).replace(/<[^>]*>/g, '').trim();
+
   const openAdd = () => { setTitle(''); setDescription(''); setFile(null); setEditing(null); setModal('add'); };
-  const openEdit = (row) => { setTitle(row.title || ''); setDescription(row.description || ''); setFile(null); setEditing(row); setModal('edit'); };
+  const openEdit = (row) => {
+    setTitle(stripHtml(row.title || ''));
+    setDescription(row.description || row.text || '');
+    setFile(null); setEditing(row); setModal('edit');
+  };
 
   const handleSave = async () => {
     setSaving(true);
@@ -26,6 +32,7 @@ export default function WhyExhibitMain() {
       const fd = new FormData();
       fd.append('title', title);
       fd.append('description', description);
+      fd.append('text', description);
       if (file) fd.append('image', file);
       if (modal === 'edit') fd.append('id', editing.id);
       if (modal === 'add') await addExhibit(fd);
@@ -47,9 +54,9 @@ export default function WhyExhibitMain() {
               className="bg-white rounded-xl border border-zinc-200 overflow-hidden hover:shadow-md hover:border-blue-200 transition-all group">
               {row.image && <img src={row.image} alt={row.title} className="w-full h-32 object-cover" />}
               <div className="p-4">
-                <p className="text-sm font-bold text-zinc-800 mb-1">{row.title}</p>
+                <p className="text-sm font-bold text-zinc-800 mb-1">{stripHtml(row.title || '')}</p>
                 <div className="text-xs text-zinc-500 line-clamp-2"
-                  dangerouslySetInnerHTML={{ __html: row.description || '' }} />
+                  dangerouslySetInnerHTML={{ __html: row.description || row.text || '' }} />
                 <div className="flex gap-1.5 mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
                   <EditBtn onClick={() => openEdit(row)} />
                   <DelBtn onClick={() => deleteExhibit(row.id)} />
@@ -64,8 +71,8 @@ export default function WhyExhibitMain() {
         {exhibits.map((row, i) => (
           <TrRow key={row.id} index={i}>
             <TdId>{row.id}</TdId>
-            <Td className="font-semibold text-zinc-800">{row.title}</Td>
-            <TdHtml html={row.description} />
+            <Td className="font-semibold text-zinc-800">{stripHtml(row.title || '')}</Td>
+            <TdHtml html={row.description || row.text} />
             <TdImage src={row.image} />
             <TdActions>
               <EditBtn onClick={() => openEdit(row)} />

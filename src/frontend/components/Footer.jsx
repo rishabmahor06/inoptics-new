@@ -139,12 +139,12 @@ export default function Footer() {
                     Gold Sponsors
                     <span className="ml-1.5 text-zinc-500 font-normal tracking-normal">· {goldSponsors.length}</span>
                   </span>
-                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-1.5 sm:gap-2 flex-1 content-start">
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-1.5 sm:gap-1 flex-1 content-start">
                     {goldSponsors.map((s, i) => (
                       <div
                         key={s.id || i}
                         title={s.name}
-                        className="bg-white rounded-lg flex items-center justify-center h-16 sm:h-18 px-1.5 py-2 hover:-translate-y-0.5 hover:shadow-lg transition-all"
+                        className="bg-white rounded flex items-center justify-center h-16 sm:h-18 px-1.5 py-2 hover:-translate-y-0.5 hover:shadow-lg transition-all"
                       >
                         <img
                           src={`${API}/${s.image_path}`}
@@ -164,12 +164,12 @@ export default function Footer() {
                     Silver Sponsors
                     <span className="ml-1.5 text-zinc-500 font-normal tracking-normal">· {silverSponsors.length}</span>
                   </span>
-                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-1.5 sm:gap-2 flex-1 content-start">
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-1.5 sm:gap-1 flex-1 content-start">
                     {silverSponsors.map((s, i) => (
                       <div
                         key={s.id || i}
                         title={s.name}
-                        className="bg-white rounded-lg flex items-center justify-center h-16 sm:h-18 px-1.5 py-2 hover:-translate-y-0.5 hover:shadow-lg transition-all"
+                        className="bg-white rounded flex items-center justify-center h-16 sm:h-18 px-1.5 py-2 hover:-translate-y-0.5 hover:shadow-lg transition-all"
                       >
                         <img
                           src={`${API}/${s.image_path}`}

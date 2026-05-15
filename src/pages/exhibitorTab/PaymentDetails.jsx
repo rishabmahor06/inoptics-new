@@ -8,6 +8,7 @@ import { useNavStore }                  from "../../store/useNavStore";
 import { useExhibitorStallsStore }      from "../../store/exhibitor/useExhibitorStallsStore";
 import { useExhibitorPowerStore }       from "../../store/exhibitor/useExhibitorPowerStore";
 import { useExhibitorPaymentsStore }    from "../../store/exhibitor/useExhibitorPaymentsStore";
+import { useExhibitorRemarksStore }     from "../../store/exhibitor/useExhibitorRemarksStore";
 import PaymentRemarkSection from "./PaymentRemarkSection";
 
 const BADGE_RATE = 100;
@@ -79,6 +80,11 @@ export default function PaymentDetails() {
     if (ex.company_name) fetchStalls(ex.company_name);
     fetchPowerData(ex);
   }, [ex, initForCompany, fetchStalls, fetchPowerData]);
+
+  const initRemarks = useExhibitorRemarksStore((s) => s.initForCompany);
+  useEffect(() => {
+    if (ex?.company_name) initRemarks(ex.company_name);
+  }, [ex?.company_name, initRemarks]);
 
   const exState      = ex?.state || "";
   const stallSummary = useMemo(() => computeStallSummary(stallList), [stallList]);
@@ -423,9 +429,12 @@ function DetailView({ particulars, billing, form, list, editing, onEdit, onDelet
           {particulars}
           {billing}
         </div>
-        <div className="bg-zinc-50 border border-zinc-200 rounded-xl p-4 sm:p-5">
-          <h3 className="text-[14px] font-bold text-blue-700 uppercase tracking-wider mb-4">Payment Details</h3>
-          {form}
+        <div className="space-y-4">
+          <div className="bg-zinc-50 border border-zinc-200 rounded-xl p-4 sm:p-5">
+            <h3 className="text-[14px] font-bold text-blue-700 uppercase tracking-wider mb-4">Payment Details</h3>
+            {form}
+          </div>
+          <PaymentRemarkSection />
         </div>
       </div>
 
@@ -736,7 +745,6 @@ function PaymentForm({ form, editing, setField, onAdd, onUpdate, onCancel }) {
         )}
       </div>
 
-      {/* <PaymentRemarkSection /> */}
     </div>
   );
 }
