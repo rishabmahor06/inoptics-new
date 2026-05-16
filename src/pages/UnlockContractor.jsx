@@ -68,10 +68,10 @@ export default function UnlockContractor() {
   return (
     <div className="space-y-4 p-3 sm:p-4 lg:p-5">
       {/* TOOLBAR */}
-      <div className="bg-white rounded-xl shadow-sm px-4 sm:px-5 py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div className="bg-white rounded shadow-sm px-4 sm:px-5 py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="flex items-center gap-3 flex-wrap">
           <h3 className="text-[15px] font-bold text-zinc-900">Contractor Unlock Requests</h3>
-          <span className="px-2.5 py-1 text-[12px] font-bold bg-amber-50 text-amber-700 border border-amber-200 rounded-md">
+          <span className="px-2.5 py-1 text-[12px] font-bold bg-amber-50 text-amber-700 border border-amber-200 rounded">
             {requests.length} pending
           </span>
         </div>
@@ -83,13 +83,13 @@ export default function UnlockContractor() {
               placeholder="Search company, email, contractor..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full h-10 pl-9 pr-3 text-[14px] border border-zinc-200 rounded-xl bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full h-10 pl-9 pr-3 text-[14px] border border-zinc-200 rounded bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <button
             onClick={fetchUnlockRequests}
             disabled={loading}
-            className="h-10 px-3 text-[13px] font-semibold bg-zinc-100 hover:bg-zinc-200 text-zinc-700 rounded-lg flex items-center gap-1.5 transition-colors disabled:opacity-60 shrink-0"
+            className="h-10 px-3 text-[13px] font-semibold bg-zinc-100 hover:bg-zinc-200 text-zinc-700 rounded flex items-center gap-1.5 transition-colors disabled:opacity-60 shrink-0"
             title="Refresh"
           >
             <MdRefresh size={16} className={loading ? "animate-spin" : ""} />
@@ -100,16 +100,16 @@ export default function UnlockContractor() {
 
       {/* CONTENT */}
       {loading ? (
-        <div className="bg-white rounded-xl border border-zinc-200 py-12 text-center text-zinc-500 text-base">
+        <div className="bg-white rounded border border-zinc-200 py-12 text-center text-zinc-500 text-base">
           Loading requests...
         </div>
       ) : filtered.length === 0 ? (
-        <div className="bg-white rounded-xl border border-zinc-200 py-16 flex flex-col items-center gap-3 text-zinc-400">
+        <div className="bg-white rounded border border-zinc-200 py-16 flex flex-col items-center gap-3 text-zinc-400">
           <MdLock size={42} className="text-zinc-200" />
           <p className="text-base">No unlock requests</p>
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-zinc-200 overflow-hidden">
+        <div className="bg-white rounded border border-zinc-200 overflow-hidden">
           {/* Desktop table */}
           <div className="hidden lg:block overflow-x-auto">
             <table className="w-full">
@@ -145,11 +145,11 @@ export default function UnlockContractor() {
                       <button
                         onClick={() => handleUnlock(req.exhibitor_company)}
                         disabled={processing === req.exhibitor_company}
-                        className="px-3 py-1.5 text-[12px] font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-md flex items-center gap-1.5 transition-colors disabled:opacity-60 disabled:cursor-wait"
+                        className="px-3 py-1.5 text-[12px] font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded flex items-center gap-1.5 transition-colors disabled:opacity-60 disabled:cursor-wait"
                       >
                         {processing === req.exhibitor_company ? (
                           <>
-                            <span className="block w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                            <span className="block w-3 h-3 border-2 border-white border-t-transparent rounded animate-spin" />
                             Unlocking...
                           </>
                         ) : (
@@ -186,11 +186,11 @@ export default function UnlockContractor() {
                   <button
                     onClick={() => handleUnlock(req.exhibitor_company)}
                     disabled={processing === req.exhibitor_company}
-                    className="px-3 py-1.5 text-[12px] font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-md flex items-center gap-1.5 transition-colors disabled:opacity-60 disabled:cursor-wait shrink-0"
+                    className="px-3 py-1.5 text-[12px] font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded flex items-center gap-1.5 transition-colors disabled:opacity-60 disabled:cursor-wait shrink-0"
                   >
                     {processing === req.exhibitor_company ? (
                       <>
-                        <span className="block w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <span className="block w-3 h-3 border-2 border-white border-t-transparent rounded animate-spin" />
                       </>
                     ) : (
                       <>
@@ -200,7 +200,7 @@ export default function UnlockContractor() {
                   </button>
                 </div>
 
-                <div className="bg-zinc-50 rounded-lg p-3 space-y-1">
+                <div className="bg-zinc-50 rounded p-3 space-y-1">
                   <p className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Contractor</p>
                   <p className="text-[13px] font-semibold text-zinc-800">{req.contractor_name || "—"}</p>
                   <p className="text-[12px] text-zinc-500 break-all">{req.contractor_email || "—"}</p>

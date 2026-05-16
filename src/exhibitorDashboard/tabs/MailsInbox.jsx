@@ -79,7 +79,7 @@ export default function MailsInbox() {
           : "Communications from organizers"
       }
     >
-      <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded border border-zinc-200 shadow-sm overflow-hidden">
         {/* Toolbar */}
         <div className="flex items-center gap-2 px-3 sm:px-4 py-3 border-b border-zinc-100 bg-zinc-50/60">
           <div className="relative flex-1">
@@ -92,12 +92,12 @@ export default function MailsInbox() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search mails..."
-              className="w-full h-10 pl-9 pr-3 text-[13px] border border-zinc-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full h-10 pl-9 pr-3 text-[13px] border border-zinc-200 rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <button
             onClick={() => fetchMails()}
-            className="h-10 px-3 inline-flex items-center gap-1.5 text-[12px] font-semibold text-zinc-700 bg-white border border-zinc-200 hover:bg-zinc-100 rounded-xl transition-colors"
+            className="h-10 px-3 inline-flex items-center gap-1.5 text-[12px] font-semibold text-zinc-700 bg-white border border-zinc-200 hover:bg-zinc-100 rounded transition-colors"
             title="Refresh"
           >
             <MdRefresh size={16} className={loading ? "animate-spin" : ""} />
@@ -134,7 +134,7 @@ export default function MailsInbox() {
                         }`}
                       >
                         <div
-                          className={`shrink-0 w-9 h-9 rounded-full flex items-center justify-center ${
+                          className={`shrink-0 w-9 h-9 rounded flex items-center justify-center ${
                             unread
                               ? "bg-blue-100 text-blue-600"
                               : "bg-zinc-100 text-zinc-400"
@@ -203,7 +203,7 @@ function MailView({ mail, onBack }) {
       <div className="px-4 sm:px-6 py-4 border-b border-zinc-100 flex items-start gap-3">
         <button
           onClick={onBack}
-          className="md:hidden shrink-0 w-9 h-9 rounded-lg bg-zinc-100 hover:bg-zinc-200 flex items-center justify-center text-zinc-700"
+          className="md:hidden shrink-0 w-9 h-9 rounded bg-zinc-100 hover:bg-zinc-200 flex items-center justify-center text-zinc-700"
           title="Back"
         >
           <MdArrowBack size={18} />
@@ -220,7 +220,7 @@ function MailView({ mail, onBack }) {
       </div>
       <div className="px-4 sm:px-6 py-5 overflow-y-auto max-h-[65vh]">
         <div
-          className="prose prose-sm max-w-none text-[13.5px] text-zinc-700 leading-relaxed [&_a]:text-blue-600 [&_a:hover]:underline [&_img]:max-w-full [&_img]:rounded-lg"
+          className="prose prose-sm max-w-none text-[13.5px] text-zinc-700 leading-relaxed [&_a]:text-blue-600 [&_a:hover]:underline [&_img]:max-w-full [&_img]:rounded"
           dangerouslySetInnerHTML={{ __html: mail.content || "" }}
         />
       </div>
@@ -231,7 +231,7 @@ function MailView({ mail, onBack }) {
 function NoSelection() {
   return (
     <div className="h-full flex flex-col items-center justify-center text-center py-16 px-6">
-      <div className="w-16 h-16 rounded-2xl bg-zinc-50 flex items-center justify-center mb-3 text-zinc-300">
+      <div className="w-16 h-16 rounded bg-zinc-50 flex items-center justify-center mb-3 text-zinc-300">
         <MdMailOutline size={32} />
       </div>
       <p className="text-[14px] font-semibold text-zinc-600">Select a mail</p>
@@ -245,7 +245,7 @@ function NoSelection() {
 function EmptyList() {
   return (
     <div className="py-14 px-6 text-center">
-      <div className="w-12 h-12 rounded-xl bg-zinc-50 flex items-center justify-center mx-auto mb-3 text-zinc-300">
+      <div className="w-12 h-12 rounded bg-zinc-50 flex items-center justify-center mx-auto mb-3 text-zinc-300">
         <MdMailOutline size={24} />
       </div>
       <p className="text-[13px] font-semibold text-zinc-600">No mails yet</p>
@@ -261,7 +261,7 @@ function ListSkeleton() {
     <ul className="divide-y divide-zinc-100">
       {[1, 2, 3, 4, 5].map((i) => (
         <li key={i} className="px-4 py-3 flex gap-3">
-          <div className="w-9 h-9 rounded-full bg-zinc-100 animate-pulse" />
+          <div className="w-9 h-9 rounded bg-zinc-100 animate-pulse" />
           <div className="flex-1 space-y-2">
             <div className="h-3 bg-zinc-100 rounded animate-pulse w-3/4" />
             <div className="h-2.5 bg-zinc-100 rounded animate-pulse w-1/3" />

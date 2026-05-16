@@ -39,7 +39,7 @@ export default function OurVision() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
           {visionRows.map((row, i) => (
             <div key={row.id}
-              className="bg-white rounded-xl border border-zinc-200 p-5 hover:shadow-md transition-all group">
+              className="bg-white rounded border border-zinc-200 p-5 hover:shadow-md transition-all group">
               <div className="flex items-center gap-2 mb-2">
                 <p className="text-sm font-bold text-zinc-800">{row.title}</p>
               </div>

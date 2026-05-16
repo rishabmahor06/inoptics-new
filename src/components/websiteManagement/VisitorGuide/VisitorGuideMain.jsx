@@ -37,7 +37,7 @@ export default function VisitorGuideMain() {
       {loadingMain ? (
         <LoadingSpinner />
       ) : (
-        <div className="bg-white border border-zinc-200 rounded-2xl p-5 sm:p-6 space-y-4">
+        <div className="bg-white border border-zinc-200 rounded p-5 sm:p-6 space-y-4">
           <Field label="Title">
             <WmInput value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Visitor Guide title..." />
           </Field>
@@ -50,7 +50,7 @@ export default function VisitorGuideMain() {
             <button
               onClick={handleSave}
               disabled={saving}
-              className="px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors disabled:opacity-60"
+              className="px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded transition-colors disabled:opacity-60"
             >
               {saving ? "Saving..." : "Save"}
             </button>

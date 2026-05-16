@@ -121,7 +121,7 @@ export default function Media() {
      
 
       {/* ── Upload panel ── */}
-      <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-5">
+      <div className="bg-white rounded border border-zinc-200 shadow-sm p-5">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
 
           {/* Left — drag & drop zone */}
@@ -130,7 +130,7 @@ export default function Media() {
             onDragLeave={onDragLeave}
             onDrop={onDrop}
             onClick={() => !file && inputRef.current?.click()}
-            className={`relative flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed transition-colors cursor-pointer select-none
+            className={`relative flex flex-col items-center justify-center gap-3 rounded border-2 border-dashed transition-colors cursor-pointer select-none
               ${dragging
                 ? 'border-blue-500 bg-blue-50'
                 : 'border-zinc-300 bg-zinc-50 hover:border-blue-400 hover:bg-blue-50/40'}`}
@@ -143,7 +143,7 @@ export default function Media() {
               className="hidden"
               onChange={onInputChange}
             />
-            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-colors
+            <div className={`w-14 h-14 rounded flex items-center justify-center transition-colors
               ${dragging ? 'bg-blue-600' : 'bg-blue-500'}`}>
               <MdCloudUpload size={30} className="text-white" />
             </div>
@@ -164,13 +164,13 @@ export default function Media() {
           </div>
 
           {/* Right — preview */}
-          <div className="flex flex-col rounded-xl border border-zinc-200 overflow-hidden bg-white">
+          <div className="flex flex-col rounded border border-zinc-200 overflow-hidden bg-white">
             {/* Preview header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-100">
               <p className="text-[13px] font-bold text-zinc-800">Preview</p>
               {preview && (
                 <button onClick={clearFile}
-                  className="w-7 h-7 rounded-lg hover:bg-zinc-100 flex items-center justify-center text-zinc-400 hover:text-zinc-700 transition-colors">
+                  className="w-7 h-7 rounded hover:bg-zinc-100 flex items-center justify-center text-zinc-400 hover:text-zinc-700 transition-colors">
                   <MdClose size={16} />
                 </button>
               )}
@@ -183,7 +183,7 @@ export default function Media() {
                   <img
                     src={preview}
                     alt="preview"
-                    className="w-28 h-24 object-cover rounded-xl border border-zinc-200 shrink-0"
+                    className="w-28 h-24 object-cover rounded border border-zinc-200 shrink-0"
                   />
                   <div className="min-w-0">
                     <p className="text-[13px] font-semibold text-zinc-800 break-all leading-tight">{file?.name}</p>
@@ -194,7 +194,7 @@ export default function Media() {
                   <button
                     onClick={handleUpload}
                     disabled={uploading}
-                    className="w-full py-2.5 rounded-xl text-[13px] font-bold text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-sm flex items-center justify-center gap-2 disabled:opacity-60"
+                    className="w-full py-2.5 rounded text-[13px] font-bold text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-sm flex items-center justify-center gap-2 disabled:opacity-60"
                   >
                     <MdCloudUpload size={16} />
                     {uploading ? 'Uploading...' : 'Upload Image'}
@@ -204,7 +204,7 @@ export default function Media() {
             ) : (
               <div className="flex-1 flex flex-col items-center justify-center gap-2 py-10 px-6 text-center"
                 style={{ minHeight: 170 }}>
-                <div className="w-12 h-12 rounded-2xl bg-zinc-100 flex items-center justify-center mb-1">
+                <div className="w-12 h-12 rounded bg-zinc-100 flex items-center justify-center mb-1">
                   <MdCloudUpload size={24} className="text-zinc-400" />
                 </div>
                 <p className="text-[12px] font-medium text-zinc-500">No image selected</p>
@@ -216,15 +216,15 @@ export default function Media() {
       </div>
 
       {/* ── Gallery ── */}
-      <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-5">
+      <div className="bg-white rounded border border-zinc-200 shadow-sm p-5">
         <div className="flex items-center justify-between mb-4">
           <p className="text-[14px] font-bold text-zinc-800">Uploaded Images</p>
           <div className="flex items-center gap-2">
-            <span className="text-[11px] font-semibold text-zinc-500 bg-zinc-100 border border-zinc-200 px-2.5 py-1 rounded-lg">
+            <span className="text-[11px] font-semibold text-zinc-500 bg-zinc-100 border border-zinc-200 px-2.5 py-1 rounded">
               {images.length} {images.length === 1 ? 'Image' : 'Images'}
             </span>
             <button onClick={fetchImages} disabled={loading}
-              className="w-8 h-8 rounded-lg border border-zinc-200 hover:bg-zinc-50 flex items-center justify-center text-zinc-500 transition-colors disabled:opacity-50">
+              className="w-8 h-8 rounded border border-zinc-200 hover:bg-zinc-50 flex items-center justify-center text-zinc-500 transition-colors disabled:opacity-50">
               <MdRefresh size={15} className={loading ? 'animate-spin' : ''} />
             </button>
           </div>
@@ -233,19 +233,19 @@ export default function Media() {
         {loading ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-4">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="rounded-xl border border-zinc-100 overflow-hidden">
+              <div key={i} className="rounded border border-zinc-100 overflow-hidden">
                 <div className="h-40 bg-zinc-100 animate-pulse" />
                 <div className="p-3 space-y-2">
                   <div className="h-3 bg-zinc-100 rounded animate-pulse" />
                   <div className="h-3 w-2/3 bg-zinc-100 rounded animate-pulse" />
-                  <div className="h-8 bg-zinc-100 rounded-lg animate-pulse mt-3" />
+                  <div className="h-8 bg-zinc-100 rounded animate-pulse mt-3" />
                 </div>
               </div>
             ))}
           </div>
         ) : images.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 gap-3">
-            <div className="w-14 h-14 rounded-2xl bg-zinc-100 flex items-center justify-center">
+            <div className="w-14 h-14 rounded bg-zinc-100 flex items-center justify-center">
               <MdCloudUpload size={28} className="text-zinc-300" />
             </div>
             <p className="text-[13px] font-medium text-zinc-400">No images uploaded yet</p>
@@ -255,7 +255,7 @@ export default function Media() {
           <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-4">
             {images.map((img) => (
               <div key={img.id}
-                className="rounded-xl border border-zinc-200 overflow-hidden hover:shadow-md hover:border-zinc-300 transition-all group">
+                className="rounded border border-zinc-200 overflow-hidden hover:shadow-md hover:border-zinc-300 transition-all group">
                 {/* Image */}
                 <div className="relative overflow-hidden bg-zinc-100" style={{ height: 160 }}>
                   <img

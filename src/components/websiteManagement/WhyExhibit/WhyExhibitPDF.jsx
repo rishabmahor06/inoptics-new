@@ -42,10 +42,10 @@ export default function WhyExhibitPDF() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
           {pdfs.map(row => (
             <div key={row.id}
-              className="flex items-center gap-3 bg-white rounded-xl border border-zinc-200 p-4 hover:shadow-md hover:border-red-200 transition-all group">
+              className="flex items-center gap-3 bg-white rounded border border-zinc-200 p-4 hover:shadow-md hover:border-red-200 transition-all group">
               <button
                 onClick={() => openPreview(row.pdf, row.title)}
-                className="w-10 h-10 rounded-lg bg-red-50 hover:bg-red-100 flex items-center justify-center shrink-0 transition-colors"
+                className="w-10 h-10 rounded bg-red-50 hover:bg-red-100 flex items-center justify-center shrink-0 transition-colors"
                 title="Preview"
               >
                 <MdPictureAsPdf className="text-red-500" size={22} />
@@ -110,7 +110,7 @@ export default function WhyExhibitPDF() {
           onClick={() => setPreviewUrl(null)}
         >
           <div
-            className="relative bg-white rounded-2xl shadow-2xl w-full max-w-5xl h-[88vh] flex flex-col overflow-hidden"
+            className="relative bg-white rounded shadow-2xl w-full max-w-5xl h-[88vh] flex flex-col overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}

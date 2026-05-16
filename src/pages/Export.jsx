@@ -202,7 +202,7 @@ ${labelData.map((d, i) => `
   /* ============== RENDER ============== */
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-4 sm:p-5 lg:p-6">
+    <div className="bg-white rounded shadow-sm p-4 sm:p-5 lg:p-6">
       {/* header */}
       <div className="flex items-center gap-3 mb-5">
         <div className="w-11 h-11 rounded bg-zinc-100 flex items-center justify-center">

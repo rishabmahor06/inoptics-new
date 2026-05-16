@@ -708,7 +708,7 @@ th,td{border:1px solid #000;padding:6px;text-align:center;}th{background:#f2f2f2
   return (
     <div className="space-y-4 p-3 sm:p-4 lg:p-5">
       {/* TOOLBAR */}
-      <div className="bg-white rounded-xl shadow-sm px-4 sm:px-5 py-3 sm:py-4 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+      <div className="bg-white rounded shadow-sm px-4 sm:px-5 py-3 sm:py-4 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
         <div className="flex items-center gap-2 flex-wrap">
           <button
             onClick={exportToExcel}
@@ -739,13 +739,13 @@ th,td{border:1px solid #000;padding:6px;text-align:center;}th{background:#f2f2f2
             placeholder="Search company..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full h-10 pl-9 pr-3 text-[16px] border border-zinc-200 rounded-xl bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full h-10 pl-9 pr-3 text-[16px] border border-zinc-200 rounded bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
       </div>
 
       {loading && (
-        <div className="bg-white rounded-xl border border-zinc-200 py-10 text-center text-zinc-500 text-base">
+        <div className="bg-white rounded border border-zinc-200 py-10 text-center text-zinc-500 text-base">
           Loading...
         </div>
       )}
@@ -753,7 +753,7 @@ th,td{border:1px solid #000;padding:6px;text-align:center;}th{background:#f2f2f2
       {/* ACCORDION LIST */}
       <div className="space-y-2">
         {!loading && filtered.length === 0 ? (
-          <div className="bg-white rounded-xl border border-zinc-200 py-16 text-center text-zinc-400 text-base">
+          <div className="bg-white rounded border border-zinc-200 py-16 text-center text-zinc-400 text-base">
             No companies found
           </div>
         ) : (
@@ -773,7 +773,7 @@ th,td{border:1px solid #000;padding:6px;text-align:center;}th{background:#f2f2f2
             return (
               <div
                 key={company}
-                className="bg-white border border-zinc-200 rounded-xl overflow-hidden"
+                className="bg-white border border-zinc-200 rounded overflow-hidden"
               >
                 {/* Header */}
                 <div
@@ -1103,19 +1103,19 @@ th,td{border:1px solid #000;padding:6px;text-align:center;}th{background:#f2f2f2
                                           setEditingRow(row);
                                           setShowEditModal(true);
                                         }}
-                                        className="p-1.5 text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-md"
+                                        className="p-1.5 text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded"
                                       >
                                         <MdEdit size={13} />
                                       </button>
                                       <button
                                         onClick={() => handleDelete(row)}
-                                        className="p-1.5 text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded-md"
+                                        className="p-1.5 text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded"
                                       >
                                         <MdDelete size={13} />
                                       </button>
                                       <button
                                         onClick={() => handleSendPowerMail(row)}
-                                        className="p-1.5 text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-md"
+                                        className="p-1.5 text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded"
                                       >
                                         <MdEmail size={13} />
                                       </button>
@@ -1234,7 +1234,7 @@ th,td{border:1px solid #000;padding:6px;text-align:center;}th{background:#f2f2f2
                                 )}
                                 <button
                                   onClick={() => openPaymentModal(company)}
-                                  className="px-3 py-1.5 text-[16px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-md"
+                                  className="px-3 py-1.5 text-[16px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded"
                                 >
                                   {payment ? "Update Payment" : "Add Payment"}
                                 </button>
@@ -1324,10 +1324,10 @@ th,td{border:1px solid #000;padding:6px;text-align:center;}th{background:#f2f2f2
               placeholder="Search exhibitor..."
               value={exhibitorSearch}
               onChange={(e) => setExhibitorSearch(e.target.value)}
-              className="w-full h-10 pl-9 pr-3 text-[15px] border border-zinc-200 rounded-lg bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full h-10 pl-9 pr-3 text-[15px] border border-zinc-200 rounded bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <div className="max-h-[55vh] overflow-y-auto border border-zinc-100 rounded-lg divide-y divide-zinc-100">
+          <div className="max-h-[55vh] overflow-y-auto border border-zinc-100 rounded divide-y divide-zinc-100">
             {exhibitorData
               .filter((ex) =>
                 ex.company_name
@@ -1355,7 +1355,7 @@ th,td{border:1px solid #000;padding:6px;text-align:center;}th{background:#f2f2f2
                       });
                       setShowAddPowerModal(true);
                     }}
-                    className="px-3 py-1 text-[15px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-md shrink-0"
+                    className="px-3 py-1 text-[15px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded shrink-0"
                   >
                     Select
                   </button>
@@ -1385,7 +1385,7 @@ th,td{border:1px solid #000;padding:6px;text-align:center;}th{background:#f2f2f2
           </Field>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
-            <div className="border border-zinc-200 rounded-xl p-4 space-y-2 bg-zinc-50">
+            <div className="border border-zinc-200 rounded p-4 space-y-2 bg-zinc-50">
               <h4 className="text-[15px] font-bold text-zinc-800">
                 Setup Days
               </h4>
@@ -1432,7 +1432,7 @@ th,td{border:1px solid #000;padding:6px;text-align:center;}th{background:#f2f2f2
               </div>
             </div>
 
-            <div className="border border-zinc-200 rounded-xl p-4 space-y-2 bg-zinc-50">
+            <div className="border border-zinc-200 rounded p-4 space-y-2 bg-zinc-50">
               <h4 className="text-[15px] font-bold text-zinc-800">
                 Exhibition Days
               </h4>
@@ -1502,7 +1502,7 @@ th,td{border:1px solid #000;padding:6px;text-align:center;}th{background:#f2f2f2
             <select
               value={paymentType}
               onChange={(e) => setPaymentType(e.target.value)}
-              className="w-full px-3 py-2 text-[15px] border border-zinc-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 text-[15px] border border-zinc-200 rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select Method</option>
               <option value="Cash">Cash</option>
@@ -1523,7 +1523,7 @@ th,td{border:1px solid #000;padding:6px;text-align:center;}th{background:#f2f2f2
               value={paymentRemark}
               onChange={(e) => setPaymentRemark(e.target.value)}
               rows={3}
-              className="w-full px-3 py-2 text-[15px] border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+              className="w-full px-3 py-2 text-[15px] border border-zinc-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
             />
           </Field>
         </ModalShell>
@@ -1538,7 +1538,7 @@ function ModalShell({ title, onClose, children, footer, wide }) {
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div
-        className={`bg-white rounded-xl shadow-xl w-full ${wide ? "max-w-3xl" : "max-w-md"} max-h-[92vh] flex flex-col overflow-hidden`}
+        className={`bg-white rounded shadow-xl w-full ${wide ? "max-w-3xl" : "max-w-md"} max-h-[92vh] flex flex-col overflow-hidden`}
       >
         <div className="px-5 py-3.5 border-b border-zinc-100 flex items-center justify-between shrink-0">
           <h3 className="text-[16px] font-bold text-zinc-800 truncate pr-3">
@@ -1546,7 +1546,7 @@ function ModalShell({ title, onClose, children, footer, wide }) {
           </h3>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-lg hover:bg-zinc-100 flex items-center justify-center text-zinc-400 hover:text-zinc-700 transition-colors shrink-0"
+            className="w-8 h-8 rounded hover:bg-zinc-100 flex items-center justify-center text-zinc-400 hover:text-zinc-700 transition-colors shrink-0"
           >
             <MdClose size={18} />
           </button>
@@ -1577,7 +1577,7 @@ function Input({ className = "", ...props }) {
   return (
     <input
       {...props}
-      className={`w-full px-3 py-2 text-[15px] border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 read-only:bg-zinc-50 read-only:text-zinc-500 ${className}`}
+      className={`w-full px-3 py-2 text-[15px] border border-zinc-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 read-only:bg-zinc-50 read-only:text-zinc-500 ${className}`}
     />
   );
 }
@@ -1600,7 +1600,7 @@ function BtnGhost({ onClick, children }) {
   return (
     <button
       onClick={onClick}
-      className="px-4 py-2 text-[15px] font-semibold bg-zinc-100 hover:bg-zinc-200 text-zinc-700 rounded-lg transition-colors"
+      className="px-4 py-2 text-[15px] font-semibold bg-zinc-100 hover:bg-zinc-200 text-zinc-700 rounded transition-colors"
     >
       {children}
     </button>
@@ -1611,7 +1611,7 @@ function BtnPrimary({ onClick, children }) {
   return (
     <button
       onClick={onClick}
-      className="px-4 py-2 text-[15px] font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+      className="px-4 py-2 text-[15px] font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors"
     >
       {children}
     </button>

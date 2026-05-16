@@ -75,7 +75,7 @@ export default function FasciaName() {
                   onChange={(e) => setFaciaName(e.target.value.toUpperCase())}
                   placeholder="ENTER FASCIA NAME"
                   required
-                  className="w-full px-3 py-2.5 text-[14px] font-semibold tracking-wide uppercase border border-zinc-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2.5 text-[14px] font-semibold tracking-wide uppercase border border-zinc-200 rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <p className="mt-1 text-[11px] text-zinc-400">
                   Will be displayed in uppercase on your stall fascia
@@ -86,7 +86,7 @@ export default function FasciaName() {
                 <button
                   type="submit"
                   disabled={saving || loading}
-                  className="inline-flex items-center gap-1.5 px-5 py-2 text-[13px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg disabled:opacity-60 transition-colors"
+                  className="inline-flex items-center gap-1.5 px-5 py-2 text-[13px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded disabled:opacity-60 transition-colors"
                 >
                   {saving ? "Submitting..." : "Submit"}
                 </button>
@@ -106,7 +106,7 @@ export default function FasciaName() {
           ) : (
             <Card title="Fascia Details" Icon={MdCheckCircle}>
               <div className="py-8 text-center">
-                <div className="w-14 h-14 rounded-2xl bg-zinc-50 flex items-center justify-center mx-auto mb-2 text-zinc-300">
+                <div className="w-14 h-14 rounded bg-zinc-50 flex items-center justify-center mx-auto mb-2 text-zinc-300">
                   <MdLabel size={26} />
                 </div>
                 <p className="text-[13px] text-zinc-400">
@@ -123,22 +123,22 @@ export default function FasciaName() {
 
 function FasciaPreviewCard({ data }) {
   return (
-    <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
+    <div className="bg-white rounded border border-zinc-200 shadow-sm overflow-hidden">
       <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-b border-zinc-100 bg-zinc-50/60">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+          <div className="w-7 h-7 rounded bg-emerald-50 text-emerald-600 flex items-center justify-center">
             <MdCheckCircle size={15} />
           </div>
           <h3 className="text-[13.5px] font-bold text-[#02062c]">Fascia Details</h3>
         </div>
-        <span className="inline-flex items-center gap-1 text-[10.5px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">
+        <span className="inline-flex items-center gap-1 text-[10.5px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
           <MdLock size={11} /> Saved
         </span>
       </div>
 
       {/* Fascia preview block — looks like the actual signage */}
       <div className="p-4 sm:p-5 space-y-3">
-        <div className="bg-linear-to-br from-blue-600 to-indigo-700 rounded-xl px-5 py-8 text-center shadow-inner">
+        <div className="bg-linear-to-br from-blue-600 to-indigo-700 rounded px-5 py-8 text-center shadow-inner">
           <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-blue-200 mb-2">
             Stall Fascia Preview
           </p>
@@ -160,7 +160,7 @@ function FasciaPreviewCard({ data }) {
 function Row({ Icon, label, value }) {
   return (
     <div className="flex items-start gap-2.5">
-      <div className="w-7 h-7 rounded-lg bg-zinc-50 text-zinc-500 flex items-center justify-center shrink-0">
+      <div className="w-7 h-7 rounded bg-zinc-50 text-zinc-500 flex items-center justify-center shrink-0">
         <Icon size={14} />
       </div>
       <div className="min-w-0 flex-1">
@@ -177,10 +177,10 @@ function Row({ Icon, label, value }) {
 
 function Card({ title, Icon, children }) {
   return (
-    <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
+    <div className="bg-white rounded border border-zinc-200 shadow-sm overflow-hidden">
       <div className="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-zinc-100 bg-zinc-50/60">
         {Icon && (
-          <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+          <div className="w-7 h-7 rounded bg-blue-50 text-blue-600 flex items-center justify-center">
             <Icon size={15} />
           </div>
         )}
@@ -203,7 +203,7 @@ function Field({ label, Icon, value, disabled }) {
         value={value || ""}
         disabled={disabled}
         readOnly={disabled}
-        className="w-full px-3 py-2 text-[13px] border border-zinc-200 rounded-lg bg-zinc-50 text-zinc-600 cursor-not-allowed focus:outline-none"
+        className="w-full px-3 py-2 text-[13px] border border-zinc-200 rounded bg-zinc-50 text-zinc-600 cursor-not-allowed focus:outline-none"
       />
     </div>
   );
@@ -212,7 +212,7 @@ function Field({ label, Icon, value, disabled }) {
 function Skel() {
   return (
     <div className="space-y-3">
-      <div className="h-24 bg-zinc-100 rounded-xl animate-pulse" />
+      <div className="h-24 bg-zinc-100 rounded animate-pulse" />
       <div className="h-3 w-3/4 bg-zinc-100 rounded animate-pulse" />
       <div className="h-3 w-1/2 bg-zinc-100 rounded animate-pulse" />
       <div className="h-3 w-2/3 bg-zinc-100 rounded animate-pulse" />

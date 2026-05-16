@@ -10,7 +10,7 @@ export const apiPostForm = (ep, fd) =>
 
 export function MasterTable({ headers, children, loading, empty }) {
   return (
-    <div className="overflow-x-auto rounded-xl border border-zinc-300">
+    <div className="overflow-x-auto rounded border border-zinc-300">
       <table className="w-full border-collapse">
         <thead>
           <tr>
@@ -65,12 +65,12 @@ export function MasterActions({ onEdit, onDelete }) {
 export function MasterModal({ title, onClose, onSave, saving, children }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg flex flex-col max-h-[90vh]">
+      <div className="bg-white rounded shadow-2xl w-full max-w-lg flex flex-col max-h-[90vh]">
         <div className="px-6 py-4 border-b border-zinc-200 shrink-0">
           <h3 className="text-[15px] font-bold text-zinc-900">{title}</h3>
         </div>
         <div className="px-6 py-5 overflow-y-auto flex-1">{children}</div>
-        <div className="flex justify-end gap-3 px-6 py-4 border-t border-zinc-200 bg-zinc-50 rounded-b-2xl shrink-0">
+        <div className="flex justify-end gap-3 px-6 py-4 border-t border-zinc-200 bg-zinc-50 rounded-b shrink-0">
           <button onClick={onClose} className="px-4 py-2 text-[14px] font-medium text-zinc-700 border border-zinc-300 rounded hover:bg-zinc-100 transition-colors">Cancel</button>
           <button onClick={onSave} disabled={saving}
             className="px-4 py-2 text-[14px] font-semibold text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors disabled:opacity-60">

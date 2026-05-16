@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import ExhibitorSidebar, { TABS } from "./ExhibitorSidebar";
 import ExhibitorTopbar from "./ExhibitorTopbar";
 
@@ -14,6 +15,7 @@ import FasciaName           from "./tabs/FasciaName";
 import Payment              from "./tabs/Payment";
 
 import { useMailboxStore } from "./store/useMailboxStore";
+import { useMandatoryFormsStore } from "./store/useMandatoryFormsStore";
 
 const COMPONENTS = {
   "dashboard":            Dashboard,
@@ -31,6 +33,24 @@ const COMPONENTS = {
 export default function ExhibitorPanel() {
   const [active, setActive] = useState(TABS[0].key);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const setViewStep = useMandatoryFormsStore((s) => s.setViewStep);
+
+  const handleTabChange = (key) => {
+    // Contractor Badges → redirect into Mandatory Forms step 3 only when a contractor is selected
+    if (key === "contractor-badges") {
+      const { workflowActive } = useMandatoryFormsStore.getState();
+      if (workflowActive) {
+        setActive("mandatory-forms");
+        setViewStep(3);
+        return;
+      }
+      toast.error("Please select a contractor first in Mandatory Forms");
+      setActive("mandatory-forms");
+      return;
+    }
+    setActive(key);
+  };
+
   const ActivePage = COMPONENTS[active] || Dashboard;
 
   const mails = useMailboxStore((s) => s.mails);
@@ -42,7 +62,7 @@ export default function ExhibitorPanel() {
     <div className="flex h-screen overflow-hidden bg-[#f0f0ef]">
       <ExhibitorSidebar
         active={active}
-        onChange={setActive}
+        onChange={handleTabChange}
         mobileOpen={mobileOpen}
         setMobileOpen={setMobileOpen}
       />

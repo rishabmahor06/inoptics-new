@@ -425,7 +425,7 @@ const ExtraFurniture = ({ exhibitorData = [] }) => {
   return (
     <div className="space-y-4 p-3 sm:p-4 lg:p-5">
       {/* TOOLBAR */}
-      <div className="bg-white rounded-xl shadow-sm px-4 sm:px-5 py-3 sm:py-4 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+      <div className="bg-white rounded shadow-sm px-4 sm:px-5 py-3 sm:py-4 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
         <div className="flex items-center gap-2 flex-wrap">
           <button
             onClick={exportFurnitureExcel}
@@ -457,12 +457,12 @@ const ExtraFurniture = ({ exhibitorData = [] }) => {
 
       {/* CONTENT */}
       {loadingCompanies ? (
-        <div className="bg-white rounded-xl border border-zinc-200 py-12 flex flex-col items-center gap-3 text-zinc-500">
+        <div className="bg-white rounded border border-zinc-200 py-12 flex flex-col items-center gap-3 text-zinc-500">
           <MdRefresh size={28} className="animate-spin text-blue-500" />
           <p className="text-base">Loading...</p>
         </div>
       ) : filteredCompanies.length === 0 ? (
-        <div className="bg-white rounded-xl border border-zinc-200 py-16 flex flex-col items-center gap-3 text-zinc-400">
+        <div className="bg-white rounded border border-zinc-200 py-16 flex flex-col items-center gap-3 text-zinc-400">
           <MdChair size={42} className="text-zinc-200" />
           <p className="text-base">No companies found</p>
         </div>
@@ -475,7 +475,7 @@ const ExtraFurniture = ({ exhibitorData = [] }) => {
             const isUnlReq = unlockStatus[key]?.unlock_requested === 1;
 
             return (
-              <div key={company.company_name} className="bg-white border border-zinc-200 rounded-xl overflow-hidden">
+              <div key={company.company_name} className="bg-white border border-zinc-200 rounded overflow-hidden">
                 {/* Header */}
                 <div
                   onClick={() => toggleAccordion(index, company)}
@@ -806,7 +806,7 @@ const ExtraFurniture = ({ exhibitorData = [] }) => {
 function ModalShell({ title, subtitle, onClose, children, footer, wide }) {
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className={`bg-white rounded-xl shadow-xl w-full ${wide ? "max-w-5xl" : "max-w-md"} max-h-[92vh] flex flex-col overflow-hidden`}>
+      <div className={`bg-white rounded shadow-xl w-full ${wide ? "max-w-5xl" : "max-w-md"} max-h-[92vh] flex flex-col overflow-hidden`}>
         <div className="px-5 py-3.5 border-b border-zinc-100 flex items-center justify-between shrink-0">
           <div className="min-w-0 pr-3">
             <h3 className="text-[15px] font-bold text-zinc-800 truncate">{title}</h3>

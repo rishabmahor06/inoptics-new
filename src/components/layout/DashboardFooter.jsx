@@ -39,7 +39,7 @@ export default function DashboardFooter({ variant = "exhibitor" }) {
           <div>
             <div className="flex items-center gap-2">
               <span
-                className={`inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.2em] px-2 py-1 rounded-md border ${accentClasses.pill}`}
+                className={`inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.2em] px-2 py-1 rounded border ${accentClasses.pill}`}
               >
                 <MdShield size={11} />
                 {isAdmin ? "Admin Console" : "Exhibitor Portal"}

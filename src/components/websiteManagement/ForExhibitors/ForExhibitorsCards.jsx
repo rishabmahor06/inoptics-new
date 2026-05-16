@@ -66,8 +66,8 @@ export default function ForExhibitorsCards() {
               <Td className="font-semibold text-zinc-800">{row.title}</Td>
               <TdHtml html={row.description} />
               <Td>
-                <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-semibold ${act ? 'bg-emerald-50 text-emerald-700' : 'bg-zinc-100 text-zinc-500'}`}>
-                  <span className={`w-1.5 h-1.5 rounded-full ${act ? 'bg-emerald-500' : 'bg-zinc-400'}`} />
+                <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-semibold ${act ? 'bg-emerald-50 text-emerald-700' : 'bg-zinc-100 text-zinc-500'}`}>
+                  <span className={`w-1.5 h-1.5 rounded ${act ? 'bg-emerald-500' : 'bg-zinc-400'}`} />
                   {act ? 'Active' : 'Inactive'}
                 </span>
               </Td>
@@ -93,7 +93,7 @@ export default function ForExhibitorsCards() {
               <button
                 type="button"
                 onClick={() => setActive((v) => !v)}
-                className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border text-[13px] font-semibold transition-colors ${
+                className={`inline-flex items-center gap-2 px-3 py-2 rounded border text-[13px] font-semibold transition-colors ${
                   active
                     ? 'bg-emerald-50 border-emerald-200 text-emerald-700 hover:bg-emerald-100'
                     : 'bg-zinc-50 border-zinc-200 text-zinc-500 hover:bg-zinc-100'

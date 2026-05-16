@@ -81,10 +81,10 @@ export default function HtmlContentSection({
         addLabel={`Add ${title}`}>
         {loading ? (
           <div className="space-y-3">
-            {[1,2].map(i => <div key={i} className="h-24 bg-zinc-100 rounded-lg animate-pulse" />)}
+            {[1,2].map(i => <div key={i} className="h-24 bg-zinc-100 rounded animate-pulse" />)}
           </div>
         ) : items.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 border-2 border-dashed border-zinc-200 rounded-xl text-center">
+          <div className="flex flex-col items-center justify-center py-12 border-2 border-dashed border-zinc-200 rounded text-center">
             <p className="text-sm text-zinc-400">No {title.toLowerCase()} added yet</p>
             <button onClick={() => setModal({ html: '' })}
               className="mt-2 text-sm font-semibold text-blue-600 hover:underline">+ Add first item</button>
@@ -96,7 +96,7 @@ export default function HtmlContentSection({
               const htmlContent = resolveContent(item, contentKey);
               const detectedKey = resolveKey(item, contentKey);
               return (
-                <div key={itemId ?? idx} className="bg-white rounded-lg border border-zinc-200 p-4 shadow-sm">
+                <div key={itemId ?? idx} className="bg-white rounded border border-zinc-200 p-4 shadow-sm">
                   <div className="flex items-start gap-3">
                     <div
                       className="flex-1 min-w-0 overflow-x-auto
@@ -116,11 +116,11 @@ export default function HtmlContentSection({
                     <div className="flex gap-1.5 shrink-0 mt-0.5">
                       <button
                         onClick={() => setModal({ id: itemId, html: htmlContent, _detectedKey: detectedKey })}
-                        className="p-1.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 transition-colors">
+                        className="p-1.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 transition-colors">
                         <MdEdit size={14} />
                       </button>
                       <button onClick={() => handleDelete(itemId)}
-                        className="p-1.5 rounded-md bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 transition-colors">
+                        className="p-1.5 rounded bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 transition-colors">
                         <MdDelete size={14} />
                       </button>
                     </div>

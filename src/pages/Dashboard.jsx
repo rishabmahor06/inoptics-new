@@ -24,7 +24,7 @@ const today = new Date().toLocaleDateString('en-IN', {
 /* ── Banner card ── */
 function BannerCard({ title, count, icon: Icon, bgImage, loading }) {
   return (
-    <div className="relative overflow-hidden rounded-2xl shadow-sm group cursor-pointer h-24 sm:h-28 lg:h-full">
+    <div className="relative overflow-hidden rounded shadow-sm group cursor-pointer h-24 sm:h-28 lg:h-full">
       <div
         className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
         style={{ backgroundImage: `url(${bgImage})` }}
@@ -32,11 +32,11 @@ function BannerCard({ title, count, icon: Icon, bgImage, loading }) {
       <div className="absolute inset-0" style={{ background: 'linear-gradient(160deg,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0.25) 100%)' }} />
       <div className="relative z-10 p-3 sm:p-4 h-full flex flex-col justify-between">
         <div className="flex items-start justify-between">
-          <div className="p-1.5 sm:p-2 rounded-xl bg-white/20 backdrop-blur-sm">
+          <div className="p-1.5 sm:p-2 rounded bg-white/20 backdrop-blur-sm">
             <Icon size={14} className="text-white sm:hidden" />
             <Icon size={18} className="text-white hidden sm:block" />
           </div>
-          <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest text-white/80 bg-white/15 px-1.5 py-0.5 rounded-full border border-white/20">
+          <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest text-white/80 bg-white/15 px-1.5 py-0.5 rounded border border-white/20">
             Live
           </span>
         </div>
@@ -55,8 +55,8 @@ function BannerCard({ title, count, icon: Icon, bgImage, loading }) {
 /* ── Stat card ── */
 function StatCard({ icon: Icon, label, value, color, loading }) {
   return (
-    <div className="bg-white rounded-xl border border-zinc-100 shadow-sm px-3 py-3 flex items-center gap-2.5 hover:shadow-md transition-shadow">
-      <div className="shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center" style={{ background: color + '18' }}>
+    <div className="bg-white rounded border border-zinc-100 shadow-sm px-3 py-3 flex items-center gap-2.5 hover:shadow-md transition-shadow">
+      <div className="shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded flex items-center justify-center" style={{ background: color + '18' }}>
         <Icon size={17} style={{ color }} className="sm:hidden" />
         <Icon size={20} style={{ color }} className="hidden sm:block" />
       </div>
@@ -90,11 +90,11 @@ function Badge({ text, color }) {
 /* ── Table card ── */
 function TableCard({ title, subtitle, icon: Icon, iconBg, iconColor, badge, headers, rows, loading, emptyMsg = 'No data' }) {
   return (
-    <div className="bg-white rounded-xl border border-zinc-100 shadow-sm flex flex-col overflow-hidden min-h-60 lg:min-h-0">
+    <div className="bg-white rounded border border-zinc-100 shadow-sm flex flex-col overflow-hidden min-h-60 lg:min-h-0">
       {/* Card header */}
       <div className="flex items-center justify-between px-4 py-3 shrink-0 border-b border-zinc-50">
         <div className="flex items-center gap-2 min-w-0">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style={{ background: iconBg }}>
+          <div className="w-7 h-7 rounded flex items-center justify-center shrink-0" style={{ background: iconBg }}>
             <Icon size={13} style={{ color: iconColor }} />
           </div>
           <div className="min-w-0">
@@ -210,7 +210,7 @@ export default function Dashboard() {
           <p className="text-[10px] sm:text-[11px] text-zinc-400 mt-0.5">{today}</p>
         </div>
         <button onClick={() => loadAll(true)} disabled={refreshing}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold text-zinc-600 bg-white border border-zinc-200 rounded-lg hover:bg-zinc-50 transition-colors shadow-sm disabled:opacity-60">
+          className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold text-zinc-600 bg-white border border-zinc-200 rounded hover:bg-zinc-50 transition-colors shadow-sm disabled:opacity-60">
           <MdRefresh size={13} className={refreshing ? 'animate-spin' : ''} />
           <span className="hidden sm:inline">{refreshing ? 'Refreshing...' : 'Refresh'}</span>
         </button>

@@ -178,49 +178,9 @@ export default function AppointedContractor() {
       <div className="space-y-4">
         
 
-        <section className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm sm:p-5">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2">
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-50 text-amber-600">
-                  <MdInfoOutline size={18} />
-                </div>
-                <div>
-                  <h4 className="text-[15px] font-bold text-zinc-900">Contractor Instructions</h4>
-                  <p className="text-[12px] text-zinc-500">Choose a contractor and complete the booth design step</p>
-                </div>
-              </div>
+        
 
-              <div className="mt-4 grid grid-cols-1 gap-2 text-[13px] text-zinc-600">
-                {INSTRUCTIONS.map((item, index) => (
-                  <div key={item} className="flex gap-3 rounded-lg bg-zinc-50 px-3 py-2.5">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white text-[11px] font-bold text-zinc-700 ring-1 ring-zinc-200">
-                      {index + 1}
-                    </span>
-                    <p>{item}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="w-full rounded-xl border border-dashed border-zinc-300 bg-zinc-50 p-4 lg:max-w-xs">
-              <p className="text-[14px] font-semibold text-zinc-900">Your contractor not listed?</p>
-              <p className="mt-1 text-[12px] leading-5 text-zinc-500">
-                Open the registration form modal and send the contractor form directly from here.
-              </p>
-              <button
-                type="button"
-                onClick={() => setShowRegistrationModal(true)}
-                className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded bg-zinc-900 px-4 text-[13px] font-semibold text-white transition hover:bg-zinc-800"
-              >
-                <MdEmail size={16} />
-                Open Registration Form
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <section className="rounded-xl border border-zinc-200 bg-white shadow-sm">
+        <section className="rounded border border-zinc-200 bg-white shadow-sm">
           <div className="flex flex-col gap-3 border-b border-zinc-100 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
             <div>
               <h4 className="text-[15px] font-bold text-zinc-900">Available Contractors</h4>
@@ -234,7 +194,7 @@ export default function AppointedContractor() {
                 placeholder="Search contractor..."
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
-                className="h-10 w-full rounded-lg border border-zinc-200 bg-zinc-50 pl-9 pr-3 text-[13px] text-zinc-900 outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                className="h-10 w-full rounded border border-zinc-200 bg-zinc-50 pl-9 pr-3 text-[13px] text-zinc-900 outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100"
               />
             </div>
           </div>
@@ -245,9 +205,9 @@ export default function AppointedContractor() {
             <div className="px-4 py-12 text-center text-[14px] text-zinc-500">No contractors found</div>
           ) : (
             <>
-              <div className="hidden overflow-x-auto md:block">
+              <div className="hidden md:block overflow-auto max-h-[60vh]">
                 <table className="w-full min-w-[54rem]">
-                  <thead className="bg-zinc-50">
+                  <thead className="bg-zinc-50 sticky top-0 z-10">
                     <tr>
                       {["#", "Name", "Company", "City", "Contact", "Email", "Action"].map((heading) => (
                         <th
@@ -279,7 +239,7 @@ export default function AppointedContractor() {
                                 type="button"
                                 onClick={() => unselectContractor(ex.company_name)}
                                 disabled={unselecting}
-                                className="inline-flex h-9 items-center justify-center rounded-lg border border-red-200 bg-red-50 px-3 text-[12px] font-semibold text-red-700 transition hover:bg-red-100 disabled:opacity-60"
+                                className="inline-flex h-9 items-center justify-center rounded border border-red-200 bg-red-50 px-3 text-[12px] font-semibold text-red-700 transition hover:bg-red-100 disabled:opacity-60"
                               >
                                 {unselecting ? "Removing..." : "Unselect"}
                               </button>
@@ -301,7 +261,7 @@ export default function AppointedContractor() {
                 </table>
               </div>
 
-              <div className="divide-y divide-zinc-100 md:hidden">
+              <div className="divide-y divide-zinc-100 md:hidden max-h-[60vh] overflow-y-auto">
                 {filteredContractors.map((contractor, index) => {
                   const isSelected = String(selectedContractorId) === String(contractor.id);
                   const hasSelection = !!selectedContractorId;
@@ -332,7 +292,7 @@ export default function AppointedContractor() {
                           type="button"
                           onClick={() => unselectContractor(ex.company_name)}
                           disabled={unselecting}
-                          className="inline-flex h-10 w-full items-center justify-center rounded-lg border border-red-200 bg-red-50 px-4 text-[13px] font-semibold text-red-700 transition hover:bg-red-100 disabled:opacity-60"
+                          className="inline-flex h-10 w-full items-center justify-center rounded border border-red-200 bg-red-50 px-4 text-[13px] font-semibold text-red-700 transition hover:bg-red-100 disabled:opacity-60"
                         >
                           {unselecting ? "Removing..." : "Unselect Contractor"}
                         </button>
@@ -341,7 +301,7 @@ export default function AppointedContractor() {
                           type="button"
                           onClick={() => selectContractor(contractor.id, ex)}
                           disabled={selecting || hasSelection}
-                          className="inline-flex h-10 w-full items-center justify-center rounded-lg bg-emerald-600 px-4 text-[13px] font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-zinc-200 disabled:text-zinc-500"
+                          className="inline-flex h-10 w-full items-center justify-center rounded bg-emerald-600 px-4 text-[13px] font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-zinc-200 disabled:text-zinc-500"
                         >
                           {selecting ? "Selecting..." : "Select Contractor"}
                         </button>
@@ -356,130 +316,55 @@ export default function AppointedContractor() {
       </div>
 
       <aside className="space-y-4">
-        <section className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm sm:p-5">
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <h4 className="text-[15px] font-bold text-zinc-900">Selected Contractor</h4>
-              <p className="text-[12px] text-zinc-500">Current appointed contractor for this exhibitor</p>
+        <section className="rounded border border-zinc-200 bg-white p-4 shadow-sm sm:p-5">
+          <div className="flex items-start gap-3 mb-4">
+            <div className="w-9 h-9 rounded border-2 border-amber-300 bg-amber-50 flex items-center justify-center shrink-0">
+              <MdInfoOutline size={18} className="text-amber-600" />
             </div>
-            <StatusPill label={selectionStatusLabel} tone={selectedContractor ? "emerald" : "zinc"} />
+            <div>
+              <h4 className="text-[15px] font-bold text-zinc-900">Contractor Instructions</h4>
+              <p className="text-[12px] text-amber-700 mt-0.5">
+                Choose a contractor and complete the booth design step
+              </p>
+            </div>
           </div>
 
-          {selectedContractor ? (
-            <div className="mt-4 space-y-3 rounded-lg bg-zinc-50 p-4">
-              <InfoLine icon={<MdPerson size={15} />} label={selectedContractor.name || "—"} strong />
-              <InfoLine icon={<MdBusiness size={15} />} label={selectedContractor.company_name || "—"} />
-              <InfoLine icon={<MdLocationOn size={15} />} label={selectedContractor.city || "—"} />
-              <InfoLine
-                icon={<MdPhone size={15} />}
-                label={
-                  selectedContractor.contact_numbers ||
-                  [selectedContractor.mobile_numbers, selectedContractor.phone_numbers].filter(Boolean).join(", ") ||
-                  "—"
-                }
-              />
-              <InfoLine icon={<MdEmail size={15} />} label={selectedContractor.email || "—"} />
-
-              <div className="grid grid-cols-1 gap-2 pt-1">
-                <SidebarButton
-                  onClick={() => setShowInstructionsModal(true)}
-                  className="bg-zinc-900 text-white hover:bg-zinc-800"
-                >
-                  View Instructions
-                </SidebarButton>
-                <SidebarButton
-                  onClick={() => sendRegistrationMail(selectedContractor.email)}
-                  disabled={sendingMail || !selectedContractor.email}
-                  className="bg-blue-600 text-white hover:bg-blue-700"
-                >
-                  {sendingMail ? "Sending..." : "Send Form to Contractor"}
-                </SidebarButton>
-              </div>
-            </div>
-          ) : (
-            <div className="mt-4 rounded-lg border border-dashed border-zinc-300 bg-zinc-50 px-4 py-8 text-center text-[13px] text-zinc-500">
-              Select one contractor from the list to continue with booth design upload.
-            </div>
-          )}
+          <ul className="space-y-2">
+            {[
+              "All contractors must be registered before the deadline.",
+              "ID badges must be collected before exhibition day.",
+              "Ensure proper documentation is uploaded in the portal.",
+              "Contractor undertaking form is mandatory.",
+              "Follow the venue safety and conduct guidelines strictly.",
+            ].map((line, i) => (
+              <li
+                key={i}
+                className="flex items-center gap-3 px-3 py-2.5 rounded bg-zinc-50 border border-zinc-100"
+              >
+                <span className="w-6 h-6 rounded bg-white border border-zinc-200 flex items-center justify-center text-[11px] font-bold text-zinc-500 shrink-0">
+                  {i + 1}
+                </span>
+                <span className="text-[13px] text-zinc-700">{line}</span>
+              </li>
+            ))}
+          </ul>
         </section>
 
-        <section className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm sm:p-5">
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <h4 className="text-[15px] font-bold text-zinc-900">Booth Design</h4>
-              <p className="text-[12px] text-zinc-500">Upload design file for review and approval</p>
-            </div>
-            <StatusPill label={boothStatusLabel} tone={boothStatusTone} />
-          </div>
-
-          <div className="mt-4 space-y-2 text-[12px] leading-5 text-zinc-600">
-            {BOOTH_NOTES.map((item) => (
-              <p key={item}>{item}</p>
-            ))}
-          </div>
-
-          {boothRejectReason && (
-            <div className="mt-4 rounded-lg border border-red-200 bg-red-50 px-3 py-3 text-[12px] text-red-700">
-              <div className="flex items-start gap-2">
-                <MdWarningAmber size={17} className="mt-0.5 shrink-0" />
-                <div>
-                  <p className="font-semibold">Rejection Reason</p>
-                  <p className="mt-1">{boothRejectReason}</p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {boothFileUrl && (
-            <a
-              href={boothFileUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-1 rounded-lg bg-blue-50 px-3 py-2 text-[12px] font-semibold text-blue-700 ring-1 ring-blue-200 transition hover:bg-blue-100"
-            >
-              <MdOpenInNew size={15} />
-              View Current Booth File
-            </a>
-          )}
-
-          <div className="mt-4">
-            <label className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-dashed border-zinc-300 bg-zinc-50 px-4 py-5 text-center transition hover:border-blue-300 hover:bg-blue-50">
-              <MdUploadFile size={20} className="text-zinc-400" />
-              <div>
-                <p className="text-[13px] font-semibold text-zinc-800">
-                  {boothDesignFile ? boothDesignFile.name : "Choose Booth Design File"}
-                </p>
-                <p className="mt-1 text-[11px] text-zinc-500">
-                  {boothDesignFile ? formatFileSize(boothDesignFile.size) : "JPG, PNG or PDF up to 5MB"}
-                </p>
-              </div>
-              <input
-                type="file"
-                accept=".jpg,.jpeg,.png,.pdf"
-                onChange={handleBoothFileChange}
-                disabled={!selectedContractor}
-                className="hidden"
-              />
-            </label>
-          </div>
-
-          <div className="mt-4 grid grid-cols-1 gap-2">
-            <SidebarButton
-              onClick={() => uploadBoothDesign(ex)}
-              disabled={uploadingBooth || !selectedContractor || !boothDesignFile}
-              className="bg-emerald-600 text-white hover:bg-emerald-700"
-            >
-              {uploadingBooth ? "Uploading..." : "Upload Booth Design"}
-            </SidebarButton>
-            {boothDesignFile && (
-              <SidebarButton
-                onClick={() => setBoothDesignFile(null)}
-                className="bg-zinc-100 text-zinc-700 hover:bg-zinc-200"
-              >
-                Remove Selected File
-              </SidebarButton>
-            )}
-          </div>
+        <section className="rounded border-2 border-dashed border-amber-200 bg-amber-50/40 p-4 sm:p-5">
+          <h4 className="text-[14px] font-bold text-zinc-900">
+            Your contractor not listed?
+          </h4>
+          <p className="text-[12px] text-amber-700 mt-1.5 leading-relaxed">
+            Open the registration form modal and send the contractor form
+            directly from here.
+          </p>
+          <button
+            type="button"
+            onClick={() => setShowRegistrationModal(true)}
+            className="mt-4 w-full h-11 bg-zinc-900 hover:bg-zinc-800 text-white text-[13px] font-semibold rounded flex items-center justify-center gap-2 transition-colors"
+          >
+            <MdEmail size={16} /> Open Registration Form
+          </button>
         </section>
       </aside>
 
@@ -499,7 +384,7 @@ export default function AppointedContractor() {
               placeholder="Enter contractor email"
               value={contractorEmail}
               onChange={(event) => setContractorEmail(event.target.value)}
-              className="h-11 w-full rounded-lg border border-zinc-200 bg-white px-3 text-[14px] text-zinc-900 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+              className="h-11 w-full rounded border border-zinc-200 bg-white px-3 text-[14px] text-zinc-900 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
             />
           </div>
 
@@ -533,7 +418,7 @@ export default function AppointedContractor() {
       {showInstructionsModal && (
         <ModalShell onClose={() => setShowInstructionsModal(false)} title="Mandatory Required Information" size="lg">
           <div className="space-y-4">
-            <div className="rounded-xl border border-zinc-200 bg-zinc-50 p-4">
+            <div className="rounded border border-zinc-200 bg-zinc-50 p-4">
               <p className="text-[14px] font-semibold text-zinc-900">Please follow carefully</p>
               <div className="mt-3 space-y-2 text-[13px] leading-6 text-zinc-600">
                 <p>1. Send the undertaking and registration form to the selected contractor.</p>
@@ -547,7 +432,7 @@ export default function AppointedContractor() {
             </div>
 
             {selectedContractor && (
-              <div className="rounded-xl border border-zinc-200 bg-white p-4">
+              <div className="rounded border border-zinc-200 bg-white p-4">
                 <p className="text-[14px] font-semibold text-zinc-900">Selected Contractor Details</p>
                 <div className="mt-3 grid grid-cols-1 gap-2 text-[13px] text-zinc-600">
                   <InfoLine icon={<MdPerson size={15} />} label={selectedContractor.name || "—"} strong />
@@ -565,7 +450,7 @@ export default function AppointedContractor() {
                   href={registrationFormUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-zinc-200 bg-white px-4 text-[13px] font-semibold text-zinc-700 transition hover:bg-zinc-100"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded border border-zinc-200 bg-white px-4 text-[13px] font-semibold text-zinc-700 transition hover:bg-zinc-100"
                 >
                   <MdOpenInNew size={16} />
                   View Form
@@ -575,7 +460,7 @@ export default function AppointedContractor() {
                 type="button"
                 onClick={() => sendRegistrationMail(selectedContractor?.email || contractorEmail)}
                 disabled={sendingMail}
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 text-[13px] font-semibold text-white transition hover:bg-blue-700 disabled:opacity-60"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded bg-blue-600 px-4 text-[13px] font-semibold text-white transition hover:bg-blue-700 disabled:opacity-60"
               >
                 <MdEmail size={16} />
                 {sendingMail ? "Sending..." : "Send Mail"}
@@ -595,7 +480,7 @@ function ModalShell({ children, onClose, title, size = "md" }) {
       onClick={onClose}
     >
       <div
-        className={`w-full rounded-2xl bg-white shadow-xl ${
+        className={`w-full rounded bg-white shadow-xl ${
           size === "lg" ? "max-w-3xl" : "max-w-xl"
         }`}
         onClick={(event) => event.stopPropagation()}
@@ -605,7 +490,7 @@ function ModalShell({ children, onClose, title, size = "md" }) {
           <button
             type="button"
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-zinc-400 transition hover:bg-zinc-100 hover:text-zinc-700"
+            className="flex h-8 w-8 items-center justify-center rounded text-zinc-400 transition hover:bg-zinc-100 hover:text-zinc-700"
           >
             <MdClose size={18} />
           </button>
@@ -618,7 +503,7 @@ function ModalShell({ children, onClose, title, size = "md" }) {
 
 function MailPreviewCard() {
   return (
-    <div className="mt-4 rounded-xl border border-zinc-200 bg-zinc-50 p-4">
+    <div className="mt-4 rounded border border-zinc-200 bg-zinc-50 p-4">
       <p className="text-[14px] font-semibold text-zinc-900">Mail Preview</p>
       <div className="mt-3 space-y-2 text-[13px] text-zinc-600">
         <p>
@@ -641,7 +526,7 @@ function SidebarButton({ onClick, disabled, className, children }) {
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={`inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg px-4 text-[13px] font-semibold transition disabled:cursor-not-allowed disabled:opacity-60 ${className}`}
+      className={`inline-flex h-10 w-full items-center justify-center gap-2 rounded px-4 text-[13px] font-semibold transition disabled:cursor-not-allowed disabled:opacity-60 ${className}`}
     >
       {children}
     </button>
@@ -659,7 +544,7 @@ function InfoLine({ icon, label, strong = false }) {
 
 function MiniStat({ label, value }) {
   return (
-    <div className="rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2.5">
+    <div className="rounded border border-zinc-200 bg-zinc-50 px-3 py-2.5">
       <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-500">{label}</p>
       <p className="mt-1 text-[14px] font-bold text-zinc-900">{value}</p>
     </div>
@@ -676,7 +561,7 @@ function StatusPill({ label, tone }) {
   };
 
   return (
-    <span className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-[11px] font-semibold ${toneMap[tone] || toneMap.zinc}`}>
+    <span className={`inline-flex items-center gap-1 rounded px-3 py-1 text-[11px] font-semibold ${toneMap[tone] || toneMap.zinc}`}>
       {tone === "emerald" && <MdCheckCircle size={13} />}
       {label}
     </span>

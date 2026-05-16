@@ -53,10 +53,10 @@ async function fetchSingle(ep) {
 function Modal({ title, onClose, children, wide = false }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-      <div className={`bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden w-full ${wide ? 'max-w-5xl' : 'max-w-2xl'}`} style={{ maxHeight: '92vh' }}>
+      <div className={`bg-white rounded shadow-2xl flex flex-col overflow-hidden w-full ${wide ? 'max-w-5xl' : 'max-w-2xl'}`} style={{ maxHeight: '92vh' }}>
         <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-100 shrink-0">
           <p className="text-sm font-bold text-zinc-800">{title}</p>
-          <button onClick={onClose} className="w-8 h-8 rounded-lg hover:bg-zinc-100 flex items-center justify-center text-zinc-400 hover:text-zinc-700">
+          <button onClick={onClose} className="w-8 h-8 rounded hover:bg-zinc-100 flex items-center justify-center text-zinc-400 hover:text-zinc-700">
             <MdClose size={18} />
           </button>
         </div>
@@ -171,13 +171,13 @@ function PhonePreview({ lines }) {
 /* ─── Instructions Box ────────────────────────────────── */
 function InstructionsBox({ title, htmlContent, onAdd, onEdit, onDelete }) {
   return (
-    <div className="bg-zinc-50 rounded-lg border border-zinc-200 p-4">
+    <div className="bg-zinc-50 rounded border border-zinc-200 p-4">
       <div className="flex items-center justify-between mb-3">
         <p className="text-sm font-bold text-zinc-800">{title}</p>
         <div className="flex gap-1.5">
           {!htmlContent ? (
             <button onClick={onAdd}
-              className="flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100">
+              className="flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100">
               <MdAdd size={13} /> Add
             </button>
           ) : (
@@ -206,7 +206,7 @@ const PLAN_COLS = [
 
 function PlansTable({ plans, loading, onEdit, onDelete, selectedId, onSelect }) {
   return (
-    <div className="overflow-x-auto rounded-lg border border-zinc-200">
+    <div className="overflow-x-auto rounded border border-zinc-200">
       <table className="w-full">
         <thead className="bg-zinc-800 text-white">
           <tr>
@@ -273,17 +273,17 @@ function PlanSlide({ plan, msgType, onClose }) {
   };
 
   return (
-    <div className="rounded-xl border border-zinc-200 overflow-hidden">
+    <div className="rounded border border-zinc-200 overflow-hidden">
       <div className="flex items-center justify-between px-5 py-3 bg-zinc-800">
         <p className="text-sm font-bold text-white">Selected Plan: {plan.plan_name}</p>
         <button onClick={onClose}
-          className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-white/20 text-white/70 hover:text-white transition-colors">
+          className="w-7 h-7 flex items-center justify-center rounded hover:bg-white/20 text-white/70 hover:text-white transition-colors">
           <MdClose size={15} />
         </button>
       </div>
       <div className="p-5 bg-zinc-50 grid grid-cols-1 lg:grid-cols-2 gap-5">
         <div className="space-y-4">
-          <div className="bg-white rounded-lg border border-zinc-200 p-4">
+          <div className="bg-white rounded border border-zinc-200 p-4">
             <p className="text-sm font-bold text-zinc-700 mb-2.5">Plan Details</p>
             <div className="space-y-1.5">
               {[['Plan', plan.plan_name], ['Frequency', plan.delivery_frequency], ['Description', plan.description], ['Price', `₹${price.toFixed(2)}`]].map(([k, v]) => (
@@ -305,12 +305,12 @@ function PlanSlide({ plan, msgType, onClose }) {
             )}
           </div>
           <button onClick={handleSave} disabled={saving}
-            className="px-5 py-2 text-sm font-semibold text-white bg-zinc-800 rounded-md hover:bg-zinc-700 transition-colors disabled:opacity-60">
+            className="px-5 py-2 text-sm font-semibold text-white bg-zinc-800 rounded hover:bg-zinc-700 transition-colors disabled:opacity-60">
             {saving ? 'Saving...' : 'Save Message'}
           </button>
         </div>
         <div className="space-y-4">
-          <div className="bg-white rounded-lg border border-zinc-200 p-4">
+          <div className="bg-white rounded border border-zinc-200 p-4">
             <p className="text-sm font-bold text-zinc-700 mb-3">Particulars</p>
             {msgType === 'SMS' && (
               <p className="text-xs text-zinc-400 italic mb-3">* Messages over 160 characters are charged as multiple messages.</p>
@@ -326,7 +326,7 @@ function PlanSlide({ plan, msgType, onClose }) {
               <div className="flex justify-between font-bold text-base"><span>GRAND TOTAL</span><span>₹{total.toFixed(2)}</span></div>
             </div>
           </div>
-          <div className="bg-white rounded-lg border border-zinc-200 p-4">
+          <div className="bg-white rounded border border-zinc-200 p-4">
             <p className="text-sm font-bold text-zinc-700 mb-3">Company Info</p>
             <div className="space-y-1.5">
               {[['Company', 'ABC Exhibitors Pvt. Ltd.'], ['Stall No', 'A-101'], ['Category', 'Bare Space A++'], ['Area', '18.00 sqm']].map(([k, v]) => (
@@ -346,7 +346,7 @@ function PlanSlide({ plan, msgType, onClose }) {
 /* ─── HOARDINGS ───────────────────────────────────────── */
 function HoardingsSection() {
   return (
-    <div className="py-20 text-center border-2 border-dashed border-zinc-200 rounded-xl">
+    <div className="py-20 text-center border-2 border-dashed border-zinc-200 rounded">
       <MdCampaign size={44} className="text-zinc-300 mx-auto mb-3" />
       <p className="text-sm font-semibold text-zinc-400">Hoardings</p>
       <p className="text-xs text-zinc-300 mt-1">Content coming soon</p>
@@ -413,7 +413,7 @@ function VideoWallsSection() {
     <>
       <div className="grid grid-cols-1 lg:grid-cols-[35%_1fr] gap-5">
         <div className="space-y-4">
-          <div className="rounded-xl overflow-hidden border border-zinc-200 bg-black aspect-video">
+          <div className="rounded overflow-hidden border border-zinc-200 bg-black aspect-video">
             <iframe className="w-full h-full"
               src="https://www.youtube.com/embed/udqRmfMC_0A"
               title="Promotional Video"
@@ -421,7 +421,7 @@ function VideoWallsSection() {
               allowFullScreen />
           </div>
           <div
-            className="border-2 border-dashed border-zinc-300 rounded-xl p-6 text-center cursor-pointer hover:border-blue-400 hover:bg-blue-50/30 transition-colors"
+            className="border-2 border-dashed border-zinc-300 rounded p-6 text-center cursor-pointer hover:border-blue-400 hover:bg-blue-50/30 transition-colors"
             onClick={() => fileRef.current?.click()}>
             <MdVideoLibrary size={32} className="text-zinc-400 mx-auto mb-2" />
             {videoFile
@@ -436,7 +436,7 @@ function VideoWallsSection() {
           </div>
           {videoFile && (
             <button onClick={handleUpload} disabled={uploading}
-              className="w-full flex items-center justify-center gap-2 py-2 text-sm font-semibold text-white bg-zinc-800 rounded-md hover:bg-zinc-700 transition-colors disabled:opacity-60">
+              className="w-full flex items-center justify-center gap-2 py-2 text-sm font-semibold text-white bg-zinc-800 rounded hover:bg-zinc-700 transition-colors disabled:opacity-60">
               <MdUpload size={16} /> {uploading ? 'Uploading...' : 'Upload Video'}
             </button>
           )}
@@ -687,7 +687,7 @@ export default function PromotesBrands() {
 
   return (
     <div className="p-2 lg:p-3">
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+      <div className="bg-white rounded shadow-sm overflow-hidden">
         {/* Tab bar */}
         <div className="flex overflow-x-auto border-b border-zinc-100 [scrollbar-width:none]">
           {SUB_TABS.map(t => {
@@ -699,7 +699,7 @@ export default function PromotesBrands() {
                 className={`relative px-5 py-3.5 text-sm whitespace-nowrap transition-colors cursor-pointer shrink-0 font-medium
                   ${active ? 'font-bold text-zinc-900' : 'text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50'}`}>
                 {t.label}
-                <span className={`absolute bottom-0 left-0 right-0 h-0.5 rounded-full transition-all duration-200 ${active ? 'bg-zinc-900' : 'bg-transparent'}`} />
+                <span className={`absolute bottom-0 left-0 right-0 h-0.5 rounded transition-all duration-200 ${active ? 'bg-zinc-900' : 'bg-transparent'}`} />
               </button>
             );
           })}

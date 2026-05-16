@@ -89,7 +89,7 @@ export default function FormsHistoryTab() {
   return (
     <div className="space-y-4 p-3 sm:p-4 lg:p-5">
       {/* Toolbar */}
-      <div className="bg-white rounded-xl shadow-sm px-4 sm:px-5 py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div className="bg-white rounded shadow-sm px-4 sm:px-5 py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <h3 className="text-[15px] font-bold text-zinc-900">Contractor Forms History</h3>
         <div className="relative w-full sm:w-72">
           <MdSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" size={18} />
@@ -98,18 +98,18 @@ export default function FormsHistoryTab() {
             placeholder="Search company..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full h-10 pl-9 pr-3 text-[14px] border border-zinc-200 rounded-xl bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full h-10 pl-9 pr-3 text-[14px] border border-zinc-200 rounded bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
       </div>
 
       {/* List */}
       {loading ? (
-        <div className="bg-white rounded-xl border border-zinc-200 py-10 text-center text-zinc-500 text-base">
+        <div className="bg-white rounded border border-zinc-200 py-10 text-center text-zinc-500 text-base">
           Loading history...
         </div>
       ) : filtered.length === 0 ? (
-        <div className="bg-white rounded-xl border border-zinc-200 py-16 flex flex-col items-center gap-3 text-zinc-400">
+        <div className="bg-white rounded border border-zinc-200 py-16 flex flex-col items-center gap-3 text-zinc-400">
           <MdHistory size={42} className="text-zinc-200" />
           <p className="text-base">No forms history found</p>
         </div>
@@ -119,7 +119,7 @@ export default function FormsHistoryTab() {
             const isOpen = !!openCompany[company];
             const items  = grouped[company] || [];
             return (
-              <div key={company} className="bg-white border border-zinc-200 rounded-xl overflow-hidden">
+              <div key={company} className="bg-white border border-zinc-200 rounded overflow-hidden">
                 <div
                   onClick={() => toggleCompany(company)}
                   className="flex items-center justify-between gap-2 px-4 sm:px-5 py-3 hover:bg-zinc-50 transition-colors cursor-pointer"
@@ -169,7 +169,7 @@ export default function FormsHistoryTab() {
                                       href={fileUrl}
                                       target="_blank"
                                       rel="noopener noreferrer"
-                                      className="inline-flex items-center gap-1 px-2.5 py-1 text-[13px] font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-md transition-colors"
+                                      className="inline-flex items-center gap-1 px-2.5 py-1 text-[13px] font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded transition-colors"
                                     >
                                       <MdVisibility size={14} /> View
                                     </a>
@@ -178,7 +178,7 @@ export default function FormsHistoryTab() {
                                   )}
                                 </td>
                                 <td className="px-4 py-3">
-                                  <span className={`inline-flex px-2.5 py-1 text-[12px] font-semibold rounded-full capitalize ${
+                                  <span className={`inline-flex px-2.5 py-1 text-[12px] font-semibold rounded capitalize ${
                                     isApprov ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
                                     : isReject ? "bg-red-50 text-red-700 border border-red-200"
                                     : "bg-zinc-100 text-zinc-600 border border-zinc-200"
@@ -191,7 +191,7 @@ export default function FormsHistoryTab() {
                                 <td className="px-4 py-3">
                                   <button
                                     onClick={() => handleDelete(r.id)}
-                                    className="p-1.5 text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded-md transition-colors"
+                                    className="p-1.5 text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded transition-colors"
                                     title="Delete"
                                   >
                                     <MdDelete size={15} />
@@ -222,7 +222,7 @@ export default function FormsHistoryTab() {
                                 <p className="text-[12px] text-zinc-400 font-mono truncate">{fileName}</p>
                               </div>
                               <div className="flex items-center gap-2 shrink-0">
-                                <span className={`inline-flex px-2 py-0.5 text-[11px] font-semibold rounded-full capitalize ${
+                                <span className={`inline-flex px-2 py-0.5 text-[11px] font-semibold rounded capitalize ${
                                   isApprov ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
                                   : isReject ? "bg-red-50 text-red-700 border border-red-200"
                                   : "bg-zinc-100 text-zinc-600 border border-zinc-200"
@@ -231,7 +231,7 @@ export default function FormsHistoryTab() {
                                 </span>
                                 <button
                                   onClick={() => handleDelete(r.id)}
-                                  className="p-1.5 text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded-md"
+                                  className="p-1.5 text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded"
                                 >
                                   <MdDelete size={14} />
                                 </button>
@@ -249,7 +249,7 @@ export default function FormsHistoryTab() {
                                   href={fileUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1 px-2.5 py-1 text-[12px] font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-md"
+                                  className="inline-flex items-center gap-1 px-2.5 py-1 text-[12px] font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded"
                                 >
                                   <MdVisibility size={13} /> View
                                 </a>

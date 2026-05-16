@@ -132,14 +132,14 @@ export default function EmailAppliedPlace() {
           </h2>
           
         </div>
-        <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200 px-2 py-1 rounded-md">
+        <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200 px-2 py-1 rounded">
           {rows.length} total
         </span>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
         {/* ============ LEFT — LIST ============ */}
-        <div className="lg:col-span-3 bg-white rounded-xl border border-zinc-200 shadow-sm overflow-hidden">
+        <div className="lg:col-span-3 bg-white rounded border border-zinc-200 shadow-sm overflow-hidden">
           <div className="flex items-center gap-2 px-3 sm:px-4 py-3 border-b border-zinc-100 bg-zinc-50/60">
             <div className="relative flex-1">
               <MdSearch
@@ -151,12 +151,12 @@ export default function EmailAppliedPlace() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search names..."
-                className="w-full h-9 pl-9 pr-3 text-[13px] border border-zinc-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full h-9 pl-9 pr-3 text-[13px] border border-zinc-200 rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <button
               onClick={startCreate}
-              className="inline-flex items-center gap-1 px-3 h-9 text-[12px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+              className="inline-flex items-center gap-1 px-3 h-9 text-[12px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded transition-colors"
               title="New"
             >
               <MdAdd size={15} /> New
@@ -184,7 +184,7 @@ export default function EmailAppliedPlace() {
                       isSelected ? "bg-blue-50/60" : "hover:bg-zinc-50"
                     }`}
                   >
-                    <span className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                    <span className="w-7 h-7 rounded bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
                       <MdMail size={14} />
                     </span>
                     <div className="flex-1 min-w-0">
@@ -197,14 +197,14 @@ export default function EmailAppliedPlace() {
                     </div>
                     <button
                       onClick={() => startEdit(row)}
-                      className="w-8 h-8 rounded-md text-blue-600 hover:bg-blue-50 flex items-center justify-center"
+                      className="w-8 h-8 rounded text-blue-600 hover:bg-blue-50 flex items-center justify-center"
                       title="Edit"
                     >
                       <MdEdit size={15} />
                     </button>
                     <button
                       onClick={() => handleDelete(row)}
-                      className="w-8 h-8 rounded-md text-red-600 hover:bg-red-50 flex items-center justify-center"
+                      className="w-8 h-8 rounded text-red-600 hover:bg-red-50 flex items-center justify-center"
                       title="Delete"
                     >
                       <MdDelete size={15} />
@@ -218,11 +218,11 @@ export default function EmailAppliedPlace() {
 
         {/* ============ RIGHT — FORM ============ */}
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-xl border border-zinc-200 shadow-sm overflow-hidden sticky top-4">
+          <div className="bg-white rounded border border-zinc-200 shadow-sm overflow-hidden sticky top-4">
             <div className="px-4 py-3 border-b border-zinc-100 bg-zinc-50/60 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div
-                  className={`w-7 h-7 rounded-lg flex items-center justify-center ${
+                  className={`w-7 h-7 rounded flex items-center justify-center ${
                     isEdit
                       ? "bg-amber-50 text-amber-600"
                       : "bg-emerald-50 text-emerald-600"
@@ -237,7 +237,7 @@ export default function EmailAppliedPlace() {
               {isEdit && (
                 <button
                   onClick={startCreate}
-                  className="w-7 h-7 rounded-md text-zinc-500 hover:bg-zinc-100 flex items-center justify-center"
+                  className="w-7 h-7 rounded text-zinc-500 hover:bg-zinc-100 flex items-center justify-center"
                   title="Cancel edit"
                 >
                   <MdClose size={16} />
@@ -256,7 +256,7 @@ export default function EmailAppliedPlace() {
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Payment Receive"
                   autoFocus
-                  className="w-full px-3 py-2 text-[13px] border border-zinc-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 text-[13px] border border-zinc-200 rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 {isEdit && (
                   <p className="text-[11px] text-zinc-400 mt-1">
@@ -271,7 +271,7 @@ export default function EmailAppliedPlace() {
                     type="button"
                     onClick={startCreate}
                     disabled={saving}
-                    className="flex-1 h-10 text-[12.5px] font-semibold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded-lg disabled:opacity-60"
+                    className="flex-1 h-10 text-[12.5px] font-semibold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded disabled:opacity-60"
                   >
                     Cancel
                   </button>
@@ -279,7 +279,7 @@ export default function EmailAppliedPlace() {
                 <button
                   type="submit"
                   disabled={saving || !name.trim()}
-                  className="flex-1 h-10 text-[12.5px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg disabled:opacity-60 inline-flex items-center justify-center gap-1.5 transition-colors"
+                  className="flex-1 h-10 text-[12.5px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded disabled:opacity-60 inline-flex items-center justify-center gap-1.5 transition-colors"
                 >
                   {saving ? (
                     "Saving..."
@@ -304,7 +304,7 @@ function ListSkel() {
     <ul className="divide-y divide-zinc-100">
       {[1, 2, 3, 4, 5].map((i) => (
         <li key={i} className="flex items-center gap-2.5 px-4 py-2.5">
-          <div className="w-7 h-7 rounded-lg bg-zinc-100 animate-pulse" />
+          <div className="w-7 h-7 rounded bg-zinc-100 animate-pulse" />
           <div className="flex-1 space-y-1.5">
             <div className="h-3 w-3/5 bg-zinc-100 rounded animate-pulse" />
             <div className="h-2.5 w-1/4 bg-zinc-100 rounded animate-pulse" />
@@ -318,7 +318,7 @@ function ListSkel() {
 function Empty({ text }) {
   return (
     <div className="py-14 text-center">
-      <div className="w-12 h-12 rounded-2xl bg-zinc-50 flex items-center justify-center mx-auto mb-3 text-zinc-300">
+      <div className="w-12 h-12 rounded bg-zinc-50 flex items-center justify-center mx-auto mb-3 text-zinc-300">
         <MdMail size={22} />
       </div>
       <p className="text-[13px] text-zinc-500">{text}</p>

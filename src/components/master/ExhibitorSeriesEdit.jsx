@@ -48,16 +48,16 @@ export default function ExhibitorSeriesEdit() {
 
       {/* Current Series Card */}
       {loading ? (
-        <div className="bg-zinc-50 rounded-xl border border-zinc-200 p-6 text-center text-sm text-zinc-400">Loading...</div>
+        <div className="bg-zinc-50 rounded border border-zinc-200 p-6 text-center text-sm text-zinc-400">Loading...</div>
       ) : saved ? (
-        <div className="bg-white rounded-xl border border-zinc-200 p-5 mb-6 shadow-sm">
+        <div className="bg-white rounded border border-zinc-200 p-5 mb-6 shadow-sm">
           <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wide mb-3">Current Configuration</p>
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-zinc-50 rounded-lg p-4 border border-zinc-100">
+            <div className="bg-zinc-50 rounded p-4 border border-zinc-100">
               <p className="text-xs text-zinc-400 mb-1">Badge Series</p>
               <p className="text-base font-bold text-zinc-800">{saved.exhibitor_badge_series || '—'}</p>
             </div>
-            <div className="bg-zinc-50 rounded-lg p-4 border border-zinc-100">
+            <div className="bg-zinc-50 rounded p-4 border border-zinc-100">
               <p className="text-xs text-zinc-400 mb-1">Starting Number</p>
               <p className="text-base font-bold text-zinc-800">{saved.exhibitor_badge_num || '—'}</p>
             </div>
@@ -68,11 +68,11 @@ export default function ExhibitorSeriesEdit() {
           </button>
         </div>
       ) : (
-        <div className="bg-zinc-50 rounded-xl border border-zinc-200 p-5 mb-6 text-center text-sm text-zinc-400">No series configured yet</div>
+        <div className="bg-zinc-50 rounded border border-zinc-200 p-5 mb-6 text-center text-sm text-zinc-400">No series configured yet</div>
       )}
 
       {/* Edit Form */}
-      <form onSubmit={handleSave} className="bg-white rounded-xl border border-zinc-200 p-5 shadow-sm space-y-4">
+      <form onSubmit={handleSave} className="bg-white rounded border border-zinc-200 p-5 shadow-sm space-y-4">
         <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wide">Update Series</p>
         <MasterField label="Badge Series Prefix" required>
           <MasterInput value={series} onChange={e => setSeries(e.target.value)} placeholder="e.g. INOP-2026" />

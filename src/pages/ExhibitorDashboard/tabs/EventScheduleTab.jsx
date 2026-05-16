@@ -43,24 +43,24 @@ export default function EventScheduleTab() {
         title="Event Schedule" subtitle="Event timeline shown to exhibitors"
         onAdd={() => setModal({ description: '' })} addLabel="Add Schedule">
         {loading ? (
-          <div className="h-32 bg-zinc-100 rounded-lg animate-pulse" />
+          <div className="h-32 bg-zinc-100 rounded animate-pulse" />
         ) : items.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 border-2 border-dashed border-zinc-200 rounded-xl text-center">
+          <div className="flex flex-col items-center justify-center py-12 border-2 border-dashed border-zinc-200 rounded text-center">
             <p className="text-sm text-zinc-400">No event schedule added</p>
             <button onClick={() => setModal({ description: '' })} className="mt-2 text-sm font-semibold text-blue-600 hover:underline">+ Add schedule</button>
           </div>
         ) : (
           <div className="space-y-3">
             {items.map((item, idx) => (
-              <div key={item.id ?? idx} className="bg-white rounded-lg border border-zinc-200 p-4">
+              <div key={item.id ?? idx} className="bg-white rounded border border-zinc-200 p-4">
                 <div className="flex items-start gap-3">
                   <div className="flex-1 text-sm text-zinc-700 leading-relaxed min-w-0 [&_p]:mb-1"
                     dangerouslySetInnerHTML={{ __html: item.description || '' }} />
                   <div className="flex gap-1.5 shrink-0">
                     <button onClick={() => setModal({ id: item.id, description: item.description || '' })}
-                      className="p-1.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100"><MdEdit size={14} /></button>
+                      className="p-1.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100"><MdEdit size={14} /></button>
                     <button onClick={() => handleDelete(item.id)}
-                      className="p-1.5 rounded-md bg-red-50 text-red-600 border border-red-200 hover:bg-red-100"><MdDelete size={14} /></button>
+                      className="p-1.5 rounded bg-red-50 text-red-600 border border-red-200 hover:bg-red-100"><MdDelete size={14} /></button>
                   </div>
                 </div>
               </div>

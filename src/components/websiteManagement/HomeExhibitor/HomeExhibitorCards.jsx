@@ -49,7 +49,7 @@ export default function HomeExhibitorCards() {
             const src = imgSrc(row.image);
             return (
               <div key={row.id}
-                className="bg-white rounded-xl border border-zinc-200 overflow-hidden hover:shadow-md hover:border-blue-200 transition-all group flex flex-col">
+                className="bg-white rounded border border-zinc-200 overflow-hidden hover:shadow-md hover:border-blue-200 transition-all group flex flex-col">
                 <div
                   className="relative h-24 bg-zinc-50 flex items-center justify-center cursor-pointer"
                   onClick={() => src && setPreview(src)}>
@@ -57,7 +57,7 @@ export default function HomeExhibitorCards() {
                     <>
                       <img src={src} alt={row.title || ''} className="h-full w-full object-contain p-2" />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center">
-                        <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white text-[10px] font-semibold bg-black/60 px-2 py-0.5 rounded-full">
+                        <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white text-[10px] font-semibold bg-black/60 px-2 py-0.5 rounded">
                           🔍 Preview
                         </span>
                       </div>
@@ -106,7 +106,7 @@ export default function HomeExhibitorCards() {
             {modal === 'edit' && editing?.image && (
               <Field label="Current Image">
                 <img src={imgSrc(editing.image)} alt={title}
-                  className="h-20 w-28 object-contain rounded-lg border border-zinc-200 bg-zinc-50 cursor-pointer"
+                  className="h-20 w-28 object-contain rounded border border-zinc-200 bg-zinc-50 cursor-pointer"
                   onClick={() => setPreview(imgSrc(editing.image))} />
                 <p className="text-xs text-zinc-400 mt-1">Click to preview</p>
               </Field>
@@ -116,7 +116,7 @@ export default function HomeExhibitorCards() {
               {file && (
                 <div className="mt-2 flex items-center gap-3">
                   <img src={URL.createObjectURL(file)} alt="preview"
-                    className="h-16 w-24 object-contain rounded-lg border border-zinc-200 bg-zinc-50" />
+                    className="h-16 w-24 object-contain rounded border border-zinc-200 bg-zinc-50" />
                   <p className="text-xs text-emerald-600">{file.name}</p>
                 </div>
               )}

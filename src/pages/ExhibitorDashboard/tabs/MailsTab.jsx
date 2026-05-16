@@ -13,7 +13,7 @@ export default function MailsTab() {
 
   return (
     <SectionShell icon={MdMail} iconBg="#dbeafe" iconColor="#3b82f6" title="Mails" subtitle="Sent mail history">
-      <div className="flex rounded-lg border border-zinc-200 overflow-hidden" style={{ minHeight: 400 }}>
+      <div className="flex rounded border border-zinc-200 overflow-hidden" style={{ minHeight: 400 }}>
         {/* List */}
         <div className="w-64 shrink-0 border-r border-zinc-100 overflow-y-auto bg-zinc-50">
           {MAILS.map(m => (

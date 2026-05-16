@@ -49,7 +49,7 @@ export default function WhyExhibitImages() {
             const src = imgSrc(row.image_url || row.image || row.url);
             return (
               <div key={row.id}
-                className="relative group rounded-xl overflow-hidden border border-zinc-200 aspect-square hover:shadow-md transition-all bg-zinc-50">
+                className="relative group rounded overflow-hidden border border-zinc-200 aspect-square hover:shadow-md transition-all bg-zinc-50">
                 {src ? (
                   <>
                     <img src={src} alt={row.title || ''}
@@ -57,7 +57,7 @@ export default function WhyExhibitImages() {
                       className="w-full h-full object-cover cursor-pointer" />
                     <div onClick={() => setPreview(src)}
                       className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-all flex items-center justify-center cursor-pointer">
-                      <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white text-xs font-semibold bg-black/60 px-2.5 py-1 rounded-full">
+                      <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white text-xs font-semibold bg-black/60 px-2.5 py-1 rounded">
                         🔍 Preview
                       </span>
                     </div>
@@ -73,7 +73,7 @@ export default function WhyExhibitImages() {
                   </div>
                 )}
                 <button onClick={() => deleteImage(row.id)}
-                  className="absolute top-1.5 right-1.5 bg-red-600 text-white rounded-lg p-1.5 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700 shadow-lg z-10">
+                  className="absolute top-1.5 right-1.5 bg-red-600 text-white rounded p-1.5 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700 shadow-lg z-10">
                   <MdDelete size={14} />
                 </button>
               </div>
@@ -93,7 +93,7 @@ export default function WhyExhibitImages() {
               {file && (
                 <div className="mt-2 flex items-center gap-3">
                   <img src={URL.createObjectURL(file)} alt="preview"
-                    className="h-16 w-24 object-contain rounded-lg border border-zinc-200 bg-zinc-50" />
+                    className="h-16 w-24 object-contain rounded border border-zinc-200 bg-zinc-50" />
                   <p className="text-xs text-emerald-600">{file.name}</p>
                 </div>
               )}

@@ -65,7 +65,7 @@ export default function HomePageVideo() {
             const src = row.video_url || row.video_path || row.video || row.url || '';
             const fullSrc = src.startsWith('http') ? src : `https://inoptics.in/api/${src}`;
             return (
-              <div key={row.id} className="relative group bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800 shadow-sm">
+              <div key={row.id} className="relative group bg-zinc-900 rounded overflow-hidden border border-zinc-800 shadow-sm">
                 {isEmbed(fullSrc) ? (
                   <iframe
                     src={fullSrc}
@@ -84,7 +84,7 @@ export default function HomePageVideo() {
 
                 <button
                   onClick={() => deleteVideo(row.id)}
-                  className="absolute top-2 right-2 bg-red-600 text-white rounded-lg p-2 hover:bg-red-700 transition-all shadow-lg opacity-0 group-hover:opacity-100"
+                  className="absolute top-2 right-2 bg-red-600 text-white rounded p-2 hover:bg-red-700 transition-all shadow-lg opacity-0 group-hover:opacity-100"
                   title="Delete"
                 >
                   <MdDelete size={16} />
@@ -107,11 +107,11 @@ export default function HomePageVideo() {
       {modal && (
         <WmModal title="Add Home Video" onClose={() => setModal(false)} onSave={handleSave} saving={saving}>
           {/* Tabs */}
-          <div className="flex gap-1 p-1 bg-zinc-100 rounded-lg mb-4">
+          <div className="flex gap-1 p-1 bg-zinc-100 rounded mb-4">
             <button
               type="button"
               onClick={() => setTab('link')}
-              className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-[13px] font-semibold rounded-md transition-all ${
+              className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-[13px] font-semibold rounded transition-all ${
                 tab === 'link' ? 'bg-white text-blue-600 shadow-sm' : 'text-zinc-500 hover:text-zinc-700'
               }`}
             >
@@ -120,7 +120,7 @@ export default function HomePageVideo() {
             <button
               type="button"
               onClick={() => setTab('file')}
-              className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-[13px] font-semibold rounded-md transition-all ${
+              className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-[13px] font-semibold rounded transition-all ${
                 tab === 'file' ? 'bg-white text-blue-600 shadow-sm' : 'text-zinc-500 hover:text-zinc-700'
               }`}
             >

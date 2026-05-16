@@ -72,17 +72,17 @@ export default function ExhibitorBadges() {
           tone="amber"
           Icon={MdCurrencyRupee}
         />
-        <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-3 flex flex-col gap-2 justify-center">
+        <div className="bg-white rounded border border-zinc-200 shadow-sm p-3 flex flex-col gap-2 justify-center">
           <button
             onClick={() => setShowAdd(true)}
-            className="w-full inline-flex items-center justify-center gap-1.5 h-10 text-[13px] font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+            className="w-full inline-flex items-center justify-center gap-1.5 h-10 text-[13px] font-bold text-white bg-blue-600 hover:bg-blue-700 rounded transition-colors"
           >
             <MdAddCircle size={16} /> Add Badge
           </button>
           <button
             onClick={() => setShowSubmitConfirm(true)}
             disabled={badges.length === 0}
-            className="w-full inline-flex items-center justify-center gap-1.5 h-10 text-[13px] font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg disabled:opacity-60 transition-colors"
+            className="w-full inline-flex items-center justify-center gap-1.5 h-10 text-[13px] font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded disabled:opacity-60 transition-colors"
           >
             <MdUpload size={15} /> Submit All
           </button>
@@ -96,16 +96,16 @@ export default function ExhibitorBadges() {
       </div>
 
       {/* ============ BADGES TABLE ============ */}
-      <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden mt-4">
+      <div className="bg-white rounded border border-zinc-200 shadow-sm overflow-hidden mt-4">
         <div className="px-4 sm:px-5 py-3 border-b border-zinc-100 flex items-center justify-between bg-zinc-50/60">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+            <div className="w-7 h-7 rounded bg-blue-50 text-blue-600 flex items-center justify-center">
               <MdBadge size={15} />
             </div>
             <h3 className="text-[13.5px] font-bold text-[#02062c]">
               Badges List
             </h3>
-            <span className="text-[10.5px] font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-md">
+            <span className="text-[10.5px] font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded">
               {badges.length}
             </span>
           </div>
@@ -264,8 +264,8 @@ function StatCard({ label, value, tone = "blue", Icon }) {
   };
   const t = tones[tone] || tones.blue;
   return (
-    <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-4 flex items-center gap-3">
-      <div className={`w-11 h-11 rounded-xl flex items-center justify-center ${t.bg} ${t.text}`}>
+    <div className="bg-white rounded border border-zinc-200 shadow-sm p-4 flex items-center gap-3">
+      <div className={`w-11 h-11 rounded flex items-center justify-center ${t.bg} ${t.text}`}>
         <Icon size={20} />
       </div>
       <div className="min-w-0">
@@ -282,9 +282,9 @@ function StatCard({ label, value, tone = "blue", Icon }) {
 
 function PolicyCard({ freeBadges }) {
   return (
-    <div className="lg:col-span-3 bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
+    <div className="lg:col-span-3 bg-white rounded border border-zinc-200 shadow-sm overflow-hidden">
       <div className="px-4 sm:px-5 py-3 border-b border-zinc-100 bg-zinc-50/60 flex items-center gap-2">
-        <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+        <div className="w-7 h-7 rounded bg-blue-50 text-blue-600 flex items-center justify-center">
           <MdInfoOutline size={15} />
         </div>
         <h3 className="text-[13.5px] font-bold text-[#02062c]">
@@ -314,9 +314,9 @@ function PolicyCard({ freeBadges }) {
 
 function BillingCard({ billing }) {
   return (
-    <div className="lg:col-span-2 bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
+    <div className="lg:col-span-2 bg-white rounded border border-zinc-200 shadow-sm overflow-hidden">
       <div className="px-4 sm:px-5 py-3 border-b border-zinc-100 bg-zinc-50/60 flex items-center gap-2">
-        <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+        <div className="w-7 h-7 rounded bg-blue-50 text-blue-600 flex items-center justify-center">
           <MdReceiptLong size={15} />
         </div>
         <h3 className="text-[13.5px] font-bold text-[#02062c]">
@@ -362,7 +362,7 @@ function Row({ label, value, muted }) {
 function BadgeAvatar({ src, name, size = 40 }) {
   return (
     <div
-      className="rounded-lg bg-zinc-100 border border-zinc-200 overflow-hidden flex items-center justify-center shrink-0"
+      className="rounded bg-zinc-100 border border-zinc-200 overflow-hidden flex items-center justify-center shrink-0"
       style={{ width: size, height: size }}
     >
       {src ? (
@@ -383,11 +383,11 @@ function BadgeAvatar({ src, name, size = 40 }) {
 
 function TypePill({ free }) {
   return free ? (
-    <span className="inline-flex items-center gap-1 text-[10.5px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">
+    <span className="inline-flex items-center gap-1 text-[10.5px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
       <MdVerified size={11} /> Free
     </span>
   ) : (
-    <span className="inline-flex items-center gap-1 text-[10.5px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-md">
+    <span className="inline-flex items-center gap-1 text-[10.5px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded">
       <MdCurrencyRupee size={11} /> Paid
     </span>
   );
@@ -400,7 +400,7 @@ function ActionButtons({ badge, unlockApproved, onEdit, onUnlock, onSubmitUpdate
       {lock === 0 && (
         <button
           onClick={onEdit}
-          className="w-8 h-8 rounded-md text-blue-600 bg-blue-50 hover:bg-blue-100 border border-blue-200 flex items-center justify-center"
+          className="w-8 h-8 rounded text-blue-600 bg-blue-50 hover:bg-blue-100 border border-blue-200 flex items-center justify-center"
           title="Edit"
         >
           <MdEdit size={14} />
@@ -409,7 +409,7 @@ function ActionButtons({ badge, unlockApproved, onEdit, onUnlock, onSubmitUpdate
       {lock === 0 && unlockApproved && (
         <button
           onClick={onSubmitUpdate}
-          className="px-2.5 h-8 inline-flex items-center gap-1 text-[11.5px] font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-md"
+          className="px-2.5 h-8 inline-flex items-center gap-1 text-[11.5px] font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded"
         >
           Submit Update
         </button>
@@ -417,14 +417,14 @@ function ActionButtons({ badge, unlockApproved, onEdit, onUnlock, onSubmitUpdate
       {lock === 1 && (
         <button
           onClick={onUnlock}
-          className="w-8 h-8 rounded-md text-zinc-600 bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 flex items-center justify-center"
+          className="w-8 h-8 rounded text-zinc-600 bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 flex items-center justify-center"
           title="Request unlock"
         >
           <MdLock size={14} />
         </button>
       )}
       {lock === 2 && (
-        <span className="inline-flex items-center gap-1 px-2 h-8 text-[10.5px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200 rounded-md">
+        <span className="inline-flex items-center gap-1 px-2 h-8 text-[10.5px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200 rounded">
           <MdHourglassTop size={11} /> Pending
         </span>
       )}
@@ -492,7 +492,7 @@ function AddBadgeModal({ exhibitor, stallNo, freeRemaining, saving, onClose, onS
           onChange={(e) => setName(e.target.value)}
           placeholder="Enter candidate name"
           autoFocus
-          className="w-full px-3 py-2 text-[13px] border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 py-2 text-[13px] border border-zinc-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
@@ -512,7 +512,7 @@ function AddBadgeModal({ exhibitor, stallNo, freeRemaining, saving, onClose, onS
             <img
               src={preview}
               alt="preview"
-              className="w-14 h-14 rounded-lg object-cover border border-zinc-200"
+              className="w-14 h-14 rounded object-cover border border-zinc-200"
             />
           )}
         </div>
@@ -522,14 +522,14 @@ function AddBadgeModal({ exhibitor, stallNo, freeRemaining, saving, onClose, onS
         <button
           onClick={onClose}
           disabled={saving}
-          className="px-4 h-10 text-[13px] font-semibold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded-lg"
+          className="px-4 h-10 text-[13px] font-semibold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded"
         >
           Cancel
         </button>
         <button
           onClick={() => onSave({ name, photo })}
           disabled={saving || !name.trim()}
-          className="px-5 h-10 text-[13px] font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-lg disabled:opacity-60"
+          className="px-5 h-10 text-[13px] font-bold text-white bg-blue-600 hover:bg-blue-700 rounded disabled:opacity-60"
         >
           {saving ? "Saving..." : "Generate Badge"}
         </button>
@@ -581,7 +581,7 @@ function EditBadgeModal({ badge, saving, onClose, onSave }) {
             <img
               src={form.preview}
               alt="preview"
-              className="w-14 h-14 rounded-lg object-cover border border-zinc-200"
+              className="w-14 h-14 rounded object-cover border border-zinc-200"
             />
           )}
         </div>
@@ -590,14 +590,14 @@ function EditBadgeModal({ badge, saving, onClose, onSave }) {
         <button
           onClick={onClose}
           disabled={saving}
-          className="px-4 h-10 text-[13px] font-semibold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded-lg"
+          className="px-4 h-10 text-[13px] font-semibold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded"
         >
           Cancel
         </button>
         <button
           onClick={() => onSave(form)}
           disabled={saving || !form.name.trim()}
-          className="px-5 h-10 text-[13px] font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-lg disabled:opacity-60"
+          className="px-5 h-10 text-[13px] font-bold text-white bg-blue-600 hover:bg-blue-700 rounded disabled:opacity-60"
         >
           {saving ? "Saving..." : "Update"}
         </button>
@@ -616,7 +616,7 @@ function FormField({ label, value, onChange }) {
         type="text"
         value={value || ""}
         onChange={onChange}
-        className="w-full px-3 py-2 text-[13px] border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full px-3 py-2 text-[13px] border border-zinc-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
     </div>
   );
@@ -632,7 +632,7 @@ function DisField({ label, value }) {
         type="text"
         value={value || "—"}
         readOnly
-        className="w-full px-3 py-2 text-[13px] border border-zinc-200 bg-zinc-50 text-zinc-600 rounded-lg cursor-not-allowed"
+        className="w-full px-3 py-2 text-[13px] border border-zinc-200 bg-zinc-50 text-zinc-600 rounded cursor-not-allowed"
       />
     </div>
   );
@@ -648,10 +648,10 @@ function ConfirmModal({ title, message, onCancel, onConfirm }) {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden"
+        className="bg-white rounded shadow-2xl w-full max-w-md overflow-hidden"
       >
         <div className="px-5 pt-6 pb-2 text-center">
-          <div className="w-14 h-14 rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-center mx-auto mb-3">
+          <div className="w-14 h-14 rounded bg-amber-50 border border-amber-100 flex items-center justify-center mx-auto mb-3">
             <MdLock size={26} className="text-amber-500" />
           </div>
           <h3 className="text-lg font-bold text-zinc-900">{title}</h3>
@@ -662,13 +662,13 @@ function ConfirmModal({ title, message, onCancel, onConfirm }) {
         <div className="px-5 pb-5 pt-3 flex items-center gap-2">
           <button
             onClick={onCancel}
-            className="flex-1 h-10 text-[13px] font-semibold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded-lg"
+            className="flex-1 h-10 text-[13px] font-semibold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded"
           >
             Cancel
           </button>
           <button
             onClick={onConfirm}
-            className="flex-1 h-10 text-[13px] font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg"
+            className="flex-1 h-10 text-[13px] font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded"
           >
             Confirm
           </button>
@@ -688,13 +688,13 @@ function ModalShell({ title, onClose, children }) {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden"
+        className="bg-white rounded shadow-xl w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden"
       >
         <div className="px-5 py-3.5 border-b border-zinc-100 flex items-center justify-between">
           <h3 className="text-[14px] font-bold text-[#02062c]">{title}</h3>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-lg text-zinc-500 hover:bg-zinc-100 flex items-center justify-center"
+            className="w-8 h-8 rounded text-zinc-500 hover:bg-zinc-100 flex items-center justify-center"
           >
             <MdClose size={18} />
           </button>
@@ -710,13 +710,13 @@ function ModalShell({ title, onClose, children }) {
 function EmptyState({ onAdd }) {
   return (
     <div className="py-14 text-center">
-      <div className="w-14 h-14 rounded-2xl bg-zinc-50 flex items-center justify-center mx-auto mb-3 text-zinc-300">
+      <div className="w-14 h-14 rounded bg-zinc-50 flex items-center justify-center mx-auto mb-3 text-zinc-300">
         <MdBadge size={26} />
       </div>
       <p className="text-[13px] text-zinc-500 mb-3">No badges yet</p>
       <button
         onClick={onAdd}
-        className="inline-flex items-center gap-1.5 px-4 h-10 text-[13px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg"
+        className="inline-flex items-center gap-1.5 px-4 h-10 text-[13px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded"
       >
         <MdAddCircle size={15} /> Add First Badge
       </button>
@@ -729,7 +729,7 @@ function TableSkel() {
     <div className="p-4 space-y-3">
       {[1, 2, 3].map((i) => (
         <div key={i} className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-zinc-100 animate-pulse" />
+          <div className="w-10 h-10 rounded bg-zinc-100 animate-pulse" />
           <div className="flex-1 space-y-1.5">
             <div className="h-3 w-2/5 bg-zinc-100 rounded animate-pulse" />
             <div className="h-2.5 w-1/4 bg-zinc-100 rounded animate-pulse" />

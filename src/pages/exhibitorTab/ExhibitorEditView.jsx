@@ -38,13 +38,13 @@ export default function ExhibitorEditView() {
       <div className="flex items-center gap-3 mb-5">
         <button
           onClick={() => setEditingExhibitor(null)}
-          className="flex items-center gap-1.5 bg-zinc-100 rounded-lg px-3.5 py-1.5 text-[13px] font-semibold text-zinc-600 cursor-pointer hover:bg-zinc-200 transition-colors"
+          className="flex items-center gap-1.5 bg-zinc-100 rounded px-3.5 py-1.5 text-[13px] font-semibold text-zinc-600 cursor-pointer hover:bg-zinc-200 transition-colors"
         >
           <MdArrowBack size={16} /> Back
         </button>
 
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-[9px] bg-zinc-900 flex items-center justify-center shrink-0">
+          <div className="w-9 h-9 rounded bg-zinc-900 flex items-center justify-center shrink-0">
             <MdStorefront size={18} className="text-white" />
           </div>
           <div>
@@ -55,7 +55,7 @@ export default function ExhibitorEditView() {
       </div>
 
       {/* Card with sub-tabs */}
-      <div className={`bg-white rounded-xl shadow-sm overflow-hidden ${isContainedTab ? 'flex min-h-0 flex-1 flex-col' : ''}`}>
+      <div className={`bg-white rounded shadow-sm overflow-hidden ${isContainedTab ? 'flex min-h-0 flex-1 flex-col' : ''}`}>
 
         {/* Tab bar — using relative + absolute bottom line to avoid border conflict with button reset */}
         <div className="flex overflow-x-auto border-b border-zinc-100 [scrollbar-width:none]">
@@ -73,7 +73,7 @@ export default function ExhibitorEditView() {
               >
                 {tab.label}
                 {/* Active underline indicator */}
-                <span className={`absolute bottom-0 left-0 right-0 h-0.5 rounded-full transition-all duration-200 ${active ? 'bg-zinc-900' : 'bg-transparent'}`} />
+                <span className={`absolute bottom-0 left-0 right-0 h-0.5 rounded transition-all duration-200 ${active ? 'bg-zinc-900' : 'bg-transparent'}`} />
               </button>
             );
           })}

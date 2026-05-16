@@ -49,7 +49,7 @@ export default function PowerRequirement() {
       {/* ================ TOP: FORM + GUIDELINES ================ */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* FORM (all sections at once) */}
-        <div className="lg:col-span-2 bg-white border border-zinc-200 rounded-xl p-4 sm:p-5 space-y-5">
+        <div className="lg:col-span-2 bg-white border border-zinc-200 rounded p-4 sm:p-5 space-y-5">
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 rounded bg-zinc-900 flex items-center justify-center">
               <MdElectricBolt size={18} className="text-white" />
@@ -101,7 +101,7 @@ export default function PowerRequirement() {
         </div>
 
         {/* GUIDELINES + ACTIONS */}
-        <div className="bg-white border border-zinc-200 rounded-xl p-4 sm:p-5 space-y-4">
+        <div className="bg-white border border-zinc-200 rounded p-4 sm:p-5 space-y-4">
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 rounded bg-amber-500 flex items-center justify-center">
               <MdInfoOutline size={18} className="text-white" />
@@ -167,11 +167,11 @@ export default function PowerRequirement() {
       {/* ================ TABLE + BILLING ================ */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* table */}
-        <div className="lg:col-span-2 bg-white border border-zinc-200 rounded-xl overflow-hidden">
+        <div className="lg:col-span-2 bg-white border border-zinc-200 rounded overflow-hidden">
           {/* Desktop */}
-          <div className="hidden md:block overflow-x-auto">
+          <div className="hidden md:block overflow-auto max-h-[60vh]">
             <table className="w-full">
-              <thead className="bg-zinc-50">
+              <thead className="bg-zinc-50 sticky top-0 z-10">
                 <tr>
                   {["Days", "Price/KW", "Power", "Phase", "Total", "Action"].map((h) => (
                     <th key={h} className="px-4 py-2.5 text-left text-[12px] font-semibold text-zinc-500 uppercase tracking-widest whitespace-nowrap">
@@ -210,7 +210,7 @@ export default function PowerRequirement() {
           </div>
 
           {/* Mobile cards */}
-          <div className="md:hidden">
+          <div className="md:hidden max-h-[60vh] overflow-y-auto">
             {previewList.length === 0 ? (
               <p className="p-8 text-center text-[14px] text-zinc-400">No power entries yet</p>
             ) : (
@@ -246,7 +246,7 @@ export default function PowerRequirement() {
         </div>
 
         {/* billing */}
-        <div className="bg-white border border-zinc-200 rounded-xl p-4 sm:p-5 space-y-4">
+        <div className="bg-white border border-zinc-200 rounded p-4 sm:p-5 space-y-4">
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 rounded bg-blue-600 flex items-center justify-center">
               <MdReceiptLong size={18} className="text-white" />
@@ -279,8 +279,8 @@ export default function PowerRequirement() {
       {/* sending mail overlay */}
       {isSendingMail && (
         <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center">
-          <div className="bg-white rounded-xl px-6 py-5 flex flex-col items-center gap-3 shadow-xl">
-            <span className="block w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+          <div className="bg-white rounded px-6 py-5 flex flex-col items-center gap-3 shadow-xl">
+            <span className="block w-8 h-8 border-4 border-blue-600 border-t-transparent rounded animate-spin" />
             <p className="text-[13px] text-zinc-700">Sending mail, please wait...</p>
           </div>
         </div>
@@ -296,7 +296,7 @@ function FormSection({ index, type, price, form, onChange }) {
     <div className="space-y-3">
       {/* section header */}
       <div className="flex items-center gap-2">
-        <div className="flex items-center justify-center w-7 h-7 rounded-full bg-blue-600 text-white text-[12px] font-bold shrink-0">
+        <div className="flex items-center justify-center w-7 h-7 rounded bg-blue-600 text-white text-[12px] font-bold shrink-0">
           {index}
         </div>
         <div className="flex items-center gap-1.5 text-[14px] font-bold text-zinc-900">

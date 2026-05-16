@@ -46,12 +46,12 @@ export default function AboutUsSection() {
           {aboutRows.map(row => {
             const src = imgSrc(row.image);
             return (
-              <div key={row.id} className="bg-white rounded-xl border border-zinc-200 p-5 flex gap-4 hover:shadow-md hover:border-blue-200 transition-all group">
+              <div key={row.id} className="bg-white rounded border border-zinc-200 p-5 flex gap-4 hover:shadow-md hover:border-blue-200 transition-all group">
                 {src && (
                   <img src={src} alt={row.title}
                     onClick={() => setPreview(src)}
                     title="Click to preview"
-                    className="w-20 h-20 object-cover rounded-xl border border-zinc-100 shrink-0 cursor-pointer hover:scale-105 transition-transform" />
+                    className="w-20 h-20 object-cover rounded border border-zinc-100 shrink-0 cursor-pointer hover:scale-105 transition-transform" />
                 )}
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-bold text-zinc-800 mb-1">{row.title}</p>
@@ -95,7 +95,7 @@ export default function AboutUsSection() {
             {modal === 'edit' && editing?.image && (
               <Field label="Current Image">
                 <img src={imgSrc(editing.image)} alt={title}
-                  className="h-20 w-28 object-contain rounded-lg border border-zinc-200 bg-zinc-50 cursor-pointer"
+                  className="h-20 w-28 object-contain rounded border border-zinc-200 bg-zinc-50 cursor-pointer"
                   onClick={() => setPreview(imgSrc(editing.image))} />
                 <p className="text-xs text-zinc-400 mt-1">Click to preview</p>
               </Field>
@@ -105,7 +105,7 @@ export default function AboutUsSection() {
               {file && (
                 <div className="mt-2 flex items-center gap-3">
                   <img src={URL.createObjectURL(file)} alt="preview"
-                    className="h-16 w-24 object-contain rounded-lg border border-zinc-200 bg-zinc-50" />
+                    className="h-16 w-24 object-contain rounded border border-zinc-200 bg-zinc-50" />
                   <p className="text-xs text-emerald-600">{file.name}</p>
                 </div>
               )}

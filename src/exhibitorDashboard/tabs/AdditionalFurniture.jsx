@@ -68,12 +68,12 @@ export default function AdditionalFurniture() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* ===================== LEFT — TABLE ===================== */}
-        <div className="lg:col-span-2 bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
+        <div className="lg:col-span-2 bg-white rounded border border-zinc-200 shadow-sm overflow-hidden">
           <div className="px-4 sm:px-5 py-4 border-b border-zinc-100 flex flex-col sm:flex-row sm:items-center gap-3">
             <button
               onClick={() => setShowAdd(true)}
               disabled={isSaved}
-              className="inline-flex items-center gap-1.5 px-4 py-2 text-[13px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
+              className="inline-flex items-center gap-1.5 px-4 py-2 text-[13px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
             >
               <MdAdd size={16} /> Add Furniture
             </button>
@@ -85,7 +85,7 @@ export default function AdditionalFurniture() {
           <div className="px-4 sm:px-5 py-3 flex items-center justify-between border-b border-zinc-100">
             <p className="text-[14px] font-bold text-[#02062c]">
               Selected Furniture{" "}
-              <span className="ml-1 text-[11px] font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-md">
+              <span className="ml-1 text-[11px] font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded">
                 {selected.length} Items
               </span>
             </p>
@@ -122,7 +122,7 @@ export default function AdditionalFurniture() {
                       <td className="px-3 py-3 text-[13px] text-zinc-500">{i + 1}</td>
                       <td className="px-3 py-3">
                         <div className="flex items-center gap-2.5">
-                          <div className="w-12 h-12 rounded-lg bg-zinc-50 border border-zinc-100 overflow-hidden flex items-center justify-center shrink-0">
+                          <div className="w-12 h-12 rounded bg-zinc-50 border border-zinc-100 overflow-hidden flex items-center justify-center shrink-0">
                             {item.image ? (
                               <img
                                 src={imgSrc(item.image)}
@@ -162,7 +162,7 @@ export default function AdditionalFurniture() {
                         <button
                           onClick={() => removeItem(i)}
                           disabled={isSaved}
-                          className="w-9 h-9 rounded-lg text-red-600 border border-red-200 bg-red-50 hover:bg-red-100 flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed"
+                          className="w-9 h-9 rounded text-red-600 border border-red-200 bg-red-50 hover:bg-red-100 flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed"
                           title="Remove"
                         >
                           <MdDelete size={16} />
@@ -184,7 +184,7 @@ export default function AdditionalFurniture() {
             ) : (
               selected.map((item, i) => (
                 <div key={item.id} className="p-4 flex gap-3">
-                  <div className="w-16 h-16 rounded-lg bg-zinc-50 border border-zinc-100 overflow-hidden flex items-center justify-center shrink-0">
+                  <div className="w-16 h-16 rounded bg-zinc-50 border border-zinc-100 overflow-hidden flex items-center justify-center shrink-0">
                     {item.image ? (
                       <img
                         src={imgSrc(item.image)}
@@ -203,7 +203,7 @@ export default function AdditionalFurniture() {
                       {!isSaved && (
                         <button
                           onClick={() => removeItem(i)}
-                          className="w-8 h-8 rounded-md text-red-600 hover:bg-red-50 flex items-center justify-center shrink-0"
+                          className="w-8 h-8 rounded text-red-600 hover:bg-red-50 flex items-center justify-center shrink-0"
                         >
                           <MdDelete size={15} />
                         </button>
@@ -246,9 +246,9 @@ export default function AdditionalFurniture() {
         {/* ===================== RIGHT — BILLING + VENDOR ===================== */}
         <div className="space-y-4">
           {/* Billing summary */}
-          <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
+          <div className="bg-white rounded border border-zinc-200 shadow-sm overflow-hidden">
             <div className="px-4 py-3 border-b border-zinc-100 flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+              <div className="w-7 h-7 rounded bg-blue-50 text-blue-600 flex items-center justify-center">
                 <MdReceiptLong size={15} />
               </div>
               <h3 className="text-[13.5px] font-bold text-[#02062c]">
@@ -278,9 +278,9 @@ export default function AdditionalFurniture() {
           </div>
 
           {/* Vendor */}
-          <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
+          <div className="bg-white rounded border border-zinc-200 shadow-sm overflow-hidden">
             <div className="px-4 py-3 border-b border-zinc-100 flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+              <div className="w-7 h-7 rounded bg-blue-50 text-blue-600 flex items-center justify-center">
                 <MdStore size={15} />
               </div>
               <h3 className="text-[13.5px] font-bold text-[#02062c]">
@@ -321,7 +321,7 @@ export default function AdditionalFurniture() {
                   setUnlockSent(true);
                 }}
                 disabled={saving || unlockSent}
-                className="w-full inline-flex items-center justify-center gap-2 h-11 text-[13px] font-bold text-white bg-amber-500 hover:bg-amber-600 rounded-lg shadow-sm disabled:opacity-60"
+                className="w-full inline-flex items-center justify-center gap-2 h-11 text-[13px] font-bold text-white bg-amber-500 hover:bg-amber-600 rounded shadow-sm disabled:opacity-60"
               >
                 {unlockSent ? (
                   <>
@@ -337,7 +337,7 @@ export default function AdditionalFurniture() {
               <button
                 onClick={save}
                 disabled={saving || selected.length === 0}
-                className="w-full inline-flex items-center justify-center gap-2 h-11 text-[13px] font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm disabled:opacity-60"
+                className="w-full inline-flex items-center justify-center gap-2 h-11 text-[13px] font-bold text-white bg-blue-600 hover:bg-blue-700 rounded shadow-sm disabled:opacity-60"
               >
                 <MdSend size={15} />
                 {saving ? "Submitting..." : "Submit Request"}
@@ -362,7 +362,7 @@ export default function AdditionalFurniture() {
 function StatusPill({ isSaved }) {
   return (
     <span
-      className={`inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md border ${
+      className={`inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded border ${
         isSaved
           ? "text-emerald-700 bg-emerald-50 border-emerald-200"
           : "text-amber-700 bg-amber-50 border-amber-200"
@@ -376,7 +376,7 @@ function StatusPill({ isSaved }) {
 
 function QtyStepper({ value, onChange, disabled }) {
   return (
-    <div className="inline-flex items-center border border-zinc-200 rounded-lg overflow-hidden">
+    <div className="inline-flex items-center border border-zinc-200 rounded overflow-hidden">
       <button
         type="button"
         onClick={() => onChange(Math.max(1, Number(value) - 1))}
@@ -442,7 +442,7 @@ function AddFurnitureModal({ catalog, selected, onAdd, onClose }) {
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-2xl shadow-xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden"
+        className="bg-white rounded shadow-xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="px-5 py-3.5 border-b border-zinc-100 flex items-center justify-between">
@@ -454,7 +454,7 @@ function AddFurnitureModal({ catalog, selected, onAdd, onClose }) {
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-lg text-zinc-500 hover:bg-zinc-100 flex items-center justify-center"
+            className="w-8 h-8 rounded text-zinc-500 hover:bg-zinc-100 flex items-center justify-center"
           >
             <MdClose size={18} />
           </button>
@@ -471,7 +471,7 @@ function AddFurnitureModal({ catalog, selected, onAdd, onClose }) {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search furniture..."
-              className="w-full h-9 pl-9 pr-3 text-[13px] border border-zinc-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full h-9 pl-9 pr-3 text-[13px] border border-zinc-200 rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
         </div>
@@ -492,7 +492,7 @@ function AddFurnitureModal({ catalog, selected, onAdd, onClose }) {
                     type="button"
                     onClick={() => !alreadySel && toggle(item)}
                     disabled={alreadySel}
-                    className={`relative rounded-xl border-2 p-2.5 text-center transition-all ${
+                    className={`relative rounded border-2 p-2.5 text-center transition-all ${
                       alreadySel
                         ? "border-zinc-200 bg-zinc-50 opacity-50 cursor-not-allowed"
                         : isPicked
@@ -502,14 +502,14 @@ function AddFurnitureModal({ catalog, selected, onAdd, onClose }) {
                   >
                     {(isPicked || alreadySel) && (
                       <span
-                        className={`absolute top-1.5 left-1.5 w-5 h-5 rounded-md flex items-center justify-center text-white ${
+                        className={`absolute top-1.5 left-1.5 w-5 h-5 rounded flex items-center justify-center text-white ${
                           alreadySel ? "bg-zinc-400" : "bg-blue-600"
                         }`}
                       >
                         <MdCheck size={12} />
                       </span>
                     )}
-                    <div className="aspect-square w-full bg-zinc-50 rounded-lg overflow-hidden mb-2 flex items-center justify-center">
+                    <div className="aspect-square w-full bg-zinc-50 rounded overflow-hidden mb-2 flex items-center justify-center">
                       {item.image ? (
                         <img
                           src={imgSrc(item.image)}
@@ -536,14 +536,14 @@ function AddFurnitureModal({ catalog, selected, onAdd, onClose }) {
         <div className="px-5 py-3 border-t border-zinc-100 flex items-center justify-between gap-2">
           <button
             onClick={onClose}
-            className="px-4 h-10 text-[13px] font-semibold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded-lg"
+            className="px-4 h-10 text-[13px] font-semibold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded"
           >
             Cancel
           </button>
           <button
             onClick={handleAdd}
             disabled={pickedCount === 0}
-            className="inline-flex items-center gap-1.5 px-5 h-10 text-[13px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg disabled:opacity-60"
+            className="inline-flex items-center gap-1.5 px-5 h-10 text-[13px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded disabled:opacity-60"
           >
             <MdCheck size={15} /> Add Selected ({pickedCount})
           </button>
@@ -578,7 +578,7 @@ function VendorLine({ label, value }) {
 function EmptyState() {
   return (
     <div className="py-14 text-center">
-      <div className="w-14 h-14 rounded-2xl bg-zinc-50 flex items-center justify-center mx-auto mb-3 text-zinc-300">
+      <div className="w-14 h-14 rounded bg-zinc-50 flex items-center justify-center mx-auto mb-3 text-zinc-300">
         <MdChair size={26} />
       </div>
       <p className="text-[13px] text-zinc-500">No furniture selected yet</p>
@@ -594,7 +594,7 @@ function TableSkel() {
     <div className="p-4 space-y-3">
       {[1, 2, 3].map((i) => (
         <div key={i} className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-lg bg-zinc-100 animate-pulse" />
+          <div className="w-12 h-12 rounded bg-zinc-100 animate-pulse" />
           <div className="flex-1 space-y-1.5">
             <div className="h-3 w-3/5 bg-zinc-100 rounded animate-pulse" />
             <div className="h-2.5 w-1/4 bg-zinc-100 rounded animate-pulse" />

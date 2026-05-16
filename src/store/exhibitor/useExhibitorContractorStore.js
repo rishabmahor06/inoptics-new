@@ -164,26 +164,25 @@ export const useExhibitorContractorStore = create((set, get) => ({
   fetchBoothData: async (companyName) => {
     if (!companyName) return;
 
+    const safeJson = async (res) => {
+      if (!res || !res.ok) return {};
+      try {
+        const text = await res.text();
+        if (!text) return {};
+        return JSON.parse(text);
+      } catch {
+        return {};
+      }
+    };
+
     try {
       const [statusRes, formsRes] = await Promise.all([
-        fetch(`${API}/get_booth_design_status.php?company=${encodeURIComponent(companyName)}`),
-        fetch(`${API}/get_all_uploaded_exhibitor_forms.php`),
+        fetch(`${API}/get_booth_design_status.php?company=${encodeURIComponent(companyName)}`).catch(() => null),
+        fetch(`${API}/get_all_uploaded_exhibitor_forms.php`).catch(() => null),
       ]);
 
-      let statusData = {};
-      let formsData = {};
-
-      try {
-        statusData = await statusRes.json();
-      } catch {
-        statusData = {};
-      }
-
-      try {
-        formsData = await formsRes.json();
-      } catch {
-        formsData = {};
-      }
+      const statusData = await safeJson(statusRes);
+      const formsData = await safeJson(formsRes);
 
       const rawStatus = String(statusData?.status || "").toLowerCase().trim();
       const boothDesignStatus = ["pending", "approved", "rejected"].includes(rawStatus)
@@ -203,8 +202,8 @@ export const useExhibitorContractorStore = create((set, get) => ({
         boothDesignPath: matchingRow?.booth_design || "",
       });
     } catch (error) {
+      // silent — booth design data is optional in the current UI
       console.error("Error fetching booth design data:", error);
-      toast.error("Failed to fetch booth design data");
     }
   },
 

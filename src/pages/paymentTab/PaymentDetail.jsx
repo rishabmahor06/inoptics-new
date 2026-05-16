@@ -52,17 +52,17 @@ function BRow({ label, value, bold, color }) {
 /* ─── Card wrapper ─── */
 function ChargeCard({ icon, title, accentBg, children }) {
   return (
-    <div className="bg-white border border-zinc-200 rounded-xl overflow-hidden flex flex-col">
+    <div className="bg-white border border-zinc-200 rounded overflow-hidden flex flex-col">
       <div
         className={`px-5 py-4 flex items-center justify-between border-b border-zinc-100 ${accentBg}`}
       >
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-white/70 flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded bg-white/70 flex items-center justify-center shrink-0">
             {icon}
           </div>
           <h4 className="text-[13px] font-bold text-zinc-900">{title}</h4>
         </div>
-        <button className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 text-white text-xs font-semibold hover:bg-zinc-700 transition-colors shrink-0">
+        <button className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-zinc-900 text-white text-xs font-semibold hover:bg-zinc-700 transition-colors shrink-0">
           <MdMail size={13} /> Send Mail
         </button>
       </div>
@@ -74,9 +74,9 @@ function ChargeCard({ icon, title, accentBg, children }) {
 /* ─── Stat pill ─── */
 function StatPill({ icon, label, value, bg }) {
   return (
-    <div className="bg-white rounded-xl shadow-sm px-5 py-4 flex items-center gap-3">
+    <div className="bg-white rounded shadow-sm px-5 py-4 flex items-center gap-3">
       <div
-        className={`w-9 h-9 rounded-lg ${bg} flex items-center justify-center shrink-0`}
+        className={`w-9 h-9 rounded ${bg} flex items-center justify-center shrink-0`}
       >
         {icon}
       </div>
@@ -183,7 +183,7 @@ export default function PaymentDetail() {
       {/* Back Button */}
       <button
         onClick={() => setSelectedPayment(null)}
-        className="w-9 h-9 rounded-xl bg-zinc-100 hover:bg-zinc-200 transition flex items-center justify-center shrink-0"
+        className="w-9 h-9 rounded bg-zinc-100 hover:bg-zinc-200 transition flex items-center justify-center shrink-0"
       >
         <MdArrowBack size={17} className="text-zinc-700" />
       </button>
@@ -196,23 +196,23 @@ export default function PaymentDetail() {
 
         {stallRows.length === 1 ? (
           <div className="mt-1 flex flex-wrap gap-2 text-xs">
-            <span className="px-2 py-1 rounded-lg bg-zinc-100 text-zinc-700">
+            <span className="px-2 py-1 rounded bg-zinc-100 text-zinc-700">
               Stall:{" "}
               <span className="font-semibold text-zinc-900">
                 {stallRows[0]["Stall Number"]}
               </span>
             </span>
 
-            <span className="px-2 py-1 rounded-lg bg-zinc-100 text-zinc-700">
+            <span className="px-2 py-1 rounded bg-zinc-100 text-zinc-700">
               {stallRows[0]["Stall Category"]}
             </span>
 
-            <span className="px-2 py-1 rounded-lg bg-zinc-100 text-zinc-700">
+            <span className="px-2 py-1 rounded bg-zinc-100 text-zinc-700">
               {stallRows[0]["Stall Area"]}
             </span>
           </div>
         ) : (
-          <div className="mt-2 overflow-x-auto rounded-xl border border-zinc-100">
+          <div className="mt-2 overflow-x-auto rounded border border-zinc-100">
             <table className="w-full text-xs">
               <thead className="bg-zinc-50">
                 <tr>
@@ -240,8 +240,8 @@ export default function PaymentDetail() {
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 xl:min-w-[520px] w-full xl:w-auto">
       
       {/* Total */}
-      <div className="rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2 flex items-center gap-2">
-        <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center">
+      <div className="rounded border border-zinc-200 bg-zinc-50 px-3 py-2 flex items-center gap-2">
+        <div className="w-8 h-8 rounded bg-white flex items-center justify-center">
           <MdReceiptLong size={16} className="text-zinc-700" />
         </div>
         <div>
@@ -255,8 +255,8 @@ export default function PaymentDetail() {
       </div>
 
       {/* Received */}
-      <div className="rounded-xl border border-emerald-100 bg-emerald-50 px-3 py-2 flex items-center gap-2">
-        <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center">
+      <div className="rounded border border-emerald-100 bg-emerald-50 px-3 py-2 flex items-center gap-2">
+        <div className="w-8 h-8 rounded bg-white flex items-center justify-center">
           <MdCheckCircle size={16} className="text-emerald-700" />
         </div>
         <div>
@@ -270,8 +270,8 @@ export default function PaymentDetail() {
       </div>
 
       {/* Pending */}
-      <div className="rounded-xl border border-red-100 bg-red-50 px-3 py-2 flex items-center gap-2">
-        <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center">
+      <div className="rounded border border-red-100 bg-red-50 px-3 py-2 flex items-center gap-2">
+        <div className="w-8 h-8 rounded bg-white flex items-center justify-center">
           <MdPendingActions size={16} className="text-red-600" />
         </div>
         <div>
@@ -306,7 +306,7 @@ export default function PaymentDetail() {
             <>
               {/* Stall info */}
               {stallRows.length === 1 ? (
-                <div className="bg-zinc-50 rounded-lg px-3 py-2 space-y-1 text-[13px]">
+                <div className="bg-zinc-50 rounded px-3 py-2 space-y-1 text-[13px]">
                   <p>
                     <span className="text-zinc-400 font-medium">Stall:</span>{" "}
                     <span className="font-semibold text-zinc-900">
@@ -323,7 +323,7 @@ export default function PaymentDetail() {
                   </p>
                 </div>
               ) : (
-                <div className="overflow-x-auto rounded-lg border border-zinc-100">
+                <div className="overflow-x-auto rounded border border-zinc-100">
                   <table className="w-full border-collapse text-sm">
                     <thead>
                       <tr>
@@ -604,7 +604,7 @@ export default function PaymentDetail() {
       </div>
 
       {/* ── Payment Summary Table ── */}
-      <div className="bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden">
+      <div className="bg-white rounded shadow-sm border border-zinc-200 overflow-hidden">
         <div className="px-5 py-4 border-b border-zinc-100">
           <h3 className="text-sm font-bold text-zinc-900">Payment Summary</h3>
         </div>

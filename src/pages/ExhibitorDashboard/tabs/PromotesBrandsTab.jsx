@@ -12,8 +12,8 @@ const SUB_TABS = [
   { id: 'whatsapp',   label: 'WHATSAPP'     },
 ];
 
-const INPUT    = 'w-full h-9 px-3 text-sm border border-zinc-200 rounded-md bg-zinc-50 text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition';
-const TEXTAREA = 'w-full px-3 py-2 text-sm border border-zinc-200 rounded-md bg-zinc-50 text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 resize-none transition';
+const INPUT    = 'w-full h-9 px-3 text-sm border border-zinc-200 rounded bg-zinc-50 text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition';
+const TEXTAREA = 'w-full px-3 py-2 text-sm border border-zinc-200 rounded bg-zinc-50 text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 resize-none transition';
 
 async function fetchArr(ep) {
   try {
@@ -53,26 +53,26 @@ function PhonePreview({ lines }) {
 
   return (
     <div className="flex justify-center py-4">
-      <div className="relative w-44 rounded-[2.2rem] p-1.5 shadow-2xl border-[3px] border-zinc-800 bg-zinc-900" style={{ height: '22rem' }}>
+      <div className="relative w-44 rounded p-1.5 shadow-2xl border-[3px] border-zinc-800 bg-zinc-900" style={{ height: '22rem' }}>
         <div className="absolute right-[-3px] top-16 w-1 h-10 bg-zinc-700 rounded-l" />
         <div className="absolute left-[-3px] top-20 w-1 h-7 bg-zinc-700 rounded-r" />
         <div className="absolute left-[-3px] top-32 w-1 h-7 bg-zinc-700 rounded-r" />
-        <div className="w-full h-full rounded-[1.8rem] overflow-hidden flex flex-col bg-gradient-to-b from-slate-800 to-slate-700">
+        <div className="w-full h-full rounded overflow-hidden flex flex-col bg-gradient-to-b from-slate-800 to-slate-700">
           <div className="flex justify-center pt-2.5">
-            <div className="w-2 h-2 rounded-full bg-zinc-900" />
+            <div className="w-2 h-2 rounded bg-zinc-900" />
           </div>
           <div className="text-center mt-1.5">
             <p className="text-white/60 text-[7px]">{date}</p>
             <p className="text-white font-bold text-xl leading-tight">{time}</p>
           </div>
           <div className="flex-1 flex items-center px-3">
-            <div className="bg-white/15 rounded-xl p-2.5 text-white text-[8px] leading-relaxed w-full">
+            <div className="bg-white/15 rounded p-2.5 text-white text-[8px] leading-relaxed w-full">
               {msg.split('\n').map((l, i) => <div key={i}>{l}</div>)}
             </div>
           </div>
           <div className="text-center pb-3">
             <p className="text-white/40 text-[7px]">Swipe up to unlock</p>
-            <div className="w-7 h-0.5 bg-white/20 rounded-full mx-auto mt-1" />
+            <div className="w-7 h-0.5 bg-white/20 rounded mx-auto mt-1" />
           </div>
         </div>
       </div>
@@ -83,19 +83,19 @@ function PhonePreview({ lines }) {
 /* ─── Instructions Box ────────────────────────────────── */
 function InstructionsBox({ title, htmlContent, onAdd, onEdit, onDelete }) {
   return (
-    <div className="bg-zinc-50 rounded-lg border border-zinc-200 p-4">
+    <div className="bg-zinc-50 rounded border border-zinc-200 p-4">
       <div className="flex items-center justify-between mb-3">
         <p className="text-sm font-bold text-zinc-800">{title}</p>
         <div className="flex gap-1.5">
           {!htmlContent ? (
             <button onClick={onAdd}
-              className="flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100">
+              className="flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100">
               <MdAdd size={13} /> Add
             </button>
           ) : (
             <>
-              <button onClick={onEdit} className="p-1.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100"><MdEdit size={13} /></button>
-              <button onClick={onDelete} className="p-1.5 rounded-md bg-red-50 text-red-600 border border-red-200 hover:bg-red-100"><MdDelete size={13} /></button>
+              <button onClick={onEdit} className="p-1.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100"><MdEdit size={13} /></button>
+              <button onClick={onDelete} className="p-1.5 rounded bg-red-50 text-red-600 border border-red-200 hover:bg-red-100"><MdDelete size={13} /></button>
             </>
           )}
         </div>
@@ -118,7 +118,7 @@ const PLAN_COLS = [
 
 function PlansTable({ plans, loading, onEdit, onDelete, selectedId, onSelect }) {
   return (
-    <div className="overflow-x-auto rounded-lg border border-zinc-200">
+    <div className="overflow-x-auto rounded border border-zinc-200">
       <table className="w-full">
         <thead className="bg-zinc-800 text-white">
           <tr>
@@ -148,11 +148,11 @@ function PlansTable({ plans, loading, onEdit, onDelete, selectedId, onSelect }) 
               ))}
               <td className="px-4 py-2.5">
                 <div className="flex items-center justify-center gap-1.5">
-                  <button onClick={() => onEdit(row)} className="p-1.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100"><MdEdit size={13} /></button>
-                  <button onClick={() => onDelete(row.id)} className="p-1.5 rounded-md bg-red-50 text-red-600 border border-red-200 hover:bg-red-100"><MdDelete size={13} /></button>
+                  <button onClick={() => onEdit(row)} className="p-1.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100"><MdEdit size={13} /></button>
+                  <button onClick={() => onDelete(row.id)} className="p-1.5 rounded bg-red-50 text-red-600 border border-red-200 hover:bg-red-100"><MdDelete size={13} /></button>
                   <button
                     onClick={() => onSelect(selectedId === row.id ? null : row)}
-                    className={`px-2.5 py-1 rounded-md text-xs font-semibold border transition-colors
+                    className={`px-2.5 py-1 rounded text-xs font-semibold border transition-colors
                       ${selectedId === row.id
                         ? 'bg-zinc-900 text-white border-zinc-900'
                         : 'bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100'}`}>
@@ -189,18 +189,18 @@ function PlanSlide({ plan, msgType, onClose }) {
   };
 
   return (
-    <div className="rounded-xl border border-zinc-200 overflow-hidden">
+    <div className="rounded border border-zinc-200 overflow-hidden">
       <div className="flex items-center justify-between px-5 py-3 bg-zinc-800">
         <p className="text-sm font-bold text-white">Selected Plan: {plan.plan_name}</p>
         <button onClick={onClose}
-          className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-white/20 text-white/70 hover:text-white transition-colors">
+          className="w-7 h-7 flex items-center justify-center rounded hover:bg-white/20 text-white/70 hover:text-white transition-colors">
           <MdClose size={15} />
         </button>
       </div>
       <div className="p-5 bg-zinc-50 grid grid-cols-1 lg:grid-cols-2 gap-5">
         {/* Compose */}
         <div className="space-y-4">
-          <div className="bg-white rounded-lg border border-zinc-200 p-4">
+          <div className="bg-white rounded border border-zinc-200 p-4">
             <p className="text-sm font-bold text-zinc-700 mb-2.5">Plan Details</p>
             <div className="space-y-1.5">
               {[['Plan', plan.plan_name], ['Frequency', plan.delivery_frequency], ['Description', plan.description], ['Price', `₹${price.toFixed(2)}`]].map(([k, v]) => (
@@ -227,13 +227,13 @@ function PlanSlide({ plan, msgType, onClose }) {
             )}
           </div>
           <button onClick={handleSave} disabled={saving}
-            className="px-5 py-2 text-sm font-semibold text-white bg-zinc-800 rounded-md hover:bg-zinc-700 transition-colors disabled:opacity-60">
+            className="px-5 py-2 text-sm font-semibold text-white bg-zinc-800 rounded hover:bg-zinc-700 transition-colors disabled:opacity-60">
             {saving ? 'Saving...' : 'Save Message'}
           </button>
         </div>
         {/* Particulars */}
         <div className="space-y-4">
-          <div className="bg-white rounded-lg border border-zinc-200 p-4">
+          <div className="bg-white rounded border border-zinc-200 p-4">
             <p className="text-sm font-bold text-zinc-700 mb-3">Particulars</p>
             {msgType === 'SMS' && (
               <p className="text-xs text-zinc-400 italic mb-3">* Messages exceeding 160 characters are charged as multiple messages.</p>
@@ -252,7 +252,7 @@ function PlanSlide({ plan, msgType, onClose }) {
               </div>
             </div>
           </div>
-          <div className="bg-white rounded-lg border border-zinc-200 p-4">
+          <div className="bg-white rounded border border-zinc-200 p-4">
             <p className="text-sm font-bold text-zinc-700 mb-3">Company Info</p>
             <div className="space-y-1.5">
               {[['Company', 'ABC Exhibitors Pvt. Ltd.'], ['Stall No', 'A-101'], ['Category', 'Bare Space A++'], ['Area', '18.00 sqm']].map(([k, v]) => (
@@ -272,7 +272,7 @@ function PlanSlide({ plan, msgType, onClose }) {
 /* ─── HOARDINGS ───────────────────────────────────────── */
 function HoardingsSection() {
   return (
-    <div className="py-20 text-center border-2 border-dashed border-zinc-200 rounded-xl">
+    <div className="py-20 text-center border-2 border-dashed border-zinc-200 rounded">
       <MdCampaign size={44} className="text-zinc-300 mx-auto mb-3" />
       <p className="text-sm font-semibold text-zinc-400">Hoardings</p>
       <p className="text-xs text-zinc-300 mt-1">Content coming soon</p>
@@ -336,7 +336,7 @@ function VideoWallsSection() {
       <div className="grid grid-cols-1 lg:grid-cols-[35%_1fr] gap-5">
         {/* Left: embed + upload */}
         <div className="space-y-4">
-          <div className="rounded-xl overflow-hidden border border-zinc-200 bg-black aspect-video">
+          <div className="rounded overflow-hidden border border-zinc-200 bg-black aspect-video">
             <iframe
               className="w-full h-full"
               src="https://www.youtube.com/embed/udqRmfMC_0A"
@@ -346,7 +346,7 @@ function VideoWallsSection() {
             />
           </div>
           <div
-            className="border-2 border-dashed border-zinc-300 rounded-xl p-6 text-center cursor-pointer hover:border-blue-400 hover:bg-blue-50/30 transition-colors"
+            className="border-2 border-dashed border-zinc-300 rounded p-6 text-center cursor-pointer hover:border-blue-400 hover:bg-blue-50/30 transition-colors"
             onClick={() => fileRef.current?.click()}>
             <MdVideoLibrary size={32} className="text-zinc-400 mx-auto mb-2" />
             {videoFile
@@ -361,7 +361,7 @@ function VideoWallsSection() {
           </div>
           {videoFile && (
             <button onClick={handleUpload} disabled={uploading}
-              className="w-full flex items-center justify-center gap-2 py-2 text-sm font-semibold text-white bg-zinc-800 rounded-md hover:bg-zinc-700 transition-colors disabled:opacity-60">
+              className="w-full flex items-center justify-center gap-2 py-2 text-sm font-semibold text-white bg-zinc-800 rounded hover:bg-zinc-700 transition-colors disabled:opacity-60">
               <MdUpload size={16} /> {uploading ? 'Uploading...' : 'Upload Video'}
             </button>
           )}
@@ -507,7 +507,7 @@ function MessagingSection({ type }) {
               <p className="text-sm font-bold text-zinc-800">Choose Your Messaging Plan</p>
               <button
                 onClick={() => { setPlanForm(emptyPlanForm); setPlanModal({}); }}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100">
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100">
                 <MdAdd size={13} /> Add Plan
               </button>
             </div>
@@ -588,7 +588,7 @@ export default function PromotesBrandsTab() {
           <button
             key={t.id}
             onClick={() => setSub(t.id)}
-            className={`px-4 py-2 text-xs font-bold rounded-md border transition-colors
+            className={`px-4 py-2 text-xs font-bold rounded border transition-colors
               ${sub === t.id
                 ? 'bg-zinc-900 text-white border-zinc-900'
                 : 'bg-zinc-50 text-zinc-500 border-zinc-200 hover:bg-zinc-100 hover:text-zinc-700'}`}>

@@ -52,7 +52,7 @@ export default function Stalls() {
       {/* ============= FORM + BILLING ============= */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* FORM */}
-        <form onSubmit={handleSubmit} className="lg:col-span-2 bg-white border border-zinc-200 rounded-xl p-4 sm:p-5 space-y-4">
+        <form onSubmit={handleSubmit} className="lg:col-span-2 bg-white border border-zinc-200 rounded p-4 sm:p-5 space-y-4">
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 rounded bg-zinc-900 flex items-center justify-center">
               <MdCalculate size={18} className="text-white" />
@@ -142,7 +142,7 @@ export default function Stalls() {
         </form>
 
         {/* BILLING / PARTICULARS */}
-        <div className="bg-white border border-zinc-200 rounded-xl p-4 sm:p-5 space-y-4">
+        <div className="bg-white border border-zinc-200 rounded p-4 sm:p-5 space-y-4">
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 rounded bg-blue-600 flex items-center justify-center">
               <MdReceiptLong size={18} className="text-white" />
@@ -216,8 +216,8 @@ export default function Stalls() {
       {/* sending overlay */}
       {isSendingMail && (
         <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center">
-          <div className="bg-white rounded-xl px-6 py-5 flex flex-col items-center gap-3 shadow-xl">
-            <span className="block w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+          <div className="bg-white rounded px-6 py-5 flex flex-col items-center gap-3 shadow-xl">
+            <span className="block w-8 h-8 border-4 border-blue-600 border-t-transparent rounded animate-spin" />
             <p className="text-[13px] text-zinc-700">Sending mail, please wait...</p>
           </div>
         </div>
@@ -306,7 +306,7 @@ function StallsTable({ stallList, editStall, deleteStall }) {
 
   if (stallList.length === 0) {
     return (
-      <div className="bg-white border border-zinc-200 rounded-xl py-12 text-center text-[14px] text-zinc-400">
+      <div className="bg-white border border-zinc-200 rounded py-12 text-center text-[14px] text-zinc-400">
         No stalls added yet
       </div>
     );
@@ -316,11 +316,11 @@ function StallsTable({ stallList, editStall, deleteStall }) {
     Math.round(stallList.reduce((s, r) => s + (parseFloat(r[key]) || 0), 0));
 
   return (
-    <div className="bg-white border border-zinc-200 rounded-xl overflow-hidden">
+    <div className="bg-white border border-zinc-200 rounded overflow-hidden">
       {/* Desktop table */}
-      <div className="hidden xl:block overflow-x-auto">
+      <div className="hidden xl:block overflow-auto max-h-[60vh]">
         <table className="w-full">
-          <thead className="bg-zinc-50">
+          <thead className="bg-zinc-50 sticky top-0 z-10">
             <tr>
               {visible.map((c) => (
                 <th key={c.key} className="px-3 py-2.5 text-left text-[11px] font-semibold text-zinc-500 uppercase tracking-widest whitespace-nowrap">

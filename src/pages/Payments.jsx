@@ -163,8 +163,8 @@ export default function Payments() {
       {/* ── Summary cards ── */}
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
         {STAT_CARDS.map((c) => (
-          <div key={c.label} className="bg-white border border-zinc-200 rounded-2xl px-4 py-3 flex items-center gap-3 shadow-sm">
-            <div className={`w-10 h-10 rounded-xl ${c.iconBg} flex items-center justify-center shrink-0 ${c.iconColor}`}>
+          <div key={c.label} className="bg-white border border-zinc-200 rounded px-4 py-3 flex items-center gap-3 shadow-sm">
+            <div className={`w-10 h-10 rounded ${c.iconBg} flex items-center justify-center shrink-0 ${c.iconColor}`}>
               {c.icon}
             </div>
             <div className="min-w-0">
@@ -180,7 +180,7 @@ export default function Payments() {
       </div>
 
       {/* Main card */}
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+      <div className="bg-white rounded shadow-sm overflow-hidden">
         {/* Toolbar */}
         <div className="px-5 py-4 border-b border-zinc-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <h3 className="text-[15px] font-bold text-zinc-900">All Payments</h3>
@@ -191,7 +191,7 @@ export default function Payments() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search company..."
-              className="w-full h-10 pl-9 pr-3 text-[14px] border border-zinc-200 rounded-xl bg-zinc-50 text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition"
+              className="w-full h-10 pl-9 pr-3 text-[14px] border border-zinc-200 rounded bg-zinc-50 text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition"
             />
           </div>
         </div>
@@ -297,9 +297,9 @@ export default function Payments() {
 
 function StatCard({ icon, label, value, color }) {
   return (
-    <div className="bg-white rounded-xl shadow-sm px-5 py-4 flex items-center gap-4">
+    <div className="bg-white rounded shadow-sm px-5 py-4 flex items-center gap-4">
       <div
-        className={`w-10 h-10 rounded-lg ${color} flex items-center justify-center shrink-0`}
+        className={`w-10 h-10 rounded ${color} flex items-center justify-center shrink-0`}
       >
         {icon}
       </div>

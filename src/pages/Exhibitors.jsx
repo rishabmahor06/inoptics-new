@@ -74,11 +74,11 @@ export default function Exhibitors() {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+    <div className="bg-white rounded shadow-sm overflow-hidden">
 
       {/* Toolbar */}
       <div className="px-5 py-3.5 border-b border-zinc-100 flex flex-wrap gap-2.5 items-center">
-        <div className="flex items-center gap-2 bg-zinc-50 border border-zinc-200 rounded-lg px-3 py-2">
+        <div className="flex items-center gap-2 bg-zinc-50 border border-zinc-200 rounded px-3 py-2">
           <MdSearch size={15} className="text-zinc-400 shrink-0" />
           <input
             className="bg-transparent outline-none text-[13px] text-zinc-800 w-44 placeholder:text-zinc-400 border-0"
@@ -87,7 +87,7 @@ export default function Exhibitors() {
             onChange={e => setCompanySearch(e.target.value)}
           />
         </div>
-        <div className="flex items-center bg-zinc-50 border border-zinc-200 rounded-lg px-3 py-2">
+        <div className="flex items-center bg-zinc-50 border border-zinc-200 rounded px-3 py-2">
           <input
             className="bg-transparent outline-none text-[13px] text-zinc-800 w-16 placeholder:text-zinc-400 border-0"
             placeholder="B / S"

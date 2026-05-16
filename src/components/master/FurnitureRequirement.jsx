@@ -29,14 +29,14 @@ function ImagePreviewModal({ src, name, onClose }) {
       >
         <button
           onClick={onClose}
-          className="absolute -top-10 right-0 w-8 h-8 flex items-center justify-center rounded-full bg-white/20 text-white hover:bg-white/30 transition-colors"
+          className="absolute -top-10 right-0 w-8 h-8 flex items-center justify-center rounded bg-white/20 text-white hover:bg-white/30 transition-colors"
         >
           <MdClose size={18} />
         </button>
         <img
           src={src}
           alt={name}
-          className="w-full rounded-2xl object-contain bg-white shadow-2xl"
+          className="w-full rounded object-contain bg-white shadow-2xl"
           style={{ maxHeight: "80vh" }}
         />
         {name && (
@@ -52,12 +52,12 @@ function ImagePreviewModal({ src, name, onClose }) {
 /* Skeleton card */
 function SkeletonCard() {
   return (
-    <div className="bg-white rounded-2xl border border-zinc-100 overflow-hidden">
+    <div className="bg-white rounded border border-zinc-100 overflow-hidden">
       <div className="h-44 bg-zinc-100 animate-pulse" />
       <div className="p-3 space-y-2">
         <div className="h-3 bg-zinc-100 rounded animate-pulse" />
         <div className="h-3 w-1/2 bg-zinc-100 rounded animate-pulse" />
-        <div className="h-7 bg-zinc-100 rounded-lg animate-pulse mt-3" />
+        <div className="h-7 bg-zinc-100 rounded animate-pulse mt-3" />
       </div>
     </div>
   );
@@ -170,7 +170,7 @@ export default function FurnitureRequirement() {
       {/* Empty state */}
       {!loading && filtered.length === 0 && (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
-          <div className="w-14 h-14 rounded-2xl bg-zinc-100 flex items-center justify-center">
+          <div className="w-14 h-14 rounded bg-zinc-100 flex items-center justify-center">
             <MdEdit size={24} className="text-zinc-300" />
           </div>
           <p className="text-[13px] font-medium text-zinc-400">
@@ -195,7 +195,7 @@ export default function FurnitureRequirement() {
             return (
               <div
                 key={row.id}
-                className="bg-white rounded-2xl border border-zinc-200 shadow-sm hover:shadow-md transition-all group overflow-hidden flex flex-col"
+                className="bg-white rounded border border-zinc-200 shadow-sm hover:shadow-md transition-all group overflow-hidden flex flex-col"
               >
                 {/* Image area */}
                 <div
@@ -219,7 +219,7 @@ export default function FurnitureRequirement() {
                         onClick={() => setPreview({ src, name: row.name })}
                         className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/20 transition-all"
                       >
-                        <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 backdrop-blur-sm text-zinc-700 text-[11px] font-semibold px-2.5 py-1.5 rounded-lg flex items-center gap-1 shadow">
+                        <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 backdrop-blur-sm text-zinc-700 text-[11px] font-semibold px-2.5 py-1.5 rounded flex items-center gap-1 shadow">
                           <MdZoomIn size={13} /> Preview
                         </span>
                       </button>
@@ -298,7 +298,7 @@ export default function FurnitureRequirement() {
             >
               {/* Show current image when editing */}
               {modal === "edit" && editing?.image && !image && (
-                <div className="mb-2 w-24 h-20 rounded-xl border border-zinc-200 overflow-hidden bg-zinc-50">
+                <div className="mb-2 w-24 h-20 rounded border border-zinc-200 overflow-hidden bg-zinc-50">
                   <img
                     src={imgSrc(editing.image)}
                     alt="current"
@@ -307,7 +307,7 @@ export default function FurnitureRequirement() {
                 </div>
               )}
               <label className="flex items-center gap-3 cursor-pointer">
-                <span className="px-4 py-2 text-xs font-semibold bg-zinc-100 text-zinc-700 rounded-lg border border-zinc-200 hover:bg-zinc-200 transition-colors">
+                <span className="px-4 py-2 text-xs font-semibold bg-zinc-100 text-zinc-700 rounded border border-zinc-200 hover:bg-zinc-200 transition-colors">
                   Choose Image
                 </span>
                 <input
@@ -322,7 +322,7 @@ export default function FurnitureRequirement() {
               </label>
               {/* New image preview */}
               {image && (
-                <div className="mt-2 w-24 h-20 rounded-xl border border-zinc-200 overflow-hidden bg-zinc-50">
+                <div className="mt-2 w-24 h-20 rounded border border-zinc-200 overflow-hidden bg-zinc-50">
                   <img
                     src={URL.createObjectURL(image)}
                     alt="preview"

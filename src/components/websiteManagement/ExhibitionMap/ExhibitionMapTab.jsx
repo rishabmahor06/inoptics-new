@@ -172,7 +172,7 @@ function MapPreview({ src, onClose }) {
         </div>
 
         {/* Hint */}
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-full bg-black/60 text-white text-[11px] flex items-center gap-2 pointer-events-none">
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded bg-black/60 text-white text-[11px] flex items-center gap-2 pointer-events-none">
           <MdPanTool size={12} /> Drag to pan · Scroll / pinch to zoom · Press 0 to reset
         </div>
       </div>
@@ -282,7 +282,7 @@ export default function ExhibitionMapTab() {
             return (
               <div
                 key={row.id}
-                className="bg-white rounded-xl border border-zinc-200 overflow-hidden hover:shadow-md hover:border-blue-200 transition-all group flex flex-col"
+                className="bg-white rounded border border-zinc-200 overflow-hidden hover:shadow-md hover:border-blue-200 transition-all group flex flex-col"
               >
                 <div
                   className="relative h-44 bg-zinc-50 flex items-center justify-center cursor-pointer"
@@ -292,7 +292,7 @@ export default function ExhibitionMapTab() {
                     <>
                       <img src={src} alt="" className="h-full w-full object-contain p-2" />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
-                        <span className="opacity-0 group-hover:opacity-100 transition-opacity inline-flex items-center gap-1.5 text-white text-[12px] font-semibold bg-black/70 px-3 py-1.5 rounded-full">
+                        <span className="opacity-0 group-hover:opacity-100 transition-opacity inline-flex items-center gap-1.5 text-white text-[12px] font-semibold bg-black/70 px-3 py-1.5 rounded">
                           <MdVisibility size={14} /> Preview
                         </span>
                       </div>
@@ -307,7 +307,7 @@ export default function ExhibitionMapTab() {
                       Map #{row.id}
                     </p>
                     <span className={`inline-flex items-center gap-1 mt-0.5 text-[10px] font-bold uppercase tracking-wider ${isActiveRow(row) ? 'text-emerald-600' : 'text-zinc-400'}`}>
-                      <span className={`w-1.5 h-1.5 rounded-full ${isActiveRow(row) ? 'bg-emerald-500' : 'bg-zinc-300'}`} />
+                      <span className={`w-1.5 h-1.5 rounded ${isActiveRow(row) ? 'bg-emerald-500' : 'bg-zinc-300'}`} />
                       {isActiveRow(row) ? 'Active' : 'Inactive'}
                     </span>
                   </div>
@@ -347,8 +347,8 @@ export default function ExhibitionMapTab() {
                 )}
               </Td>
               <Td>
-                <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-semibold ${act ? 'bg-emerald-50 text-emerald-700' : 'bg-zinc-100 text-zinc-500'}`}>
-                  <span className={`w-1.5 h-1.5 rounded-full ${act ? 'bg-emerald-500' : 'bg-zinc-400'}`} />
+                <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-semibold ${act ? 'bg-emerald-50 text-emerald-700' : 'bg-zinc-100 text-zinc-500'}`}>
+                  <span className={`w-1.5 h-1.5 rounded ${act ? 'bg-emerald-500' : 'bg-zinc-400'}`} />
                   {act ? 'Active' : 'Inactive'}
                 </span>
               </Td>
@@ -374,7 +374,7 @@ export default function ExhibitionMapTab() {
               <button
                 type="button"
                 onClick={() => setActive((v) => !v)}
-                className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border text-[13px] font-semibold transition-colors ${
+                className={`inline-flex items-center gap-2 px-3 py-2 rounded border text-[13px] font-semibold transition-colors ${
                   active
                     ? 'bg-emerald-50 border-emerald-200 text-emerald-700 hover:bg-emerald-100'
                     : 'bg-zinc-50 border-zinc-200 text-zinc-500 hover:bg-zinc-100'
@@ -394,7 +394,7 @@ export default function ExhibitionMapTab() {
                 <img
                   src={imgSrc(editing.image)}
                   alt=""
-                  className="h-28 w-44 object-contain rounded-lg border border-zinc-200 bg-zinc-50 cursor-pointer"
+                  className="h-28 w-44 object-contain rounded border border-zinc-200 bg-zinc-50 cursor-pointer"
                   onClick={() => setPreview(imgSrc(editing.image))}
                 />
                 <p className="text-xs text-zinc-400 mt-1">Click to preview</p>
@@ -407,7 +407,7 @@ export default function ExhibitionMapTab() {
                   <img
                     src={URL.createObjectURL(file)}
                     alt="preview"
-                    className="h-20 w-32 object-contain rounded-lg border border-zinc-200 bg-zinc-50"
+                    className="h-20 w-32 object-contain rounded border border-zinc-200 bg-zinc-50"
                   />
                   <p className="text-xs text-emerald-600">{file.name}</p>
                 </div>

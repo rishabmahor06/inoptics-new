@@ -40,7 +40,7 @@ export default function BasicDetails() {
         </div>
 
         {/* Card */}
-        <div className="bg-white border border-zinc-200 rounded-xl p-4 sm:p-5 space-y-4">
+        <div className="bg-white border border-zinc-200 rounded p-4 sm:p-5 space-y-4">
           {/* Company Name */}
           <FormField
             label="Company Name" required error={errors.company_name}
@@ -159,8 +159,8 @@ export default function BasicDetails() {
 
         {isSendingMail && (
           <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center">
-            <div className="bg-white rounded-xl px-6 py-5 flex flex-col items-center gap-3 shadow-xl">
-              <span className="block w-8 h-8 border-3 border-blue-600 border-t-transparent rounded-full animate-spin" />
+            <div className="bg-white rounded px-6 py-5 flex flex-col items-center gap-3 shadow-xl">
+              <span className="block w-8 h-8 border-3 border-blue-600 border-t-transparent rounded animate-spin" />
               <p className="text-[13px] text-zinc-700">Sending mail, please wait...</p>
             </div>
           </div>
@@ -215,7 +215,7 @@ function UpdateCompanyName() {
         </div>
       </div>
 
-      <div className="bg-white border border-zinc-200 rounded-xl p-4 sm:p-5 space-y-3">
+      <div className="bg-white border border-zinc-200 rounded p-4 sm:p-5 space-y-3">
         <FormField
           label="Old Company Name"
           value={oldCompany}

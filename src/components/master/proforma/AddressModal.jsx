@@ -72,14 +72,14 @@ export default function AddressModal({ editing, onClose, onSave }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md flex flex-col max-h-[90vh]">
+      <div className="bg-white rounded shadow-xl w-full max-w-md flex flex-col max-h-[90vh]">
         <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-100 shrink-0">
           <p className="text-[14px] font-bold text-zinc-800">
             {isEditing ? "Edit" : "Add"} Company Address
           </p>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-zinc-400 hover:bg-zinc-100"
+            className="p-1 rounded text-zinc-400 hover:bg-zinc-100"
           >
             <MdClose size={18} />
           </button>

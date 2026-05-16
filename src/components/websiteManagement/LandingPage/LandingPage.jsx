@@ -99,7 +99,7 @@ export default function LandingPage() {
         Object.entries(grouped).map(([type, items]) => (
           <div key={type} className="space-y-3">
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider bg-zinc-900 text-white rounded-md">
+              <span className="px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider bg-zinc-900 text-white rounded">
                 {type}
               </span>
               <span className="text-xs text-zinc-400">{items.length} sponsor{items.length !== 1 ? 's' : ''}</span>
@@ -132,13 +132,13 @@ export default function LandingPage() {
             </Field>
 
             <Field label="Sponsor Type (select one or more)">
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 p-3 border border-zinc-200 rounded-lg bg-zinc-50 max-h-56 overflow-y-auto">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 p-3 border border-zinc-200 rounded bg-zinc-50 max-h-56 overflow-y-auto">
                 {SPONSOR_TYPES.map(t => {
                   const checked = (form.sponsor_type || []).includes(t);
                   return (
                     <label
                       key={t}
-                      className={`flex items-center gap-2 px-2.5 py-1.5 text-[12px] rounded-md cursor-pointer border ${checked ? 'bg-blue-50 border-blue-300 text-blue-700' : 'bg-white border-zinc-200 text-zinc-600 hover:bg-zinc-100'}`}
+                      className={`flex items-center gap-2 px-2.5 py-1.5 text-[12px] rounded cursor-pointer border ${checked ? 'bg-blue-50 border-blue-300 text-blue-700' : 'bg-white border-zinc-200 text-zinc-600 hover:bg-zinc-100'}`}
                     >
                       <input
                         type="checkbox"
@@ -171,7 +171,7 @@ export default function LandingPage() {
                   <img
                     src={imgSrc(rowImg(editing))}
                     alt={displayName(editing)}
-                    className="h-20 w-28 object-contain rounded-lg border border-zinc-200 bg-zinc-50 cursor-pointer"
+                    className="h-20 w-28 object-contain rounded border border-zinc-200 bg-zinc-50 cursor-pointer"
                     onClick={() => setPreview({ src: imgSrc(rowImg(editing)), alt: displayName(editing) })}
                   />
                   <p className="text-xs text-zinc-400">Click image to preview</p>
@@ -186,7 +186,7 @@ export default function LandingPage() {
                   <img
                     src={URL.createObjectURL(file)}
                     alt="preview"
-                    className="h-16 w-24 object-contain rounded-lg border border-zinc-200 bg-zinc-50"
+                    className="h-16 w-24 object-contain rounded border border-zinc-200 bg-zinc-50"
                   />
                   <p className="text-xs text-emerald-600">{file.name}</p>
                 </div>
@@ -210,7 +210,7 @@ function SponsorCard({ row, displayName, rowImg, onPreview, onEdit, onDelete }) 
   const hasImage = !!imagePath;
   const src = imgSrc(imagePath);
   return (
-    <div className="bg-white rounded-xl border border-zinc-200 overflow-hidden hover:shadow-md hover:border-blue-200 transition-all group flex flex-col">
+    <div className="bg-white rounded border border-zinc-200 overflow-hidden hover:shadow-md hover:border-blue-200 transition-all group flex flex-col">
       {/* Image area */}
       <div
         className="relative h-32 bg-zinc-50 flex items-center justify-center cursor-pointer"
@@ -231,7 +231,7 @@ function SponsorCard({ row, displayName, rowImg, onPreview, onEdit, onDelete }) 
         {/* Hover overlay */}
         {hasImage && (
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center">
-            <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 text-white text-xs font-semibold px-3 py-1.5 rounded-full">
+            <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 text-white text-xs font-semibold px-3 py-1.5 rounded">
               🔍 Preview
             </span>
           </div>

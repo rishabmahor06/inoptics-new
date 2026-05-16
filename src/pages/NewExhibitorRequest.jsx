@@ -78,7 +78,7 @@ export default function NewExhibitorRequest() {
 
   if (loadingNewExhibitors) {
     return (
-      <div className="bg-white rounded-xl shadow-sm py-16 flex flex-col items-center gap-3">
+      <div className="bg-white rounded shadow-sm py-16 flex flex-col items-center gap-3">
         <MdPersonAdd size={46} className="text-zinc-300 animate-pulse" />
         <p className="text-sm text-zinc-500">Loading requests...</p>
       </div>
@@ -98,7 +98,7 @@ export default function NewExhibitorRequest() {
 
   if (!newExhibitors.length) {
     return (
-      <div className="bg-white rounded-xl shadow-sm py-16 flex flex-col items-center gap-3">
+      <div className="bg-white rounded shadow-sm py-16 flex flex-col items-center gap-3">
         <MdPersonAdd size={46} className="text-zinc-300" />
         <p className="text-sm text-zinc-500">No exhibitor requests found.</p>
       </div>
@@ -108,7 +108,7 @@ export default function NewExhibitorRequest() {
   return (
     <div className="space-y-5">
       {/* Top Header */}
-      <div className="bg-white rounded-xl shadow-sm border border-zinc-200 px-2 py-2 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      <div className="bg-white rounded shadow-sm border border-zinc-200 px-2 py-2 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
        
 
         {/* Search */}
@@ -123,7 +123,7 @@ export default function NewExhibitorRequest() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search company, person, email..."
-            className="w-full h-11 pl-10 pr-4 rounded-xl border border-zinc-200 bg-zinc-50 text-sm text-zinc-700 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400"
+            className="w-full h-11 pl-10 pr-4 rounded border border-zinc-200 bg-zinc-50 text-sm text-zinc-700 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400"
           />
         </div>
       </div>
@@ -133,12 +133,12 @@ export default function NewExhibitorRequest() {
         {newExhibitors.map((item, index) => (
           <div
             key={item.id}
-            className="bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden hover:shadow-md transition"
+            className="bg-white rounded shadow-sm border border-zinc-200 overflow-hidden hover:shadow-md transition"
           >
             {/* Card Header */}
             <div className="px-5 py-4 border-b border-zinc-100 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="w-9 h-9 rounded-lg bg-zinc-100 flex items-center justify-center">
+                <div className="w-9 h-9 rounded bg-zinc-100 flex items-center justify-center">
                   <MdBusiness size={18} className="text-zinc-700" />
                 </div>
 

@@ -37,7 +37,7 @@ export default function VisitorMetroMap() {
       {loadingMetro ? (
         <LoadingSpinner />
       ) : (
-        <div className="bg-white border border-zinc-200 rounded-2xl p-5 sm:p-6 space-y-4">
+        <div className="bg-white border border-zinc-200 rounded p-5 sm:p-6 space-y-4">
           <Field label="Description">
             <CustomEditor value={desc} onChange={setDesc} placeholder="Metro map directions / how to reach..." />
           </Field>
@@ -48,7 +48,7 @@ export default function VisitorMetroMap() {
                 src={imgSrc(metro.image || metro.image_path)}
                 alt="Metro Map"
                 onClick={() => setPreview(imgSrc(metro.image || metro.image_path))}
-                className="max-w-full h-auto max-h-72 object-contain rounded-lg border border-zinc-200 bg-zinc-50 cursor-pointer hover:opacity-90 transition-opacity"
+                className="max-w-full h-auto max-h-72 object-contain rounded border border-zinc-200 bg-zinc-50 cursor-pointer hover:opacity-90 transition-opacity"
               />
               <p className="text-[11px] text-zinc-400 mt-1">Click to preview</p>
             </Field>
@@ -58,7 +58,7 @@ export default function VisitorMetroMap() {
             <WmFileInput onChange={(e) => setFile(e.target.files[0])} />
             {file && (
               <div className="mt-2 flex items-center gap-3">
-                <img src={URL.createObjectURL(file)} alt="" className="h-20 w-32 object-contain rounded-lg border border-zinc-200" />
+                <img src={URL.createObjectURL(file)} alt="" className="h-20 w-32 object-contain rounded border border-zinc-200" />
                 <p className="text-xs text-emerald-600">{file.name}</p>
               </div>
             )}
@@ -68,7 +68,7 @@ export default function VisitorMetroMap() {
             <button
               onClick={handleSave}
               disabled={saving}
-              className="px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors disabled:opacity-60"
+              className="px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded transition-colors disabled:opacity-60"
             >
               {saving ? "Saving..." : "Save"}
             </button>

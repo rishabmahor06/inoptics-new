@@ -66,13 +66,13 @@ export default function ContactSupport() {
       
 
       {/* Main card */}
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+      <div className="bg-white rounded shadow-sm overflow-hidden">
 
         {/* Toolbar */}
         <div className="px-5 py-3.5 border-b border-zinc-100 flex items-center justify-between">
           <h3 className="text-sm font-semibold text-zinc-900">Support Messages</h3>
           {!loading && (
-            <span className="text-xs text-zinc-400 bg-zinc-50 border border-zinc-200 px-2.5 py-1 rounded-full">
+            <span className="text-xs text-zinc-400 bg-zinc-50 border border-zinc-200 px-2.5 py-1 rounded">
               {tickets.length} tickets
             </span>
           )}
@@ -96,7 +96,7 @@ export default function ContactSupport() {
             {tickets.map((ticket, index) => (
               <div
                 key={ticket.id}
-                className="border border-zinc-200 rounded-xl overflow-hidden hover:shadow-md hover:border-zinc-300 transition-all duration-200 flex flex-col"
+                className="border border-zinc-200 rounded overflow-hidden hover:shadow-md hover:border-zinc-300 transition-all duration-200 flex flex-col"
               >
 
                 {/* Card head */}

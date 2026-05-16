@@ -44,12 +44,12 @@ export default function PressRelease() {
           {releases.map(row => {
             const src = imgSrc(row.image);
             return (
-              <div key={row.id} className="bg-white rounded-xl border border-zinc-200 overflow-hidden hover:shadow-md hover:border-blue-200 transition-all group">
+              <div key={row.id} className="bg-white rounded border border-zinc-200 overflow-hidden hover:shadow-md hover:border-blue-200 transition-all group">
                 {src ? (
                   <div className="relative cursor-pointer overflow-hidden" onClick={() => setPreview(src)}>
                     <img src={src} alt={row.title} className="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-300" />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center">
-                      <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white text-xs font-semibold bg-black/60 px-2.5 py-1 rounded-full">
+                      <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white text-xs font-semibold bg-black/60 px-2.5 py-1 rounded">
                         🔍 Preview
                       </span>
                     </div>
@@ -99,7 +99,7 @@ export default function PressRelease() {
             {modal === 'edit' && editing?.image && (
               <Field label="Current Image">
                 <img src={imgSrc(editing.image)} alt={form.title}
-                  className="h-20 w-32 object-cover rounded-lg border border-zinc-200 cursor-pointer hover:scale-105 transition-transform"
+                  className="h-20 w-32 object-cover rounded border border-zinc-200 cursor-pointer hover:scale-105 transition-transform"
                   onClick={() => setPreview(imgSrc(editing.image))} />
                 <p className="text-xs text-zinc-400 mt-1">Click to preview</p>
               </Field>
@@ -109,7 +109,7 @@ export default function PressRelease() {
               {file && (
                 <div className="mt-2 flex items-center gap-3">
                   <img src={URL.createObjectURL(file)} alt="preview"
-                    className="h-16 w-24 object-cover rounded-lg border border-zinc-200" />
+                    className="h-16 w-24 object-cover rounded border border-zinc-200" />
                   <p className="text-xs text-emerald-600">{file.name}</p>
                 </div>
               )}

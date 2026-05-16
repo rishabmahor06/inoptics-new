@@ -39,7 +39,7 @@ const apiPostForm = (ep, fd) => fetch(`${API}/${ep}`, { method: 'POST', body: fd
 function AddBtn({ onClick, label = 'Add' }) {
   return (
     <button onClick={onClick}
-      className="inline-flex items-center gap-1.5 bg-blue-600 text-white rounded-lg px-3.5 py-2 text-[13px] font-semibold hover:bg-blue-700 transition-colors">
+      className="inline-flex items-center gap-1.5 bg-blue-600 text-white rounded px-3.5 py-2 text-[13px] font-semibold hover:bg-blue-700 transition-colors">
       <MdAdd size={16} />{label}
     </button>
   );
@@ -47,7 +47,7 @@ function AddBtn({ onClick, label = 'Add' }) {
 function EditBtn({ onClick }) {
   return (
     <button onClick={onClick}
-      className="inline-flex items-center gap-1 bg-green-50 text-green-700 border border-green-200 rounded-lg px-2.5 py-1.5 text-[12px] font-semibold hover:bg-green-100 transition-colors">
+      className="inline-flex items-center gap-1 bg-green-50 text-green-700 border border-green-200 rounded px-2.5 py-1.5 text-[12px] font-semibold hover:bg-green-100 transition-colors">
       <MdEdit size={13} />Edit
     </button>
   );
@@ -55,7 +55,7 @@ function EditBtn({ onClick }) {
 function DelBtn({ onClick }) {
   return (
     <button onClick={onClick}
-      className="inline-flex items-center gap-1 bg-red-50 text-red-600 border border-red-200 rounded-lg px-2.5 py-1.5 text-[12px] font-semibold hover:bg-red-100 transition-colors">
+      className="inline-flex items-center gap-1 bg-red-50 text-red-600 border border-red-200 rounded px-2.5 py-1.5 text-[12px] font-semibold hover:bg-red-100 transition-colors">
       <MdDelete size={13} />Delete
     </button>
   );
@@ -63,23 +63,23 @@ function DelBtn({ onClick }) {
 function Modal({ title, onClose, onSave, saving, children }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
+      <div className="bg-white rounded shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
         <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-100 shrink-0">
           <h2 className="text-base font-semibold text-zinc-800">{title}</h2>
-          <button onClick={onClose} className="p-2 rounded-lg text-zinc-400 hover:text-zinc-600 hover:bg-zinc-100 transition-colors">
+          <button onClick={onClose} className="p-2 rounded text-zinc-400 hover:text-zinc-600 hover:bg-zinc-100 transition-colors">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
         <div className="overflow-y-auto flex-1 px-6 py-5">{children}</div>
-        <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-zinc-100 bg-zinc-50 rounded-b-2xl shrink-0">
+        <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-zinc-100 bg-zinc-50 rounded-b shrink-0">
           <button onClick={onClose} disabled={saving}
-            className="px-5 py-2.5 text-sm font-medium text-zinc-600 bg-white border border-zinc-200 hover:bg-zinc-50 rounded-lg transition-colors disabled:opacity-50">
+            className="px-5 py-2.5 text-sm font-medium text-zinc-600 bg-white border border-zinc-200 hover:bg-zinc-50 rounded transition-colors disabled:opacity-50">
             Cancel
           </button>
           <button onClick={onSave} disabled={saving}
-            className="px-5 py-2.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors disabled:opacity-60 flex items-center gap-2">
+            className="px-5 py-2.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded transition-colors disabled:opacity-60 flex items-center gap-2">
             {saving && <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" /></svg>}
             {saving ? 'Saving...' : 'Save'}
           </button>
@@ -90,7 +90,7 @@ function Modal({ title, onClose, onSave, saving, children }) {
 }
 function TableShell({ headers, children, loading, empty }) {
   return (
-    <div className="overflow-x-auto rounded-xl border border-zinc-100">
+    <div className="overflow-x-auto rounded border border-zinc-100">
       <table className="w-full border-collapse">
         <thead>
           <tr>{headers.map(h => <th key={h} className="bg-zinc-900 text-white px-4 py-3 text-left font-semibold text-[11px] tracking-wider whitespace-nowrap">{h}</th>)}</tr>
@@ -113,10 +113,10 @@ function Field({ label, children, required }) {
   );
 }
 function Input({ value, onChange, placeholder, type = 'text' }) {
-  return <input type={type} value={value} onChange={onChange} placeholder={placeholder} className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded-lg bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors placeholder:text-zinc-300" />;
+  return <input type={type} value={value} onChange={onChange} placeholder={placeholder} className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors placeholder:text-zinc-300" />;
 }
 function FileInput({ onChange, accept = 'image/*' }) {
-  return <input type="file" accept={accept} onChange={onChange} className="w-full text-sm text-zinc-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />;
+  return <input type="file" accept={accept} onChange={onChange} className="w-full text-sm text-zinc-600 file:mr-3 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />;
 }
 
 // ─── Legacy components (kept for remaining tabs) ───────────────────────────────
@@ -264,7 +264,7 @@ function VisitorGuide() {
       <div className="flex gap-1 flex-wrap border-b border-zinc-200 pb-3">
         {SUB_TABS.map(t => (
           <button key={t} onClick={() => setSub(t)}
-            className={`px-3 py-1.5 rounded-lg text-[12px] font-semibold transition-colors ${sub === t ? 'bg-indigo-600 text-white' : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'}`}>
+            className={`px-3 py-1.5 rounded text-[12px] font-semibold transition-colors ${sub === t ? 'bg-indigo-600 text-white' : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'}`}>
             {t}
           </button>
         ))}
@@ -285,7 +285,7 @@ function ForExhibitors() {
       <div className="flex gap-1 flex-wrap border-b border-zinc-200 pb-3">
         {['Main', 'Cards'].map(t => (
           <button key={t} onClick={() => setSub(t)}
-            className={`px-3 py-1.5 rounded-lg text-[12px] font-semibold transition-colors ${sub === t ? 'bg-indigo-600 text-white' : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'}`}>
+            className={`px-3 py-1.5 rounded text-[12px] font-semibold transition-colors ${sub === t ? 'bg-indigo-600 text-white' : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'}`}>
             {t}
           </button>
         ))}
@@ -305,7 +305,7 @@ function BecomeAnExhibitor() {
       <div className="flex gap-1 flex-wrap border-b border-zinc-200 pb-3">
         {['Powering Future', 'Why Exhibit'].map(t => (
           <button key={t} onClick={() => setSub(t)}
-            className={`px-3 py-1.5 rounded-lg text-[12px] font-semibold transition-colors ${sub === t ? 'bg-indigo-600 text-white' : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'}`}>
+            className={`px-3 py-1.5 rounded text-[12px] font-semibold transition-colors ${sub === t ? 'bg-indigo-600 text-white' : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'}`}>
             {t}
           </button>
         ))}
@@ -429,7 +429,7 @@ export default function WebsiteManagement() {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm overflow-hidden min-h-screen">
+    <div className="bg-white rounded shadow-sm overflow-hidden min-h-screen">
       {/* Tab Nav */}
       <div className="border-b border-zinc-200 overflow-x-auto">
         <div className="flex min-w-max px-5 pt-3">

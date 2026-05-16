@@ -136,7 +136,7 @@ export default function CoreFormsTab() {
   return (
     <div className="space-y-4 p-3 sm:p-4 lg:p-5">
       {/* TOOLBAR */}
-      <div className="bg-white rounded-xl shadow-sm px-4 sm:px-5 py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div className="bg-white rounded shadow-sm px-4 sm:px-5 py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="flex items-center gap-2 flex-wrap">
           <button
             onClick={openAdd}
@@ -172,16 +172,16 @@ export default function CoreFormsTab() {
 
       {/* CONTENT */}
       {loading ? (
-        <div className="bg-white rounded-xl border border-zinc-200 py-12 text-center text-zinc-500 text-base">
+        <div className="bg-white rounded border border-zinc-200 py-12 text-center text-zinc-500 text-base">
           Loading...
         </div>
       ) : filtered.length === 0 ? (
-        <div className="bg-white rounded-xl border border-zinc-200 py-16 flex flex-col items-center gap-3 text-zinc-400">
+        <div className="bg-white rounded border border-zinc-200 py-16 flex flex-col items-center gap-3 text-zinc-400">
           <MdDescription size={42} className="text-zinc-200" />
           <p className="text-base">No forms found</p>
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-zinc-200 overflow-hidden">
+        <div className="bg-white rounded border border-zinc-200 overflow-hidden">
           {/* Desktop table */}
           <div className="hidden md:block overflow-x-auto">
             <table className="w-full">
@@ -230,7 +230,7 @@ export default function CoreFormsTab() {
                           title="Delete"
                         >
                           {deleting === item.id ? (
-                            <span className="block w-3.5 h-3.5 border-2 border-red-700 border-t-transparent rounded-full animate-spin" />
+                            <span className="block w-3.5 h-3.5 border-2 border-red-700 border-t-transparent rounded animate-spin" />
                           ) : <MdDelete size={14} />}
                         </button>
                       </div>
@@ -268,7 +268,7 @@ export default function CoreFormsTab() {
                       className="p-1.5 text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded"
                     >
                       {deleting === item.id ? (
-                        <span className="block w-3 h-3 border-2 border-red-700 border-t-transparent rounded-full animate-spin" />
+                        <span className="block w-3 h-3 border-2 border-red-700 border-t-transparent rounded animate-spin" />
                       ) : <MdDelete size={13} />}
                     </button>
                   </div>
@@ -288,7 +288,7 @@ export default function CoreFormsTab() {
       {/* ADD/EDIT MODAL */}
       {showModal && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-md max-h-[92vh] flex flex-col overflow-hidden">
+          <div className="bg-white rounded shadow-xl w-full max-w-md max-h-[92vh] flex flex-col overflow-hidden">
             <div className="px-5 py-3.5 border-b border-zinc-100 flex items-center justify-between shrink-0">
               <h3 className="text-[15px] font-bold text-zinc-800">
                 {isEditing ? "Edit Form" : "Add Form"}
@@ -401,7 +401,7 @@ export default function CoreFormsTab() {
       {/* PREVIEW MODAL (table View PDF) */}
       {previewItem && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-4xl max-h-[92vh] flex flex-col overflow-hidden">
+          <div className="bg-white rounded shadow-xl w-full max-w-4xl max-h-[92vh] flex flex-col overflow-hidden">
             <div className="px-5 py-3.5 border-b border-zinc-100 flex items-center justify-between shrink-0 gap-3">
               <h3 className="text-[15px] font-bold text-zinc-800 truncate capitalize">
                 {previewItem.category || "Form Preview"}

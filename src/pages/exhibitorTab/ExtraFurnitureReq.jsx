@@ -70,7 +70,7 @@ export default function ExtraFurnitureReq() {
       <div className="space-y-4">
         
 
-        <section className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm">
+        <section className="overflow-hidden rounded border border-zinc-200 bg-white shadow-sm">
           <div className="flex flex-col gap-3 border-b border-zinc-100 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
             <div>
               <h4 className="text-[15px] font-bold text-zinc-900">Selected Furniture</h4>
@@ -118,9 +118,9 @@ export default function ExtraFurnitureReq() {
             </div>
           ) : (
             <>
-              <div className="hidden overflow-x-auto lg:block">
+              <div className="hidden lg:block overflow-auto max-h-[60vh]">
                 <table className="w-full min-w-[54rem]">
-                  <thead className="bg-zinc-50">
+                  <thead className="bg-zinc-50 sticky top-0 z-10">
                     <tr>
                       {["ID", "Image", "Name", "Price", "Qty", "Amount", "Tax", "Total", "Action"].map((heading) => (
                         <th
@@ -211,7 +211,7 @@ export default function ExtraFurnitureReq() {
                             type="button"
                             onClick={() => removeFurniture(index, ex.state)}
                             disabled={isLocked}
-                            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-red-200 bg-red-50 text-red-700 disabled:opacity-50"
+                            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded border border-red-200 bg-red-50 text-red-700 disabled:opacity-50"
                           >
                             <MdDelete size={15} />
                           </button>
@@ -243,9 +243,9 @@ export default function ExtraFurnitureReq() {
       </div>
 
       <aside className="space-y-4">
-        <section className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm sm:p-5">
+        <section className="rounded border border-zinc-200 bg-white p-4 shadow-sm sm:p-5">
           <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+            <div className="flex h-9 w-9 items-center justify-center rounded bg-blue-50 text-blue-600">
               <MdShoppingBag size={18} />
             </div>
             <div>
@@ -272,9 +272,9 @@ export default function ExtraFurnitureReq() {
           </div>
         </section>
 
-        <section className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm sm:p-5">
+        <section className="rounded border border-zinc-200 bg-white p-4 shadow-sm sm:p-5">
           <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600">
+            <div className="flex h-9 w-9 items-center justify-center rounded bg-emerald-50 text-emerald-600">
               <MdInventory2 size={18} />
             </div>
             <div>
@@ -286,7 +286,7 @@ export default function ExtraFurnitureReq() {
           <div className="mt-4 space-y-3">
             {vendorDetails.length > 0 ? (
               vendorDetails.map((vendor) => (
-                <div key={vendor.id} className="rounded-lg border border-zinc-200 bg-zinc-50 p-3">
+                <div key={vendor.id} className="rounded border border-zinc-200 bg-zinc-50 p-3">
                   <VendorLine label="Vendor Name" value={vendor.vendor_name} />
                   <VendorLine label="Company Name" value={vendor.company_name} />
                   <VendorLine label="Email" value={vendor.email || vendor.vendor_email} />
@@ -294,14 +294,14 @@ export default function ExtraFurnitureReq() {
                 </div>
               ))
             ) : (
-              <div className="rounded-lg border border-dashed border-zinc-300 bg-zinc-50 px-4 py-8 text-center text-[13px] text-zinc-500">
+              <div className="rounded border border-dashed border-zinc-300 bg-zinc-50 px-4 py-8 text-center text-[13px] text-zinc-500">
                 No vendors found
               </div>
             )}
           </div>
         </section>
 
-        <section className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm sm:p-5">
+        <section className="rounded border border-zinc-200 bg-white p-4 shadow-sm sm:p-5">
           <div className="flex items-start justify-between gap-3">
             <div>
               <h4 className="text-[15px] font-bold text-zinc-900">Actions</h4>
@@ -347,7 +347,7 @@ function CatalogModal({ rows, selectedFurniture, search, onSearchChange, onClose
       onClick={onClose}
     >
       <div
-        className="flex max-h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-2xl bg-white shadow-xl"
+        className="flex max-h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded bg-white shadow-xl"
         onClick={(event) => event.stopPropagation()}
       >
         <div className="flex items-center justify-between gap-3 border-b border-zinc-100 px-5 py-4">
@@ -390,7 +390,7 @@ function CatalogModal({ rows, selectedFurniture, search, onSearchChange, onClose
                 return (
                   <div
                     key={item.id}
-                    className={`overflow-hidden rounded-xl border bg-white transition ${
+                    className={`overflow-hidden rounded border bg-white transition ${
                       alreadyAdded ? "border-emerald-300 ring-1 ring-emerald-200" : "border-zinc-200 hover:shadow-md"
                     }`}
                   >
@@ -435,7 +435,7 @@ function CatalogModal({ rows, selectedFurniture, search, onSearchChange, onClose
 
 function FurnitureThumb({ image, name }) {
   return (
-    <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-lg bg-zinc-100">
+    <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded bg-zinc-100">
       {image ? (
         <img src={`${API}/uploads/${image}`} alt={name} className="h-full w-full object-cover" />
       ) : (
@@ -447,7 +447,7 @@ function FurnitureThumb({ image, name }) {
 
 function QtyControl({ value, disabled, onDecrement, onIncrement, onChange }) {
   return (
-    <div className="inline-flex items-center rounded-lg bg-zinc-100">
+    <div className="inline-flex items-center rounded bg-zinc-100">
       <button
         type="button"
         onClick={onDecrement}
@@ -492,7 +492,7 @@ function ActionButton({ onClick, disabled, icon, className, children }) {
 
 function MiniStat({ label, value }) {
   return (
-    <div className="rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2.5">
+    <div className="rounded border border-zinc-200 bg-zinc-50 px-3 py-2.5">
       <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-500">{label}</p>
       <p className="mt-1 text-[14px] font-bold text-zinc-900">{value}</p>
     </div>
@@ -501,7 +501,7 @@ function MiniStat({ label, value }) {
 
 function SummaryRow({ label, value }) {
   return (
-    <div className="flex items-center justify-between rounded-lg bg-zinc-50 px-3 py-2">
+    <div className="flex items-center justify-between rounded bg-zinc-50 px-3 py-2">
       <span className="text-[13px] text-zinc-500">{label}</span>
       <span className="text-[13px] font-semibold text-zinc-800">{value}</span>
     </div>
@@ -526,7 +526,7 @@ function StatusPill({ label, tone }) {
   };
 
   return (
-    <span className={`inline-flex rounded-full px-3 py-1 text-[11px] font-semibold ${toneMap[tone] || toneMap.blue}`}>
+    <span className={`inline-flex rounded px-3 py-1 text-[11px] font-semibold ${toneMap[tone] || toneMap.blue}`}>
       {label}
     </span>
   );
@@ -534,7 +534,7 @@ function StatusPill({ label, tone }) {
 
 function MetaCard({ label, value }) {
   return (
-    <div className="rounded-lg bg-zinc-50 px-3 py-2">
+    <div className="rounded bg-zinc-50 px-3 py-2">
       <p className="text-zinc-400">{label}</p>
       <p className="font-semibold text-zinc-700">{value}</p>
     </div>

@@ -73,7 +73,7 @@ export default function FounderSection() {
             {modal === 'edit' && (editing?.image_url || editing?.image) && (
               <Field label="Current Image">
                 <img src={imgSrc(editing.image_url || editing.image)} alt={heading}
-                  className="h-20 w-28 object-contain rounded-lg border border-zinc-200 bg-zinc-50 cursor-pointer"
+                  className="h-20 w-28 object-contain rounded border border-zinc-200 bg-zinc-50 cursor-pointer"
                   onClick={() => setPreview(imgSrc(editing.image_url || editing.image))} />
                 <p className="text-xs text-zinc-400 mt-1">Click to preview</p>
               </Field>
@@ -83,7 +83,7 @@ export default function FounderSection() {
               {file && (
                 <div className="mt-2 flex items-center gap-3">
                   <img src={URL.createObjectURL(file)} alt="preview"
-                    className="h-16 w-24 object-contain rounded-lg border border-zinc-200 bg-zinc-50" />
+                    className="h-16 w-24 object-contain rounded border border-zinc-200 bg-zinc-50" />
                   <p className="text-xs text-emerald-600">{file.name}</p>
                 </div>
               )}

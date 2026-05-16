@@ -58,7 +58,7 @@ export default function BusinessRequirement() {
         
         <div className="flex items-center gap-2">
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search..."
-            className="text-sm border border-zinc-200 rounded-lg px-3 py-2 bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-blue-500 w-48" />
+            className="text-sm border border-zinc-200 rounded px-3 py-2 bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-blue-500 w-48" />
           <button onClick={openAdd}
             className="bg-blue-600 text-white rounded px-3.5 py-2 text-sm font-semibold hover:bg-blue-700 transition-colors">
             + Add
@@ -66,7 +66,7 @@ export default function BusinessRequirement() {
         </div>
       </div>
 
-      <div className="overflow-x-auto rounded-xl border border-zinc-200">
+      <div className="overflow-x-auto rounded border border-zinc-200">
         <table className="w-full border-collapse">
           <thead>
             <tr>
@@ -104,7 +104,7 @@ export default function BusinessRequirement() {
 
       {modal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md">
+          <div className="bg-white rounded shadow-2xl w-full max-w-md">
             <div className="px-6 py-4 border-b border-zinc-100">
               <h3 className="text-sm font-semibold text-zinc-800">{modal === 'add' ? 'Add' : 'Edit'} Business Requirement</h3>
             </div>
@@ -113,7 +113,7 @@ export default function BusinessRequirement() {
               <input value={name} onChange={e => setName(e.target.value)} placeholder="Enter business name"
                 className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
-            <div className="flex justify-end gap-3 px-6 py-4 border-t border-zinc-100 bg-zinc-50 rounded-b-2xl">
+            <div className="flex justify-end gap-3 px-6 py-4 border-t border-zinc-100 bg-zinc-50 rounded-b">
               <button onClick={() => setModal(null)} className="px-4 py-2 text-sm text-zinc-600 border border-zinc-200 rounded hover:bg-zinc-100">Cancel</button>
               <button onClick={handleSave} disabled={saving}
                 className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded hover:bg-blue-700 disabled:opacity-60">

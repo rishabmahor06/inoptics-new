@@ -5,19 +5,19 @@ import { apiFetch, apiPost, SectionShell, Modal, ModalActions } from '../shared'
 import CustomEditor from '../../../components/CustomEditor/CustomEditor';
 
 /* ── shared card styles ── */
-const CARD = 'bg-white rounded-xl border border-zinc-200 shadow-sm overflow-hidden';
+const CARD = 'bg-white rounded border border-zinc-200 shadow-sm overflow-hidden';
 const CARD_HEADER = 'flex items-center justify-between px-4 py-3 border-b border-zinc-100';
 const CARD_BODY = 'p-4';
-const BTN_EDIT = 'flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-md hover:bg-emerald-100 transition-colors';
-const BTN_DEL  = 'flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-red-600 bg-red-50 border border-red-200 rounded-md hover:bg-red-100 transition-colors';
-const BTN_ADD  = 'flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100 transition-colors';
-const INPUT    = 'w-full h-9 px-3 text-sm border border-zinc-200 rounded-md bg-zinc-50 text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition';
-const TEXTAREA = 'w-full px-3 py-2 text-sm border border-zinc-200 rounded-md bg-zinc-50 text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 resize-none transition';
-const EMPTY    = 'flex flex-col items-center justify-center py-10 border-2 border-dashed border-zinc-200 rounded-xl text-center';
+const BTN_EDIT = 'flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded hover:bg-emerald-100 transition-colors';
+const BTN_DEL  = 'flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-red-600 bg-red-50 border border-red-200 rounded hover:bg-red-100 transition-colors';
+const BTN_ADD  = 'flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100 transition-colors';
+const INPUT    = 'w-full h-9 px-3 text-sm border border-zinc-200 rounded bg-zinc-50 text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition';
+const TEXTAREA = 'w-full px-3 py-2 text-sm border border-zinc-200 rounded bg-zinc-50 text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 resize-none transition';
+const EMPTY    = 'flex flex-col items-center justify-center py-10 border-2 border-dashed border-zinc-200 rounded text-center';
 
 function SectionIcon({ iconBg, iconColor, Icon }) {
   return (
-    <div className="w-8 h-8 rounded-md flex items-center justify-center shrink-0" style={{ background: iconBg }}>
+    <div className="w-8 h-8 rounded flex items-center justify-center shrink-0" style={{ background: iconBg }}>
       <Icon size={16} style={{ color: iconColor }} />
     </div>
   );
@@ -67,7 +67,7 @@ function EventScheduleCard() {
         </div>
         <div className={CARD_BODY}>
           {loading ? (
-            <div className="h-20 bg-zinc-100 rounded-lg animate-pulse" />
+            <div className="h-20 bg-zinc-100 rounded animate-pulse" />
           ) : !item ? (
             <div className={EMPTY}>
               <p className="text-sm text-zinc-400">No event schedule added</p>
@@ -141,7 +141,7 @@ function DashboardScheduleCard() {
         </div>
         <div className={CARD_BODY}>
           {loading ? (
-            <div className="space-y-2">{[1,2].map(i => <div key={i} className="h-8 bg-zinc-100 rounded-lg animate-pulse" />)}</div>
+            <div className="space-y-2">{[1,2].map(i => <div key={i} className="h-8 bg-zinc-100 rounded animate-pulse" />)}</div>
           ) : items.length === 0 ? (
             <div className={EMPTY}>
               <p className="text-sm text-zinc-400">No dashboard schedule added</p>
@@ -180,7 +180,7 @@ function DashboardScheduleCard() {
         <Modal title={modal.id ? 'Edit Dashboard Schedule' : 'Add Dashboard Schedule'} onClose={() => setModal(null)}>
           <div className="space-y-3">
             {modal.points.map((pt, i) => (
-              <div key={i} className="bg-zinc-50 rounded-lg p-3 border border-zinc-200 space-y-2">
+              <div key={i} className="bg-zinc-50 rounded p-3 border border-zinc-200 space-y-2">
                 <div className="flex items-center justify-between">
                   <p className="text-xs font-bold text-zinc-500 uppercase tracking-wide">Point {i + 1}</p>
                   {modal.points.length > 1 && (
@@ -245,7 +245,7 @@ function LatestNewsCard() {
         </div>
         <div className={CARD_BODY}>
           {loading ? (
-            <div className="space-y-2">{[1,2].map(i => <div key={i} className="h-12 bg-zinc-100 rounded-lg animate-pulse" />)}</div>
+            <div className="space-y-2">{[1,2].map(i => <div key={i} className="h-12 bg-zinc-100 rounded animate-pulse" />)}</div>
           ) : items.length === 0 ? (
             <div className={EMPTY}>
               <p className="text-sm text-zinc-400">No latest news added</p>
@@ -277,7 +277,7 @@ function LatestNewsCard() {
         <Modal title={modal.id ? 'Edit Latest News' : 'Add Latest News'} onClose={() => setModal(null)}>
           <div className="space-y-3">
             {modal.news.map((n, i) => (
-              <div key={i} className="bg-zinc-50 rounded-lg p-3 border border-zinc-200 space-y-2">
+              <div key={i} className="bg-zinc-50 rounded p-3 border border-zinc-200 space-y-2">
                 <div className="flex items-center justify-between">
                   <p className="text-xs font-bold text-zinc-500 uppercase tracking-wide">Item {i + 1}</p>
                   {modal.news.length > 1 && <button onClick={() => removeItem(i)} className="text-xs text-red-500 hover:text-red-700 font-semibold">Remove</button>}
@@ -328,7 +328,7 @@ function ParticularsCard() {
       </div>
       <div className={CARD_BODY}>
         {loading ? (
-          <div className="space-y-2">{[1,2,3,4,5].map(i => <div key={i} className="h-7 bg-zinc-100 rounded-md animate-pulse" />)}</div>
+          <div className="space-y-2">{[1,2,3,4,5].map(i => <div key={i} className="h-7 bg-zinc-100 rounded animate-pulse" />)}</div>
         ) : (
           <div className="divide-y divide-zinc-100">
             {rows.map(r => (

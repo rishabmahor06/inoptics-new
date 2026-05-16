@@ -155,9 +155,9 @@ export default function ExhibitionMapTab() {
         loading={loading}
         >
         {loading ? (
-          <div className="h-64 bg-zinc-100 rounded-xl animate-pulse" />
+          <div className="h-64 bg-zinc-100 rounded animate-pulse" />
         ) : !map ? (
-          <div className="text-center py-16 border-2 border-dashed border-zinc-200 rounded-xl">
+          <div className="text-center py-16 border-2 border-dashed border-zinc-200 rounded">
             <MdMap size={40} className="text-zinc-300 mx-auto mb-2" />
             <p className="text-[13px] text-zinc-400">No exhibition map uploaded</p>
             <button onClick={() => setModal({})} className="mt-2 text-[12px] font-semibold text-blue-600 hover:underline">+ Upload map</button>
@@ -166,36 +166,36 @@ export default function ExhibitionMapTab() {
           <div className="space-y-3">
             <div className="flex items-center gap-2 flex-wrap">
               <button onClick={() => zoomBy(0.25)}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-zinc-700 bg-zinc-100 border border-zinc-200 rounded-lg hover:bg-zinc-200 transition-colors">
+                className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-zinc-700 bg-zinc-100 border border-zinc-200 rounded hover:bg-zinc-200 transition-colors">
                 <MdZoomIn size={14} /> Zoom In
               </button>
               <button onClick={() => zoomBy(-0.25)}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-zinc-700 bg-zinc-100 border border-zinc-200 rounded-lg hover:bg-zinc-200 transition-colors">
+                className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-zinc-700 bg-zinc-100 border border-zinc-200 rounded hover:bg-zinc-200 transition-colors">
                 <MdZoomOut size={14} /> Zoom Out
               </button>
               <button onClick={resetView}
-                className="px-3 py-1.5 text-[12px] font-semibold text-zinc-500 bg-zinc-50 border border-zinc-200 rounded-lg hover:bg-zinc-100 transition-colors">
+                className="px-3 py-1.5 text-[12px] font-semibold text-zinc-500 bg-zinc-50 border border-zinc-200 rounded hover:bg-zinc-100 transition-colors">
                 Reset ({Math.round(view.zoom * 100)}%)
               </button>
               <p className="text-[10px] text-zinc-400 hidden sm:block">Scroll to zoom · Drag to pan</p>
               <div className="flex-1" />
               <button onClick={() => handleDownload(map.image)}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 transition-colors">
+                className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100 transition-colors">
                 <MdDownload size={14} /> Download
               </button>
               <button onClick={() => { setModal({ id: map.id }); setImgFile(null); }}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg hover:bg-emerald-100 transition-colors">
+                className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded hover:bg-emerald-100 transition-colors">
                 <MdEdit size={13} /> Replace
               </button>
               <button onClick={() => handleDelete(map.id)}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-red-600 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 transition-colors">
+                className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-red-600 bg-red-50 border border-red-200 rounded hover:bg-red-100 transition-colors">
                 <MdDelete size={13} /> Delete
               </button>
             </div>
 
             <div
               ref={containerRef}
-              className="relative rounded-xl border border-zinc-200 bg-[#f4f4f4] overflow-hidden select-none"
+              className="relative rounded border border-zinc-200 bg-[#f4f4f4] overflow-hidden select-none"
               style={{ height: '100vh', cursor: isDragging ? 'grabbing' : 'grab' }}
               onMouseDown={onMouseDown}
               onMouseMove={onMouseMove}
@@ -221,7 +221,7 @@ export default function ExhibitionMapTab() {
                 }}
                 onError={e => { e.target.style.display = 'none'; }}
               />
-              <div className="absolute bottom-2 right-2 bg-black/40 text-white text-[10px] font-semibold px-2 py-1 rounded-lg backdrop-blur-sm pointer-events-none">
+              <div className="absolute bottom-2 right-2 bg-black/40 text-white text-[10px] font-semibold px-2 py-1 rounded backdrop-blur-sm pointer-events-none">
                 {Math.round(view.zoom * 100)}%
               </div>
             </div>
@@ -233,7 +233,7 @@ export default function ExhibitionMapTab() {
         <Modal title={modal.id ? 'Replace Exhibition Map' : 'Upload Exhibition Map'}
           onClose={() => { setModal(null); setImgFile(null); }}>
           <div
-            className="border-2 border-dashed border-zinc-300 rounded-xl p-10 text-center cursor-pointer hover:border-blue-400 hover:bg-blue-50/30 transition-colors"
+            className="border-2 border-dashed border-zinc-300 rounded p-10 text-center cursor-pointer hover:border-blue-400 hover:bg-blue-50/30 transition-colors"
             onClick={() => fileRef.current?.click()}>
             <MdMap size={36} className="text-zinc-400 mx-auto mb-2" />
             {imgFile
@@ -246,7 +246,7 @@ export default function ExhibitionMapTab() {
           </div>
           {imgFile && (
             <img src={URL.createObjectURL(imgFile)} alt="preview"
-              className="w-full rounded-xl border border-zinc-200 max-h-48 object-contain mt-3" />
+              className="w-full rounded border border-zinc-200 max-h-48 object-contain mt-3" />
           )}
           <ModalActions
             onCancel={() => { setModal(null); setImgFile(null); }}

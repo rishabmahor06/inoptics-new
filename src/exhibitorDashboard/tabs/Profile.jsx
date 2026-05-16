@@ -115,7 +115,7 @@ function StallDetailsCard({ stallList, loading }) {
           {stallList.map((stall, idx) => (
             <div
               key={idx}
-              className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3 bg-zinc-50 rounded-xl border border-zinc-100"
+              className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3 bg-zinc-50 rounded border border-zinc-100"
             >
               <Detail label="Stall Number" value={stall.stall_number} />
               <Detail
@@ -157,7 +157,7 @@ function BrandsCard({
         !isEditMode && hasBrandsData ? (
           <button
             onClick={() => setIsEditMode(true)}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded transition-colors"
           >
             <MdEdit size={14} /> Edit
           </button>
@@ -224,7 +224,7 @@ function BrandsForm({
             {brandsData.products.map((p) => (
               <span
                 key={p}
-                className="inline-flex items-center gap-1 px-2.5 py-1 text-[12px] font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-full"
+                className="inline-flex items-center gap-1 px-2.5 py-1 text-[12px] font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded"
               >
                 {p}
                 <button
@@ -242,7 +242,7 @@ function BrandsForm({
         <select
           value=""
           onChange={(e) => addProduct(e.target.value)}
-          className="w-full px-3 py-2 text-[13px] border border-zinc-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 py-2 text-[13px] border border-zinc-200 rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">-- Select Product --</option>
           {products.map((p, i) => (
@@ -275,7 +275,7 @@ function BrandsForm({
             type="button"
             onClick={onCancel}
             disabled={saving}
-            className="px-4 py-2 text-[13px] font-semibold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded-lg disabled:opacity-60"
+            className="px-4 py-2 text-[13px] font-semibold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded disabled:opacity-60"
           >
             Cancel
           </button>
@@ -284,7 +284,7 @@ function BrandsForm({
           type="button"
           onClick={onSubmit}
           disabled={saving}
-          className="inline-flex items-center gap-1.5 px-4 py-2 text-[13px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg disabled:opacity-60"
+          className="inline-flex items-center gap-1.5 px-4 py-2 text-[13px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded disabled:opacity-60"
         >
           {saving ? (
             "Saving..."
@@ -313,7 +313,7 @@ function BrandsView({ brandsData }) {
             {brandsData.products.map((p) => (
               <span
                 key={p}
-                className="inline-flex items-center px-2.5 py-1 text-[12px] font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-full"
+                className="inline-flex items-center px-2.5 py-1 text-[12px] font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded"
               >
                 {p}
               </span>
@@ -329,7 +329,7 @@ function BrandsView({ brandsData }) {
         label="International Brands"
         value={brandsData.international_brands}
       />
-      <div className="flex items-center gap-1.5 mt-2 text-[11.5px] text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2">
+      <div className="flex items-center gap-1.5 mt-2 text-[11.5px] text-emerald-700 bg-emerald-50 border border-emerald-200 rounded px-3 py-2">
         <MdLock size={13} />
         Saved — click edit to update
       </div>
@@ -339,11 +339,11 @@ function BrandsView({ brandsData }) {
 
 function Card({ title, Icon, action, children }) {
   return (
-    <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
+    <div className="bg-white rounded border border-zinc-200 shadow-sm overflow-hidden">
       <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-b border-zinc-100 bg-zinc-50/60">
         <div className="flex items-center gap-2">
           {Icon && (
-            <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded bg-blue-50 text-blue-600 flex items-center justify-center">
               <Icon size={16} />
             </div>
           )}
@@ -407,7 +407,7 @@ function Field({ label, value, onChange, placeholder }) {
         value={value || ""}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full px-3 py-2 text-[13px] border border-zinc-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full px-3 py-2 text-[13px] border border-zinc-200 rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
     </div>
   );

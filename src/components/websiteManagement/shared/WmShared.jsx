@@ -32,7 +32,7 @@ export function ImgPreview({ src, alt, onClose }) {
         <img
           src={src}
           alt={alt || ''}
-          className="w-full max-h-[85vh] object-contain rounded-xl shadow-2xl bg-zinc-900"
+          className="w-full max-h-[85vh] object-contain rounded shadow-2xl bg-zinc-900"
         />
         {alt && <p className="text-center text-white/50 text-xs mt-2">{alt}</p>}
       </div>
@@ -44,7 +44,7 @@ import { MdAdd, MdEdit, MdDelete } from 'react-icons/md';
 export function AddBtn({ onClick, label = 'Add' }) {
   return (
     <button onClick={onClick}
-      className="inline-flex items-center gap-1.5 bg-blue-600 text-white rounded-lg px-3.5 py-2 text-[13px] font-semibold hover:bg-blue-700 transition-colors">
+      className="inline-flex items-center gap-1.5 bg-blue-600 text-white rounded px-3.5 py-2 text-[13px] font-semibold hover:bg-blue-700 transition-colors">
       <MdAdd size={16} />{label}
     </button>
   );
@@ -71,7 +71,7 @@ export function DelBtn({ onClick }) {
 export function WmModal({ title, onClose, onSave, saving, children }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
+      <div className="bg-white rounded shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
         <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-100 shrink-0">
           <h2 className="text-base font-semibold text-zinc-800">{title}</h2>
           <button onClick={onClose}
@@ -82,7 +82,7 @@ export function WmModal({ title, onClose, onSave, saving, children }) {
           </button>
         </div>
         <div className="overflow-y-auto flex-1 px-6 py-5">{children}</div>
-        <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-zinc-100 bg-zinc-50/80 rounded-b-2xl shrink-0">
+        <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-zinc-100 bg-zinc-50/80 rounded-b shrink-0">
           <button onClick={onClose} disabled={saving}
             className="px-5 py-2.5 text-sm font-medium text-zinc-600 bg-white border border-zinc-200 hover:bg-zinc-50 rounded transition-colors disabled:opacity-50">
             Cancel
@@ -105,7 +105,7 @@ export function WmModal({ title, onClose, onSave, saving, children }) {
 
 export function WmTable({ headers, children, loading, empty }) {
   return (
-    <div className="overflow-x-auto rounded-xl border border-zinc-200 shadow-sm">
+    <div className="overflow-x-auto rounded border border-zinc-200 shadow-sm">
       <table className="w-full border-collapse">
         <thead>
           <tr>
@@ -162,21 +162,21 @@ export function Field({ label, children, required }) {
 export function WmInput({ value, onChange, placeholder, type = 'text' }) {
   return (
     <input type={type} value={value} onChange={onChange} placeholder={placeholder}
-      className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded-lg bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all placeholder:text-zinc-300" />
+      className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all placeholder:text-zinc-300" />
   );
 }
 
 export function WmTextarea({ value, onChange, placeholder, rows = 3 }) {
   return (
     <textarea value={value} onChange={onChange} placeholder={placeholder} rows={rows}
-      className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded-lg bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all placeholder:text-zinc-300 resize-none" />
+      className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all placeholder:text-zinc-300 resize-none" />
   );
 }
 
 export function WmFileInput({ onChange, accept = 'image/*', label = 'Choose file' }) {
   return (
     <label className="flex items-center gap-3 cursor-pointer group">
-      <span className="px-4 py-2 text-xs font-semibold bg-blue-50 text-blue-700 rounded-lg border border-blue-200 group-hover:bg-blue-100 transition-colors">
+      <span className="px-4 py-2 text-xs font-semibold bg-blue-50 text-blue-700 rounded border border-blue-200 group-hover:bg-blue-100 transition-colors">
         {label}
       </span>
       <input type="file" accept={accept} onChange={onChange} className="hidden" />
@@ -258,7 +258,7 @@ export function TdImage({ src, alt = '', onPreview }) {
         alt={alt}
         onClick={onPreview ? () => onPreview(resolved) : undefined}
         title={onPreview ? 'Click to preview' : undefined}
-        className={`h-10 w-16 object-contain rounded-lg border border-zinc-100 bg-zinc-50 transition-transform ${onPreview ? 'cursor-pointer hover:scale-110' : ''}`}
+        className={`h-10 w-16 object-contain rounded border border-zinc-100 bg-zinc-50 transition-transform ${onPreview ? 'cursor-pointer hover:scale-110' : ''}`}
       />
     </td>
   );

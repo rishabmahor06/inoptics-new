@@ -102,7 +102,7 @@ export default function VisitorGuideCards() {
                   src={imgSrc(editing.image || editing.image_path)}
                   alt={title}
                   onClick={() => setPreview(imgSrc(editing.image || editing.image_path))}
-                  className="h-20 w-32 object-cover rounded-lg border border-zinc-200 cursor-pointer hover:scale-105 transition-transform"
+                  className="h-20 w-32 object-cover rounded border border-zinc-200 cursor-pointer hover:scale-105 transition-transform"
                 />
               </Field>
             )}
@@ -110,7 +110,7 @@ export default function VisitorGuideCards() {
               <WmFileInput onChange={(e) => setFile(e.target.files[0])} />
               {file && (
                 <div className="mt-2 flex items-center gap-3">
-                  <img src={URL.createObjectURL(file)} alt="" className="h-16 w-24 object-cover rounded-lg border border-zinc-200" />
+                  <img src={URL.createObjectURL(file)} alt="" className="h-16 w-24 object-cover rounded border border-zinc-200" />
                   <p className="text-xs text-emerald-600">{file.name}</p>
                 </div>
               )}

@@ -79,7 +79,7 @@ export default function ContractorBadges() {
                     onChange={(e) => setQuantity(e.target.value)}
                     disabled={inputDisabled}
                     placeholder="Enter number of badges"
-                    className={`w-full px-3 py-2.5 text-[14px] font-semibold border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    className={`w-full px-3 py-2.5 text-[14px] font-semibold border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                       inputDisabled
                         ? "bg-zinc-50 text-zinc-600 border-zinc-200 cursor-not-allowed"
                         : "bg-white border-zinc-200"
@@ -93,7 +93,7 @@ export default function ContractorBadges() {
                       type="button"
                       onClick={submit}
                       disabled={saving || !quantity}
-                      className="inline-flex items-center gap-1.5 px-5 py-2 text-[13px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg disabled:opacity-60"
+                      className="inline-flex items-center gap-1.5 px-5 py-2 text-[13px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded disabled:opacity-60"
                     >
                       <MdLock size={14} />
                       {saving
@@ -108,7 +108,7 @@ export default function ContractorBadges() {
                       type="button"
                       onClick={requestUnlock}
                       disabled={saving}
-                      className="inline-flex items-center gap-1.5 px-5 py-2 text-[13px] font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-lg disabled:opacity-60"
+                      className="inline-flex items-center gap-1.5 px-5 py-2 text-[13px] font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded disabled:opacity-60"
                     >
                       <MdLockOpen size={14} />
                       Request Unlock
@@ -118,7 +118,7 @@ export default function ContractorBadges() {
                     <button
                       type="button"
                       disabled
-                      className="inline-flex items-center gap-1.5 px-5 py-2 text-[13px] font-semibold text-zinc-500 bg-zinc-100 border border-zinc-200 rounded-lg cursor-not-allowed"
+                      className="inline-flex items-center gap-1.5 px-5 py-2 text-[13px] font-semibold text-zinc-500 bg-zinc-100 border border-zinc-200 rounded cursor-not-allowed"
                     >
                       <MdHourglassTop size={14} />
                       Waiting for admin approval
@@ -171,7 +171,7 @@ function StatusCard({ lockStatus, isSubmitted, quantity }) {
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
+    <div className="bg-white rounded border border-zinc-200 shadow-sm overflow-hidden">
       <div className={`px-4 sm:px-5 py-4 bg-linear-to-br ${grads[s.tone]} text-white relative`}>
         <p className="text-[10.5px] font-bold uppercase tracking-widest text-white/85">
           Status
@@ -184,7 +184,7 @@ function StatusCard({ lockStatus, isSubmitted, quantity }) {
       <div className="p-4 sm:p-5 space-y-3">
         <p className="text-[12.5px] text-zinc-600 leading-relaxed">{s.desc}</p>
         {quantity && (
-          <div className="bg-zinc-50 border border-zinc-100 rounded-lg px-3 py-2.5 flex items-center justify-between">
+          <div className="bg-zinc-50 border border-zinc-100 rounded px-3 py-2.5 flex items-center justify-between">
             <span className="text-[11px] uppercase tracking-wider font-semibold text-zinc-500">
               Badge Qty
             </span>
@@ -200,7 +200,7 @@ function StatusCard({ lockStatus, isSubmitted, quantity }) {
 
 function InfoCard() {
   return (
-    <div className="bg-blue-50/50 border border-blue-100 rounded-2xl p-4">
+    <div className="bg-blue-50/50 border border-blue-100 rounded p-4">
       <p className="text-[11.5px] font-bold uppercase tracking-wider text-blue-700 mb-1.5">
         How it works
       </p>
@@ -216,7 +216,7 @@ function InfoCard() {
 function NoContractor() {
   return (
     <div className="py-10 text-center">
-      <div className="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mx-auto mb-3 text-amber-500">
+      <div className="w-14 h-14 rounded bg-amber-50 flex items-center justify-center mx-auto mb-3 text-amber-500">
         <MdHandshake size={26} />
       </div>
       <p className="text-[14px] font-bold text-[#02062c]">
@@ -238,11 +238,11 @@ function Card({ title, Icon, status, children }) {
         ? { label: "UNLOCK REQUESTED", cls: "text-blue-700 bg-blue-50 border-blue-200" }
         : null;
   return (
-    <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
+    <div className="bg-white rounded border border-zinc-200 shadow-sm overflow-hidden">
       <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-b border-zinc-100 bg-zinc-50/60">
         <div className="flex items-center gap-2">
           {Icon && (
-            <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+            <div className="w-7 h-7 rounded bg-blue-50 text-blue-600 flex items-center justify-center">
               <Icon size={15} />
             </div>
           )}
@@ -250,7 +250,7 @@ function Card({ title, Icon, status, children }) {
         </div>
         {badge && (
           <span
-            className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border ${badge.cls}`}
+            className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${badge.cls}`}
           >
             {badge.label}
           </span>
@@ -273,7 +273,7 @@ function Field({ label, Icon, value, disabled, helper }) {
         value={value || ""}
         disabled={disabled}
         readOnly={disabled}
-        className="w-full px-3 py-2 text-[13px] border border-zinc-200 rounded-lg bg-zinc-50 text-zinc-600 cursor-not-allowed focus:outline-none"
+        className="w-full px-3 py-2 text-[13px] border border-zinc-200 rounded bg-zinc-50 text-zinc-600 cursor-not-allowed focus:outline-none"
       />
       {helper && (
         <p className="text-[11px] text-zinc-400 mt-1">{helper}</p>
@@ -288,7 +288,7 @@ function Skel() {
       {[1, 2, 3].map((i) => (
         <div key={i} className="space-y-1.5">
           <div className="h-2.5 w-24 bg-zinc-100 rounded animate-pulse" />
-          <div className="h-9 bg-zinc-100 rounded-lg animate-pulse" />
+          <div className="h-9 bg-zinc-100 rounded animate-pulse" />
         </div>
       ))}
     </div>

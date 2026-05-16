@@ -42,7 +42,7 @@ export default function Payment() {
         <button
           onClick={fetchAll}
           disabled={loading}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-zinc-700 bg-white border border-zinc-200 hover:bg-zinc-50 rounded-lg disabled:opacity-60"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-zinc-700 bg-white border border-zinc-200 hover:bg-zinc-50 rounded disabled:opacity-60"
         >
           <MdRefresh size={14} className={loading ? "animate-spin" : ""} />
           Refresh
@@ -78,9 +78,9 @@ export default function Payment() {
 
 function BankCard() {
   return (
-    <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
+    <div className="bg-white rounded border border-zinc-200 shadow-sm overflow-hidden">
       <div className="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-zinc-100 bg-zinc-50/60">
-        <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+        <div className="w-7 h-7 rounded bg-blue-50 text-blue-600 flex items-center justify-center">
           <MdAccountBalance size={15} />
         </div>
         <h3 className="text-[13.5px] font-bold text-[#02062c]">
@@ -94,7 +94,7 @@ function BankCard() {
         {BANK_DETAILS.map((b, i) => (
           <div
             key={i}
-            className="border border-zinc-100 rounded-xl p-3 bg-zinc-50/40"
+            className="border border-zinc-100 rounded p-3 bg-zinc-50/40"
           >
             <p className="text-[13px] font-bold text-[#02062c] truncate">
               {b.bank}
@@ -137,7 +137,7 @@ function StallCard({ summary, cleared, isDelhi, currency }) {
           {summary.stalls.map((s, i) => (
             <div
               key={i}
-              className="grid grid-cols-3 gap-2 text-[12px] bg-zinc-50/60 border border-zinc-100 rounded-lg px-2.5 py-1.5"
+              className="grid grid-cols-3 gap-2 text-[12px] bg-zinc-50/60 border border-zinc-100 rounded px-2.5 py-1.5"
             >
               <div>
                 <p className="text-[10px] uppercase tracking-wider font-semibold text-zinc-400">
@@ -207,7 +207,7 @@ function PowerCard({ power, cleared, isDelhi, currency }) {
     >
       {power.rows?.length > 0 && (
         <div className="mb-3 pb-3 border-b border-dashed border-zinc-200">
-          <div className="grid grid-cols-5 gap-1 px-2 py-1.5 bg-zinc-50 rounded-t-lg text-[10px] uppercase tracking-wider font-semibold text-zinc-500">
+          <div className="grid grid-cols-5 gap-1 px-2 py-1.5 bg-zinc-50 rounded-t text-[10px] uppercase tracking-wider font-semibold text-zinc-500">
             <span>Day</span>
             <span>Phase</span>
             <span className="text-right">₹/KW</span>
@@ -267,7 +267,7 @@ function BadgeCard({ billing, cleared, currency }) {
       paid={pending <= 0 && billing.grandTotal > 0}
     >
       <div className="grid grid-cols-2 gap-2 mb-3 pb-3 border-b border-dashed border-zinc-200">
-        <div className="bg-zinc-50/60 border border-zinc-100 rounded-lg px-2.5 py-2 text-center">
+        <div className="bg-zinc-50/60 border border-zinc-100 rounded px-2.5 py-2 text-center">
           <p className="text-[10px] uppercase tracking-wider font-semibold text-zinc-400">
             Per Badge
           </p>
@@ -275,7 +275,7 @@ function BadgeCard({ billing, cleared, currency }) {
             {currency} {billing.rate}
           </p>
         </div>
-        <div className="bg-zinc-50/60 border border-zinc-100 rounded-lg px-2.5 py-2 text-center">
+        <div className="bg-zinc-50/60 border border-zinc-100 rounded px-2.5 py-2 text-center">
           <p className="text-[10px] uppercase tracking-wider font-semibold text-zinc-400">
             Extra Badges
           </p>
@@ -312,20 +312,20 @@ function CardShell({ title, Icon, tone = "blue", paid, children }) {
     purple: "from-purple-500 to-pink-500",
   };
   return (
-    <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden flex flex-col">
+    <div className="bg-white rounded border border-zinc-200 shadow-sm overflow-hidden flex flex-col">
       <div className="relative">
         <div className={`h-1.5 bg-linear-to-r ${tones[tone]}`} />
         <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-100">
           <div className="flex items-center gap-2">
             {Icon && (
-              <div className="w-7 h-7 rounded-lg bg-zinc-100 text-zinc-700 flex items-center justify-center">
+              <div className="w-7 h-7 rounded bg-zinc-100 text-zinc-700 flex items-center justify-center">
                 <Icon size={15} />
               </div>
             )}
             <h3 className="text-[13.5px] font-bold text-[#02062c]">{title}</h3>
           </div>
           {paid && (
-            <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">
+            <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
               <MdCheckCircle size={11} /> Paid
             </span>
           )}
@@ -363,7 +363,7 @@ function StatusRow({ pending, currency, grandTotal }) {
   const isPaid = pending <= 0 && grandTotal > 0;
   return (
     <div
-      className={`mt-2 flex items-center justify-between px-3 py-2 rounded-lg border ${
+      className={`mt-2 flex items-center justify-between px-3 py-2 rounded border ${
         isPaid
           ? "bg-emerald-50 border-emerald-200"
           : pending > 0

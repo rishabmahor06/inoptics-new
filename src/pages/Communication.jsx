@@ -83,7 +83,7 @@ function Modal({ title, onClose, children, wide = false }) {
       className="fixed inset-0 z-50 bg-black/40 backdrop-blur-[2px] flex items-start justify-center overflow-y-auto py-8 px-4"
     >
       <div
-        className={`relative bg-white rounded-2xl shadow-2xl w-full flex flex-col ${wide ? "max-w-5xl" : "max-w-2xl"}`}
+        className={`relative bg-white rounded shadow-2xl w-full flex flex-col ${wide ? "max-w-5xl" : "max-w-2xl"}`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal header */}
@@ -263,7 +263,7 @@ function EmailsMaster() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-zinc-200 overflow-hidden">
+      <div className="bg-white rounded border border-zinc-200 overflow-hidden">
         {loading ? (
           <div className="py-16 text-center text-sm text-zinc-400">
             Loading templates…
@@ -468,7 +468,7 @@ function EmailsMaster() {
 /* ─── Send Bulk Emails Tab ─── */
 function SendBulkEmails() {
   return (
-    <div className="bg-white rounded-xl border border-zinc-200 flex flex-col items-center justify-center py-20 gap-3 text-zinc-300">
+    <div className="bg-white rounded border border-zinc-200 flex flex-col items-center justify-center py-20 gap-3 text-zinc-300">
       <MdSend size={44} />
       <p className="text-sm text-zinc-400">Bulk email composer coming soon</p>
     </div>
@@ -611,7 +611,7 @@ function VendorTable({
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-zinc-200 overflow-hidden">
+      <div className="bg-white rounded border border-zinc-200 overflow-hidden">
         {loading ? (
           <div className="py-16 text-center text-sm text-zinc-400">
             Loading…
@@ -718,14 +718,14 @@ function VendorTable({
           <div className="px-6 py-4 border-t border-zinc-100 flex items-center justify-end gap-3">
             <button
               onClick={() => setShowModal(false)}
-              className="px-4 py-2 rounded-lg border border-zinc-200 text-sm font-semibold text-zinc-600 hover:bg-zinc-50 transition-colors"
+              className="px-4 py-2 rounded border border-zinc-200 text-sm font-semibold text-zinc-600 hover:bg-zinc-50 transition-colors"
             >
               Cancel
             </button>
             <button
               onClick={handleSave}
               disabled={saving}
-              className="px-5 py-2 rounded-lg bg-zinc-900 text-white text-sm font-semibold hover:bg-zinc-700 transition-colors disabled:opacity-60"
+              className="px-5 py-2 rounded bg-zinc-900 text-white text-sm font-semibold hover:bg-zinc-700 transition-colors disabled:opacity-60"
             >
               {saving ? "Saving…" : editingId ? "Update" : "Add"}
             </button>
@@ -780,7 +780,7 @@ export default function Communication() {
       
 
       {/* Tab card */}
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+      <div className="bg-white rounded shadow-sm overflow-hidden">
         {/* Tab bar */}
         <div className="flex overflow-x-auto border-b border-zinc-100 [scrollbar-width:none]">
           {SUB_TABS.map((tab) => {
@@ -795,7 +795,7 @@ export default function Communication() {
                 {tab.icon}
                 {tab.label}
                 <span
-                  className={`absolute bottom-0 left-0 right-0 h-0.5 rounded-full transition-all duration-200 ${active ? "bg-zinc-900" : "bg-transparent"}`}
+                  className={`absolute bottom-0 left-0 right-0 h-0.5 rounded transition-all duration-200 ${active ? "bg-zinc-900" : "bg-transparent"}`}
                 />
               </button>
             );

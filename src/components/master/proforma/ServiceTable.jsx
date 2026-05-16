@@ -19,11 +19,11 @@ export default function ServiceTable({ services, onEdit, onDelete, onAdd }) {
       </div>
 
       {services.length === 0 ? (
-        <div className="text-center py-10 text-zinc-400 text-sm border border-dashed border-zinc-200 rounded-xl">
+        <div className="text-center py-10 text-zinc-400 text-sm border border-dashed border-zinc-200 rounded">
           No services configured yet
         </div>
       ) : (
-        <div className="rounded-xl border border-zinc-200 overflow-hidden">
+        <div className="rounded border border-zinc-200 overflow-hidden">
           <table className="w-full text-left">
             <thead className="bg-zinc-50 border-b border-zinc-200">
               <tr>

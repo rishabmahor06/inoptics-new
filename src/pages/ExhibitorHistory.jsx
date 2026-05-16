@@ -14,7 +14,7 @@ export default function ExhibitorHistory() {
 
   return (
     <div className="space-y-4">
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+      <div className="bg-white rounded shadow-sm overflow-hidden">
         {/* Tab bar */}
         <div className="flex overflow-x-auto border-b border-zinc-100 [scrollbar-width:none]">
           {TABS.map((t) => {
@@ -29,7 +29,7 @@ export default function ExhibitorHistory() {
               >
                 <Icon size={16} />
                 {t.label}
-                <span className={`absolute bottom-0 left-0 right-0 h-0.5 rounded-full transition-all duration-200 ${active ? 'bg-zinc-900' : 'bg-transparent'}`} />
+                <span className={`absolute bottom-0 left-0 right-0 h-0.5 rounded transition-all duration-200 ${active ? 'bg-zinc-900' : 'bg-transparent'}`} />
               </button>
             );
           })}

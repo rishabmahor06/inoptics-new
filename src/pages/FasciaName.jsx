@@ -219,17 +219,17 @@ th{background:#f2f2f2;}
   return (
     <div className="space-y-4 p-3 sm:p-4 lg:p-5">
       {/* TOOLBAR */}
-      <div className="bg-white rounded-xl shadow-sm px-4 sm:px-5 py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div className="bg-white rounded shadow-sm px-4 sm:px-5 py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="flex items-center gap-2 flex-wrap">
           <button
             onClick={exportToExcel}
-            className="px-3 py-2 text-[13px] font-semibold bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg flex items-center gap-1.5 transition-colors"
+            className="px-3 py-2 text-[13px] font-semibold bg-emerald-600 hover:bg-emerald-700 text-white rounded flex items-center gap-1.5 transition-colors"
           >
             <MdFileDownload size={16} /> Export Excel
           </button>
           <button
             onClick={handlePrintAll}
-            className="px-3 py-2 text-[13px] font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center gap-1.5 transition-colors"
+            className="px-3 py-2 text-[13px] font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded flex items-center gap-1.5 transition-colors"
           >
             <MdPrint size={16} /> Print All
           </button>
@@ -241,7 +241,7 @@ th{background:#f2f2f2;}
             placeholder="Search company or fascia..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full h-10 pl-9 pr-3 text-[14px] border border-zinc-200 rounded-xl bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full h-10 pl-9 pr-3 text-[14px] border border-zinc-200 rounded bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
       </div>
@@ -249,7 +249,7 @@ th{background:#f2f2f2;}
       {/* ACCORDION LIST */}
       <div className="space-y-2">
         {filteredCompanies.length === 0 ? (
-          <div className="bg-white rounded-xl border border-zinc-200 py-16 text-center text-zinc-400 text-sm">
+          <div className="bg-white rounded border border-zinc-200 py-16 text-center text-zinc-400 text-sm">
             No companies found
           </div>
         ) : (
@@ -259,7 +259,7 @@ th{background:#f2f2f2;}
             return (
               <div
                 key={company}
-                className="bg-white border border-zinc-200 rounded-xl overflow-hidden"
+                className="bg-white border border-zinc-200 rounded overflow-hidden"
               >
                 {/* Header */}
                 <div
@@ -277,7 +277,7 @@ th{background:#f2f2f2;}
                   <div className="flex items-center gap-2 shrink-0">
                     <button
                       onClick={(e) => { e.stopPropagation(); handlePrintCompany(company); }}
-                      className="px-2.5 py-1 text-[11px] font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-md flex items-center gap-1 transition-colors"
+                      className="px-2.5 py-1 text-[11px] font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded flex items-center gap-1 transition-colors"
                     >
                       <MdPrint size={13} /> Print
                     </button>
@@ -315,13 +315,13 @@ th{background:#f2f2f2;}
                                 <div className="flex items-center gap-1.5">
                                   <button
                                     onClick={() => handleEditClick(row)}
-                                    className="px-2.5 py-1 text-[11px] font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-md flex items-center gap-1 transition-colors"
+                                    className="px-2.5 py-1 text-[11px] font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded flex items-center gap-1 transition-colors"
                                   >
                                     <MdEdit size={12} /> Edit
                                   </button>
                                   <button
                                     onClick={() => handleDelete(row.id)}
-                                    className="px-2.5 py-1 text-[11px] font-semibold text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded-md flex items-center gap-1 transition-colors"
+                                    className="px-2.5 py-1 text-[11px] font-semibold text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded flex items-center gap-1 transition-colors"
                                   >
                                     <MdDelete size={12} /> Delete
                                   </button>
@@ -347,13 +347,13 @@ th{background:#f2f2f2;}
                             <div className="flex gap-1.5 shrink-0">
                               <button
                                 onClick={() => handleEditClick(row)}
-                                className="px-2 py-1 text-[11px] font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-md flex items-center gap-1"
+                                className="px-2 py-1 text-[11px] font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded flex items-center gap-1"
                               >
                                 <MdEdit size={12} /> Edit
                               </button>
                               <button
                                 onClick={() => handleDelete(row.id)}
-                                className="px-2 py-1 text-[11px] font-semibold text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded-md flex items-center gap-1"
+                                className="px-2 py-1 text-[11px] font-semibold text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded flex items-center gap-1"
                               >
                                 <MdDelete size={12} />
                               </button>
@@ -389,12 +389,12 @@ th{background:#f2f2f2;}
       {/* EDIT MODAL */}
       {showEditPopup && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-md max-h-[90vh] flex flex-col overflow-hidden">
+          <div className="bg-white rounded shadow-xl w-full max-w-md max-h-[90vh] flex flex-col overflow-hidden">
             <div className="px-5 py-3.5 border-b border-zinc-100 flex items-center justify-between shrink-0">
               <h3 className="text-[14px] font-bold text-zinc-800">Edit Fascia Name</h3>
               <button
                 onClick={() => setShowEditPopup(false)}
-                className="w-8 h-8 rounded-lg hover:bg-zinc-100 flex items-center justify-center text-zinc-400 hover:text-zinc-700 transition-colors"
+                className="w-8 h-8 rounded hover:bg-zinc-100 flex items-center justify-center text-zinc-400 hover:text-zinc-700 transition-colors"
               >
                 <MdClose size={18} />
               </button>
@@ -426,13 +426,13 @@ th{background:#f2f2f2;}
             <div className="px-5 py-3 border-t border-zinc-100 flex justify-end gap-2 shrink-0">
               <button
                 onClick={() => setShowEditPopup(false)}
-                className="px-4 py-2 text-[13px] font-semibold bg-zinc-100 hover:bg-zinc-200 text-zinc-700 rounded-lg transition-colors"
+                className="px-4 py-2 text-[13px] font-semibold bg-zinc-100 hover:bg-zinc-200 text-zinc-700 rounded transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleUpdate}
-                className="px-4 py-2 text-[13px] font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                className="px-4 py-2 text-[13px] font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors"
               >
                 Update
               </button>
@@ -455,7 +455,7 @@ function Field({ label, value, onChange, disabled }) {
         value={value}
         onChange={onChange}
         disabled={disabled}
-        className="w-full px-3 py-2 text-[13px] border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-zinc-50 disabled:text-zinc-500 disabled:cursor-not-allowed"
+        className="w-full px-3 py-2 text-[13px] border border-zinc-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-zinc-50 disabled:text-zinc-500 disabled:cursor-not-allowed"
       />
     </div>
   );

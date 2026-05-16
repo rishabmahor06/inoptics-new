@@ -62,7 +62,7 @@ export default function BadgesLimit() {
             <MasterTd>{row.min_sq_ft} sq ft</MasterTd>
             <MasterTd>{row.max_sq_ft} sq ft</MasterTd>
             <MasterTd>
-              <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-zinc-100 text-zinc-800 text-[12px] font-semibold">
+              <span className="inline-flex items-center px-2.5 py-1 rounded bg-zinc-100 text-zinc-800 text-[12px] font-semibold">
                 {row.no_of_badges} badges
               </span>
             </MasterTd>

@@ -41,9 +41,9 @@ export default function Dashboard() {
       subtitle="Your exhibitor command center"
     >
       {/* Hero strip with circular progress + stats */}
-      <div className="bg-linear-to-br from-[#0b1437] via-[#1d2a6b] to-[#3730a3] rounded-2xl shadow-lg p-5 sm:p-6 text-white relative overflow-hidden">
-        <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-white/5 blur-2xl" />
-        <div className="absolute -bottom-20 -left-10 w-72 h-72 rounded-full bg-blue-400/10 blur-3xl" />
+      <div className="bg-linear-to-br from-[#0b1437] via-[#1d2a6b] to-[#3730a3] rounded shadow-lg p-5 sm:p-6 text-white relative overflow-hidden">
+        <div className="absolute -top-16 -right-16 w-56 h-56 rounded bg-white/5 blur-2xl" />
+        <div className="absolute -bottom-20 -left-10 w-72 h-72 rounded bg-blue-400/10 blur-3xl" />
 
         <div className="relative flex flex-col md:flex-row md:items-center gap-5">
           {/* Circular progress */}
@@ -85,7 +85,7 @@ export default function Dashboard() {
 
           <button
             onClick={() => fetchAll()}
-            className="self-start md:self-auto inline-flex items-center gap-1.5 px-3 py-2 text-[12px] font-semibold bg-white/15 hover:bg-white/25 border border-white/20 rounded-lg backdrop-blur-sm transition-colors"
+            className="self-start md:self-auto inline-flex items-center gap-1.5 px-3 py-2 text-[12px] font-semibold bg-white/15 hover:bg-white/25 border border-white/20 rounded backdrop-blur-sm transition-colors"
             title="Refresh"
           >
             <MdRefresh size={14} className={loading ? "animate-spin" : ""} />
@@ -111,7 +111,7 @@ export default function Dashboard() {
                 {activities.map((a) => (
                   <li
                     key={a.id}
-                    className={`flex items-center gap-2.5 px-3 py-2 rounded-lg border transition-colors ${
+                    className={`flex items-center gap-2.5 px-3 py-2 rounded border transition-colors ${
                       a.done
                         ? "bg-emerald-50/50 border-emerald-100 hover:bg-emerald-50"
                         : "bg-white border-zinc-100 hover:bg-zinc-50"
@@ -138,7 +138,7 @@ export default function Dashboard() {
                       {a.name}
                     </p>
                     <span
-                      className={`shrink-0 w-2 h-2 rounded-full ${
+                      className={`shrink-0 w-2 h-2 rounded ${
                         a.done ? "bg-emerald-500" : "bg-amber-400"
                       }`}
                     />
@@ -182,7 +182,7 @@ export default function Dashboard() {
                 {remarks.map((r) => (
                   <li
                     key={r.id}
-                    className="relative bg-amber-50 border-l-4 border-amber-400 rounded-r-lg pl-3 pr-3 py-2.5"
+                    className="relative bg-amber-50 border-l-4 border-amber-400 rounded-r pl-3 pr-3 py-2.5"
                   >
                     <p className="text-[12.5px] text-zinc-800 wrap-break-word leading-relaxed">
                       {r.remark}
@@ -241,7 +241,7 @@ function MiniStat({ Icon, label, value, tone, className = "" }) {
   };
   return (
     <div
-      className={`bg-white/10 backdrop-blur-sm border border-white/15 rounded-xl px-3 py-2.5 ${className}`}
+      className={`bg-white/10 backdrop-blur-sm border border-white/15 rounded px-3 py-2.5 ${className}`}
     >
       <div className="flex items-center gap-1.5">
         <Icon size={13} className={tones[tone] || "text-white"} />
@@ -256,18 +256,18 @@ function MiniStat({ Icon, label, value, tone, className = "" }) {
 
 function Card({ title, Icon, badge, children }) {
   return (
-    <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
+    <div className="bg-white rounded border border-zinc-200 shadow-sm overflow-hidden">
       <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-b border-zinc-100 bg-zinc-50/60">
         <div className="flex items-center gap-2">
           {Icon && (
-            <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+            <div className="w-7 h-7 rounded bg-blue-50 text-blue-600 flex items-center justify-center">
               <Icon size={15} />
             </div>
           )}
           <h3 className="text-[13.5px] font-bold text-[#02062c]">{title}</h3>
         </div>
         {badge != null && (
-          <span className="text-[10.5px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-md">
+          <span className="text-[10.5px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded">
             {badge}
           </span>
         )}
@@ -287,9 +287,9 @@ function ChecklistSkel() {
       {[1, 2, 3, 4, 5].map((i) => (
         <li
           key={i}
-          className="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-zinc-50"
+          className="flex items-center gap-2.5 px-3 py-2 rounded bg-zinc-50"
         >
-          <div className="w-4 h-4 rounded-full bg-zinc-200 animate-pulse" />
+          <div className="w-4 h-4 rounded bg-zinc-200 animate-pulse" />
           <div className="flex-1 h-2.5 bg-zinc-200 rounded animate-pulse" />
         </li>
       ))}

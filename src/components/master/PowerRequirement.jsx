@@ -49,7 +49,7 @@ export default function PowerRequirement() {
       {!loading && types.length > 0 && (
         <div className="flex gap-2 flex-wrap mb-4">
           {types.map(t => (
-            <span key={t} className="px-2.5 py-1 text-[11px] font-semibold bg-zinc-100 text-zinc-600 rounded-md border border-zinc-200">
+            <span key={t} className="px-2.5 py-1 text-[11px] font-semibold bg-zinc-100 text-zinc-600 rounded border border-zinc-200">
               {t}
             </span>
           ))}

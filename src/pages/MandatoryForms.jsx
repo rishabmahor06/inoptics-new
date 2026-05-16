@@ -111,7 +111,7 @@ export default function MandatoryForms() {
   return (
     <div className="space-y-4 p-3 sm:p-4 lg:p-5">
       {/* TOOLBAR */}
-      <div className="bg-white rounded-xl shadow-sm px-4 sm:px-5 py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div className="bg-white rounded shadow-sm px-4 sm:px-5 py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="flex items-center gap-3 flex-wrap">
           <h3 className="text-[15px] font-bold text-zinc-900">Exhibitor Mandatory Forms</h3>
           <span className="px-2.5 py-1 text-[12px] font-bold bg-blue-50 text-blue-700 border border-blue-200 rounded">
@@ -142,11 +142,11 @@ export default function MandatoryForms() {
 
       {/* LIST */}
       {loading ? (
-        <div className="bg-white rounded-xl border border-zinc-200 py-12 text-center text-zinc-500 text-base">
+        <div className="bg-white rounded border border-zinc-200 py-12 text-center text-zinc-500 text-base">
           Loading...
         </div>
       ) : filteredCompanies.length === 0 ? (
-        <div className="bg-white rounded-xl border border-zinc-200 py-16 flex flex-col items-center gap-3 text-zinc-400">
+        <div className="bg-white rounded border border-zinc-200 py-16 flex flex-col items-center gap-3 text-zinc-400">
           <MdDescription size={42} className="text-zinc-200" />
           <p className="text-base">No mandatory forms found</p>
         </div>
@@ -157,7 +157,7 @@ export default function MandatoryForms() {
             const { pending, approved } = countByStatus(company, forms);
 
             return (
-              <div key={company} className="bg-white border border-zinc-200 rounded-xl overflow-hidden">
+              <div key={company} className="bg-white border border-zinc-200 rounded overflow-hidden">
                 {/* Header */}
                 <div
                   onClick={() => setOpenCompany(isOpen ? null : company)}
@@ -233,7 +233,7 @@ export default function MandatoryForms() {
                                   </a>
                                 </td>
                                 <td className="px-4 py-3">
-                                  <span className={`inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-semibold border rounded-full capitalize ${sb.cls}`}>
+                                  <span className={`inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-semibold border rounded capitalize ${sb.cls}`}>
                                     <sb.Icon size={12} /> {sb.label}
                                   </span>
                                 </td>
@@ -246,7 +246,7 @@ export default function MandatoryForms() {
                                     >
                                       {processing === procKey ? (
                                         <>
-                                          <span className="block w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                          <span className="block w-3 h-3 border-2 border-white border-t-transparent rounded animate-spin" />
                                           Unlocking...
                                         </>
                                       ) : (
@@ -286,7 +286,7 @@ export default function MandatoryForms() {
                                   {FORM_LABELS[form.form_type] || (form.form_type || "").replace(/_/g, " ")}
                                 </p>
                               </div>
-                              <span className={`inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-semibold border rounded-full capitalize shrink-0 ${sb.cls}`}>
+                              <span className={`inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-semibold border rounded capitalize shrink-0 ${sb.cls}`}>
                                 <sb.Icon size={11} /> {sb.label}
                               </span>
                             </div>
@@ -307,7 +307,7 @@ export default function MandatoryForms() {
                                 >
                                   {processing === procKey ? (
                                     <>
-                                      <span className="block w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                      <span className="block w-3 h-3 border-2 border-white border-t-transparent rounded animate-spin" />
                                     </>
                                   ) : (
                                     <><MdLockOpen size={13} /> Unlock</>

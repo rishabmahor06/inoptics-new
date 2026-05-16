@@ -12,7 +12,7 @@ export default function AddressCard({ addr, onEdit, onDelete, onSetActive }) {
 
   return (
     <div
-      className={`relative flex flex-col rounded-xl border p-4 transition-all h-full
+      className={`relative flex flex-col rounded border p-4 transition-all h-full
       ${isActive ? "border-blue-400 bg-blue-50/60 shadow-sm" : "border-zinc-200 bg-white hover:border-zinc-300"}`}
     >
       {/* Header */}
@@ -22,7 +22,7 @@ export default function AddressCard({ addr, onEdit, onDelete, onSetActive }) {
             {addr.label || "Address"}
           </p>
           {isActive && (
-            <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-blue-700 bg-blue-100 px-1.5 py-0.5 rounded-full mt-0.5">
+            <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-blue-700 bg-blue-100 px-1.5 py-0.5 rounded mt-0.5">
               <MdCheckCircle size={10} /> Active
             </span>
           )}
@@ -31,7 +31,7 @@ export default function AddressCard({ addr, onEdit, onDelete, onSetActive }) {
           <button
             onClick={() => onSetActive(addr.id)}
             title="Set as active"
-            className="p-1 rounded-lg text-zinc-400 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+            className="p-1 rounded text-zinc-400 hover:text-blue-600 hover:bg-blue-50 transition-colors"
           >
             <MdRadioButtonUnchecked size={16} />
           </button>

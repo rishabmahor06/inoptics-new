@@ -545,7 +545,7 @@ const deleteContractorReq = async (id) => {
   // RENDER
   // ══════════════════════════════════════════════════════════════
   return (
-    <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+    <div className="bg-white rounded shadow-sm overflow-hidden">
 
       {/* Tab Navigation */}
       <div className="border-b border-zinc-200 overflow-x-auto">
@@ -581,7 +581,7 @@ const deleteContractorReq = async (id) => {
                   placeholder="Search by name or company..."
                   value={reqSearch}
                   onChange={e => setReqSearch(e.target.value)}
-                  className="pl-9 pr-4 py-2 text-sm border border-zinc-200 rounded-lg w-60 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="pl-9 pr-4 py-2 text-sm border border-zinc-200 rounded w-60 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <svg className="absolute left-3 top-2.5 w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -609,7 +609,7 @@ const deleteContractorReq = async (id) => {
               </div>
             </div>
 
-            <div className="overflow-x-auto rounded-lg border border-zinc-200">
+            <div className="overflow-x-auto rounded border border-zinc-200">
               <table className="w-full text-sm">
                 <thead className="bg-zinc-50 text-zinc-600 text-xs uppercase tracking-wide">
                   <tr>
@@ -670,7 +670,7 @@ const deleteContractorReq = async (id) => {
             {boothLoading ? (
               <div className="flex items-center justify-center py-12 text-zinc-400 text-sm">Loading...</div>
             ) : (
-              <div className="overflow-x-auto rounded-lg border border-zinc-200">
+              <div className="overflow-x-auto rounded border border-zinc-200">
                 <table className="w-full text-sm">
                   <thead className="bg-zinc-50 text-zinc-600 text-xs uppercase tracking-wide">
                     <tr>
@@ -698,7 +698,7 @@ const deleteContractorReq = async (id) => {
                               <a
                                 href={`https://inoptics.in/api/${boothFile.booth_design}`}
                                 target="_blank" rel="noreferrer"
-                                className="inline-flex items-center gap-1 px-3 py-1.5 text-xs bg-sky-50 text-sky-600 hover:bg-sky-100 rounded-md font-medium transition-colors"
+                                className="inline-flex items-center gap-1 px-3 py-1.5 text-xs bg-sky-50 text-sky-600 hover:bg-sky-100 rounded font-medium transition-colors"
                               >
                                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -709,7 +709,7 @@ const deleteContractorReq = async (id) => {
                             ) : <span className="text-zinc-400">—</span>}
                           </td>
                           <td className="px-4 py-3">
-                            <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
+                            <span className={`inline-flex px-2 py-1 text-xs font-medium rounded ${
                               item.status === 'approved' ? 'bg-emerald-100 text-emerald-700'
                                 : item.status === 'rejected' ? 'bg-red-100 text-red-700'
                                 : 'bg-amber-100 text-amber-700'
@@ -721,7 +721,7 @@ const deleteContractorReq = async (id) => {
                             <div className="flex gap-2">
                               <button
                                 onClick={() => approveBooth(company)}
-                                className="px-3 py-1.5 text-xs bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-md font-medium transition-colors"
+                                className="px-3 py-1.5 text-xs bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded font-medium transition-colors"
                               >Approve</button>
                               <button
                                 onClick={() => {
@@ -729,7 +729,7 @@ const deleteContractorReq = async (id) => {
                                   setSelectedBoothId(boothId); setSelectedCompany(company);
                                   setRejectReason(''); setShowRejectPopup(true);
                                 }}
-                                className="px-3 py-1.5 text-xs bg-red-50 text-red-600 hover:bg-red-100 rounded-md font-medium transition-colors"
+                                className="px-3 py-1.5 text-xs bg-red-50 text-red-600 hover:bg-red-100 rounded font-medium transition-colors"
                               >Reject</button>
                             </div>
                           </td>
@@ -744,7 +744,7 @@ const deleteContractorReq = async (id) => {
             {/* Reject Popup */}
             {showRejectPopup && (
               <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-                <div className="bg-white rounded-xl shadow-xl p-6 w-full max-w-md">
+                <div className="bg-white rounded shadow-xl p-6 w-full max-w-md">
                   <h3 className="text-base font-semibold text-zinc-800 mb-1">Reject Booth Design</h3>
                   <p className="text-sm text-zinc-500 mb-4">Enter the reason for rejecting this booth design.</p>
                   <textarea
@@ -752,18 +752,18 @@ const deleteContractorReq = async (id) => {
                     placeholder="Enter rejection reason..."
                     value={rejectReason}
                     onChange={e => setRejectReason(e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 resize-none"
+                    className="w-full px-3 py-2 text-sm border border-zinc-200 rounded focus:outline-none focus:ring-2 focus:ring-red-400 resize-none"
                   />
                   <div className="flex gap-3 mt-4">
                     <button
                       onClick={() => { setShowRejectPopup(false); setRejectReason(''); }}
                       disabled={rejecting}
-                      className="flex-1 px-4 py-2 text-sm bg-zinc-100 hover:bg-zinc-200 text-zinc-700 rounded-lg font-medium transition-colors"
+                      className="flex-1 px-4 py-2 text-sm bg-zinc-100 hover:bg-zinc-200 text-zinc-700 rounded font-medium transition-colors"
                     >Cancel</button>
                     <button
                       onClick={handleRejectBooth}
                       disabled={!rejectReason.trim() || rejecting}
-                      className="flex-1 px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium disabled:opacity-50 transition-colors"
+                      className="flex-1 px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded font-medium disabled:opacity-50 transition-colors"
                     >{rejecting ? 'Rejecting...' : 'Reject Booth Design'}</button>
                   </div>
                 </div>
@@ -798,7 +798,7 @@ const deleteContractorReq = async (id) => {
               </button>
             </div>
 
-            <div className="overflow-x-auto rounded-lg border border-zinc-200">
+            <div className="overflow-x-auto rounded border border-zinc-200">
               <table className="w-full text-sm">
                 <thead className="bg-zinc-50 text-zinc-600 text-xs uppercase tracking-wide">
                   <tr>
@@ -819,9 +819,9 @@ const deleteContractorReq = async (id) => {
                             <div className="flex items-center justify-between gap-3 flex-wrap">
                               <span className="text-zinc-700 font-medium text-sm">Contractor Undertaking - {i + 1}</span>
                               <div className="flex gap-1.5 shrink-0">
-                                <button onClick={() => setViewedUndertaking(u.declaration_text)} className="px-2.5 py-1.5 text-xs bg-sky-50 text-sky-600 hover:bg-sky-100 rounded-md font-medium transition-colors">View</button>
-                                <button onClick={() => { closeAllForms(); setSelectedItemIndex(i); setRichText(u.declaration_text || ''); setShowEditUndertaking(true); }} className="px-2.5 py-1.5 text-xs bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-md font-medium transition-colors">Edit</button>
-                                <button onClick={() => deleteUndertaking(u.id)} className="px-2.5 py-1.5 text-xs bg-red-50 text-red-600 hover:bg-red-100 rounded-md font-medium transition-colors">Delete</button>
+                                <button onClick={() => setViewedUndertaking(u.declaration_text)} className="px-2.5 py-1.5 text-xs bg-sky-50 text-sky-600 hover:bg-sky-100 rounded font-medium transition-colors">View</button>
+                                <button onClick={() => { closeAllForms(); setSelectedItemIndex(i); setRichText(u.declaration_text || ''); setShowEditUndertaking(true); }} className="px-2.5 py-1.5 text-xs bg-blue-50 text-blue-600 hover:bg-blue-100 rounded font-medium transition-colors">Edit</button>
+                                <button onClick={() => deleteUndertaking(u.id)} className="px-2.5 py-1.5 text-xs bg-red-50 text-red-600 hover:bg-red-100 rounded font-medium transition-colors">Delete</button>
                               </div>
                             </div>
                           ) : <span className="text-zinc-400">—</span>}
@@ -831,9 +831,9 @@ const deleteContractorReq = async (id) => {
                             <div className="flex items-center justify-between gap-3 flex-wrap">
                               <span className="text-zinc-700 font-medium text-sm">Registration Fee - {i + 1}</span>
                               <div className="flex gap-1.5 shrink-0">
-                                <button onClick={() => setViewedRegistration(r.declaration_text)} className="px-2.5 py-1.5 text-xs bg-sky-50 text-sky-600 hover:bg-sky-100 rounded-md font-medium transition-colors">View</button>
-                                <button onClick={() => { closeAllForms(); setSelectedItemIndex(i); setRichText(r.declaration_text || ''); setShowEditRegistration(true); }} className="px-2.5 py-1.5 text-xs bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-md font-medium transition-colors">Edit</button>
-                                <button onClick={() => deleteRegistrationFee(r.id)} className="px-2.5 py-1.5 text-xs bg-red-50 text-red-600 hover:bg-red-100 rounded-md font-medium transition-colors">Delete</button>
+                                <button onClick={() => setViewedRegistration(r.declaration_text)} className="px-2.5 py-1.5 text-xs bg-sky-50 text-sky-600 hover:bg-sky-100 rounded font-medium transition-colors">View</button>
+                                <button onClick={() => { closeAllForms(); setSelectedItemIndex(i); setRichText(r.declaration_text || ''); setShowEditRegistration(true); }} className="px-2.5 py-1.5 text-xs bg-blue-50 text-blue-600 hover:bg-blue-100 rounded font-medium transition-colors">Edit</button>
+                                <button onClick={() => deleteRegistrationFee(r.id)} className="px-2.5 py-1.5 text-xs bg-red-50 text-red-600 hover:bg-red-100 rounded font-medium transition-colors">Delete</button>
                               </div>
                             </div>
                           ) : <span className="text-zinc-400">—</span>}
@@ -847,7 +847,7 @@ const deleteContractorReq = async (id) => {
 
             {/* Add/Edit Form */}
             {(showAddUndertaking || showEditUndertaking || showAddRegistration || showEditRegistration) && (
-              <div className="mt-5 p-5 border border-zinc-200 rounded-xl bg-zinc-50">
+              <div className="mt-5 p-5 border border-zinc-200 rounded bg-zinc-50">
                 <h3 className="text-base font-semibold text-zinc-800 mb-3">
                   {showAddUndertaking ? 'Add Contractor Undertaking'
                     : showEditUndertaking ? 'Edit Contractor Undertaking'
@@ -859,14 +859,14 @@ const deleteContractorReq = async (id) => {
                   value={richText}
                   onChange={e => setRichText(e.target.value)}
                   placeholder="Enter content here (HTML supported)..."
-                  className="w-full px-3 py-2 text-sm border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y font-mono bg-white"
+                  className="w-full px-3 py-2 text-sm border border-zinc-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y font-mono bg-white"
                 />
                 <div className="flex gap-3 mt-3">
                   <button
                     onClick={showAddUndertaking ? addUndertaking : showEditUndertaking ? updateUndertaking : showAddRegistration ? addRegistrationFee : updateRegistrationFee}
-                    className="px-5 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+                    className="px-5 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded font-medium transition-colors"
                   >{(showAddUndertaking || showAddRegistration) ? 'Add' : 'Update'}</button>
-                  <button onClick={closeAllForms} className="px-5 py-2 text-sm bg-zinc-200 hover:bg-zinc-300 text-zinc-700 rounded-lg font-medium transition-colors">Cancel</button>
+                  <button onClick={closeAllForms} className="px-5 py-2 text-sm bg-zinc-200 hover:bg-zinc-300 text-zinc-700 rounded font-medium transition-colors">Cancel</button>
                 </div>
               </div>
             )}
@@ -874,19 +874,19 @@ const deleteContractorReq = async (id) => {
             {/* View Modals */}
             {viewedUndertaking && (
               <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-                <div className="bg-white rounded-xl shadow-xl p-6 w-full max-w-2xl max-h-[80vh] flex flex-col">
+                <div className="bg-white rounded shadow-xl p-6 w-full max-w-2xl max-h-[80vh] flex flex-col">
                   <h3 className="text-base font-semibold text-zinc-800 mb-4">Viewing Contractor Undertaking</h3>
-                  <div className="overflow-y-auto flex-1 text-sm text-zinc-700 border border-zinc-100 rounded-lg p-4" dangerouslySetInnerHTML={{ __html: viewedUndertaking }} />
-                  <button onClick={() => setViewedUndertaking(null)} className="mt-4 px-5 py-2 text-sm bg-zinc-200 hover:bg-zinc-300 text-zinc-700 rounded-lg font-medium transition-colors self-end">Close</button>
+                  <div className="overflow-y-auto flex-1 text-sm text-zinc-700 border border-zinc-100 rounded p-4" dangerouslySetInnerHTML={{ __html: viewedUndertaking }} />
+                  <button onClick={() => setViewedUndertaking(null)} className="mt-4 px-5 py-2 text-sm bg-zinc-200 hover:bg-zinc-300 text-zinc-700 rounded font-medium transition-colors self-end">Close</button>
                 </div>
               </div>
             )}
             {viewedRegistration && (
               <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-                <div className="bg-white rounded-xl shadow-xl p-6 w-full max-w-2xl max-h-[80vh] flex flex-col">
+                <div className="bg-white rounded shadow-xl p-6 w-full max-w-2xl max-h-[80vh] flex flex-col">
                   <h3 className="text-base font-semibold text-zinc-800 mb-4">Viewing Registration Fees</h3>
-                  <div className="overflow-y-auto flex-1 text-sm text-zinc-700 border border-zinc-100 rounded-lg p-4" dangerouslySetInnerHTML={{ __html: viewedRegistration }} />
-                  <button onClick={() => setViewedRegistration(null)} className="mt-4 px-5 py-2 text-sm bg-zinc-200 hover:bg-zinc-300 text-zinc-700 rounded-lg font-medium transition-colors self-end">Close</button>
+                  <div className="overflow-y-auto flex-1 text-sm text-zinc-700 border border-zinc-100 rounded p-4" dangerouslySetInnerHTML={{ __html: viewedRegistration }} />
+                  <button onClick={() => setViewedRegistration(null)} className="mt-4 px-5 py-2 text-sm bg-zinc-200 hover:bg-zinc-300 text-zinc-700 rounded font-medium transition-colors self-end">Close</button>
                 </div>
               </div>
             )}
@@ -904,7 +904,7 @@ const deleteContractorReq = async (id) => {
                 {guidelinesList.length === 0 ? (
                   <button
                     onClick={() => { setGuidelinesText(''); setEditingGuidelineIndex(null); setShowGuidelinesModal(true); }}
-                    className="flex items-center gap-2 px-3 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -915,7 +915,7 @@ const deleteContractorReq = async (id) => {
                   <>
                     <button
                       onClick={() => { setGuidelinesText(guidelinesList[0] || ''); setEditingGuidelineIndex(0); setShowGuidelinesModal(true); }}
-                      className="flex items-center gap-2 px-3 py-2 text-sm bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors"
+                      className="flex items-center gap-2 px-3 py-2 text-sm bg-blue-50 text-blue-600 hover:bg-blue-100 rounded transition-colors"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -924,7 +924,7 @@ const deleteContractorReq = async (id) => {
                     </button>
                     <button
                       onClick={deleteGuideline}
-                      className="flex items-center gap-2 px-3 py-2 text-sm bg-red-50 text-red-600 hover:bg-red-100 rounded-lg transition-colors"
+                      className="flex items-center gap-2 px-3 py-2 text-sm bg-red-50 text-red-600 hover:bg-red-100 rounded transition-colors"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -936,7 +936,7 @@ const deleteContractorReq = async (id) => {
               </div>
             </div>
 
-            <div className="border border-zinc-200 rounded-xl p-5 min-h-[200px]">
+            <div className="border border-zinc-200 rounded p-5 min-h-[200px]">
               {guidelinesList.length === 0 ? (
                 <p className="text-zinc-400 text-sm">No guidelines added.</p>
               ) : (
@@ -946,7 +946,7 @@ const deleteContractorReq = async (id) => {
 
             {showGuidelinesModal && (
               <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-                <div className="bg-white rounded-xl shadow-xl p-6 w-full max-w-2xl">
+                <div className="bg-white rounded shadow-xl p-6 w-full max-w-2xl">
                   <h3 className="text-base font-semibold text-zinc-800 mb-4">
                     {editingGuidelineIndex !== null ? 'Edit Guideline' : 'Add Guideline'}
                   </h3>
@@ -955,13 +955,13 @@ const deleteContractorReq = async (id) => {
                     value={guidelinesText}
                     onChange={e => setGuidelinesText(e.target.value)}
                     placeholder="Enter guidelines content (HTML supported)..."
-                    className="w-full px-3 py-2 text-sm border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y font-mono"
+                    className="w-full px-3 py-2 text-sm border border-zinc-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y font-mono"
                   />
                   <div className="flex gap-3 mt-4">
-                    <button onClick={saveGuideline} className="px-5 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">
+                    <button onClick={saveGuideline} className="px-5 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded font-medium transition-colors">
                       {editingGuidelineIndex !== null ? 'Update' : 'Add'}
                     </button>
-                    <button onClick={() => setShowGuidelinesModal(false)} className="px-5 py-2 text-sm bg-zinc-200 hover:bg-zinc-300 text-zinc-700 rounded-lg font-medium transition-colors">Close</button>
+                    <button onClick={() => setShowGuidelinesModal(false)} className="px-5 py-2 text-sm bg-zinc-200 hover:bg-zinc-300 text-zinc-700 rounded font-medium transition-colors">Close</button>
                   </div>
                 </div>
               </div>
@@ -973,7 +973,7 @@ const deleteContractorReq = async (id) => {
             UNLOCK EXHIBITORS
         ══════════════════════════════════════════════════════ */}
         {activeTab === 'Unlock Exhibitors' && (
-          <div className="overflow-x-auto rounded-lg border border-zinc-200">
+          <div className="overflow-x-auto rounded border border-zinc-200">
             <table className="w-full text-sm">
               <thead className="bg-zinc-50 text-zinc-600 text-xs uppercase tracking-wide">
                 <tr>
@@ -999,7 +999,7 @@ const deleteContractorReq = async (id) => {
                       <button
                         onClick={() => handleUnlockExhibitor(req.exhibitor_company)}
                         disabled={processing === req.exhibitor_company}
-                        className="px-3 py-1.5 text-xs bg-emerald-50 text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 rounded-md font-medium transition-colors"
+                        className="px-3 py-1.5 text-xs bg-emerald-50 text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 rounded font-medium transition-colors"
                       >
                         {processing === req.exhibitor_company ? 'Unlocking...' : 'Unlock'}
                       </button>
@@ -1023,7 +1023,7 @@ const deleteContractorReq = async (id) => {
                   placeholder="Search Exhibitor / Contractor..."
                   value={badgeSearch}
                   onChange={e => setBadgeSearch(e.target.value)}
-                  className="pl-9 pr-4 py-2 text-sm border border-zinc-200 rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="pl-9 pr-4 py-2 text-sm border border-zinc-200 rounded w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <svg className="absolute left-3 top-2.5 w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -1031,7 +1031,7 @@ const deleteContractorReq = async (id) => {
               </div>
               <button
                 onClick={exportBadgesToExcel}
-                className="flex items-center gap-2 px-3 py-2 text-sm bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors"
+                className="flex items-center gap-2 px-3 py-2 text-sm bg-emerald-600 hover:bg-emerald-700 text-white rounded transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -1040,7 +1040,7 @@ const deleteContractorReq = async (id) => {
               </button>
             </div>
 
-            <div className="overflow-x-auto rounded-lg border border-zinc-200">
+            <div className="overflow-x-auto rounded border border-zinc-200">
               <table className="w-full text-sm">
                 <thead className="bg-zinc-50 text-zinc-600 text-xs uppercase tracking-wide">
                   <tr>
@@ -1066,7 +1066,7 @@ const deleteContractorReq = async (id) => {
                         <td className="px-4 py-3 text-zinc-600">{row.contractor_company_name}</td>
                         <td className="px-4 py-3 text-zinc-600 text-center">{row.badge_quantity}</td>
                         <td className="px-4 py-3">
-                          <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
+                          <span className={`inline-flex px-2 py-1 text-xs font-medium rounded ${
                             lockStatus === 0 ? 'bg-emerald-100 text-emerald-700'
                               : lockStatus === 2 ? 'bg-amber-100 text-amber-700'
                               : 'bg-zinc-100 text-zinc-600'
@@ -1081,26 +1081,26 @@ const deleteContractorReq = async (id) => {
                               value={payments[key]?.payment || ''}
                               disabled={paidRows[key] && !editPaymentRow[key]}
                               onChange={e => handlePaymentChange(key, e.target.value)}
-                              className="px-2 py-1 text-xs border border-zinc-200 rounded-md resize-none focus:outline-none focus:ring-1 focus:ring-blue-400 disabled:bg-zinc-50 disabled:text-zinc-500"
+                              className="px-2 py-1 text-xs border border-zinc-200 rounded resize-none focus:outline-none focus:ring-1 focus:ring-blue-400 disabled:bg-zinc-50 disabled:text-zinc-500"
                             />
                             {!paidRows[key] ? (
-                              <button onClick={() => handlePaymentSubmit(row)} className="px-2 py-1 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium transition-colors">Submit</button>
+                              <button onClick={() => handlePaymentSubmit(row)} className="px-2 py-1 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded font-medium transition-colors">Submit</button>
                             ) : editPaymentRow[key] ? (
-                              <button onClick={() => handlePaymentUpdate(row)} className="px-2 py-1 text-xs bg-emerald-600 hover:bg-emerald-700 text-white rounded-md font-medium transition-colors">Save</button>
+                              <button onClick={() => handlePaymentUpdate(row)} className="px-2 py-1 text-xs bg-emerald-600 hover:bg-emerald-700 text-white rounded font-medium transition-colors">Save</button>
                             ) : (
-                              <button onClick={() => setEditPaymentRow(prev => ({ ...prev, [key]: true }))} className="px-2 py-1 text-xs bg-zinc-200 hover:bg-zinc-300 text-zinc-700 rounded-md font-medium transition-colors">Edit</button>
+                              <button onClick={() => setEditPaymentRow(prev => ({ ...prev, [key]: true }))} className="px-2 py-1 text-xs bg-zinc-200 hover:bg-zinc-300 text-zinc-700 rounded font-medium transition-colors">Edit</button>
                             )}
                           </div>
                         </td>
                         <td className="px-4 py-3">
                           <div className="flex flex-wrap gap-1.5">
-                            <button onClick={() => { setEditData({ ...row }); setShowEditPopup(true); }} className="px-2.5 py-1.5 text-xs bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-md font-medium transition-colors">Edit</button>
-                            <button onClick={() => handleBadgeDelete(row.id)} className="px-2.5 py-1.5 text-xs bg-red-50 text-red-600 hover:bg-red-100 rounded-md font-medium transition-colors">Delete</button>
+                            <button onClick={() => { setEditData({ ...row }); setShowEditPopup(true); }} className="px-2.5 py-1.5 text-xs bg-blue-50 text-blue-600 hover:bg-blue-100 rounded font-medium transition-colors">Edit</button>
+                            <button onClick={() => handleBadgeDelete(row.id)} className="px-2.5 py-1.5 text-xs bg-red-50 text-red-600 hover:bg-red-100 rounded font-medium transition-colors">Delete</button>
                             {lockStatus === 2 && (
                               <button
                                 onClick={() => handleBadgeUnlock(row.id, row)}
                                 disabled={badgeProcessing === row.id}
-                                className="px-2.5 py-1.5 text-xs bg-emerald-50 text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 rounded-md font-medium transition-colors"
+                                className="px-2.5 py-1.5 text-xs bg-emerald-50 text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 rounded font-medium transition-colors"
                               >
                                 {badgeProcessing === row.id ? '...' : 'Unlock'}
                               </button>
@@ -1117,7 +1117,7 @@ const deleteContractorReq = async (id) => {
             {/* Edit Badge Popup */}
             {showEditPopup && editData && (
               <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-                <div className="bg-white rounded-xl shadow-xl p-6 w-full max-w-sm">
+                <div className="bg-white rounded shadow-xl p-6 w-full max-w-sm">
                   <h3 className="text-base font-semibold text-zinc-800 mb-4">Edit Contractor Badge</h3>
                   <div className="space-y-3">
                     <div>
@@ -1126,7 +1126,7 @@ const deleteContractorReq = async (id) => {
                         type="text"
                         value={editData.contractor_company_name || ''}
                         onChange={e => setEditData({ ...editData, contractor_company_name: e.target.value })}
-                        className="w-full px-3 py-2 text-sm border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 text-sm border border-zinc-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                     <div>
@@ -1135,13 +1135,13 @@ const deleteContractorReq = async (id) => {
                         type="number"
                         value={editData.badge_quantity || ''}
                         onChange={e => setEditData({ ...editData, badge_quantity: e.target.value })}
-                        className="w-full px-3 py-2 text-sm border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 text-sm border border-zinc-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                   </div>
                   <div className="flex gap-3 mt-5">
-                    <button onClick={() => setShowEditPopup(false)} className="flex-1 px-4 py-2 text-sm bg-zinc-100 hover:bg-zinc-200 text-zinc-700 rounded-lg font-medium transition-colors">Cancel</button>
-                    <button onClick={handleBadgeUpdate} className="flex-1 px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">Update</button>
+                    <button onClick={() => setShowEditPopup(false)} className="flex-1 px-4 py-2 text-sm bg-zinc-100 hover:bg-zinc-200 text-zinc-700 rounded font-medium transition-colors">Cancel</button>
+                    <button onClick={handleBadgeUpdate} className="flex-1 px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded font-medium transition-colors">Update</button>
                   </div>
                 </div>
               </div>
@@ -1174,7 +1174,7 @@ const deleteContractorReq = async (id) => {
 
             <div className="space-y-3">
               {filteredFormsCompanies.map(([company, forms]) => (
-                <div key={company} className="border border-zinc-200 rounded-xl overflow-hidden">
+                <div key={company} className="border border-zinc-200 rounded overflow-hidden">
                   <button
                     className="w-full flex items-center justify-between px-5 py-3.5 bg-zinc-50 hover:bg-zinc-100 transition-colors text-left"
                     onClick={() => setOpenCompany(openCompany === company ? null : company)}
@@ -1187,7 +1187,7 @@ const deleteContractorReq = async (id) => {
 
                   {openCompany === company && (
                     <div className="p-4">
-                      <div className="overflow-x-auto rounded-lg border border-zinc-100">
+                      <div className="overflow-x-auto rounded border border-zinc-100">
                         <table className="w-full text-sm">
                           <thead className="bg-zinc-50 text-zinc-600 text-xs uppercase tracking-wide">
                             <tr>
@@ -1209,7 +1209,7 @@ const deleteContractorReq = async (id) => {
                                     <a
                                       href={form.file_preview_url || `https://inoptics.in/api/${form.file_path}`}
                                       target="_blank" rel="noreferrer"
-                                      className="inline-flex items-center gap-1 px-3 py-1.5 text-xs bg-sky-50 text-sky-600 hover:bg-sky-100 rounded-md font-medium transition-colors"
+                                      className="inline-flex items-center gap-1 px-3 py-1.5 text-xs bg-sky-50 text-sky-600 hover:bg-sky-100 rounded font-medium transition-colors"
                                     >
                                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -1219,7 +1219,7 @@ const deleteContractorReq = async (id) => {
                                     </a>
                                   </td>
                                   <td className="px-4 py-3">
-                                    <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full capitalize ${
+                                    <span className={`inline-flex px-2 py-1 text-xs font-medium rounded capitalize ${
                                       matchedRequest?.status === 'approved' ? 'bg-emerald-100 text-emerald-700'
                                         : matchedRequest?.status === 'pending' ? 'bg-amber-100 text-amber-700'
                                         : 'bg-zinc-100 text-zinc-500'
@@ -1231,7 +1231,7 @@ const deleteContractorReq = async (id) => {
                                     {matchedRequest?.status === 'pending' && (
                                       <button
                                         onClick={() => updateStepStatus(company, stepNumber)}
-                                        className="px-3 py-1.5 text-xs bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-md font-medium transition-colors"
+                                        className="px-3 py-1.5 text-xs bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded font-medium transition-colors"
                                       >Unlock</button>
                                     )}
                                   </td>

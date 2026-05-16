@@ -124,7 +124,7 @@ const ContractorBadges = ({ exhibitorData = [] }) => {
   return (
     <div className="space-y-4 p-3 sm:p-4 lg:p-5">
       {/* TOOLBAR */}
-      <div className="bg-white rounded-xl shadow-sm px-4 sm:px-5 py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div className="bg-white rounded shadow-sm px-4 sm:px-5 py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="flex items-center gap-2 flex-wrap">
           <button
             onClick={exportExcel}
@@ -161,16 +161,16 @@ const ContractorBadges = ({ exhibitorData = [] }) => {
 
       {/* CONTENT */}
       {loading ? (
-        <div className="bg-white rounded-xl border border-zinc-200 py-12 text-center text-zinc-500 text-base">
+        <div className="bg-white rounded border border-zinc-200 py-12 text-center text-zinc-500 text-base">
           Loading...
         </div>
       ) : filteredRows.length === 0 ? (
-        <div className="bg-white rounded-xl border border-zinc-200 py-16 flex flex-col items-center gap-3 text-zinc-400">
+        <div className="bg-white rounded border border-zinc-200 py-16 flex flex-col items-center gap-3 text-zinc-400">
           <MdBadge size={42} className="text-zinc-200" />
           <p className="text-base">No contractor badges found</p>
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-zinc-200 overflow-hidden">
+        <div className="bg-white rounded border border-zinc-200 overflow-hidden">
           {/* Desktop table */}
           <div className="hidden xl:block overflow-x-auto">
             <table className="w-full">
@@ -204,7 +204,7 @@ const ContractorBadges = ({ exhibitorData = [] }) => {
                       <td className="px-4 py-3 text-[14px] text-zinc-700">{row.contractor_company_name}</td>
                       <td className="px-4 py-3 text-[14px] font-semibold text-blue-700">{row.badge_quantity}</td>
                       <td className="px-4 py-3">
-                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-semibold border rounded-full ${sb.cls}`}>
+                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-semibold border rounded ${sb.cls}`}>
                           <sb.Icon size={12} /> {sb.label}
                         </span>
                       </td>
@@ -267,7 +267,7 @@ const ContractorBadges = ({ exhibitorData = [] }) => {
                         Contractor: <b className="text-zinc-700">{row.contractor_company_name}</b>
                       </p>
                     </div>
-                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-semibold border rounded-full shrink-0 ${sb.cls}`}>
+                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-semibold border rounded shrink-0 ${sb.cls}`}>
                       <sb.Icon size={11} /> {sb.label}
                     </span>
                   </div>

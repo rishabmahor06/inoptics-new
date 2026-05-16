@@ -65,7 +65,7 @@ export default function Taxes() {
             <MasterTd className="text-zinc-400 text-[12px]">{i + 1}</MasterTd>
             <MasterTd className="font-medium text-zinc-800">{row.name}</MasterTd>
             <MasterTd>
-              <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 text-[12px] font-semibold border border-blue-100">
+              <span className="inline-flex items-center px-2 py-0.5 rounded bg-blue-50 text-blue-700 text-[12px] font-semibold border border-blue-100">
                 {row.value}
               </span>
             </MasterTd>

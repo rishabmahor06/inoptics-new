@@ -38,7 +38,7 @@ export default function FloatingCard() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
           {cards.map(row => (
             <div key={row.id}
-              className="relative bg-white rounded-xl border border-zinc-200 p-5 shadow-sm hover:shadow-md hover:border-zinc-300 transition-all group">
+              className="relative bg-white rounded border border-zinc-200 p-5 shadow-sm hover:shadow-md hover:border-zinc-300 transition-all group">
               <div className="absolute top-3 right-3 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                 <EditBtn onClick={() => openEdit(row)} />
                 <DelBtn onClick={() => deleteCard(row.id)} />

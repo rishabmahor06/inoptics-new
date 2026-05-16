@@ -52,7 +52,7 @@ export default function ExhibitorSidebar({
         </span>
         <button
           onClick={() => setMobileOpen(false)}
-          className="lg:hidden w-8 h-8 rounded-md flex items-center justify-center text-zinc-400 hover:bg-zinc-100 hover:text-zinc-900 ml-2"
+          className="lg:hidden w-8 h-8 rounded flex items-center justify-center text-zinc-400 hover:bg-zinc-100 hover:text-zinc-900 ml-2"
           aria-label="Close"
         >
           <MdClose size={18} />
@@ -94,7 +94,7 @@ export default function ExhibitorSidebar({
       <div className="p-3 border-t border-zinc-200 shrink-0">
         <button
           onClick={() => setShowLogout(true)}
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium text-red-500 hover:bg-red-50 transition-colors"
+          className="w-full flex items-center gap-3 px-3 py-2 rounded text-[13px] font-medium text-red-500 hover:bg-red-50 transition-colors"
         >
           <MdLogout size={17} />
           <span>Logout</span>
@@ -139,10 +139,10 @@ export default function ExhibitorSidebar({
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden"
+            className="bg-white rounded shadow-2xl w-full max-w-sm overflow-hidden"
           >
             <div className="px-6 pt-6 pb-2 text-center">
-              <div className="w-14 h-14 rounded-2xl bg-red-50 border border-red-100 flex items-center justify-center mx-auto mb-3">
+              <div className="w-14 h-14 rounded bg-red-50 border border-red-100 flex items-center justify-center mx-auto mb-3">
                 <MdLogout size={26} className="text-red-500" />
               </div>
               <h3 className="text-lg font-bold text-zinc-900">Sign out?</h3>
@@ -153,13 +153,13 @@ export default function ExhibitorSidebar({
             <div className="px-5 pb-5 pt-3 flex items-center gap-2">
               <button
                 onClick={() => setShowLogout(false)}
-                className="flex-1 h-10 text-[13px] font-semibold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded-lg transition-colors"
+                className="flex-1 h-10 text-[13px] font-semibold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={confirmLogout}
-                className="flex-1 h-10 text-[13px] font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors flex items-center justify-center gap-1.5"
+                className="flex-1 h-10 text-[13px] font-semibold text-white bg-red-600 hover:bg-red-700 rounded transition-colors flex items-center justify-center gap-1.5"
                 autoFocus
               >
                 <MdLogout size={14} /> Sign Out

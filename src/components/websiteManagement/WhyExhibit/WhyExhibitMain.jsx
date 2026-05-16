@@ -51,7 +51,7 @@ export default function WhyExhibitMain() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
           {exhibits.map(row => (
             <div key={row.id}
-              className="bg-white rounded-xl border border-zinc-200 overflow-hidden hover:shadow-md hover:border-blue-200 transition-all group">
+              className="bg-white rounded border border-zinc-200 overflow-hidden hover:shadow-md hover:border-blue-200 transition-all group">
               {row.image && <img src={row.image} alt={row.title} className="w-full h-32 object-cover" />}
               <div className="p-4">
                 <p className="text-sm font-bold text-zinc-800 mb-1">{stripHtml(row.title || '')}</p>

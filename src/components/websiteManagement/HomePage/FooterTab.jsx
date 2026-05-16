@@ -59,7 +59,7 @@ function FooterBlock({ num }) {
   ];
 
   return (
-    <div className="bg-white rounded-xl border border-zinc-200 p-5 space-y-3 shadow-sm">
+    <div className="bg-white rounded border border-zinc-200 p-5 space-y-3 shadow-sm">
       <div className="flex items-center justify-between">
         <div>
           <h4 className="text-sm font-bold text-zinc-800">{cfg.label}</h4>

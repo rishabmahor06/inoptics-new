@@ -333,7 +333,7 @@ export default function PaymentDetails() {
 
 function CompanyCard({ ex }) {
   return (
-    <div className="bg-white border border-zinc-200 rounded-xl p-4 sm:p-5 space-y-3">
+    <div className="bg-white border border-zinc-200 rounded p-4 sm:p-5 space-y-3">
       <div className="flex items-center gap-2">
         <div className="w-8 h-8 rounded bg-blue-600 flex items-center justify-center">
           <MdBusinessCenter size={16} className="text-white" />
@@ -356,7 +356,7 @@ function CompanyCard({ ex }) {
 
 function BoothCard({ stallList }) {
   return (
-    <div className="bg-white border border-zinc-200 rounded-xl p-4 sm:p-5 space-y-3">
+    <div className="bg-white border border-zinc-200 rounded p-4 sm:p-5 space-y-3">
       <div className="flex items-center gap-2">
         <div className="w-8 h-8 rounded bg-emerald-600 flex items-center justify-center">
           <MdStorefront size={16} className="text-white" />
@@ -400,7 +400,7 @@ function BoothCard({ stallList }) {
 
 function SummaryCard({ icon, iconBg, title, onAdd, children }) {
   return (
-    <div className="bg-white border border-zinc-200 rounded-xl p-4 sm:p-5 flex flex-col gap-3">
+    <div className="bg-white border border-zinc-200 rounded p-4 sm:p-5 flex flex-col gap-3">
       <div className="flex items-center gap-2">
         <div className={`w-9 h-9 rounded ${iconBg} flex items-center justify-center`}>{icon}</div>
         <h4 className="text-[14px] font-bold text-zinc-900">{title}</h4>
@@ -425,12 +425,12 @@ function DetailView({ particulars, billing, form, list, editing, onEdit, onDelet
     <div className="space-y-5">
       {/* Top: particulars + billing on left | form on right */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div className="bg-white border border-zinc-200 rounded-xl p-4 sm:p-5 space-y-5">
+        <div className="bg-white border border-zinc-200 rounded p-4 sm:p-5 space-y-5">
           {particulars}
           {billing}
         </div>
         <div className="space-y-4">
-          <div className="bg-zinc-50 border border-zinc-200 rounded-xl p-4 sm:p-5">
+          <div className="bg-zinc-50 border border-zinc-200 rounded p-4 sm:p-5">
             <h3 className="text-[14px] font-bold text-blue-700 uppercase tracking-wider mb-4">Payment Details</h3>
             {form}
           </div>
@@ -439,7 +439,7 @@ function DetailView({ particulars, billing, form, list, editing, onEdit, onDelet
       </div>
 
       {/* Added payments */}
-      <div className="bg-white border border-zinc-200 rounded-xl overflow-hidden">
+      <div className="bg-white border border-zinc-200 rounded overflow-hidden">
         <div className="px-4 sm:px-5 py-3 border-b border-zinc-100">
           <h4 className="text-[14px] font-bold text-blue-700 uppercase tracking-wider">Added Payments</h4>
         </div>
@@ -753,9 +753,9 @@ function PaymentsTable({ list, editing, onEdit, onDelete }) {
   return (
     <>
       {/* Desktop */}
-      <div className="hidden md:block overflow-x-auto">
+      <div className="hidden md:block overflow-auto max-h-[60vh]">
         <table className="w-full">
-          <thead className="bg-zinc-50">
+          <thead className="bg-zinc-50 sticky top-0 z-10">
             <tr>
               {["Payment Type", "Payment Date", "Exhibitor Bank", "Receiver Bank", "Received Payment", "TDS", "Action"].map((h) => (
                 <th key={h} className="px-4 py-2.5 text-left text-[11px] font-semibold text-zinc-500 uppercase tracking-widest whitespace-nowrap">

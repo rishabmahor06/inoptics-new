@@ -42,7 +42,7 @@ export default function Brands() {
           </div>
         </div>
 
-        <div className="bg-white border border-zinc-200 rounded-xl p-4 sm:p-5 space-y-4">
+        <div className="bg-white border border-zinc-200 rounded p-4 sm:p-5 space-y-4">
           <PreviewField label="Website" value={data.website} link />
           <PreviewProducts products={data.products} />
           <PreviewField label="Home Brands"            value={data.home_brands} />
@@ -65,7 +65,7 @@ export default function Brands() {
           </div>
         </div>
 
-        <div className="bg-white border border-zinc-200 rounded-xl p-4 sm:p-5 space-y-4">
+        <div className="bg-white border border-zinc-200 rounded p-4 sm:p-5 space-y-4">
           {/* Website */}
           <Field label="Website">
             <Input

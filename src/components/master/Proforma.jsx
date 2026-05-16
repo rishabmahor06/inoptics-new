@@ -57,10 +57,10 @@ export default function Proforma() {
         <div className="space-y-5 min-w-0">
 
           {/* Company Addresses */}
-          <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-5">
+          <div className="bg-white rounded border border-zinc-200 shadow-sm p-5">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <div className="p-1.5 bg-blue-50 rounded-lg"><MdBusiness size={15} className="text-blue-600" /></div>
+                <div className="p-1.5 bg-blue-50 rounded"><MdBusiness size={15} className="text-blue-600" /></div>
                 <div>
                   <p className="text-[13px] font-bold text-zinc-800">Company Addresses</p>
                   <p className="text-[11px] text-zinc-400">Select which address prints on invoices</p>
@@ -74,10 +74,10 @@ export default function Proforma() {
 
             {loading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {[1, 2, 3].map(n => <div key={n} className="h-36 bg-zinc-100 rounded-xl animate-pulse" />)}
+                {[1, 2, 3].map(n => <div key={n} className="h-36 bg-zinc-100 rounded animate-pulse" />)}
               </div>
             ) : addresses.length === 0 ? (
-              <div className="text-center py-10 border border-dashed border-zinc-200 rounded-xl">
+              <div className="text-center py-10 border border-dashed border-zinc-200 rounded">
                 <p className="text-sm text-zinc-400">No addresses yet</p>
                 <button onClick={() => setAddrModal({})}
                   className="mt-2 text-[12px] font-semibold text-blue-600 hover:underline">
@@ -100,9 +100,9 @@ export default function Proforma() {
           </div>
 
           {/* Select Service + Service List */}
-          <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-5">
+          <div className="bg-white rounded border border-zinc-200 shadow-sm p-5">
             <div className="flex items-center gap-2 mb-4">
-              <div className="p-1.5 bg-indigo-50 rounded-lg"><MdMiscellaneousServices size={15} className="text-indigo-600" /></div>
+              <div className="p-1.5 bg-indigo-50 rounded"><MdMiscellaneousServices size={15} className="text-indigo-600" /></div>
               <div>
                 <p className="text-[13px] font-bold text-zinc-800">Services</p>
                 <p className="text-[11px] text-zinc-400">Configure line items for proforma invoices</p>
@@ -110,7 +110,7 @@ export default function Proforma() {
             </div>
 
             {/* Service selector — always visible */}
-            <div className="mb-4 p-3 bg-zinc-50 rounded-xl border border-zinc-100">
+            <div className="mb-4 p-3 bg-zinc-50 rounded border border-zinc-100">
               <label className="block text-[11px] font-semibold text-zinc-500 uppercase tracking-wide mb-1.5">
                 Select Service for Preview
               </label>

@@ -48,7 +48,7 @@ export default function Undertaking() {
       </div>
 
       {/* body */}
-      <div className="bg-white border border-zinc-200 rounded-xl p-4 sm:p-5 space-y-4">
+      <div className="bg-white border border-zinc-200 rounded p-4 sm:p-5 space-y-4">
         {status === null || loading ? (
           <div className="py-10 text-center text-[13px] text-zinc-400">Loading...</div>
         ) : status === 0 ? (

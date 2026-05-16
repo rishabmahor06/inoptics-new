@@ -32,7 +32,7 @@ export default function Header({ onMenuClick }) {
         <button
           onClick={onMenuClick}
           aria-label="Open menu"
-          className="flex lg:hidden items-center justify-center w-9 h-9 rounded-md text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 transition-all shrink-0"
+          className="flex lg:hidden items-center justify-center w-9 h-9 rounded text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 transition-all shrink-0"
         >
           <MenuIcon />
         </button>
@@ -42,7 +42,7 @@ export default function Header({ onMenuClick }) {
       </div>
 
       <div className="flex items-center gap-2.5 shrink-0">
-        <div className="hidden sm:flex items-center gap-2 bg-zinc-100 border border-zinc-200 rounded-xl px-3 py-1.5 text-zinc-400 w-50 max-sm:w-35">
+        <div className="hidden sm:flex items-center gap-2 bg-zinc-100 border border-zinc-200 rounded px-3 py-1.5 text-zinc-400 w-50 max-sm:w-35">
           <SearchIcon />
           <input
             placeholder="Search"
@@ -50,9 +50,9 @@ export default function Header({ onMenuClick }) {
           />
         </div>
 
-        <button className="relative flex items-center justify-center w-9 h-9 rounded-md text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 transition-all shrink-0">
+        <button className="relative flex items-center justify-center w-9 h-9 rounded text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 transition-all shrink-0">
           <BellIcon />
-          <span className="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-[10px] font-semibold rounded-full flex items-center justify-center border-2 border-white leading-none">
+          <span className="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-[10px] font-semibold rounded flex items-center justify-center border-2 border-white leading-none">
             4
           </span>
         </button>

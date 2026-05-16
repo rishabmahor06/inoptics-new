@@ -38,7 +38,7 @@ export default function ForExhibitorsMain() {
       {loadingMain ? (
         <LoadingSpinner />
       ) : (
-        <div className="bg-white border border-zinc-200 rounded-2xl p-5 sm:p-6 space-y-4">
+        <div className="bg-white border border-zinc-200 rounded p-5 sm:p-6 space-y-4">
           <Field label="Header">
             <WmInput value={header} onChange={(e) => setHeader(e.target.value)} placeholder="For Exhibitors hero header..." />
           </Field>
@@ -47,7 +47,7 @@ export default function ForExhibitorsMain() {
           </Field>
           <div className="flex justify-end pt-2">
             <button onClick={handleSave} disabled={saving}
-              className="px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors disabled:opacity-60">
+              className="px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded transition-colors disabled:opacity-60">
               {saving ? "Saving..." : "Save"}
             </button>
           </div>

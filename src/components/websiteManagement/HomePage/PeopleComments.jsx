@@ -95,10 +95,10 @@ export default function PeopleComments() {
                   alt={row.name || ""}
                   onClick={() => setPreview(imgSrc(row.image_path || row.image))}
                   title="Click to preview"
-                  className="h-10 w-10 object-cover rounded-full border-2 border-zinc-200 cursor-pointer hover:scale-110 transition-transform"
+                  className="h-10 w-10 object-cover rounded border-2 border-zinc-200 cursor-pointer hover:scale-110 transition-transform"
                 />
               ) : (
-                <div className="h-10 w-10 rounded-full bg-zinc-200 flex items-center justify-center text-zinc-500 font-bold text-sm">
+                <div className="h-10 w-10 rounded bg-zinc-200 flex items-center justify-center text-zinc-500 font-bold text-sm">
                   {row.name?.[0]?.toUpperCase()}
                 </div>
               )}
@@ -155,7 +155,7 @@ export default function PeopleComments() {
                   <img
                     src={imgSrc(editing.image_path || editing.image)}
                     alt={form.name}
-                    className="h-16 w-16 object-cover rounded-full border-2 border-zinc-200 cursor-pointer hover:scale-105 transition-transform"
+                    className="h-16 w-16 object-cover rounded border-2 border-zinc-200 cursor-pointer hover:scale-105 transition-transform"
                     onClick={() => setPreview(imgSrc(editing.image_path || editing.image))}
                   />
                   <p className="text-xs text-zinc-400">Click to preview</p>
@@ -171,7 +171,7 @@ export default function PeopleComments() {
                   <img
                     src={URL.createObjectURL(file)}
                     alt="preview"
-                    className="h-14 w-14 object-cover rounded-full border-2 border-zinc-200"
+                    className="h-14 w-14 object-cover rounded border-2 border-zinc-200"
                   />
                   <p className="text-xs text-emerald-600">{file.name}</p>
                 </div>

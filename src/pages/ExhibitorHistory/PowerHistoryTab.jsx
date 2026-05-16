@@ -57,7 +57,7 @@ export default function PowerHistoryTab() {
   return (
     <div className="space-y-4 p-3 sm:p-4 lg:p-5">
       {/* Toolbar */}
-      <div className="bg-white rounded-xl shadow-sm px-4 sm:px-5 py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div className="bg-white rounded shadow-sm px-4 sm:px-5 py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <h3 className="text-[15px] font-bold text-zinc-900">Power Requirement History</h3>
         <div className="relative w-full sm:w-72">
           <MdSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" size={18} />
@@ -66,18 +66,18 @@ export default function PowerHistoryTab() {
             placeholder="Search company..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full h-10 pl-9 pr-3 text-[14px] border border-zinc-200 rounded-xl bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full h-10 pl-9 pr-3 text-[14px] border border-zinc-200 rounded bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
       </div>
 
       {/* List */}
       {loading ? (
-        <div className="bg-white rounded-xl border border-zinc-200 py-10 text-center text-zinc-500 text-base">
+        <div className="bg-white rounded border border-zinc-200 py-10 text-center text-zinc-500 text-base">
           Loading...
         </div>
       ) : filtered.length === 0 ? (
-        <div className="bg-white rounded-xl border border-zinc-200 py-16 flex flex-col items-center gap-3 text-zinc-400">
+        <div className="bg-white rounded border border-zinc-200 py-16 flex flex-col items-center gap-3 text-zinc-400">
           <MdHistory size={42} className="text-zinc-200" />
           <p className="text-base">No power history found</p>
         </div>
@@ -87,7 +87,7 @@ export default function PowerHistoryTab() {
             const isOpen = openCompany === company;
             const items  = grouped[company] || [];
             return (
-              <div key={company} className="bg-white border border-zinc-200 rounded-xl overflow-hidden">
+              <div key={company} className="bg-white border border-zinc-200 rounded overflow-hidden">
                 <div
                   onClick={() => setOpenCompany(isOpen ? null : company)}
                   className="flex items-center justify-between gap-2 px-4 sm:px-5 py-3 hover:bg-zinc-50 transition-colors cursor-pointer"

@@ -142,7 +142,7 @@ function MastersNavItem({ collapsed }) {
         type="button"
         title={collapsed ? 'Masters' : ''}
         onClick={handleMain}
-        className={`flex items-center w-full rounded-lg text-sm font-medium px-3 py-2 transition-all duration-150
+        className={`flex items-center w-full rounded text-sm font-medium px-3 py-2 transition-all duration-150
           ${collapsed ? 'justify-center' : 'gap-3'}
           ${isActive ? 'bg-zinc-900 text-white' : 'text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900'}`}
       >
@@ -164,7 +164,7 @@ function MastersNavItem({ collapsed }) {
                 key={sub.id}
                 type="button"
                 onClick={() => setMasterSubTab(sub.id)}
-                className={`flex items-center gap-2.5 w-full rounded-lg text-[13px] font-medium px-2.5 py-1.5 transition-all duration-150
+                className={`flex items-center gap-2.5 w-full rounded text-[13px] font-medium px-2.5 py-1.5 transition-all duration-150
                   ${subActive ? 'bg-zinc-100 text-zinc-900 font-semibold' : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-800'}`}
               >
                 <span className="truncate">{sub.label}</span>
@@ -200,7 +200,7 @@ function CommNavItem({ collapsed }) {
         type="button"
         title={collapsed ? 'Communication' : ''}
         onClick={handleMain}
-        className={`flex items-center w-full rounded-lg text-sm font-medium px-3 py-2 transition-all duration-150
+        className={`flex items-center w-full rounded text-sm font-medium px-3 py-2 transition-all duration-150
           ${collapsed ? 'justify-center' : 'gap-3'}
           ${isActive ? 'bg-zinc-900 text-white' : 'text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900'}`}
       >
@@ -226,7 +226,7 @@ function CommNavItem({ collapsed }) {
                 key={sub.id}
                 type="button"
                 onClick={() => setCommunicationSubTab(sub.id)}
-                className={`flex items-center gap-2.5 w-full rounded-lg text-[13px] font-medium px-2.5 py-1.5 transition-all duration-150
+                className={`flex items-center gap-2.5 w-full rounded text-[13px] font-medium px-2.5 py-1.5 transition-all duration-150
                   ${subActive
                     ? 'bg-zinc-100 text-zinc-900 font-semibold'
                     : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-800'
@@ -257,7 +257,7 @@ function NavItem({ item, collapsed }) {
       type="button"
       title={collapsed ? item.label : ""}
       onClick={() => setActiveTab(item.id)}
-      className={`flex items-center w-full rounded-[8px] text-sm font-medium px-3 py-2 transition-all duration-150
+      className={`flex items-center w-full rounded text-sm font-medium px-3 py-2 transition-all duration-150
         ${collapsed ? "justify-center" : "gap-3"}
         ${
           active
@@ -285,7 +285,7 @@ function SectionGroup({
         <button
           type="button"
           onClick={() => toggleSection(group.label)}
-          className="flex items-center justify-between w-full px-3 py-2 text-zinc-400 hover:bg-zinc-50 rounded-md"
+          className="flex items-center justify-between w-full px-3 py-2 text-zinc-400 hover:bg-zinc-50 rounded"
         >
           <span className="text-[10px] font-bold uppercase tracking-widest">
             {group.label}
@@ -353,7 +353,7 @@ export default function Sidebar({
       >
         {!collapsed && (
           <div className="flex items-center gap-3">
-            {/* <div className="w-full h-8 bg-zinc-900 rounded-[4px] flex items-center justify-center text-white font-bold text-sm">
+            {/* <div className="w-full h-8 bg-zinc-900 rounded flex items-center justify-center text-white font-bold text-sm">
                Admin Panel
             </div> */}
 
@@ -367,7 +367,7 @@ export default function Sidebar({
           <button
             type="button"
             onClick={onCollapse}
-            className="w-8 h-8 rounded-md flex items-center justify-center text-zinc-400 hover:bg-zinc-100 hover:text-zinc-900"
+            className="w-8 h-8 rounded flex items-center justify-center text-zinc-400 hover:bg-zinc-100 hover:text-zinc-900"
           >
             {collapsed ? (
               <MdChevronRight size={20} />
@@ -379,7 +379,7 @@ export default function Sidebar({
           <button
             type="button"
             onClick={onMobileClose}
-            className="w-8 h-8 rounded-md flex items-center justify-center text-zinc-400 hover:bg-zinc-100 hover:text-zinc-900"
+            className="w-8 h-8 rounded flex items-center justify-center text-zinc-400 hover:bg-zinc-100 hover:text-zinc-900"
           >
             <MdClose size={20} />
           </button>
@@ -404,7 +404,7 @@ export default function Sidebar({
         <button
           type="button"
           onClick={() => setShowLogoutConfirm(true)}
-          className={`flex items-center w-full rounded-lg px-3 py-2 text-sm font-medium text-red-500 hover:bg-red-50 ${
+          className={`flex items-center w-full rounded px-3 py-2 text-sm font-medium text-red-500 hover:bg-red-50 ${
             collapsed ? "justify-center" : "gap-3"
           }`}
         >
@@ -432,10 +432,10 @@ function LogoutConfirmModal({ onCancel, onConfirm }) {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden animate-[scaleIn_0.2s_ease]"
+        className="bg-white rounded shadow-2xl w-full max-w-sm overflow-hidden animate-[scaleIn_0.2s_ease]"
       >
         <div className="px-6 pt-6 pb-2 text-center">
-          <div className="w-14 h-14 rounded-2xl bg-red-50 border border-red-100 flex items-center justify-center mx-auto mb-3">
+          <div className="w-14 h-14 rounded bg-red-50 border border-red-100 flex items-center justify-center mx-auto mb-3">
             <MdLogout size={26} className="text-red-500" />
           </div>
           <h3 className="text-lg font-bold text-zinc-900">Sign out?</h3>
@@ -446,13 +446,13 @@ function LogoutConfirmModal({ onCancel, onConfirm }) {
         <div className="px-5 pb-5 pt-3 flex items-center gap-2">
           <button
             onClick={onCancel}
-            className="flex-1 h-10 text-[13px] font-semibold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded-lg transition-colors"
+            className="flex-1 h-10 text-[13px] font-semibold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded transition-colors"
           >
             Cancel
           </button>
           <button
             onClick={onConfirm}
-            className="flex-1 h-10 text-[13px] font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors flex items-center justify-center gap-1.5"
+            className="flex-1 h-10 text-[13px] font-semibold text-white bg-red-600 hover:bg-red-700 rounded transition-colors flex items-center justify-center gap-1.5"
             autoFocus
           >
             <MdLogout size={14} /> Sign Out

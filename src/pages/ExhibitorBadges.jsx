@@ -475,7 +475,7 @@ export default function ExhibitorBadges() {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-sm flex items-center justify-center py-16 text-zinc-500 text-base">
+      <div className="bg-white rounded shadow-sm flex items-center justify-center py-16 text-zinc-500 text-base">
         Loading badges...
       </div>
     );
@@ -486,15 +486,15 @@ export default function ExhibitorBadges() {
   return (
     <div className="space-y-4 p-3 sm:p-4 lg:p-5">
       {/* TOOLBAR */}
-      <div className="bg-white rounded-xl shadow-sm px-4 sm:px-5 py-3 sm:py-4 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+      <div className="bg-white rounded shadow-sm px-4 sm:px-5 py-3 sm:py-4 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
         <div className="flex items-center gap-2 flex-wrap">
           <button
             onClick={exportBadgesExcel}
-            className="px-3 py-2 text-[14px] font-semibold bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg flex items-center gap-1.5 transition-colors"
+            className="px-3 py-2 text-[14px] font-semibold bg-emerald-600 hover:bg-emerald-700 text-white rounded flex items-center gap-1.5 transition-colors"
           >
             <MdFileDownload size={16} /> Export Excel
           </button>
-          <label className="px-3 py-2 text-[14px] font-semibold bg-amber-600 hover:bg-amber-700 text-white rounded-lg flex items-center gap-1.5 transition-colors cursor-pointer">
+          <label className="px-3 py-2 text-[14px] font-semibold bg-amber-600 hover:bg-amber-700 text-white rounded flex items-center gap-1.5 transition-colors cursor-pointer">
             <MdUpload size={16} /> {uploading ? "Uploading..." : "Upload CSV"}
             <input
               type="file"
@@ -505,14 +505,14 @@ export default function ExhibitorBadges() {
           </label>
           <button
             onClick={() => setShowExhibitorPopup(true)}
-            className="px-3 py-2 text-[14px] font-semibold bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg flex items-center gap-1.5 transition-colors"
+            className="px-3 py-2 text-[14px] font-semibold bg-zinc-900 hover:bg-zinc-800 text-white rounded flex items-center gap-1.5 transition-colors"
           >
             <MdAdd size={16} /> Add Badge
           </button>
-          <span className="px-2.5 py-1 text-[12px] font-bold bg-blue-50 text-blue-700 border border-blue-200 rounded-md">
+          <span className="px-2.5 py-1 text-[12px] font-bold bg-blue-50 text-blue-700 border border-blue-200 rounded">
             Companies: {companies.length}
           </span>
-          <span className="px-2.5 py-1 text-[12px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-md">
+          <span className="px-2.5 py-1 text-[12px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded">
             Badges: {totalBadges}
           </span>
         </div>
@@ -526,14 +526,14 @@ export default function ExhibitorBadges() {
             placeholder="Search company..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full h-10 pl-9 pr-3 text-[14px] border border-zinc-200 rounded-xl bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full h-10 pl-9 pr-3 text-[14px] border border-zinc-200 rounded bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
       </div>
 
       {/* LIST */}
       {filteredCompanies.length === 0 ? (
-        <div className="bg-white rounded-xl border border-zinc-200 py-16 text-center text-zinc-400 text-base">
+        <div className="bg-white rounded border border-zinc-200 py-16 text-center text-zinc-400 text-base">
           No badges found
         </div>
       ) : (
@@ -593,7 +593,7 @@ export default function ExhibitorBadges() {
             return (
               <div
                 key={company.company_name}
-                className="bg-white border border-zinc-200 rounded-xl overflow-hidden"
+                className="bg-white border border-zinc-200 rounded overflow-hidden"
               >
                 {/* Header */}
                 <div
@@ -757,11 +757,11 @@ export default function ExhibitorBadges() {
                                 </td>
                                 <td className="px-3 py-3">
                                   {isFree ? (
-                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full">
+                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded">
                                       <MdVerified size={12} /> FREE
                                     </span>
                                   ) : (
-                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200 rounded-full">
+                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200 rounded">
                                       <MdCurrencyRupee size={12} /> PAID
                                     </span>
                                   )}
@@ -791,7 +791,7 @@ export default function ExhibitorBadges() {
                                   <div className="flex items-center gap-1">
                                     <button
                                       onClick={() => togglePrintStatus(badge)}
-                                      className="p-1.5 hover:bg-zinc-100 rounded-md flex items-center gap-0.5"
+                                      className="p-1.5 hover:bg-zinc-100 rounded flex items-center gap-0.5"
                                       title="Toggle print"
                                     >
                                       <MdPrint
@@ -824,7 +824,7 @@ export default function ExhibitorBadges() {
                                       title="Delete"
                                     >
                                       {deletingId === badge.id ? (
-                                        <span className="block w-3.5 h-3.5 border-2 border-red-700 border-t-transparent rounded-full animate-spin" />
+                                        <span className="block w-3.5 h-3.5 border-2 border-red-700 border-t-transparent rounded animate-spin" />
                                       ) : (
                                         <MdDelete size={14} />
                                       )}
@@ -905,11 +905,11 @@ export default function ExhibitorBadges() {
                               </div>
                               <div className="flex items-center gap-1 shrink-0">
                                 {isFree ? (
-                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full">
+                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded">
                                     <MdVerified size={11} /> FREE
                                   </span>
                                 ) : (
-                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200 rounded-full">
+                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200 rounded">
                                     <MdCurrencyRupee size={11} /> PAID
                                   </span>
                                 )}
@@ -950,7 +950,7 @@ export default function ExhibitorBadges() {
                             <div className="flex items-center justify-end gap-1.5 pt-1">
                               <button
                                 onClick={() => togglePrintStatus(badge)}
-                                className="p-1.5 hover:bg-zinc-100 rounded-md flex items-center"
+                                className="p-1.5 hover:bg-zinc-100 rounded flex items-center"
                               >
                                 <MdPrint size={14} className="text-zinc-600" />
                                 {printToggle[badge.id] ? (
@@ -970,22 +970,22 @@ export default function ExhibitorBadges() {
                                   setPreviewBadgeId(badge.id);
                                   setShowPreviewModal(true);
                                 }}
-                                className="p-1.5 text-zinc-700 bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 rounded-md"
+                                className="p-1.5 text-zinc-700 bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 rounded"
                               >
                                 <MdVisibility size={13} />
                               </button>
                               <button
                                 onClick={() => openEditModal(badge)}
-                                className="p-1.5 text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-md"
+                                className="p-1.5 text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded"
                               >
                                 <MdEdit size={13} />
                               </button>
                               <button
                                 onClick={() => deleteBadge(badge.id)}
-                                className="p-1.5 text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded-md"
+                                className="p-1.5 text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded"
                               >
                                 {deletingId === badge.id ? (
-                                  <span className="block w-3.5 h-3.5 border-2 border-red-700 border-t-transparent rounded-full animate-spin" />
+                                  <span className="block w-3.5 h-3.5 border-2 border-red-700 border-t-transparent rounded animate-spin" />
                                 ) : (
                                   <MdDelete size={13} />
                                 )}
@@ -1049,7 +1049,7 @@ export default function ExhibitorBadges() {
             <img
               src={`${API}/exhibitor_badges_preview.php?id=${previewBadgeId}&t=${Date.now()}`}
               alt="Badge"
-              className="max-w-full max-h-[70vh] object-contain rounded-lg"
+              className="max-w-full max-h-[70vh] object-contain rounded"
             />
           </div>
         </ModalShell>
@@ -1116,13 +1116,13 @@ export default function ExhibitorBadges() {
                   preview: URL.createObjectURL(file),
                 }));
               }}
-              className="block w-full text-[13px] text-zinc-600 file:mr-3 file:px-3 file:py-1.5 file:rounded-lg file:border-0 file:text-[12px] file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              className="block w-full text-[13px] text-zinc-600 file:mr-3 file:px-3 file:py-1.5 file:rounded file:border-0 file:text-[12px] file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
             />
             {editingBadge?.preview && (
               <img
                 src={editingBadge.preview}
                 alt="preview"
-                className="mt-2 h-24 w-24 object-cover rounded-lg border border-zinc-200"
+                className="mt-2 h-24 w-24 object-cover rounded border border-zinc-200"
               />
             )}
           </Field>
@@ -1181,13 +1181,13 @@ export default function ExhibitorBadges() {
                 type="file"
                 accept="image/*"
                 onChange={handlePhotoChange}
-                className="block w-full text-[13px] text-zinc-600 file:mr-3 file:px-3 file:py-1.5 file:rounded-lg file:border-0 file:text-[12px] file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                className="block w-full text-[13px] text-zinc-600 file:mr-3 file:px-3 file:py-1.5 file:rounded file:border-0 file:text-[12px] file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
               />
               {photoPreview && (
                 <img
                   src={photoPreview}
                   alt="preview"
-                  className="mt-2 h-24 w-24 object-cover rounded-lg border border-zinc-200"
+                  className="mt-2 h-24 w-24 object-cover rounded border border-zinc-200"
                 />
               )}
             </Field>
@@ -1237,10 +1237,10 @@ export default function ExhibitorBadges() {
               placeholder="Search exhibitor..."
               value={exhibitorSearch}
               onChange={(e) => setExhibitorSearch(e.target.value)}
-              className="w-full h-10 pl-9 pr-3 text-[14px] border border-zinc-200 rounded-lg bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full h-10 pl-9 pr-3 text-[14px] border border-zinc-200 rounded bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <div className="max-h-[55vh] overflow-y-auto border border-zinc-100 rounded-lg divide-y divide-zinc-100">
+          <div className="max-h-[55vh] overflow-y-auto border border-zinc-100 rounded divide-y divide-zinc-100">
             {filteredExhibitors.length === 0 ? (
               <p className="p-6 text-center text-zinc-400 text-[14px]">
                 No exhibitors found
@@ -1272,7 +1272,7 @@ export default function ExhibitorBadges() {
                       });
                       setShowBadgePopup(true);
                     }}
-                    className="px-3 py-1 text-[12px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-md shrink-0"
+                    className="px-3 py-1 text-[12px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded shrink-0"
                   >
                     Select
                   </button>
@@ -1292,7 +1292,7 @@ function ModalShell({ title, onClose, children, footer, wide }) {
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div
-        className={`bg-white rounded-xl shadow-xl w-full ${wide ? "max-w-3xl" : "max-w-md"} max-h-[92vh] flex flex-col overflow-hidden`}
+        className={`bg-white rounded shadow-xl w-full ${wide ? "max-w-3xl" : "max-w-md"} max-h-[92vh] flex flex-col overflow-hidden`}
       >
         <div className="px-5 py-3.5 border-b border-zinc-100 flex items-center justify-between shrink-0">
           <h3 className="text-[15px] font-bold text-zinc-800 truncate pr-3">
@@ -1300,7 +1300,7 @@ function ModalShell({ title, onClose, children, footer, wide }) {
           </h3>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-lg hover:bg-zinc-100 flex items-center justify-center text-zinc-400 hover:text-zinc-700 transition-colors shrink-0"
+            className="w-8 h-8 rounded hover:bg-zinc-100 flex items-center justify-center text-zinc-400 hover:text-zinc-700 transition-colors shrink-0"
           >
             <MdClose size={18} />
           </button>
@@ -1331,7 +1331,7 @@ function Input({ className = "", ...props }) {
   return (
     <input
       {...props}
-      className={`w-full px-3 py-2 text-[14px] border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-zinc-50 disabled:text-zinc-500 read-only:bg-zinc-50 ${className}`}
+      className={`w-full px-3 py-2 text-[14px] border border-zinc-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-zinc-50 disabled:text-zinc-500 read-only:bg-zinc-50 ${className}`}
     />
   );
 }
@@ -1340,7 +1340,7 @@ function BtnGhost({ onClick, children }) {
   return (
     <button
       onClick={onClick}
-      className="px-4 py-2 text-[14px] font-semibold bg-zinc-100 hover:bg-zinc-200 text-zinc-700 rounded-lg transition-colors"
+      className="px-4 py-2 text-[14px] font-semibold bg-zinc-100 hover:bg-zinc-200 text-zinc-700 rounded transition-colors"
     >
       {children}
     </button>
@@ -1351,7 +1351,7 @@ function BtnPrimary({ onClick, children }) {
   return (
     <button
       onClick={onClick}
-      className="px-4 py-2 text-[14px] font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+      className="px-4 py-2 text-[14px] font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors"
     >
       {children}
     </button>
