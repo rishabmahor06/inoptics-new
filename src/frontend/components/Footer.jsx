@@ -114,7 +114,7 @@ export default function Footer() {
         {/* ============ SPONSORS CARD (top, outside main footer) ============ */}
         {(platinumImg || goldSponsors.length > 0 || silverSponsors.length > 0) && (
           <div className="rounded-2xl overflow-hidden mb-5">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-2.5 sm:gap-3 p-3 sm:p-4">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-2.5 sm:gap-12 p-3 sm:p-4">
 
               {/* ─── LEFT: Platinum ─── */}
               {platinumImg && (
@@ -139,20 +139,28 @@ export default function Footer() {
                     Gold Sponsors
                     <span className="ml-1.5 text-zinc-500 font-normal tracking-normal">· {goldSponsors.length}</span>
                   </span>
-                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-1.5 sm:gap-1 flex-1 content-start">
-                    {goldSponsors.map((s, i) => (
-                      <div
-                        key={s.id || i}
-                        title={s.name}
-                        className="bg-white rounded flex items-center justify-center h-16 sm:h-18 px-1.5 py-2 hover:-translate-y-0.5 hover:shadow-lg transition-all"
-                      >
-                        <img
-                          src={`${API}/${s.image_path}`}
-                          alt={s.name || "Gold Sponsor"}
-                          className="max-h-10 sm:max-h-12 max-w-full object-contain"
-                        />
-                      </div>
-                    ))}
+                  <div className="grid grid-cols-3 sm:grid-cols-3 gap-1.5 sm:gap-1 flex-1 content-start">
+                    {goldSponsors.map((s, i) => {
+                      const rem = goldSponsors.length % 3;
+                      const isLastRowLeftover = rem !== 0 && i >= goldSponsors.length - rem;
+                      const centerClass =
+                        isLastRowLeftover && rem === 1 && i === goldSponsors.length - 1
+                          ? "col-start-2"
+                          : "";
+                      return (
+                        <div
+                          key={s.id || i}
+                          title={s.name}
+                          className={`bg-white rounded flex items-center justify-center h-16 sm:h-18 px-1.5 py-2 hover:-translate-y-0.5 hover:shadow-lg transition-all ${centerClass}`}
+                        >
+                          <img
+                            src={`${API}/${s.image_path}`}
+                            alt={s.name || "Gold Sponsor"}
+                            className="max-h-10 sm:max-h-12 max-w-full object-contain"
+                          />
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -164,7 +172,7 @@ export default function Footer() {
                     Silver Sponsors
                     <span className="ml-1.5 text-zinc-500 font-normal tracking-normal">· {silverSponsors.length}</span>
                   </span>
-                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-1.5 sm:gap-1 flex-1 content-start">
+                  <div className="grid grid-cols-3 sm:grid-cols-3 gap-1.5 sm:gap-1 flex-1 content-start">
                     {silverSponsors.map((s, i) => (
                       <div
                         key={s.id || i}

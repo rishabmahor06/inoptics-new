@@ -147,8 +147,15 @@ export default function ForExhibitors() {
   }, []);
 
   /* ── Split cards ── */
-  const featuredCard = cards.find(c => String(c.id) === "2");
-  const otherCards   = cards.filter(c => String(c.id) !== "2");
+  const isActive = (c) => {
+    const v = c?.status ?? c?.active ?? c?.is_active;
+    if (v === undefined || v === null) return false;
+    const s = String(v).toLowerCase();
+    return s === "1" || s === "true" || s === "active" || s === "yes";
+  };
+  const activeCards  = cards.filter(isActive);
+  const featuredCard = activeCards.find(c => String(c.id) === "2");
+  const otherCards   = activeCards.filter(c => String(c.id) !== "2");
 
   return (
     <div className="min-h-screen bg-[#fafafb] flex flex-col"

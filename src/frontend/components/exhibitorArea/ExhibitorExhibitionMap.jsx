@@ -41,7 +41,16 @@ export default function ExhibitorExhibitionMap() {
 
   useEffect(() => { fetchExhibitionData(); }, [fetchExhibitionData]);
 
-  const imageUrl = exhibitionData[0]?.image || null;
+  /* prefer first ACTIVE map; fall back to first row */
+  const activeMap =
+    exhibitionData.find((m) => {
+      const s = String(m?.status ?? '').toLowerCase();
+      return s === 'active' || s === '1' || s === 'true' || s === 'yes';
+    }) || null;
+
+  const firstRow = exhibitionData[0] || null;
+  const isActive = !!activeMap;
+  const imageUrl = activeMap?.image || null;
 
   /* ============ zoom ============ */
   const clampZoom = (z) => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, z));
@@ -358,6 +367,25 @@ export default function ExhibitorExhibitionMap() {
                 className="mt-2 inline-flex items-center gap-2 px-5 h-10 bg-[#02062c] hover:bg-[#0a1450] text-white text-[12px] font-bold uppercase tracking-wider rounded-lg transition-colors"
               >
                 <MdRefresh size={14} /> Try Again
+              </button>
+            </div>
+          ) : !isActive && firstRow ? (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-center px-6 bg-gradient-to-br from-amber-50 via-white to-blue-50">
+              <div className="w-20 h-20 rounded-2xl bg-amber-100 flex items-center justify-center shadow-sm">
+                <MdInfoOutline size={38} className="text-amber-600" />
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-bold text-[#02062c] tracking-tight">
+                We'll Be Back Soon
+              </h3>
+              <p className="text-[13px] sm:text-[14px] text-zinc-600 max-w-md leading-relaxed">
+                The exhibition map is currently being updated. Please check back shortly —
+                the latest layout will be available here soon.
+              </p>
+              <button
+                onClick={fetchExhibitionData}
+                className="mt-2 inline-flex items-center gap-2 px-5 h-10 bg-[#02062c] hover:bg-[#0a1450] text-white text-[12px] font-bold uppercase tracking-wider rounded-lg transition-colors"
+              >
+                <MdRefresh size={14} /> Refresh
               </button>
             </div>
           ) : !imageUrl ? (

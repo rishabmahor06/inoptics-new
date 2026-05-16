@@ -12,6 +12,7 @@ import HomeExhibitorTab    from '../components/websiteManagement/HomeExhibitor/H
 import VisitorGuideTab     from '../components/websiteManagement/VisitorGuide/VisitorGuideTab';
 import ForExhibitorsTab    from '../components/websiteManagement/ForExhibitors/ForExhibitorsTab';
 import ExhibitorLoginTab   from '../components/websiteManagement/ExhibitorLogin/ExhibitorLoginTab';
+import ExhibitionMapTab    from '../components/websiteManagement/ExhibitionMap/ExhibitionMapTab';
 
 import CustomEditor from '../components/CustomEditor/CustomEditor';
 
@@ -404,6 +405,7 @@ const MAIN_TABS = [
   'Outer Page',
   'Become An Exhibitor',
   'Exhibitor Login',
+  'Exhibition Map',
 ];
 
 export default function WebsiteManagement() {
@@ -421,6 +423,7 @@ export default function WebsiteManagement() {
       case 'For Exhibitors':      return <ForExhibitorsTab />;
       case 'Become An Exhibitor': return <BecomeAnExhibitor />;
       case 'Exhibitor Login':     return <ExhibitorLoginTab />;
+      case 'Exhibition Map':      return <ExhibitionMapTab />;
       default:                    return null;
     }
   };

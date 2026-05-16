@@ -25,17 +25,12 @@ import TouristSpots  from "./TouristSpots";
 import { useHomeVideoStore } from "../../store/website/useHomeVideoStore";
 
 /* ============ Hero video helpers ============ */
-const FALLBACK_HERO =
-  "https://www.youtube.com/embed/L9OHFU62kX8?autoplay=1&mute=1&loop=1&controls=0&rel=0&modestbranding=1&playlist=L9OHFU62kX8";
-
 const isFile = (s = "") => /\.(mp4|webm|ogg|mov)(\?|$)/i.test(s);
 
 function HeroVideo({ src }) {
-  const fullSrc = !src
-    ? FALLBACK_HERO
-    : src.startsWith("http")
-    ? src
-    : `https://inoptics.in/api/${src}`;
+  if (!src) return null;
+
+  const fullSrc = src.startsWith("http") ? src : `https://inoptics.in/api/${src}`;
 
   return (
     <div className="relative w-full h-[60vh] sm:h-[80vh] lg:h-screen overflow-hidden bg-black">
@@ -54,7 +49,6 @@ function HeroVideo({ src }) {
           title="Hero video"
         />
       )}
-      {/* gradient overlay for legibility on small screens */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/40 pointer-events-none" />
     </div>
   );

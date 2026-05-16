@@ -44,9 +44,18 @@ export default function ForExhibitors() {
     })();
   }, []);
 
+  /* only show cards whose status is active */
+  const isActive = (c) => {
+    const v = c?.status ?? c?.active ?? c?.is_active;
+    if (v === undefined || v === null) return false;
+    const s = String(v).toLowerCase();
+    return s === "1" || s === "true" || s === "active" || s === "yes";
+  };
+  const activeCards = exhibitorsCards.filter(isActive);
+
   /* card with id="2" rendered separately on the left side */
-  const featuredCard = exhibitorsCards.find((c) => String(c.id) === "2");
-  const otherCards   = exhibitorsCards.filter((c) => String(c.id) !== "2");
+  const featuredCard = activeCards.find((c) => String(c.id) === "2");
+  const otherCards   = activeCards.filter((c) => String(c.id) !== "2");
 
   return (
     <div className="min-h-screen bg-[#fafafb] flex flex-col font-[Quicksand,sans-serif]">
@@ -163,7 +172,7 @@ export default function ForExhibitors() {
                     key={card.id}
                     className="group relative bg-white rounded-2xl border border-zinc-100 shadow-sm hover:shadow-xl p-5 sm:p-6 overflow-hidden transition-all hover:-translate-y-0.5"
                   >
-                    <MdCheckCircle size={20} className="text-emerald-500 mb-3" />
+                    <MdCheckCircle size={20} className="text-emerald-00 mb-3" />
                     <h3
                       className="text-[16px] font-bold text-[#02062c] mb-2 leading-snug [&_strong]:font-bold"
                       dangerouslySetInnerHTML={{ __html: card.title }}

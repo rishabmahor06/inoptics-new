@@ -6,6 +6,6 @@ export const saveForExhibitorsMain = (fd) => apiPostForm('save_exhibitors_main.p
 
 /* For Exhibitors CARDS */
 export const getForExhibitorsCards   = () => apiFetch('get_exhibitors_cards.php');
-export const addForExhibitorCard     = (fd) => apiPostForm('add_exhibitors_card.php', fd);
-export const updateForExhibitorCard  = (fd) => apiPostForm('update_exhibitors_card.php', fd);
-export const deleteForExhibitorCard  = (id) => apiPost('delete_exhibitors_card.php', { id });
+export const addForExhibitorCard     = (payload) => apiPost('add_exhibitors_card.php',    payload);
+export const updateForExhibitorCard  = (payload) => apiPost('update_exhibitors_card.php', payload);
+export const deleteForExhibitorCard  = (id)      => apiPost('delete_exhibitors_card.php', { id });
