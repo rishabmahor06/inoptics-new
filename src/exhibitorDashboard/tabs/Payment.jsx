@@ -21,10 +21,11 @@ export default function Payment() {
     powerCleared,
     badgeBilling,
     badgeCleared,
+    exhibitor: storeExhibitor,
     loading,
     fetchAll,
   } = usePaymentStore();
-  const exhibitor = getExhibitor();
+  const exhibitor = storeExhibitor || getExhibitor();
   const isDelhi = (exhibitor?.state || "").trim().toLowerCase() === "delhi";
   const currency = stallSummary?.currency || "₹";
 

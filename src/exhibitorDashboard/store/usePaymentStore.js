@@ -4,7 +4,7 @@ import {
   fetchPowerPayments,
   fetchBadgePayments,
 } from "../api/paymentApi";
-import { fetchStalls } from "../api/profileApi";
+import { fetchStalls, fetchExhibitors } from "../api/profileApi";
 import { fetchExhibitorPower } from "../api/powerApi";
 import { getExhibitor } from "../api/base";
 
@@ -42,15 +42,12 @@ export const BANK_DETAILS = [
   },
 ];
 
-const buildStallSummary = (stalls = []) =>
-  stalls.reduce(
+const buildStallSummary = (stalls = [], state = "") => {
+  const isDelhi = (state || "").trim().toLowerCase() === "delhi";
+  const acc = stalls.reduce(
     (s, stall) => {
       s.total += parseFloat(stall.total || 0);
       s.discounted_amount += parseFloat(stall.discounted_amount || 0);
-      s.sgst += parseFloat(stall.sgst_9_percent || 0);
-      s.cgst += parseFloat(stall.cgst_9_percent || 0);
-      s.igst += parseFloat(stall.igst_18_percent || 0);
-      s.grand_total += parseFloat(stall.grand_total || 0);
       if (!s.currency && stall.currency) s.currency = stall.currency;
       s.stalls.push({
         stall_number: stall.stall_number,
@@ -72,6 +69,21 @@ const buildStallSummary = (stalls = []) =>
       stalls: [],
     }
   );
+
+  // recompute GST based on exhibitor state — ignore whatever the DB row stored
+  const taxable = acc.total - acc.discounted_amount;
+  if (isDelhi) {
+    acc.sgst = taxable * 0.09;
+    acc.cgst = taxable * 0.09;
+    acc.igst = 0;
+  } else {
+    acc.sgst = 0;
+    acc.cgst = 0;
+    acc.igst = taxable * 0.18;
+  }
+  acc.grand_total = taxable + acc.sgst + acc.cgst + acc.igst;
+  return acc;
+};
 
 const calcPowerTotals = (entries = [], state = "") => {
   const total = entries.reduce(
@@ -117,17 +129,17 @@ export const usePaymentStore = create((set) => ({
   powerCleared: 0,
   badgeBilling: null,
   badgeCleared: 0,
+  exhibitor: null,
   loading: false,
 
   fetchAll: async () => {
-    const ex = getExhibitor();
-    const company = ex?.company_name || "";
-    const state = ex?.state || "";
+    const localEx = getExhibitor();
+    const company = localEx?.company_name || "";
     if (!company) return;
     set({ loading: true });
 
     const safe = (p) => p.catch(() => null);
-    const [stalls, powerEntries, stallPays, powerPays, badgePays, badgeData] =
+    const [stalls, powerEntries, stallPays, powerPays, badgePays, badgeData, exhibitorList] =
       await Promise.all([
         safe(fetchStalls()),
         safe(fetchExhibitorPower(company)).then((r) => r?.entries || []),
@@ -139,9 +151,14 @@ export const usePaymentStore = create((set) => ({
             `/api/get_Exhibitor_badges.php?company_name=${encodeURIComponent(company)}`
           ).then((r) => r.json())
         ),
+        safe(fetchExhibitors()),
       ]);
 
-    const stallSummary = buildStallSummary(stalls || []);
+    // prefer the full DB record for state (localStorage may be missing it)
+    const fullEx = Array.isArray(exhibitorList) && exhibitorList[0] ? exhibitorList[0] : localEx;
+    const state = fullEx?.state || "";
+
+    const stallSummary = buildStallSummary(stalls || [], state);
     const power = calcPowerTotals(powerEntries || [], state);
     const badgeBilling = calcBadgeBilling(badgeData?.extra_badges, state);
 
@@ -152,6 +169,7 @@ export const usePaymentStore = create((set) => ({
       powerCleared: sumPaid(powerPays),
       badgeBilling,
       badgeCleared: sumPaid(badgePays),
+      exhibitor: fullEx,
       loading: false,
     });
   },
