@@ -391,7 +391,7 @@ function QtyStepper({ value, onChange, disabled }) {
         value={value}
         disabled={disabled}
         onChange={(e) => onChange(Math.max(1, parseInt(e.target.value) || 1))}
-        className="w-12 h-8 text-center text-[13px] font-semibold focus:outline-none disabled:bg-zinc-50 disabled:text-zinc-500"
+        className="w-12  h-8 text-center text-[13px] font-semibold focus:outline-none disabled:bg-zinc-50 disabled:text-zinc-500"
       />
       <button
         type="button"
