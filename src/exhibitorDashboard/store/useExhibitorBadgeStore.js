@@ -13,7 +13,7 @@ import {
   sendBadgeUnlockMail,
   sendExtraBadgesMail,
 } from "../api/exhibitorBadgeApi";
-import { fetchStalls } from "../api/profileApi";
+import { fetchStalls, fetchExhibitors } from "../api/profileApi";
 import { getExhibitor } from "../api/base";
 
 const RATE_PER_BADGE = 100;
@@ -52,6 +52,7 @@ export const useExhibitorBadgeStore = create((set, get) => ({
   freeRemaining: 0,
   extraPaidBadges: 0,
   stallList: [],
+  exhibitor: null,
   unlockApprovedMap: {},
   loading: false,
   saving: false,
@@ -63,11 +64,16 @@ export const useExhibitorBadgeStore = create((set, get) => ({
     if (!company) return;
     set({ loading: true });
     try {
-      const [badgesRes, countRes, stalls] = await Promise.all([
+      const [badgesRes, countRes, stalls, exhibitorList] = await Promise.all([
         fetchBadgesByCompany(company).catch(() => ({ success: false })),
         fetchBadgeCounts(company).catch(() => ({ success: false })),
         fetchStalls().catch(() => []),
+        fetchExhibitors().catch(() => []),
       ]);
+
+      const fullExhibitor = Array.isArray(exhibitorList) && exhibitorList[0]
+        ? exhibitorList[0]
+        : ex;
 
       const badges = badgesRes?.badges || [];
       const freeBadges = Number(countRes?.free_badges) || 0;
@@ -80,7 +86,8 @@ export const useExhibitorBadgeStore = create((set, get) => ({
         freeRemaining,
         extraPaidBadges,
         stallList: stalls,
-        billing: calcBilling(badges, freeBadges, ex?.state),
+        exhibitor: fullExhibitor,
+        billing: calcBilling(badges, freeBadges, fullExhibitor?.state),
       });
 
       badges.forEach((b) => get().refreshUnlockStatus(b.id));
@@ -106,7 +113,7 @@ export const useExhibitorBadgeStore = create((set, get) => ({
   },
 
   createBadge: async ({ name, photo }) => {
-    const ex = getExhibitor();
+    const ex = get().exhibitor || getExhibitor();
     const company = ex?.company_name || "";
     if (!company) {
       toast.error("Company missing");
