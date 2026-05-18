@@ -15,15 +15,20 @@ const BADGE_RATE = 100;
 
 /* ================== helpers ================== */
 
-function computeStallSummary(stallList = []) {
-  const total           = stallList.reduce((s, r) => s + (parseFloat(r.total) || 0), 0);
-  const discountedAmt   = stallList.reduce((s, r) => s + (parseFloat(r.discounted_amount) || 0), 0);
-  const sgst            = stallList.reduce((s, r) => s + (parseFloat(r.sgst_9_percent)  || 0), 0);
-  const cgst            = stallList.reduce((s, r) => s + (parseFloat(r.cgst_9_percent)  || 0), 0);
-  const igst            = stallList.reduce((s, r) => s + (parseFloat(r.igst_18_percent) || 0), 0);
-  const grand           = stallList.reduce((s, r) => s + (parseFloat(r.grand_total)     || 0), 0);
-  const currency        = stallList[0]?.currency || "INR";
-  const discountPct     = stallList[0]?.discount_percent || 0;
+function computeStallSummary(stallList = [], state = "") {
+  const total         = stallList.reduce((s, r) => s + (parseFloat(r.total) || 0), 0);
+  const discountedAmt = stallList.reduce((s, r) => s + (parseFloat(r.discounted_amount) || 0), 0);
+  const currency      = stallList[0]?.currency || "INR";
+  const discountPct   = stallList[0]?.discount_percent || 0;
+
+  // Recompute GST from exhibitor state (ignore DB-stored splits which may be wrong)
+  const isDelhi = String(state || "").trim().toLowerCase() === "delhi";
+  const taxable = total - discountedAmt;
+  const sgst = isDelhi ? taxable * 0.09 : 0;
+  const cgst = isDelhi ? taxable * 0.09 : 0;
+  const igst = !isDelhi ? taxable * 0.18 : 0;
+  const grand = taxable + sgst + cgst + igst;
+
   return { total, discounted_amount: discountedAmt, sgst, cgst, igst, grand_total: grand, currency, discountPct };
 }
 
@@ -87,7 +92,10 @@ export default function PaymentDetails() {
   }, [ex?.company_name, initRemarks]);
 
   const exState      = ex?.state || "";
-  const stallSummary = useMemo(() => computeStallSummary(stallList), [stallList]);
+  const stallSummary = useMemo(
+    () => computeStallSummary(stallList, ex?.state),
+    [stallList, ex?.state]
+  );
   const badgeSummary = useMemo(() => computeBadgeSummary(ex?.extra_badges, exState), [ex?.extra_badges, exState]);
 
   if (!ex) return null;

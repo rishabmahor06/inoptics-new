@@ -82,13 +82,11 @@ export const useExhibitorPowerStore = create((set, get) => ({
           totalAmount: it.total_amount,
         }));
         const first = result.entries[0];
+        // Always recompute billing from exhibitor state — DB-stored splits may be wrong
+        const billing = recalcBilling(list, exhibitor?.state);
         set({
           previewList:     list,
-          totalPrice:      parseFloat(first.total_price || 0),
-          cgst:            parseFloat(first.cgst        || 0),
-          sgst:            parseFloat(first.sgst        || 0),
-          igst:            parseFloat(first.igst        || 0),
-          grandTotal:      parseFloat(first.grand_total || 0),
+          ...billing,
           isLocked:        first.is_locked == 1,
           unlockRequested: first.unlock_requested == 1,
           hasExistingData: true,
