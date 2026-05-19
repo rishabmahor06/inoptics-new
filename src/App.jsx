@@ -59,10 +59,19 @@ import AdminThreePanel         from "./frontend/components/AdminThreePanel";
 
 /* ============== Routes ============== */
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [pathname]);
+  return null;
+}
+
 function AnimatedRoutes() {
   const location = useLocation();
   return (
     <AnimatePresence mode="wait">
+      <ScrollToTop />
       <Routes location={location}>
         <Route path="/"                              element={<LandingPageWrapper />} />
         <Route path="/home"                          element={<HomePageWrapper />} />

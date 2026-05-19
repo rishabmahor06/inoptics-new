@@ -106,10 +106,10 @@ export default function MailsInbox() {
         </div>
 
         {/* Two-pane container */}
-        <div className="flex flex-col md:flex-row min-h-[85vh]">
+        <div className="flex flex-col md:flex-row h-[calc(100vh-10rem)] min-h-[500px]">
           {/* List panel */}
           <div
-            className={`md:w-90 md:shrink-0 md:border-r border-zinc-100 ${
+            className={`md:w-90 md:shrink-0 md:border-r border-zinc-100 h-full overflow-hidden ${
               selectedMail ? "hidden md:block" : "block"
             }`}
           >
@@ -118,7 +118,7 @@ export default function MailsInbox() {
             ) : filtered.length === 0 ? (
               <EmptyList />
             ) : (
-              <ul className="divide-y divide-zinc-100 max-h-[84vh] overflow-y-auto">
+              <ul className="divide-y divide-zinc-100 h-full overflow-y-auto">
                 {filtered.map((mail) => {
                   const unread =
                     Number(mail.is_read) === 0 || mail.is_read === "0";
@@ -181,7 +181,7 @@ export default function MailsInbox() {
 
           {/* View panel */}
           <div
-            className={`flex-1 min-w-0 ${
+            className={`flex-1 min-w-0 h-full overflow-hidden ${
               selectedMail ? "block" : "hidden md:block"
             }`}
           >
@@ -218,7 +218,7 @@ function MailView({ mail, onBack }) {
           </p>
         </div>
       </div>
-      <div className="px-4 sm:px-6 py-5 overflow-y-auto max-h-[65vh]">
+      <div className="flex-1 min-h-0 px-4 sm:px-6 py-5 overflow-y-auto">
         <div
           className="prose prose-sm max-w-none text-[13.5px] text-zinc-700 leading-relaxed [&_a]:text-blue-600 [&_a:hover]:underline [&_img]:max-w-full [&_img]:rounded"
           dangerouslySetInnerHTML={{ __html: mail.content || "" }}

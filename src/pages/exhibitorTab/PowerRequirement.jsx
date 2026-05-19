@@ -45,7 +45,13 @@ export default function PowerRequirement() {
   const exState = ex.state || "";
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-5 max-h-[calc(100vh-12rem)] overflow-y-auto pr-2 pb-8 custom-scrollbar">
+      <style>{`
+        .custom-scrollbar::-webkit-scrollbar { width: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f4f4f5; border-radius: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #a1a1aa; border-radius: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #71717a; }
+      `}</style>
       {/* ================ TOP: FORM + GUIDELINES ================ */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* FORM (all sections at once) */}
@@ -169,7 +175,7 @@ export default function PowerRequirement() {
         {/* table */}
         <div className="lg:col-span-2 bg-white border border-zinc-200 rounded overflow-hidden">
           {/* Desktop */}
-          <div className="hidden md:block overflow-auto max-h-[60vh]">
+          <div className="hidden md:block overflow-x-auto">
             <table className="w-full">
               <thead className="bg-zinc-50 sticky top-0 z-10">
                 <tr>
@@ -210,7 +216,7 @@ export default function PowerRequirement() {
           </div>
 
           {/* Mobile cards */}
-          <div className="md:hidden max-h-[60vh] overflow-y-auto">
+          <div className="md:hidden">
             {previewList.length === 0 ? (
               <p className="p-8 text-center text-[14px] text-zinc-400">No power entries yet</p>
             ) : (

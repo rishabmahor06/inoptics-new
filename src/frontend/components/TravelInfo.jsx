@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import Footer from "./Footer";
 import Breadcrumbs from "./Breadcrumbs";
+import { FaLocationDot } from "react-icons/fa6";
+
 
 /*
   ── Add to index.html ──────────────────────────────────────────────
@@ -33,7 +35,7 @@ function useReveal(threshold = 0.1) {
   return [ref, on];
 }
 
-/* ────────────────────────────────────────
+/* ──────────────────────────────────────── 
    TRANSPORT CONFIG
 ──────────────────────────────────────── */
 const MODES = [
@@ -440,6 +442,88 @@ const TravelCard = ({ card, index }) => {
 };
 
 /* ────────────────────────────────────────
+   VENUE MAP CARD (Google Maps embed)
+──────────────────────────────────────── */
+const VENUE_ADDRESS = "Yashobhoomi, Sector 25 Dwarka, Bharthal, Delhi, 110077";
+const MAP_EMBED_SRC = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28033.80076419894!2d77.0300535384021!3d28.56300269494549!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1b86c10b12cf%3A0xa6d41303342b088c!2sYashobhoomi!5e0!3m2!1sen!2sin!4v1779170059039!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade`;
+const MAP_DIRECTIONS = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(VENUE_ADDRESS)}`;
+
+const VenueMapCard = () => {
+  const [ref, on] = useReveal(0.08);
+  return (
+    <div
+      ref={ref}
+      className="group"
+      style={{
+        opacity: on ? 1 : 0,
+        transform: on ? "translateY(0)" : "translateY(28px)",
+        transition: "opacity 0.65s ease, transform 0.65s ease",
+      }}
+    >
+      <div className="flex items-center gap-4 mb-5 pl-1">
+        <span
+          className="flex-shrink-0 w-10 h-10 rounded-2xl flex items-center justify-center text-xs font-bold border-2 select-none"
+          style={{ fontFamily: SANS, color: "#DC2626", background: "#FEF2F2", borderColor: "#FECACA" }}>
+         <FaLocationDot />
+        </span>
+        <span
+          className="flex items-center gap-2 text-xs font-semibold px-3.5 py-1.5 rounded-full border"
+          style={{ fontFamily: SANS, color: "#DC2626", background: "#FEF2F2", borderColor: "#FECACA" }}>
+          <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+          </svg>
+          Venue Location
+        </span>
+        <div className="flex-1 h-px hidden sm:block bg-gradient-to-r from-red-400 to-red-200 opacity-40" />
+      </div>
+
+      <div
+        className="flex flex-col lg:flex-row overflow-hidden rounded-[28px] border border-gray-100 bg-white group-hover:border-gray-200 group-hover:shadow-2xl transition-all duration-500"
+        style={{ boxShadow: "0 2px 16px rgba(0,0,0,0.055)" }}
+      >
+        <div className="lg:w-[55%] relative overflow-hidden bg-gray-100 min-h-[300px] sm:min-h-[380px]">
+          <iframe
+            title="Venue location map"
+            src={MAP_EMBED_SRC}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+            className="absolute inset-0 w-full h-full border-0"
+          />
+        </div>
+
+        <div className="lg:w-[45%] flex flex-col justify-center px-8 sm:px-12 py-10">
+          <div className="w-12 h-[3px] rounded-full bg-gradient-to-r from-red-400 to-red-200 mb-7" />
+          <h3 className="text-2xl font-semibold text-gray-900 mb-3" style={{ fontFamily: SERIF }}>
+            InOptics 2027 Venue Yashobhoomi
+          </h3>
+          <p className="text-[14px] text-gray-500 leading-relaxed mb-6" style={{ fontFamily: SANS }}>
+            {VENUE_ADDRESS}
+          </p>
+          <a
+            href={MAP_DIRECTIONS}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-[13px] font-medium text-gray-400 hover:text-gray-700 transition-colors self-start"
+            style={{ fontFamily: SANS, textDecoration: "none" }}
+          >
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+            </svg>
+            Get Directions
+            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ────────────────────────────────────────
    MAP CTA BANNER
 ──────────────────────────────────────── */
 const MapBanner = () => {
@@ -600,7 +684,7 @@ const TravelInfo = () => {
               </svg>
               <p className="text-[14px] text-amber-800 font-light" style={{ fontFamily: SANS }}>
                 You were redirected from the <strong className="font-semibold">Exhibitor Portal</strong>.
-                Here's how to reach the InOptics 2026 venue.
+                Here's how to reach the InOptics 2027 venue.
               </p>
             </div>
           )}
@@ -629,11 +713,12 @@ const TravelInfo = () => {
             </div>
           ) : (
             <>
-              <SectionHead count={travelCards.length} />
+              <SectionHead count={Math.min(travelCards.length, MODES.length)} />
               <div className="space-y-12">
-                {travelCards.map((card, idx) => (
+                {travelCards.slice(0, MODES.length).map((card, idx) => (
                   <TravelCard key={card.id || idx} card={card} index={idx} />
                 ))}
+                <VenueMapCard />
               </div>
             </>
           )}

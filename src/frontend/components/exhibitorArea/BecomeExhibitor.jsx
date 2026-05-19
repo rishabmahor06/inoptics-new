@@ -260,7 +260,7 @@ export default function BecomeExhibitor() {
           <div className="bg-gradient-to-r from-[#02062c] to-[#1e3a8a] px-6 sm:px-10 py-6 sm:py-8 text-white relative overflow-hidden">
             <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-amber-400/20 blur-3xl pointer-events-none" />
             <div className="relative flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-amber-400/20 border border-amber-400/40 text-amber-300 flex items-center justify-center">
+              <div className="w-12 h-12 rounded bg-amber-400/20 border border-amber-400/40 text-amber-300 flex items-center justify-center">
                 <MdHowToReg size={24} />
               </div>
               <div>
@@ -372,7 +372,7 @@ export default function BecomeExhibitor() {
                   ].map((opt) => (
                     <label
                       key={opt.value}
-                      className="flex items-center gap-2 px-4 h-12 bg-zinc-50 border border-zinc-200 rounded-xl cursor-pointer hover:border-blue-400 has-[:checked]:bg-blue-50 has-[:checked]:border-blue-500 transition-all"
+                      className="flex items-center gap-2 px-4 h-12 bg-zinc-50 border border-zinc-200 rounded cursor-pointer hover:border-blue-400 has-[:checked]:bg-blue-50 has-[:checked]:border-blue-500 transition-all"
                     >
                       <input type="radio" name="spaceType" value={opt.value} className="w-4 h-4 accent-blue-600" />
                       <span className="text-[13px] font-semibold text-[#02062c]">{opt.label}</span>
@@ -392,7 +392,7 @@ export default function BecomeExhibitor() {
                 {[...PRODUCT_OPTIONS, "Other"].map((product) => (
                   <label
                     key={product}
-                    className="flex items-center gap-2.5 px-3.5 py-3 bg-zinc-50 border border-zinc-200 rounded-xl cursor-pointer hover:border-blue-400 has-[:checked]:bg-blue-50 has-[:checked]:border-blue-500 transition-all"
+                    className="flex items-center gap-2.5 px-3.5 py-3 bg-zinc-50 border border-zinc-200 rounded cursor-pointer hover:border-blue-400 has-[:checked]:bg-blue-50 has-[:checked]:border-blue-500 transition-all"
                   >
                     <input
                       type="checkbox"
@@ -447,12 +447,12 @@ export default function BecomeExhibitor() {
             <button
               type="submit"
               disabled={submitting}
-              className="group relative w-full h-12 sm:h-14 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-[14px] font-bold uppercase tracking-wider rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 disabled:opacity-60 disabled:cursor-not-allowed transition-all overflow-hidden"
+              className="group relative w-full h-12 sm:h-14 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-[14px] font-bold uppercase tracking-wider rounded shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 disabled:opacity-60 disabled:cursor-not-allowed transition-all overflow-hidden"
             >
               <span className="relative flex items-center justify-center gap-2">
                 {submitting ? (
                   <>
-                    <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                    <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded animate-spin" />
                     Submitting...
                   </>
                 ) : (
@@ -495,7 +495,7 @@ export default function BecomeExhibitor() {
 
 /* ============ sub-components ============ */
 const INPUT_CLASS =
-  "w-full h-12 pl-10 pr-3 text-[14px] border border-zinc-200 rounded-xl bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-zinc-100 disabled:text-zinc-400 transition-all";
+  "w-full h-12 pl-10 pr-3 text-[14px] border border-zinc-200 rounded bg-zinc-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-zinc-100 disabled:text-zinc-400 transition-all";
 
 function Field({ label, icon, children }) {
   return (

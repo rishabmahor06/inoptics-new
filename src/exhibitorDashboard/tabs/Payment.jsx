@@ -142,7 +142,7 @@ function StallCard({ summary, cleared, isDelhi, currency }) {
             >
               <div>
                 <p className="text-[10px] uppercase tracking-wider font-semibold text-zinc-400">
-                  Stall #
+                  Stall
                 </p>
                 <p className="font-bold text-zinc-800">{s.stall_number || "—"}</p>
               </div>
@@ -307,19 +307,15 @@ function BadgeCard({ billing, cleared, currency }) {
 /* ============== Reusable bits ============== */
 
 function CardShell({ title, Icon, tone = "blue", paid, children }) {
-  const tones = {
-    blue: "from-blue-500 to-indigo-500",
-    amber: "from-amber-500 to-orange-500",
-    purple: "from-purple-500 to-pink-500",
-  };
+  
   return (
     <div className="bg-white rounded border border-zinc-200 shadow-sm overflow-hidden flex flex-col">
       <div className="relative">
-        <div className={`h-1.5 bg-linear-to-r ${tones[tone]}`} />
+        <div className={`h-1.5 bg-linear-to-r `} />
         <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-100">
           <div className="flex items-center gap-2">
             {Icon && (
-              <div className="w-7 h-7 rounded bg-zinc-100 text-zinc-700 flex items-center justify-center">
+              <div className="w-7 h-7 rounded bg-blue-50 text-blue-700 flex items-center justify-center">
                 <Icon size={15} />
               </div>
             )}

@@ -10,6 +10,8 @@ import { useExhibitorPowerStore }       from "../../store/exhibitor/useExhibitor
 import { useExhibitorPaymentsStore }    from "../../store/exhibitor/useExhibitorPaymentsStore";
 import { useExhibitorRemarksStore }     from "../../store/exhibitor/useExhibitorRemarksStore";
 import PaymentRemarkSection from "./PaymentRemarkSection";
+import ProformaInvoiceModal from "./ProformaInvoiceModal";
+import { MdDescription } from "react-icons/md";
 
 const BADGE_RATE = 100;
 
@@ -52,6 +54,21 @@ const fmt = (n) => Number(n || 0).toFixed(2);
 export default function PaymentDetails() {
   const { editingExhibitor: ex } = useNavStore();
   const [activeSection, setActiveSection] = useState(null); // null | "stall" | "power" | "badge"
+  const [extraBadges, setExtraBadges] = useState(0);
+  const [piOpen, setPiOpen] = useState(false);
+
+  useEffect(() => {
+    if (!ex?.company_name) return;
+    (async () => {
+      try {
+        const r = await fetch(`https://inoptics.in/api/get_Exhibitor_badges.php?company_name=${encodeURIComponent(ex.company_name)}`);
+        const d = await r.json();
+        setExtraBadges(Number(d?.extra_badges ?? d?.[0]?.extra_badges ?? 0) || 0);
+      } catch {
+        setExtraBadges(Number(ex?.extra_badges || 0) || 0);
+      }
+    })();
+  }, [ex?.company_name]);
 
   /* live data from sibling stores */
   const stallList     = useExhibitorStallsStore((s) => s.stallList);
@@ -96,7 +113,7 @@ export default function PaymentDetails() {
     () => computeStallSummary(stallList, ex?.state),
     [stallList, ex?.state]
   );
-  const badgeSummary = useMemo(() => computeBadgeSummary(ex?.extra_badges, exState), [ex?.extra_badges, exState]);
+  const badgeSummary = useMemo(() => computeBadgeSummary(extraBadges, exState), [extraBadges, exState]);
 
   if (!ex) return null;
 
@@ -106,6 +123,50 @@ export default function PaymentDetails() {
   const stallPending = (stallSummary.grand_total || 0) - stallPaid;
   const powerPending = (powerGrand || 0) - powerPaid;
   const badgePending = (badgeSummary.grandTotal || 0) - badgePaid;
+
+  const piData = useMemo(() => {
+    if (activeSection === "stall") {
+      const rows = (stallList || []).map((s) => ({
+        label: `Stall ${s.stall_number || "-"}`,
+        sub: `${s.stall_category || ""}${s.stall_area ? ` · ${s.stall_area} sqm` : ""}`,
+        qty: 1,
+        rate: parseFloat(s.stall_price || s.total || 0),
+        amount: parseFloat(s.total || 0),
+      }));
+      return {
+        rows,
+        subTotal: stallSummary.total,
+        discount: stallSummary.discounted_amount,
+        cgst: stallSummary.cgst, sgst: stallSummary.sgst, igst: stallSummary.igst,
+        grand: stallSummary.grand_total,
+      };
+    }
+    if (activeSection === "power") {
+      const rows = (previewList || []).map((p) => ({
+        label: p.day,
+        sub: p.phase,
+        qty: `${p.powerRequired} KW`,
+        rate: parseFloat(p.pricePerKw || 0),
+        amount: parseFloat(p.totalAmount || 0),
+      }));
+      return {
+        rows,
+        subTotal: powerTotal, discount: 0,
+        cgst: powerCgst, sgst: powerSgst, igst: powerIgst,
+        grand: powerGrand,
+      };
+    }
+    if (activeSection === "badge") {
+      const count = badgeSummary.count;
+      return {
+        rows: [{ label: "Extra Exhibitor Badges", sub: "", qty: count, rate: 100, amount: badgeSummary.total }],
+        subTotal: badgeSummary.total, discount: 0,
+        cgst: badgeSummary.cgst, sgst: badgeSummary.sgst, igst: badgeSummary.igst,
+        grand: badgeSummary.grandTotal,
+      };
+    }
+    return null;
+  }, [activeSection, stallList, stallSummary, previewList, powerTotal, powerCgst, powerSgst, powerIgst, powerGrand, badgeSummary]);
 
   const refreshAll = () => {
     fetchAll(ex);
@@ -143,6 +204,14 @@ export default function PaymentDetails() {
         </div>
 
         <div className="flex items-center gap-2">
+          {activeSection && (
+            <button
+              onClick={() => setPiOpen(true)}
+              className="px-3 h-10 text-[13px] font-semibold bg-indigo-600 hover:bg-indigo-700 text-white rounded flex items-center gap-1.5"
+            >
+              <MdDescription size={14} /> Performa Invoice
+            </button>
+          )}
           {activeSection && (
             <button
               onClick={() => setActiveSection(null)}
@@ -306,6 +375,14 @@ export default function PaymentDetails() {
       )}
 
       {/* ============== BADGE DETAIL VIEW ============== */}
+      <ProformaInvoiceModal
+        open={piOpen}
+        onClose={() => setPiOpen(false)}
+        section={activeSection}
+        ex={{ ...ex, extra_badges: extraBadges }}
+        data={piData}
+      />
+
       {activeSection === "badge" && (
         <DetailView
           particulars={<BadgeParticulars ex={ex} summary={badgeSummary} />}
