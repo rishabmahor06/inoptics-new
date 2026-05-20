@@ -105,7 +105,7 @@ function InvoiceTable({ selectedService, services }) {
   );
 }
 
-export default function InvoicePreview({ activeAddress, services, selectedService, proformaNo }) {
+export default function InvoicePreview({ activeAddress, services, selectedService, proformaNo, sponsorCategory, sponsor }) {
   const templateRef = useRef(null);
   const [downloading, setDownloading] = useState(false);
 
@@ -214,11 +214,28 @@ export default function InvoicePreview({ activeAddress, services, selectedServic
           {/* TO */}
           <div style={{ width: '50%', paddingLeft: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ fontSize: 11, fontWeight: 600, lineHeight: 1.7 }}>
-              <div><strong>Company</strong> &nbsp; [Exhibitor Name]</div>
-              <div><strong>Address</strong> &nbsp; [Address]</div>
-              <div><strong>Email</strong> &nbsp; [Email]</div>
-              <div><strong>State, City</strong> &nbsp; [State, City]</div>
-              <div><strong>Pincode</strong> &nbsp; [Pincode]</div>
+              {sponsor ? (
+                <>
+                  {sponsorCategory && (
+                    <div style={{ fontSize: 10, color: '#666', marginBottom: 2 }}>
+                      <strong>Sponsor Tier:</strong> &nbsp; {sponsorCategory}
+                    </div>
+                  )}
+                  <div><strong>Company</strong> &nbsp; {sponsor.name || '-'}</div>
+                  <div><strong>Type</strong> &nbsp; {sponsor.sponsor_type || '-'}</div>
+                  <div><strong>Address</strong> &nbsp; {sponsor.address || '[Address]'}</div>
+                  <div><strong>Email</strong> &nbsp; {sponsor.email || '[Email]'}</div>
+                  <div><strong>Phone</strong> &nbsp; {sponsor.phone || sponsor.mobile || '[Phone]'}</div>
+                </>
+              ) : (
+                <>
+                  <div><strong>Company</strong> &nbsp; [Exhibitor Name]</div>
+                  <div><strong>Address</strong> &nbsp; [Address]</div>
+                  <div><strong>Email</strong> &nbsp; [Email]</div>
+                  <div><strong>State, City</strong> &nbsp; [State, City]</div>
+                  <div><strong>Pincode</strong> &nbsp; [Pincode]</div>
+                </>
+              )}
             </div>
           </div>
         </div>

@@ -20,7 +20,45 @@ export default function Proforma() {
   const [previewOpen, setPreviewOpen]     = useState(false);
   const [selectedService, setSelectedService] = useState('');
 
+  // Sponsor-specific filters (only shown when selected service mentions "sponsor")
+  const [sponsors, setSponsors]                   = useState([]);
+  const [sponsorCategory, setSponsorCategory]     = useState('');
+  const [selectedSponsorId, setSelectedSponsorId] = useState('');
+
+  const isSponsorService = String(selectedService || '').toLowerCase().includes('sponsor');
+
   useEffect(() => { fetchAddresses(); fetchServices(); }, []);
+
+  // Load sponsor list lazily once a sponsor service is selected
+  useEffect(() => {
+    if (!isSponsorService || sponsors.length) return;
+    fetch('/api/get_sponsor_images_list.php')
+      .then(r => r.json())
+      .then(data => setSponsors(Array.isArray(data) ? data : []))
+      .catch(() => setSponsors([]));
+  }, [isSponsorService, sponsors.length]);
+
+  // Reset sponsor filters whenever the service changes away from sponsor
+  useEffect(() => {
+    if (!isSponsorService) {
+      setSponsorCategory('');
+      setSelectedSponsorId('');
+    }
+  }, [isSponsorService]);
+
+  // Filter sponsors by chosen category (Platinum/Gold/Silver, case-insensitive substring)
+  const filteredSponsors = sponsorCategory
+    ? sponsors.filter(s =>
+        String(s.sponsor_type || '')
+          .toLowerCase()
+          .split(',')
+          .map(t => t.trim())
+          .some(t => t.includes(sponsorCategory.toLowerCase()))
+      )
+    : [];
+
+  const selectedSponsor =
+    sponsors.find(s => String(s.id) === String(selectedSponsorId)) || null;
 
   const activeAddress = addresses.find(a => a.is_active == 1);
 
@@ -127,6 +165,49 @@ export default function Proforma() {
                 ))}
                 <option value="__all__">Exhibition Services - All</option>
               </select>
+
+              {/* Sponsor-only filters */}
+              {isSponsorService && (
+                <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div>
+                    <label className="block text-[11px] font-semibold text-zinc-500 uppercase tracking-wide mb-1.5">
+                      Sponsor Category
+                    </label>
+                    <select
+                      value={sponsorCategory}
+                      onChange={e => { setSponsorCategory(e.target.value); setSelectedSponsorId(''); }}
+                      className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="">— Select category —</option>
+                      <option value="Platinum">Platinum</option>
+                      <option value="Gold">Gold</option>
+                      <option value="Silver">Silver</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-semibold text-zinc-500 uppercase tracking-wide mb-1.5">
+                      Sponsor Company
+                    </label>
+                    <select
+                      value={selectedSponsorId}
+                      onChange={e => setSelectedSponsorId(e.target.value)}
+                      disabled={!sponsorCategory}
+                      className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-zinc-100 disabled:text-zinc-400"
+                    >
+                      <option value="">
+                        {!sponsorCategory
+                          ? '— Pick category first —'
+                          : filteredSponsors.length === 0
+                            ? 'No sponsors in this category'
+                            : '— Select company —'}
+                      </option>
+                      {filteredSponsors.map(s => (
+                        <option key={s.id} value={s.id}>{s.name}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              )}
             </div>
 
             <ServiceTable
@@ -147,6 +228,8 @@ export default function Proforma() {
               activeAddress={activeAddress}
               services={services}
               selectedService={selectedService}
+              sponsorCategory={sponsorCategory}
+              sponsor={selectedSponsor}
             />
           </div>
         )}
