@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import toast from "react-hot-toast";
 
-const API = "https://inoptics.in/api";
+const API = "/api";
 const REGISTRATION_FORM_KEY = "contractor undertaking-declaration & registration";
 
 const EMPTY_STATE = {

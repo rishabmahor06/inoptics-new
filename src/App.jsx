@@ -70,9 +70,10 @@ function ScrollToTop() {
 function AnimatedRoutes() {
   const location = useLocation();
   return (
-    <AnimatePresence mode="wait">
+    <>
       <ScrollToTop />
-      <Routes location={location}>
+      <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
         <Route path="/"                              element={<LandingPageWrapper />} />
         <Route path="/home"                          element={<HomePageWrapper />} />
         <Route path="/about"                         element={<AboutUs />} />
@@ -137,7 +138,8 @@ function AnimatedRoutes() {
         <Route path="/powerload"                     element={<AdminThreeLogin />} />
         <Route path="/power-dashboard"               element={<AdminThreePanel />} />
       </Routes>
-    </AnimatePresence>
+      </AnimatePresence>
+    </>
   );
 }
 

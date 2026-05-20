@@ -158,7 +158,7 @@ export const useExhibitorStallsStore = create((set, get) => ({
 
   submitStall: async (exhibitorState) => {
     const { formData } = get();
-    const required = ["hall_number", "stall_number", "stall_category", "stall_area", "currency"];
+    const required = ["stall_number", "stall_category", "stall_area", "currency"];
     const errs = {};
     required.forEach((k) => { if (!String(formData[k] || "").trim()) errs[k] = true; });
     if (Object.keys(errs).length) {

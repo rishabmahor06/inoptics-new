@@ -70,7 +70,7 @@ export default function Stalls() {
           {/* Row 1 — Hall + Stall */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <SelectField
-              label="Hall Number" required error={errors.hall_number}
+              label="Hall Number" error={errors.hall_number}
               value={formData.hall_number}
               onChange={(v) => setField("hall_number", v, exState)}
               options={halls.map((h) => h.hall_number)}
@@ -261,7 +261,7 @@ function SelectField({ label, value, onChange, options, required, error }) {
         }`}
       >
         <option value="">-- Select --</option>
-        {options?.filter(Boolean).map((opt) => (
+        {[...new Set((options || []).filter(Boolean))].map((opt) => (
           <option key={opt} value={opt}>{opt}</option>
         ))}
       </select>

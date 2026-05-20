@@ -93,7 +93,9 @@ export default function Exhibitors() {
     fetchExhibitors();
   }, [fetchExhibitors]);
 
-  if (editingExhibitor) return <ExhibitorEditView />;
+  // Don't switch to ExhibitorEditView while the Add modal is open — the modal
+  // sets editingExhibitor internally to populate sub-tabs, but should still close to the list.
+  if (editingExhibitor && !addOpen) return <ExhibitorEditView />;
 
   const groupedMap = rawData.reduce((acc, row) => {
     const key = row.company_name;
@@ -260,16 +262,7 @@ export default function Exhibitors() {
                         >
                           <MdDelete size={14} /> Delete
                         </button>
-                        <button className={`inline-flex items-center gap-1.5 rounded px-2.5 py-1.5 text-[12px] font-semibold transition-colors cursor-pointer border-solid
-                          ${accepted
-                            ? 'bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100'
-                            : 'bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100'
-                          }`}>
-                          <MdDescription size={14} /> Terms
-                        </button>
-                        <button className="inline-flex items-center gap-1.5 bg-cyan-50 text-cyan-700 border border-cyan-200 rounded px-2.5 py-1.5 text-[12px] font-semibold hover:bg-cyan-100 transition-colors cursor-pointer border-solid">
-                          <MdVisibility size={14} /> View
-                        </button>
+                        
                       </div>
                     </td>
                   </tr>

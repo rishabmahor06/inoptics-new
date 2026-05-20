@@ -67,7 +67,23 @@ export default function AddExhibitorModal({ open, onClose }) {
   };
 
   /* Save the basic record, then promote to "edit" mode so the other tabs can work */
+  const generatePassword = () => {
+    // 4-digit numeric password, first digit 1-9 (matches old admin format)
+    const first = "123456789";
+    const rest  = "0123456789";
+    let pwd = first.charAt(Math.floor(Math.random() * first.length));
+    for (let i = 0; i < 3; i++) {
+      pwd += rest.charAt(Math.floor(Math.random() * rest.length));
+    }
+    return pwd;
+  };
+
   const handleCreate = async () => {
+    // Auto-generate a password if admin left it blank — backend requires it.
+    const { formData: current, setField } = useExhibitorBasicStore.getState();
+    if (!String(current.password || "").trim()) {
+      setField("password", generatePassword());
+    }
     const ok = await handleSubmit();
     if (!ok) return;
     const { formData: latest } = useExhibitorBasicStore.getState();
@@ -157,9 +173,9 @@ export default function AddExhibitorModal({ open, onClose }) {
           </div>
         </div>
 
-        {/* Body */}
+        {/* Body — key includes createdCompany so tabs remount with the real exhibitor after create */}
         <div className="flex-1 min-h-0 overflow-y-auto bg-zinc-50 p-4 sm:p-5">
-          <ActiveComponent />
+          <ActiveComponent key={`${activeTab}::${createdCompany || "new"}`} />
         </div>
       </div>
     </div>

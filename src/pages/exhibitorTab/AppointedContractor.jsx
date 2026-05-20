@@ -19,7 +19,7 @@ import {
 import { useNavStore } from "../../store/useNavStore";
 import { useExhibitorContractorStore } from "../../store/exhibitor/useExhibitorContractorStore";
 
-const API = "https://inoptics.in/api";
+const API = "/api";
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ALLOWED_TYPES = ["application/pdf", "image/jpeg", "image/png"];
 const REGISTRATION_FORM_MATCH = "contractor undertaking-declaration & registration";
@@ -205,7 +205,7 @@ export default function AppointedContractor() {
             <div className="px-4 py-12 text-center text-[14px] text-zinc-500">No contractors found</div>
           ) : (
             <>
-              <div className="hidden md:block overflow-auto max-h-[60vh]">
+              <div className="hidden md:block overflow-auto max-h-[72vh]">
                 <table className="w-full min-w-[54rem]">
                   <thead className="bg-zinc-50 sticky top-0 z-10">
                     <tr>
