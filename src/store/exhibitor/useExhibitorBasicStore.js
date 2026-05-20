@@ -113,26 +113,17 @@ export const useExhibitorBasicStore = create((set, get) => ({
 
   /* ============== send mail ============== */
 
-  handleSendMail: async (templateName = "Exhibitor Login & Password") => {
+  handleSendMail: async () => {
     const { formData } = get();
-    if (!formData.email)        { toast.error("Email missing");         return; }
-    if (!formData.company_name) { toast.error("Company name missing");  return; }
     set({ isSendingMail: true });
     try {
-      const res  = await fetch(`${API}/send_exhibitor_login_mail.php`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          template_name: templateName,
-          company_name:  formData.company_name,
-          email:         formData.email,
-        }),
+      const { sendLoginMail } = await import("../../services/mailService");
+      await sendLoginMail({
+        company_name:     formData.company_name,
+        email:            formData.email,
+        password:         formData.password,
+        secondary_emails: formData.secondary_emails,
       });
-      const data = await res.json();
-      if (data.success || data.status === "success") toast.success("Mail sent successfully");
-      else                                           toast.error(data.message || "Mail failed");
-    } catch {
-      toast.error("Mail failed");
     } finally {
       set({ isSendingMail: false });
     }

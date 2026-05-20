@@ -311,36 +311,19 @@ export const useExhibitorContractorStore = create((set, get) => ({
 
   sendRegistrationMail: async (email) => {
     const trimmedEmail = String(email || "").trim();
-    if (!trimmedEmail) {
-      toast.error("Please enter contractor email address");
-      return false;
-    }
-
     const registrationForm = findRegistrationForm(get().coreForms);
     const fileName = registrationForm?.filename || "";
 
     set({ sendingMail: true });
     try {
-      const res = await fetch(`${API}/send-contractor-mail`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: trimmedEmail,
-          file: fileName,
-        }),
+      const { sendContractorRegistrationMail } = await import("../../services/mailService");
+      const result = await sendContractorRegistrationMail({
+        email:    trimmedEmail,
+        filename: fileName,
       });
-
-      const data = await res.json();
-
-      if (data?.success || data?.status === "success") {
-        toast.success("Mail sent successfully");
-        return true;
-      }
-
-      throw new Error(data?.message || data?.error || "Failed to send mail");
+      return result.ok;
     } catch (error) {
       console.error("Error sending contractor mail:", error);
-      toast.error(error.message || "Failed to send mail");
       return false;
     } finally {
       set({ sendingMail: false });

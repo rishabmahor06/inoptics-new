@@ -337,39 +337,18 @@ export const useExhibitorFurnitureStore = create((set, get) => ({
 
     set({ isSendingMail: true });
     try {
-      const response = await fetch(`${API}/admin_unlock_furniture.php`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ company_name: exhibitor.company_name }),
-      });
-      const result = await response.json();
-      if (!(result.status === "success" || result.status === "unlocked")) {
-        throw new Error(result.message || "Unlock failed");
-      }
-
+      const { unlockExtraFurniture, sendFurnitureUnlockMail } = await import("../../services/mailService");
+      const unlockResult = await unlockExtraFurniture(exhibitor.company_name);
+      if (!unlockResult.ok) return false;
       set({ lockState: { ...EMPTY_LOCK } });
 
-      const emailTemplate = get().emailTemplates.find((t) => t.email_name === UNLOCK_TEMPLATE);
-      if (emailTemplate && exhibitor.email) {
-        const html = replaceTemplateData(emailTemplate.content, {
-          "[Company Name]": exhibitor.company_name,
-          "[Email]": exhibitor.email,
-        });
-
-        await fetch(`${API}/send_mail.php`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email_name: UNLOCK_TEMPLATE,
-            to: exhibitor.email,
-            html,
-            company_name: exhibitor.company_name,
-            secondary_emails: exhibitor.secondary_emails || "",
-          }),
+      if (exhibitor.email) {
+        await sendFurnitureUnlockMail({
+          company_name:     exhibitor.company_name,
+          email:            exhibitor.email,
+          secondary_emails: exhibitor.secondary_emails,
         });
       }
-
-      toast.success("Furniture unlocked successfully");
       return true;
     } catch (error) {
       console.error("Furniture unlock failed:", error);

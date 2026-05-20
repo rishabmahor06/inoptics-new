@@ -223,101 +223,33 @@ export const useExhibitorPowerStore = create((set, get) => ({
 
   unlockPower: async (exhibitor) => {
     if (!exhibitor?.company_name) { toast.error("Company missing"); return; }
-    try {
-      const res  = await fetch(`${API}/update_unlock_power_requirement.php`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ company_name: exhibitor.company_name }),
-      });
-      const data = await res.json();
-      if (res.ok && data.success) {
-        toast.success("Power Requirement unlocked");
-        set({ isLocked: false, unlockRequested: false });
-        try {
-          await fetch(`${API}/send_power_unlocked_mail.php`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              company_name:  exhibitor.company_name,
-              template_name: "InOptics 2026 @ Successfully Unlocked Power Requirement",
-            }),
-          });
-        } catch (e) { console.warn("Unlock mail failed:", e); }
-        get().fetchPowerData(exhibitor);
-      } else {
-        toast.error(data.message || "Failed to unlock");
-      }
-    } catch {
-      toast.error("Server error while unlocking");
+    const { unlockPowerRequirement } = await import("../../services/mailService");
+    const result = await unlockPowerRequirement(exhibitor.company_name);
+    if (result.ok) {
+      set({ isLocked: false, unlockRequested: false });
+      get().fetchPowerData(exhibitor);
     }
   },
 
   /* ============== mails ============== */
 
   sendUpdatePowerMail: async (exhibitor) => {
-    if (!exhibitor?.company_name || !exhibitor?.email) { toast.error("Company/email missing"); return; }
     set({ isSendingMail: true });
     try {
-      await toast.promise(
-        (async () => {
-          await fetch(`${API}/send_power_revised_mail.php`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              company_name:  exhibitor.company_name,
-              template_name: "POWER LOAD INCREASED",
-              email:         exhibitor.email,
-            }),
-          });
-          await fetch(`${API}/send_power_vendor_mail.php`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              template_name: "Revised Power Load Vendor",
-              company_name:  exhibitor.company_name,
-            }),
-          });
-        })(),
-        {
-          loading: "Sending update mail...",
-          success: "Updated power mail sent successfully",
-          error:   "Failed to send mail",
-        },
-      );
+      const { sendPowerRevisedMail, sendPowerVendorMail } = await import("../../services/mailService");
+      await sendPowerRevisedMail({ company_name: exhibitor?.company_name, email: exhibitor?.email });
+      await sendPowerVendorMail({  company_name: exhibitor?.company_name });
     } finally {
       set({ isSendingMail: false });
     }
   },
 
   sendPowerMail: async (exhibitor) => {
-    if (!exhibitor?.company_name) { toast.error("Company missing"); return; }
     set({ isSendingMail: true });
     try {
-      await toast.promise(
-        (async () => {
-          await fetch(`${API}/send_power_mail_to_admin.php`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              template_name: "InOptics 2026 @ Exhibitor Power Requirement Confirmation",
-              company_name:  exhibitor.company_name,
-            }),
-          });
-          await fetch(`${API}/send_power_mail_to_vendor.php`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              company_name:  exhibitor.company_name,
-              template_name: "Power Requirement by Exhibitor",
-            }),
-          });
-        })(),
-        {
-          loading: "Sending mail...",
-          success: "Mail sent successfully",
-          error:   "Failed to send mail",
-        },
-      );
+      const { sendPowerMailToAdmin, sendPowerMailToVendor } = await import("../../services/mailService");
+      await sendPowerMailToAdmin({  company_name: exhibitor?.company_name });
+      await sendPowerMailToVendor({ company_name: exhibitor?.company_name });
     } finally {
       set({ isSendingMail: false });
     }

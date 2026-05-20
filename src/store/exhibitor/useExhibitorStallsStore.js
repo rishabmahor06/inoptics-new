@@ -327,24 +327,15 @@ export const useExhibitorStallsStore = create((set, get) => ({
   /* ============== send mail ============== */
 
   sendStallsMail: async (exhibitor) => {
-    if (!exhibitor?.email)        { toast.error("Exhibitor email missing"); return; }
-    if (!exhibitor?.company_name) { toast.error("Company missing");          return; }
     set({ isSendingMail: true });
     try {
-      const res = await fetch(`${API}/send_exhibitor_stall_mail.php`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          template_name: "InOptics 2026 @ Stall Booking Confirmation",
-          company_name:  exhibitor.company_name,
-          email:         exhibitor.email,
-        }),
+      const { sendStallConfirmation } = await import("../../services/mailService");
+      await sendStallConfirmation({
+        company_name:     exhibitor?.company_name,
+        email:            exhibitor?.email,
+        secondary_emails: exhibitor?.secondary_emails,
+        stallList:        get().stallList,
       });
-      const data = await res.json();
-      if (data.success || data.status === "success") toast.success("Mail sent successfully");
-      else                                           toast.error(data.message || "Mail failed");
-    } catch {
-      toast.error("Mail failed");
     } finally {
       set({ isSendingMail: false });
     }

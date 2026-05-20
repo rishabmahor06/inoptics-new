@@ -97,36 +97,15 @@ export default function ProformaInvoiceModal({ open, onClose, section, ex, data 
     if (!ex?.email) { toast.error("Exhibitor email missing"); return; }
     setSending(true);
     try {
-      const el = templateRef.current;
-      const [{ default: jsPDF }, { default: html2canvas }] = await Promise.all([
-        import("jspdf"),
-        import("html2canvas"),
-      ]);
-      const canvas = await html2canvas(el, { scale: 2, useCORS: true, scrollY: 0, backgroundColor: "#fff" });
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
-      const pageW = pdf.internal.pageSize.getWidth();
-      const imgW = pageW - 10;
-      const imgH = (canvas.height / canvas.width) * imgW;
-      pdf.addImage(imgData, "PNG", 5, 5, imgW, imgH);
-      const pdfBase64 = pdf.output("datauristring").split(",")[1];
-
-      const res = await fetch("https://inoptics.in/api/send_proforma_invoice_mail.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          company_name: ex.company_name,
-          email: ex.email,
-          section: sectionTitle,
-          pdf_base64: pdfBase64,
-          filename: `Proforma_${section}.pdf`,
-        }),
+      // Ensure the template has an id for the service to find
+      if (templateRef.current) templateRef.current.id = "invoice-template";
+      const { sendProformaInvoicePdfMail } = await import("../../services/mailService");
+      await sendProformaInvoicePdfMail({
+        elementId:    "invoice-template",
+        section:      section === "power" ? "power" : "stall",
+        company_name: ex.company_name,
+        to_email:     ex.email,
       });
-      if (res.ok) toast.success("Proforma invoice sent");
-      else toast.error("Failed to send mail");
-    } catch (e) {
-      console.error(e);
-      toast.error("Server error while sending mail");
     } finally {
       setSending(false);
     }
