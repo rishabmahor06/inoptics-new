@@ -1,11 +1,12 @@
 import { create } from "zustand";
 import toast from "react-hot-toast";
 
-const API = "https://inoptics.in/api";
+const API = "/api";
 
 export const useExhibitorUndertakingStore = create((set, get) => ({
   declaration: [],          // [{title, text}, ...]
   status: null,             // null = loading, 0 = not accepted, 1 = accepted
+  acceptedAt: null,         // raw timestamp string from API (UTC or naive)
   loading: false,
   unlocking: false,
 
@@ -34,14 +35,21 @@ export const useExhibitorUndertakingStore = create((set, get) => ({
     if (!companyName) return;
     try {
       const res  = await fetch(
-        `${API}/get_undertaking_status.php?company_name=${encodeURIComponent(companyName)}`,
+        `https://inoptics.in/api/get_undertaking_status.php?company_name=${encodeURIComponent(companyName)}`,
       );
       const data = await res.json();
-      if (data.success) {
-        set({ status: Number(data.undertaking_accepted) });
-      } else {
-        set({ status: 0 });
-      }
+      console.log("Undertaking rishab status response:", data);
+      const row = Array.isArray(data) ? data[0] : data;
+      const raw =
+        row?.undertaking_accepted ??
+        row?.accepted ??
+        row?.status ??
+        row?.is_accepted ??
+        0;
+      // DB stores 1 = accepted, 0 = not accepted. Convert any shape (number/string) to that.
+      const accepted = String(raw).trim() === "1" || String(raw).toLowerCase() === "true";
+      const ts = row?.accepted_at ?? row?.undertaking_accepted_at ?? row?.updated_at ?? row?.created_at ?? null;
+      set({ status: accepted ? 1 : 0, acceptedAt: accepted ? ts : null });
     } catch (err) {
       console.error("Fetch undertaking status error:", err);
       set({ status: 0 });
@@ -60,7 +68,7 @@ export const useExhibitorUndertakingStore = create((set, get) => ({
       const json = await res.json();
       if (res.ok && json.success) {
         toast.success("Undertaking unlocked successfully");
-        set({ status: 0 });
+        set({ status: 0, acceptedAt: null });
         return true;
       }
       toast.error(json.message || "Failed to unlock");

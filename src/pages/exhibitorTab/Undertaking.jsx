@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { MdGavel, MdLockOpen, MdCheckCircle, MdWarning } from "react-icons/md";
+import { MdGavel, MdLockOpen, MdCheckCircle, MdWarning, MdAccessTime } from "react-icons/md";
 import { useNavStore } from "../../store/useNavStore";
 import { useExhibitorUndertakingStore } from "../../store/exhibitor/useExhibitorUndertakingStore";
 
@@ -8,18 +8,34 @@ export default function Undertaking() {
 
   const declaration = useExhibitorUndertakingStore((s) => s.declaration);
   const status      = useExhibitorUndertakingStore((s) => s.status);
+  const acceptedAt  = useExhibitorUndertakingStore((s) => s.acceptedAt);
   const loading     = useExhibitorUndertakingStore((s) => s.loading);
   const unlocking   = useExhibitorUndertakingStore((s) => s.unlocking);
   const initForCompany = useExhibitorUndertakingStore((s) => s.initForCompany);
   const unlock         = useExhibitorUndertakingStore((s) => s.unlock);
 
   useEffect(() => { if (ex) initForCompany(ex); }, [ex, initForCompany]);
-
   if (!ex) return null;
+
+  const formatKolkata = (raw) => {
+    if (!raw) return null;
+    const s = String(raw).trim();
+    // DB stores IST wall-clock (server forced to Asia/Kolkata).
+    // Read the components directly — no timezone math.
+    const m = s.match(/^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2})/);
+    if (!m) return s;
+    const [, y, mo, day, h, mi] = m;
+    const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    const hourNum = parseInt(h, 10);
+    const hour12  = ((hourNum + 11) % 12) + 1;
+    const ampm    = hourNum >= 12 ? "PM" : "AM";
+    return `${day} ${monthNames[parseInt(mo, 10) - 1]} ${y}, ${String(hour12).padStart(2, "0")}:${mi} ${ampm}`;
+  };
 
   const handleUnlock = () => {
     if (!window.confirm(`Unlock undertaking for ${ex.company_name}?`)) return;
     unlock(ex.company_name);
+    
   };
 
   return (
@@ -51,12 +67,28 @@ export default function Undertaking() {
       <div className="bg-white border border-zinc-200 rounded p-4 sm:p-5 space-y-4">
         {status === null || loading ? (
           <div className="py-10 text-center text-[13px] text-zinc-400">Loading...</div>
-        ) : status === 0 ? (
-          <div className="px-4 py-3 text-[13px] bg-amber-50 border border-amber-200 text-amber-800 rounded">
-            <span className="font-semibold">{ex.company_name}</span> has NOT accepted the Undertaking.
-          </div>
         ) : (
           <>
+            {status === 1 ? (
+              <div className="px-4 py-3 text-[13px] bg-emerald-50 border border-emerald-200 text-emerald-800 rounded space-y-1">
+                <div className="flex items-center gap-2">
+                  <MdCheckCircle size={16} />
+                  <span><span className="font-semibold">{ex.company_name}</span> has accepted the Undertaking.</span>
+                </div>
+                {acceptedAt && (
+                  <div className="flex items-center gap-1.5 text-[12px] text-emerald-700 pl-6">
+                    <MdAccessTime size={13} />
+                    <span>Accepted on <strong>{formatKolkata(acceptedAt)}</strong> (IST · Asia/Kolkata)</span>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="px-4 py-3 text-[13px] bg-amber-50 border border-amber-200 text-amber-800 rounded flex items-center gap-2">
+                <MdWarning size={16} />
+                <span><span className="font-semibold">{ex.company_name}</span> has NOT accepted the Undertaking yet.</span>
+              </div>
+            )}
+
             <ol className="list-decimal pl-5 space-y-2.5 text-[13px] text-zinc-700 leading-relaxed">
               {declaration.map((point, i) => (
                 <li key={i}>
@@ -69,17 +101,19 @@ export default function Undertaking() {
               )}
             </ol>
 
-            <div className="flex justify-end pt-3 border-t border-zinc-100">
-              <button
-                type="button"
-                onClick={handleUnlock}
-                disabled={unlocking}
-                className="px-4 h-10 text-[13px] font-semibold bg-red-600 hover:bg-red-700 text-white rounded flex items-center gap-1.5 transition-colors disabled:opacity-60"
-              >
-                <MdLockOpen size={16} />
-                {unlocking ? "Unlocking..." : "Unlock Undertaking"}
-              </button>
-            </div>
+            {status === 1 && (
+              <div className="flex justify-end pt-3 border-t border-zinc-100">
+                <button
+                  type="button"
+                  onClick={handleUnlock}
+                  disabled={unlocking}
+                  className="px-4 h-10 text-[13px] font-semibold bg-red-600 hover:bg-red-700 text-white rounded flex items-center gap-1.5 transition-colors disabled:opacity-60"
+                >
+                  <MdLockOpen size={16} />
+                  {unlocking ? "Unlocking..." : "Unlock Undertaking"}
+                </button>
+              </div>
+            )}
           </>
         )}
       </div>

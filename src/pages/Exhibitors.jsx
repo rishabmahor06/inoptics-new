@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { MdEdit, MdDelete, MdDescription, MdVisibility, MdSearch } from 'react-icons/md';
+import { MdEdit, MdDelete, MdDescription, MdVisibility, MdSearch, MdAdd, MdFileDownload } from 'react-icons/md';
+import * as XLSX from 'xlsx';
 import { useNavStore } from '../store/useNavStore';
 import { useExhibitorListStore } from '../store/exhibitor/useExhibitorListStore';
 import ExhibitorEditView from './exhibitorTab/ExhibitorEditView';
+import AddExhibitorModal from './exhibitorTab/AddExhibitorModal';
 
 function chunk(arr, size) {
   const out = [];
@@ -41,9 +43,51 @@ function BSBadge({ label }) {
 
 export default function Exhibitors() {
   const { editingExhibitor, setEditingExhibitor } = useNavStore();
-  const { rawData, loading, error, fetchExhibitors } = useExhibitorListStore();
+  const { rawData, loading, error, fetchExhibitors, deleteExhibitor } = useExhibitorListStore();
+
+  const handleDelete = (companyName) => {
+    if (!window.confirm(`Delete "${companyName}" and ALL related data? This cannot be undone.`)) return;
+    deleteExhibitor(companyName);
+  };
+
+  const handleExport = () => {
+    if (!rawData.length) return;
+    const rows = rawData.map((r, i) => ({
+      "S.No":              i + 1,
+      "Company Name":      r.company_name || "",
+      "Contact Person":    r.name || r.contact_person || "",
+      "Email":             r.email || "",
+      "Secondary Emails":  r.secondary_emails || "",
+      "Mobile":            r.mobile || "",
+      "Telephone":         r.telephone || r.phone || "",
+      "Address":           r.address || "",
+      "City":              r.city || "",
+      "State":             r.state || "",
+      "Pincode":           r.pin || r.pincode || "",
+      "GST":               r.gst || r.gst_number || "",
+      "Stall No":          r.stall_no || "",
+      "Stall Category":    r.category || r.stall_category || "",
+      "Stall Area":        r.stall_area || "",
+      "B/S":               (() => {
+        const c = String(r.category || "").toLowerCase();
+        if (c.includes("bare")) return "B";
+        if (c.includes("shell")) return "S";
+        return "";
+      })(),
+      "Undertaking":       (r.undertaking_accepted === "1" || r.undertaking_accepted === 1) ? "Accepted" : "Not Accepted",
+      "Free Badges":       r.free_badges || 0,
+      "Extra Badges":      r.extra_badges || 0,
+      "Password":          r.password || "",
+    }));
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Exhibitors");
+    const stamp = new Date().toISOString().slice(0, 10);
+    XLSX.writeFile(wb, `Exhibitors_${stamp}.xlsx`);
+  };
   const [companySearch, setCompanySearch] = useState('');
   const [bsSearch,      setBsSearch]      = useState('');
+  const [addOpen,       setAddOpen]       = useState(false);
 
   useEffect(() => {
     fetchExhibitors();
@@ -78,10 +122,10 @@ export default function Exhibitors() {
 
       {/* Toolbar */}
       <div className="px-5 py-3.5 border-b border-zinc-100 flex flex-wrap gap-2.5 items-center">
-        <div className="flex items-center gap-2 bg-zinc-50 border border-zinc-200 rounded px-3 py-2">
+        <div className="flex items-center gap-2 bg-zinc-50 border border-zinc-200 rounded px-3 py-2 flex-1 min-w-[240px]">
           <MdSearch size={15} className="text-zinc-400 shrink-0" />
           <input
-            className="bg-transparent outline-none text-[13px] text-zinc-800 w-44 placeholder:text-zinc-400 border-0"
+            className="bg-transparent outline-none text-[13px] text-zinc-800 w-full placeholder:text-zinc-400 border-0"
             placeholder="Search company..."
             value={companySearch}
             onChange={e => setCompanySearch(e.target.value)}
@@ -95,10 +139,25 @@ export default function Exhibitors() {
             onChange={e => setBsSearch(e.target.value)}
           />
         </div>
-        <span className="ml-auto text-[13px] text-zinc-400 font-medium">
+        <button
+          onClick={handleExport}
+          disabled={!rawData.length}
+          className="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white rounded px-4 py-2 text-[13px] font-semibold transition-colors shrink-0"
+        >
+          <MdFileDownload size={16} /> Export Excel
+        </button>
+        <button
+          onClick={() => setAddOpen(true)}
+          className="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded px-4 py-2 text-[13px] font-semibold transition-colors shrink-0"
+        >
+          <MdAdd size={16} /> Add Exhibitor
+        </button>
+        <span className="text-[13px] text-zinc-400 font-medium shrink-0">
           {grouped.length} records
         </span>
       </div>
+
+      <AddExhibitorModal open={addOpen} onClose={() => setAddOpen(false)} />
 
       {/* Table */}
       <div className="overflow-x-auto">
@@ -195,7 +254,10 @@ export default function Exhibitors() {
                         >
                           <MdEdit size={14} /> Edit
                         </button>
-                        <button className="inline-flex items-center gap-1.5 bg-red-50 text-red-600 border border-red-200 rounded px-2.5 py-1.5 text-[12px] font-semibold hover:bg-red-100 transition-colors cursor-pointer border-solid">
+                        <button
+                          onClick={() => handleDelete(row.company_name)}
+                          className="inline-flex items-center gap-1.5 bg-red-50 text-red-600 border border-red-200 rounded px-2.5 py-1.5 text-[12px] font-semibold hover:bg-red-100 transition-colors cursor-pointer border-solid"
+                        >
                           <MdDelete size={14} /> Delete
                         </button>
                         <button className={`inline-flex items-center gap-1.5 rounded px-2.5 py-1.5 text-[12px] font-semibold transition-colors cursor-pointer border-solid

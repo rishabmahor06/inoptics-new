@@ -16,6 +16,7 @@ import Payment              from "./tabs/Payment";
 
 import { useMailboxStore } from "./store/useMailboxStore";
 import { useMandatoryFormsStore } from "./store/useMandatoryFormsStore";
+import UndertakingGate from "./UndertakingGate";
 
 const COMPONENTS = {
   "dashboard":            Dashboard,
@@ -75,7 +76,9 @@ export default function ExhibitorPanel() {
         />
 
         <main className="flex-1 min-h-0 min-w-0 overflow-y-auto p-2 lg:p-4">
-          <ActivePage />
+          <UndertakingGate>
+            <ActivePage />
+          </UndertakingGate>
         </main>
       </div>
     </div>
