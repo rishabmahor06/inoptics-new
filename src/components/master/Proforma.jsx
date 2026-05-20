@@ -24,6 +24,8 @@ export default function Proforma() {
   const [sponsors, setSponsors]                   = useState([]);
   const [sponsorCategory, setSponsorCategory]     = useState('');
   const [selectedSponsorId, setSelectedSponsorId] = useState('');
+  // Which service line-item drives the PI for the chosen sponsor
+  const [sponsorService, setSponsorService]       = useState('');
 
   const isSponsorService = String(selectedService || '').toLowerCase().includes('sponsor');
 
@@ -43,8 +45,14 @@ export default function Proforma() {
     if (!isSponsorService) {
       setSponsorCategory('');
       setSelectedSponsorId('');
+      setSponsorService('');
     }
   }, [isSponsorService]);
+
+  // Reset which service drives the sponsor PI when sponsor company changes
+  useEffect(() => {
+    setSponsorService('');
+  }, [selectedSponsorId]);
 
   // Filter sponsors by chosen category (Platinum/Gold/Silver, case-insensitive substring)
   const filteredSponsors = sponsorCategory
@@ -208,6 +216,29 @@ export default function Proforma() {
                   </div>
                 </div>
               )}
+
+              {/* Service for Sponsor PI — only after a sponsor is picked */}
+              {isSponsorService && selectedSponsorId && (
+                <div className="mt-3">
+                  <label className="block text-[11px] font-semibold text-zinc-500 uppercase tracking-wide mb-1.5">
+                    Service for Sponsor PI
+                  </label>
+                  <select
+                    value={sponsorService}
+                    onChange={e => setSponsorService(e.target.value)}
+                    className="w-full px-3 py-2.5 text-sm border border-zinc-200 rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="">— Select service for this sponsor —</option>
+                    {services.map(svc => (
+                      <option key={svc.name} value={svc.name}>{svc.name}</option>
+                    ))}
+                    <option value="__all__">Exhibition Services - All</option>
+                  </select>
+                  <p className="mt-1.5 text-[11px] text-zinc-400">
+                    Pick which service line-item should appear on this sponsor's proforma invoice.
+                  </p>
+                </div>
+              )}
             </div>
 
             <ServiceTable
@@ -227,7 +258,9 @@ export default function Proforma() {
             <InvoicePreview
               activeAddress={activeAddress}
               services={services}
-              selectedService={selectedService}
+              // When a sponsor is picked AND a sponsor-specific service is chosen,
+              // that service drives the line-items table. Otherwise fall back to the original selection.
+              selectedService={selectedSponsor && sponsorService ? sponsorService : selectedService}
               sponsorCategory={sponsorCategory}
               sponsor={selectedSponsor}
             />
